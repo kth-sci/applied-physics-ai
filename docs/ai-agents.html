@@ -130,29 +130,116 @@
   <!-- Getting Started with Claude Code -->
   <section class="mb-16">
     <h2 class="text-2xl font-bold text-slate-900 mb-2">Getting Started with Claude Code</h2>
-    <p class="text-slate-500 mb-6">From zero to your first AI agent task in 15 minutes.</p>
+    <p class="text-slate-500 mb-6">From zero to your first AI agent task in 15 minutes. Choose the path that suits you.</p>
 
     <h3 class="text-lg font-bold text-slate-900 mt-6 mb-3">Step 1: Get a Claude Account</h3>
     <ol class="text-slate-600 text-sm space-y-2 list-decimal list-inside leading-relaxed">
       <li>Go to <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">claude.ai</code> and create an account (or log in if you have one)</li>
-      <li>Subscribe to <strong>Claude Pro</strong> ($20/month) -- this gives you access to Claude Code</li>
-      <li>For heavy use (large codebases, many hours/day), consider <strong>Claude Max</strong> ($100/month)</li>
+      <li>Subscribe to <strong>Claude Pro</strong> ($20/month) or <strong>Claude Max</strong> ($100/month) &mdash; a paid plan is required for Claude Code</li>
+      <li>The free Claude.ai plan does <strong>not</strong> include Claude Code access</li>
     </ol>
 
-    <h3 class="text-lg font-bold text-slate-900 mt-8 mb-3">Step 2: Install Claude Code</h3>
-    <p class="text-slate-600 text-sm mb-3">Claude Code runs in your terminal. You need Node.js installed (version 18+).</p>
-    <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto"># Install Claude Code globally
-npm install -g @anthropic-ai/claude-code
+    <h3 class="text-lg font-bold text-slate-900 mt-8 mb-3">Step 2: Choose Your Installation Method</h3>
+    <p class="text-slate-600 text-sm mb-4">Claude Code is available in multiple environments. Pick the one that fits your workflow best.</p>
 
-# Navigate to your project directory
-cd ~/my-research-project
+    <div class="bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 mb-6">
+      <strong>Easiest option:</strong> If you have never used a terminal, start with the <strong>Desktop App</strong> or the <strong>Web</strong> version &mdash; no installation needed. You can always switch to the terminal later for more power.
+    </div>
 
-# Start Claude Code
+    <!-- Option A: Desktop App -->
+    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-4">
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+        <span style="background:#d1fae5;color:#059669;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">EASIEST</span>
+        <h4 class="text-base font-bold text-slate-900">Option A: Desktop App (Mac &amp; Windows)</h4>
+      </div>
+      <p class="text-slate-600 text-sm mb-3">A standalone app with a visual interface. Review diffs, run multiple sessions side by side, and use the <strong>Code</strong> tab to start coding &mdash; no terminal needed.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem">
+        <a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.6rem;border:1px solid #e2e8f0;border-radius:8px;text-decoration:none;color:#0f172a;font-size:0.875rem;font-weight:500;transition:all 0.2s" onmouseenter="this.style.borderColor='#6366f1'" onmouseleave="this.style.borderColor='#e2e8f0'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Download for macOS
+        </a>
+        <a href="https://claude.ai/api/desktop/win32/x64/exe/latest/redirect" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.6rem;border:1px solid #e2e8f0;border-radius:8px;text-decoration:none;color:#0f172a;font-size:0.875rem;font-weight:500;transition:all 0.2s" onmouseenter="this.style.borderColor='#6366f1'" onmouseleave="this.style.borderColor='#e2e8f0'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+          Download for Windows
+        </a>
+      </div>
+      <p class="text-slate-500 text-xs">After installing, launch the app, sign in, and click the <strong>Code</strong> tab to start.</p>
+    </div>
+
+    <!-- Option B: Web -->
+    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-4">
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+        <span style="background:#dbeafe;color:#2563eb;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">NO INSTALL</span>
+        <h4 class="text-base font-bold text-slate-900">Option B: Web (Any Browser)</h4>
+      </div>
+      <p class="text-slate-600 text-sm mb-3">Run Claude Code directly in your browser with no local setup. Start tasks, check back when they are done, and work on repos you do not have locally.</p>
+      <a href="https://claude.ai/code" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;background:#6366f1;color:#fff;font-weight:600;padding:0.5rem 1.2rem;border-radius:8px;text-decoration:none;font-size:0.875rem">Open claude.ai/code &rarr;</a>
+    </div>
+
+    <!-- Option C: Terminal -->
+    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-4">
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+        <span style="background:#fef3c7;color:#92400e;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">FULL POWER</span>
+        <h4 class="text-base font-bold text-slate-900">Option C: Terminal (Mac, Windows, Linux)</h4>
+      </div>
+      <p class="text-slate-600 text-sm mb-3">The full-featured CLI for working directly in your terminal. This is the most powerful option &mdash; full filesystem access, shell commands, and project-level memory.</p>
+
+      <div class="tabs" data-tabs>
+        <div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:1rem">
+          <button data-tab="tab-mac" style="padding:0.5rem 1rem;border:none;border-bottom:2px solid #6366f1;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;font-weight:600;color:#0f172a;cursor:pointer">macOS / Linux</button>
+          <button data-tab="tab-win" style="padding:0.5rem 1rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer">Windows</button>
+          <button data-tab="tab-brew" style="padding:0.5rem 1rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer">Homebrew (Mac)</button>
+        </div>
+
+        <div id="tab-mac" class="tab-panel active">
+          <p class="text-slate-600 text-sm mb-2">Run this single command in Terminal &mdash; no prerequisites needed:</p>
+          <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">curl -fsSL https://claude.ai/install.sh | bash</pre>
+          <p class="text-slate-500 text-xs mt-2">This installs a native binary that auto-updates in the background. No Node.js or npm required.</p>
+        </div>
+
+        <div id="tab-win" class="tab-panel">
+          <p class="text-slate-600 text-sm mb-2"><strong>Prerequisite:</strong> Install <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener" style="color:#6366f1;font-weight:500">Git for Windows</a> first.</p>
+          <p class="text-slate-600 text-sm mb-2">Then run in <strong>PowerShell</strong>:</p>
+          <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">irm https://claude.ai/install.ps1 | iex</pre>
+          <p class="text-slate-600 text-sm mt-3 mb-2">Or in <strong>CMD</strong>:</p>
+          <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd</pre>
+          <p class="text-slate-500 text-xs mt-2">You can also use <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">winget install Anthropic.ClaudeCode</code> if you prefer WinGet.</p>
+        </div>
+
+        <div id="tab-brew" class="tab-panel">
+          <p class="text-slate-600 text-sm mb-2">If you use Homebrew on macOS:</p>
+          <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">brew install --cask claude-code</pre>
+          <p class="text-slate-500 text-xs mt-2">Note: Homebrew installations do not auto-update. Run <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">brew upgrade claude-code</code> periodically.</p>
+        </div>
+      </div>
+
+      <p class="text-slate-600 text-sm mt-4 mb-2">Then start Claude Code in any project:</p>
+      <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">cd your-project
 claude</pre>
-    <p class="text-slate-600 text-sm mt-3">On first run, it will open a browser window for authentication. Log in with your Anthropic account.</p>
+      <p class="text-slate-600 text-sm mt-2">You will be prompted to log in on first run. That is it.</p>
+    </div>
+
+    <!-- Option D: VS Code / IDE -->
+    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-4">
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+        <span style="background:#ede9fe;color:#7c3aed;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">IDE</span>
+        <h4 class="text-base font-bold text-slate-900">Option D: VS Code / JetBrains Extension</h4>
+      </div>
+      <p class="text-slate-600 text-sm mb-3">Get Claude Code inside your editor with inline diffs, @-mentions, and conversation history.</p>
+      <ul class="text-slate-600 text-sm space-y-1 list-disc list-inside">
+        <li><strong>VS Code / Cursor:</strong> Search "Claude Code" in Extensions (<code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">Cmd+Shift+X</code>) or install from the marketplace</li>
+        <li><strong>JetBrains (PyCharm, IntelliJ, etc.):</strong> Install the <a href="https://plugins.jetbrains.com/plugin/27310-claude-code-beta-" target="_blank" rel="noopener" style="color:#6366f1;font-weight:500">Claude Code plugin</a> from the JetBrains Marketplace</li>
+      </ul>
+    </div>
+
+    <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-lg p-4 text-sm text-slate-700 mt-4 mb-6">
+      <strong>Note on npm:</strong> The old <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">npm install -g @anthropic-ai/claude-code</code> method is now deprecated. The native installer above is faster, has no dependencies, and auto-updates. If you previously installed via npm, migrate by running the native install command and then <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">npm uninstall -g @anthropic-ai/claude-code</code>.
+    </div>
+
+    <p class="text-slate-500 text-xs">Full documentation: <a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener" style="color:#6366f1">code.claude.com/docs</a></p>
 
     <h3 class="text-lg font-bold text-slate-900 mt-8 mb-3">Step 3: Give It a Task</h3>
-    <p class="text-slate-600 text-sm mb-3">Once inside Claude Code, simply describe what you want in natural language:</p>
+    <p class="text-slate-600 text-sm mb-3">Once inside Claude Code (terminal, desktop, or web), simply describe what you want in natural language:</p>
     <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto"># Example: analyze data
 > Read the CSV file in data/spectra.csv and create a plot of all spectra.
   Identify the main peaks and label them.
