@@ -131,22 +131,22 @@
     <h2 class="text-2xl font-bold text-slate-900 mb-2">Quick Reference Card</h2>
     <p class="text-slate-500 mb-6">Print this or keep it open in a tab.</p>
 
-    <div class="bg-slate-50 border-2 border-kth-light rounded-xl p-6 text-sm">
+    <div class="bg-slate-50 border-2 border-kth-light rounded-xl p-4 sm:p-6 text-sm overflow-hidden">
       <div class="grid md:grid-cols-2 gap-6">
-        <div>
+        <div class="min-w-0">
           <h3 class="text-base font-bold text-kth mb-3">The Prompt Formula</h3>
-          <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">[Role] + [Context] + [Task] + [Format] + [Constraints]</pre>
-          <p class="text-slate-600 mt-3">Example: "You are an expert in XPS analysis [role]. I have survey scan data from a Ti thin film [context]. Identify all peaks and assign chemical states [task]. Present as a table [format]. Focus on the Ti 2p and O 1s regions [constraints]."</p>
+          <div class="bg-slate-800 text-slate-200 p-3 sm:p-4 rounded-lg text-xs sm:text-sm font-mono overflow-x-auto whitespace-nowrap">[Role] + [Context] + [Task] + [Format] + [Constraints]</div>
+          <p class="text-slate-600 mt-3 text-xs sm:text-sm break-words">Example: "You are an expert in XPS analysis <strong>[role]</strong>. I have survey scan data from a Ti thin film <strong>[context]</strong>. Identify all peaks and assign chemical states <strong>[task]</strong>. Present as a table <strong>[format]</strong>. Focus on the Ti 2p and O 1s regions <strong>[constraints]</strong>."</p>
         </div>
-        <div>
+        <div class="min-w-0">
           <h3 class="text-base font-bold text-kth mb-3">Power Phrases</h3>
-          <ul class="text-slate-600 space-y-1.5 leading-relaxed">
-            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"Think step by step"</code> -- improves reasoning</li>
-            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"Be specific and concrete"</code> -- reduces vagueness</li>
-            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"If you are unsure, say so"</code> -- reduces hallucination</li>
-            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"Compare and contrast"</code> -- structured analysis</li>
-            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"What am I missing?"</code> -- catches blind spots</li>
-            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"Simplify this for a [audience]"</code> -- adjusts level</li>
+          <ul class="text-slate-600 space-y-1.5 leading-relaxed text-xs sm:text-sm">
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs break-all">"Think step by step"</code> -- improves reasoning</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs break-all">"Be specific and concrete"</code> -- reduces vagueness</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs break-all">"If you are unsure, say so"</code> -- reduces hallucination</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs break-all">"Compare and contrast"</code> -- structured analysis</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs break-all">"What am I missing?"</code> -- catches blind spots</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs break-all">"Simplify this for a [audience]"</code> -- adjusts level</li>
           </ul>
         </div>
       </div>
