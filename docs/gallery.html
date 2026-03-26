@@ -131,7 +131,8 @@
 <script src="assets/main.js"></script>
 <script>
 const HYPHA_URL = 'https://hypha.aicell.io';
-const COLLECTION = 'kth-sci/aphys-ai-gallery';
+const COLLECTION_ID = 'kth-sci/aphys-ai-gallery';
+const COLLECTION_API = `${HYPHA_URL}/kth-sci/artifacts/aphys-ai-gallery`;
 let allItems = [];
 
 // Icon SVG paths
@@ -192,7 +193,7 @@ function renderCard(item) {
 async function loadGallery() {
   const grid = document.getElementById('gallery-grid');
   try {
-    const res = await fetch(`${HYPHA_URL}/${COLLECTION}/children?pagination=true&limit=50&silent=true`);
+    const res = await fetch(`${COLLECTION_API}/children?pagination=true&limit=50&silent=true`);
     const data = await res.json();
     allItems = data.items || [];
     grid.innerHTML = allItems.map(renderCard).join('');
@@ -239,7 +240,7 @@ document.getElementById('submit-form')?.addEventListener('submit', async (e) => 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         alias: alias + '-' + Date.now().toString(36),
-        parent_id: COLLECTION,
+        parent_id: COLLECTION_ID,
         manifest: { name: title, description: desc, tool, tags, author: author || 'Anonymous', category, repo: repo || null, icon: 'code', difficulty: 'Intermediate', submitted: new Date().toISOString() },
       })
     });
