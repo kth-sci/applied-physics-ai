@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agents — AI @ Applied Physics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { kth: { DEFAULT:'#004791', light:'#2563eb', dark:'#003366' }, accent: { DEFAULT:'#6366f1', light:'#818cf8', dark:'#4f46e5' }, fire: { DEFAULT:'#f97316', light:'#fb923c' } },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+  }}
+}
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="font-sans text-slate-800 bg-white antialiased">
+
+<!-- Navigation -->
+<nav class="bg-slate-900 sticky top-0 z-50 shadow-lg">
+  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <a href="index.html" class="flex items-center gap-2.5 text-white font-bold text-sm">
+      <svg width="32" height="32" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/><circle cx="32" cy="16" r="4" fill="#818cf8"/><circle cx="18" cy="40" r="4" fill="#818cf8"/><circle cx="46" cy="40" r="4" fill="#818cf8"/><line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/><circle cx="32" cy="32" r="7" fill="#6366f1"/><text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text></svg>
+      AI @ Applied Physics
+    </a>
+    <button id="nav-toggle" class="md:hidden text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <ul id="nav-menu" class="hidden md:flex items-center gap-0 text-sm">
+      <li><a href="index.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Home</a></li>
+      <li><a href="getting-started.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Get Started</a></li>
+      <li><a href="chatgpt-quickstart.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">ChatGPT</a></li>
+      <li><a href="ai-agents.html" class="block px-3 py-4 text-white font-medium border-b-2 border-accent">AI Agents</a></li>
+      <li><a href="gallery.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Gallery</a></li>
+      <li><a href="events.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Events</a></li>
+      <li><a href="community.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Community</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="bg-gradient-to-br from-slate-900 via-slate-800 to-kth-dark text-white py-14 px-6 text-center">
+  <h1 class="text-3xl md:text-4xl font-bold mb-3">AI Agents: Your Autonomous Research Assistant</h1>
+  <p class="text-slate-300 text-lg max-w-2xl mx-auto">Move beyond chat -- let AI plan, execute, and iterate on complex tasks for you.</p>
+</header>
+
+<div class="max-w-5xl mx-auto px-4 py-12">
+
+  <!-- What Is an AI Agent -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">What Is an AI Agent?</h2>
+    <p class="text-slate-500 mb-6">The leap from asking questions to delegating tasks.</p>
+
+    <!-- Simplified Tailwind Diagram -->
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <!-- Chatbot side -->
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 text-center">
+        <h3 class="text-sm font-bold text-kth mb-4">Chatbot (ChatGPT)</h3>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 justify-center">
+            <div class="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1.5 rounded-full">You ask</div>
+            <svg class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="bg-blue-200 text-blue-800 text-xs font-medium px-3 py-1.5 rounded-full">AI responds</div>
+          </div>
+          <div class="flex items-center gap-3 justify-center">
+            <div class="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1.5 rounded-full">You ask again</div>
+            <svg class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="bg-blue-200 text-blue-800 text-xs font-medium px-3 py-1.5 rounded-full">AI responds</div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-400 mt-4 italic">Reactive: one question at a time</p>
+      </div>
+
+      <!-- Agent side -->
+      <div class="bg-orange-50 border border-orange-200 rounded-xl p-6 text-center">
+        <h3 class="text-sm font-bold text-orange-700 mb-4">AI Agent (Claude Code)</h3>
+        <div class="flex items-center justify-center gap-2 mb-3">
+          <div class="bg-fire text-white text-xs font-semibold px-3 py-1.5 rounded-lg">Plan</div>
+          <svg class="w-4 h-4 text-fire" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <div class="bg-fire text-white text-xs font-semibold px-3 py-1.5 rounded-lg">Execute</div>
+          <svg class="w-4 h-4 text-fire" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <div class="bg-fire text-white text-xs font-semibold px-3 py-1.5 rounded-lg">Evaluate</div>
+        </div>
+        <p class="text-xs text-orange-500 italic mb-3">Iterate until done</p>
+        <div class="flex flex-wrap gap-2 justify-center">
+          <span class="bg-amber-100 text-amber-700 text-xs font-mono px-2 py-1 rounded">Files</span>
+          <span class="bg-amber-100 text-amber-700 text-xs font-mono px-2 py-1 rounded">Code</span>
+          <span class="bg-amber-100 text-amber-700 text-xs font-mono px-2 py-1 rounded">Terminal</span>
+          <span class="bg-amber-100 text-amber-700 text-xs font-mono px-2 py-1 rounded">Web</span>
+          <span class="bg-amber-100 text-amber-700 text-xs font-mono px-2 py-1 rounded">Memory</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-slate-600 mb-3">A <strong>chatbot</strong> like ChatGPT responds to your messages one at a time. You prompt, it replies, you prompt again. It is reactive.</p>
+    <p class="text-slate-600 mb-4">An <strong>AI agent</strong> like Claude Code operates differently. You describe a goal -- "analyze my spectroscopy data and create a report" -- and the agent <em>autonomously</em> plans the steps, reads your files, writes code, runs it, evaluates the results, and iterates until the task is complete. It has access to your filesystem, your terminal, and the web.</p>
+
+    <div class="bg-orange-50 border-l-4 border-fire rounded-r-lg p-4 text-sm text-slate-700">
+      <strong>The analogy:</strong> ChatGPT is like emailing a colleague a question. Claude Code is like having a research assistant sit at your computer and do the work -- while you supervise the approach and evaluate the output.
+    </div>
+  </section>
+
+  <!-- Key Concepts -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-6">Key Concepts</h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-kth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Tool Use</h3>
+        <p class="text-slate-600 text-sm">AI agents can use tools: read and write files, execute shell commands, search the web, run Python scripts. This is what makes them powerful -- they can interact with your actual work environment.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-fire" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Planning &amp; Iteration</h3>
+        <p class="text-slate-600 text-sm">Given a complex task, the agent breaks it into steps, executes each one, evaluates the result, and adjusts. If code fails, it reads the error, fixes it, and tries again -- just like you would debug.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Memory &amp; Context</h3>
+        <p class="text-slate-600 text-sm">Claude Code maintains memory across sessions. It remembers your project structure, your preferences, and the context of your work. You can teach it once and it retains that knowledge for future sessions.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Human Oversight</h3>
+        <p class="text-slate-600 text-sm">You remain in control. The agent asks for permission before executing potentially impactful commands. You review its work, approve changes, and guide its direction. Think of it as supervised autonomy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Getting Started with Claude Code -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Getting Started with Claude Code</h2>
+    <p class="text-slate-500 mb-6">From zero to your first AI agent task in 15 minutes.</p>
+
+    <h3 class="text-lg font-bold text-slate-900 mt-6 mb-3">Step 1: Get a Claude Account</h3>
+    <ol class="text-slate-600 text-sm space-y-2 list-decimal list-inside leading-relaxed">
+      <li>Go to <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">claude.ai</code> and create an account (or log in if you have one)</li>
+      <li>Subscribe to <strong>Claude Pro</strong> ($20/month) -- this gives you access to Claude Code</li>
+      <li>For heavy use (large codebases, many hours/day), consider <strong>Claude Max</strong> ($100/month)</li>
+    </ol>
+
+    <h3 class="text-lg font-bold text-slate-900 mt-8 mb-3">Step 2: Install Claude Code</h3>
+    <p class="text-slate-600 text-sm mb-3">Claude Code runs in your terminal. You need Node.js installed (version 18+).</p>
+    <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto"># Install Claude Code globally
+npm install -g @anthropic-ai/claude-code
+
+# Navigate to your project directory
+cd ~/my-research-project
+
+# Start Claude Code
+claude</pre>
+    <p class="text-slate-600 text-sm mt-3">On first run, it will open a browser window for authentication. Log in with your Anthropic account.</p>
+
+    <h3 class="text-lg font-bold text-slate-900 mt-8 mb-3">Step 3: Give It a Task</h3>
+    <p class="text-slate-600 text-sm mb-3">Once inside Claude Code, simply describe what you want in natural language:</p>
+    <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto"># Example: analyze data
+> Read the CSV file in data/spectra.csv and create a plot of all spectra.
+  Identify the main peaks and label them.
+
+# Example: build a tool
+> Create a Python script that batch-processes all .tif microscopy images
+  in the images/ folder, applies background subtraction, and saves the
+  results as PNG files with a scale bar.
+
+# Example: convert code
+> Convert the MATLAB script analysis.m to Python. Use numpy and scipy.
+  Make sure the numerical results match.</pre>
+
+    <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-r-lg p-4 text-sm text-slate-700 mt-4">
+      <strong>That is it.</strong> Claude Code will read the files, plan the approach, write the code, run it, check the output, and iterate. You review and approve each step.
+    </div>
+  </section>
+
+  <!-- Real-World Examples -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">What Can You Build? Real Examples</h2>
+    <p class="text-slate-500 mb-6">Actual tasks that faculty in Applied Physics can accomplish with Claude Code.</p>
+
+    <div class="tabs">
+      <div class="flex gap-1 border-b border-slate-200 mb-6 flex-wrap">
+        <button class="tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-accent text-accent bg-accent/5 active" data-tab="tab-research">Research</button>
+        <button class="tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition" data-tab="tab-teaching">Teaching</button>
+        <button class="tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition" data-tab="tab-productivity">Productivity</button>
+        <button class="tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition" data-tab="tab-code">Code &amp; Tools</button>
+      </div>
+
+      <div id="tab-research" class="tab-panel active">
+        <div class="space-y-5">
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Analyze Spectroscopy Data</h3>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"Read all .csv files in data/raman/. Each file has columns wavelength and intensity. For each spectrum: subtract the baseline using asymmetric least squares, find all peaks above 3x the noise floor, fit each peak with a Voigt profile, and create a summary table with peak positions, widths, and areas. Save the results as an HTML report with interactive plots."</p>
+            </div>
+            <p class="text-slate-500 text-sm mt-3">The agent reads the data, writes the analysis code, runs it, checks the fits, and generates the report -- autonomously.</p>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Build an ML Model for Image Classification</h3>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"I have microscopy images of cells in two folders: healthy/ and stressed/. Build a CNN classifier to distinguish them. Split data 80/20, train with data augmentation, evaluate with a confusion matrix and ROC curve. Report the accuracy and any signs of overfitting."</p>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Structured Literature Review</h3>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"Search for recent papers on machine learning for X-ray spectroscopy analysis. Create a structured comparison table covering: authors, year, method, dataset size, reported accuracy, and limitations. Organize by method category."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-teaching" class="tab-panel" style="display:none;">
+        <div class="space-y-5">
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Generate Exercise Sets with Solutions</h3>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"Create a set of 5 exercises on Fourier optics for my SK2300 course. Each exercise should include: the problem statement, a hint, a detailed model solution, and a grading rubric. Mix conceptual questions with calculations. Save as a LaTeX document."</p>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Review Student Reports</h3>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"Read the student report in submissions/report_student_A.pdf. Evaluate: (1) clarity of the experimental method description, (2) correctness of the data analysis, (3) quality of the conclusions. Provide constructive feedback organized by section. Be encouraging but specific about improvements needed."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-productivity" class="tab-panel" style="display:none;">
+        <div class="space-y-5">
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Automate Meeting Notes</h3>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"Read the meeting transcript in notes/faculty_meeting_march.txt. Extract: (1) key decisions made, (2) action items with responsible person and deadline, (3) open questions. Format as a clean summary email ready to send to the department."</p>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Build a Personal Dashboard</h3>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"Create a simple web dashboard that shows my upcoming deadlines, current research projects, and a reading list. Read the data from projects.json. Make it look clean and professional. It should update when I edit the JSON file."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-code" class="tab-panel" style="display:none;">
+        <div class="space-y-5">
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Convert Legacy Code</h3>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"Convert the MATLAB simulation in simulation/beam_propagation.m to Python. Use numpy for array operations and scipy for the FFT. Preserve all comments. Add type hints. Verify that the output matches the MATLAB version for the test case in test_data/."</p>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Create a Data Processing Pipeline</h3>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"I have raw measurement files (.dat) arriving in raw_data/ every week. Create a Python pipeline that: (1) reads new files, (2) applies calibration from calibration.json, (3) performs noise filtering, (4) exports processed results to processed/ as CSV, (5) generates a weekly summary plot. Make it runnable with a single command."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Memory & Context -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Memory: Teaching Your Agent</h2>
+    <p class="text-slate-500 mb-6">Claude Code remembers your preferences and project context across sessions.</p>
+
+    <p class="text-slate-600 text-sm mb-6">Unlike a chatbot where each conversation starts fresh, Claude Code maintains <strong>persistent memory</strong>. It stores project-level instructions in a <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">CLAUDE.md</code> file in your repository, which it reads at the start of every session.</p>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-lg font-bold text-slate-900 mb-3">What It Remembers</h3>
+        <ul class="text-slate-500 text-sm space-y-1.5 list-disc list-inside">
+          <li>Your project structure and conventions</li>
+          <li>Coding style preferences (Python version, libraries)</li>
+          <li>Common file locations and data formats</li>
+          <li>Previous decisions and their rationale</li>
+          <li>Your feedback ("always use scipy, not manual FFT")</li>
+        </ul>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-lg font-bold text-slate-900 mb-3">How to Teach It</h3>
+        <ul class="text-slate-500 text-sm space-y-1.5 list-disc list-inside">
+          <li>Say <em>"Remember that..."</em> to store preferences</li>
+          <li>Edit <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">CLAUDE.md</code> directly with project-wide instructions</li>
+          <li>Correct mistakes -- it learns from your feedback</li>
+          <li>The more you use it, the better it gets at your specific workflows</li>
+        </ul>
+      </div>
+    </div>
+
+    <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto"># Example CLAUDE.md for a research project
+# My Research Project
+
+## Context
+This is an ultrafast spectroscopy data analysis project.
+Data files are in data/ as HDF5 format.
+Use Python 3.11+ with numpy, scipy, matplotlib, and h5py.
+
+## Conventions
+- All plots should use the "science" matplotlib style
+- Wavelength in nm, time delays in fs
+- Save figures as both PNG (300 dpi) and SVG</pre>
+  </section>
+
+  <!-- Quiz -->
+  <section class="mb-16">
+    <div class="quiz-container bg-slate-50 border border-slate-200 rounded-xl p-6">
+      <h3 class="text-lg font-bold text-slate-900 mb-2">Quick Check: Do You Understand AI Agents?</h3>
+      <p class="text-slate-500 text-sm mb-6">Test your understanding with these three questions.</p>
+
+      <div class="quiz-question space-y-3 mb-6" data-answer="b" data-explanation="An AI agent plans, executes, and iterates autonomously. A chatbot only responds to individual prompts.">
+        <p class="font-medium text-slate-800">1. What is the main difference between a chatbot and an AI agent?</p>
+        <div class="quiz-options space-y-2 text-sm">
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q1" value="a" class="mt-0.5"> An agent uses a more advanced language model</label>
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q1" value="b" class="mt-0.5"> An agent can autonomously plan, execute, and iterate on multi-step tasks</label>
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q1" value="c" class="mt-0.5"> An agent is always more accurate than a chatbot</label>
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q1" value="d" class="mt-0.5"> There is no meaningful difference</label>
+        </div>
+        <div class="quiz-feedback text-sm"></div>
+      </div>
+
+      <div class="quiz-question space-y-3 mb-6" data-answer="c" data-explanation="Claude Code stores project-level context in a CLAUDE.md file that persists across sessions, unlike chatbot conversations that start fresh.">
+        <p class="font-medium text-slate-800">2. How does Claude Code maintain memory across sessions?</p>
+        <div class="quiz-options space-y-2 text-sm">
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q2" value="a" class="mt-0.5"> It stores everything in the cloud automatically</label>
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q2" value="b" class="mt-0.5"> It does not -- each session starts fresh</label>
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q2" value="c" class="mt-0.5"> Through project-level files like CLAUDE.md and its memory system</label>
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q2" value="d" class="mt-0.5"> By recording your voice commands</label>
+        </div>
+        <div class="quiz-feedback text-sm"></div>
+      </div>
+
+      <div class="quiz-question space-y-3 mb-6" data-answer="b" data-explanation="AI agents are powerful but not infallible. Your scientific expertise is essential for evaluating whether the agent's output is physically meaningful and correct.">
+        <p class="font-medium text-slate-800">3. When using an AI agent for data analysis, what is your role?</p>
+        <div class="quiz-options space-y-2 text-sm">
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q3" value="a" class="mt-0.5"> Just wait for the results -- the agent handles everything</label>
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q3" value="b" class="mt-0.5"> Define the goal, supervise the approach, and critically evaluate the results</label>
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q3" value="c" class="mt-0.5"> Write all the code yourself and let the agent review it</label>
+          <label class="flex items-start gap-2 cursor-pointer text-slate-600 hover:text-slate-800"><input type="radio" name="q3" value="d" class="mt-0.5"> Only use it for trivial tasks that do not require expertise</label>
+        </div>
+        <div class="quiz-feedback text-sm"></div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button class="quiz-submit bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">Check Answers</button>
+      </div>
+      <div class="quiz-score hidden text-center mt-4 text-lg font-bold text-kth"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="text-center p-8 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-xl">
+    <h2 class="text-2xl font-bold text-orange-700 mb-3">Try It at the May 8 Tutorial</h2>
+    <p class="text-slate-600 max-w-xl mx-auto mb-4">Join us for a hands-on session where you will set up Claude Code, work through real examples, and get personalized help from facilitators.</p>
+    <p class="text-sm text-slate-500 mb-5"><strong>May 8, 2026</strong> &bull; 13:00-17:00 &bull; APHYS Department</p>
+    <a href="events.html" class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">View Event Details &rarr;</a>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 text-center py-8 px-4 mt-16 text-sm">
+  <p>Department of Applied Physics &bull; School of Engineering Sciences &bull; KTH Royal Institute of Technology</p>
+  <p class="mt-1">Organized by <strong class="text-slate-200">Wei Ouyang</strong> &amp; <strong class="text-slate-200">Jonas Sellberg</strong> &bull; 2026</p>
+  <p class="mt-3 text-xs text-slate-500 max-w-lg mx-auto">This webpage was generated with the assistance of AI (Claude Code) and may contain errors or inaccuracies. Please cross-check important information independently.</p>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

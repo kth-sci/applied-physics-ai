@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Workshop Proposal — Applied Physics, KTH</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --blue: #004791;
+    --blue-l: #2563eb;
+    --accent: #e85d26;
+    --txt: #0f172a;
+    --txt2: #475569;
+    --txt3: #94a3b8;
+    --ok: #10b981;
+    --warn: #f59e0b;
+    --err: #ef4444;
+  }
+
+  .reveal { font-family: 'Inter', sans-serif; color: var(--txt); }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { padding: 18px 36px; box-sizing: border-box; }
+
+  .reveal h1, .reveal h2, .reveal h3 { font-weight: 700; color: var(--blue); text-transform: none; letter-spacing: -0.02em; }
+  .reveal h1 { font-size: 1.8em; }
+  .reveal h2 { font-size: 1.15em; margin-bottom: 0.35em; }
+  .reveal h3 { font-size: 0.72em; color: var(--blue-l); margin-bottom: 0.2em; font-weight: 600; }
+
+  .reveal p, .reveal li { font-size: 0.5em; line-height: 1.45; }
+  .reveal ul { list-style: none; padding-left: 0; }
+  .reveal ul li { padding-left: 1em; position: relative; margin-bottom: 0.15em; }
+  .reveal ul li::before { content:''; position: absolute; left: 0; top: 0.45em; width: 5px; height: 5px; border-radius: 50%; background: var(--blue-l); }
+
+  .reveal blockquote { background: none; border: none; font-style: italic; font-size: 0.6em; color: var(--blue); padding: 0.1em 0 0.1em 1.4em; margin: 0.3em 0; width: 100%; box-shadow: none; position: relative; }
+  .reveal blockquote::before { content:'\201C'; position: absolute; left: 0; top: -0.15em; font-size: 2.2em; color: var(--blue-l); opacity: 0.2; font-style: normal; }
+
+  .hbox { border-left: 3px solid var(--blue); padding: 0.35em 0.7em; border-radius: 0 5px 5px 0; margin: 0.3em 0; font-size: 0.48em; line-height: 1.4; background: linear-gradient(135deg,#eff6ff,#f0f9ff); }
+  .hbox.a { border-color: var(--accent); background: linear-gradient(135deg,#fff7ed,#fffbeb); }
+  .hbox.d { border-color: var(--err); background: linear-gradient(135deg,#fef2f2,#fff1f2); }
+  .hbox.s { border-color: var(--ok); background: linear-gradient(135deg,#ecfdf5,#f0fdf4); }
+
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8em; align-items: start; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6em; align-items: start; }
+
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 7px; padding: 0.45em 0.55em; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .card h3 { margin-top: 0; }
+  .card p, .card li { font-size: 0.44em; }
+
+  .tag { display: inline-block; padding: 0.08em 0.4em; border-radius: 12px; font-size: 0.38em; font-weight: 600; margin-right: 0.2em; }
+  .tb { background: #dbeafe; color: var(--blue); }
+  .to { background: #ffedd5; color: #c2410c; }
+  .tg { background: #dcfce7; color: #166534; }
+
+  .title-slide { text-align: center !important; }
+  .title-slide h1 { font-size: 1.9em; margin-bottom: 0.08em; font-weight: 800; }
+  .title-slide .sub { font-size: 0.75em; color: var(--blue-l); font-weight: 400; margin-bottom: 0.8em; }
+  .title-slide .meta { font-size: 0.48em; color: var(--txt2); line-height: 1.7; }
+
+  .reveal table { font-size: 0.42em; border-collapse: separate; border-spacing: 0; width: 100%; margin: 0.3em 0; border-radius: 6px; overflow: hidden; }
+  .reveal table th { background: var(--blue); color: #fff; padding: 0.4em 0.6em; font-weight: 600; text-align: left; }
+  .reveal table td { padding: 0.35em 0.6em; border-bottom: 1px solid #e2e8f0; background: #fff; }
+  .reveal table tr:nth-child(even) td { background: #f8fafc; }
+
+  .sched { display: grid; grid-template-columns: 80px 1fr; gap: 0.4em; margin-bottom: 0.18em; font-size: 0.44em; align-items: baseline; }
+  .sched .t { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--txt2); font-weight: 500; }
+  .sched .s { font-weight: 600; }
+  .sched .s span { font-weight: 400; color: var(--txt2); display: block; font-size: 0.88em; }
+
+  .reveal .progress { height: 3px; color: var(--blue); }
+  .reveal .slide-number { font-family: 'Inter'; font-size: 11px !important; color: var(--txt3) !important; background: none !important; }
+
+  #fs-btn { position: fixed; top: 12px; right: 12px; z-index: 100; background: rgba(0,71,145,0.85); color: #fff; border: none; border-radius: 6px; padding: 6px 12px; font-family: 'Inter'; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 5px; backdrop-filter: blur(6px); box-shadow: 0 2px 6px rgba(0,0,0,0.12); opacity: 0.6; transition: 0.2s; }
+  #fs-btn:hover { opacity: 1; }
+  #fs-btn svg { width: 14px; height: 14px; }
+
+  .icon-r { display: flex; gap: 0.4em; align-items: flex-start; margin: 0.2em 0; }
+  .icon-r .ic { font-size: 0.9em; flex-shrink: 0; width: 1.2em; text-align: center; }
+  .icon-r .ct { flex: 1; }
+  .icon-r .ct p { margin: 0; }
+</style>
+</head>
+<body>
+
+<button id="fs-btn" onclick="toggleFullscreen()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+  Fullscreen
+</button>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- 1: TITLE -->
+<section>
+  <div class="title-slide">
+    <div style="margin-bottom:1em;">
+      <svg width="50" height="50" viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="none" stroke="#004791" stroke-width="2"/><circle cx="30" cy="30" r="20" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="30" cy="20" r="3" fill="#004791"/><circle cx="20" cy="35" r="3" fill="#2563eb"/><circle cx="40" cy="35" r="3" fill="#2563eb"/><line x1="30" y1="20" x2="20" y2="35" stroke="#004791" stroke-width="1.5"/><line x1="30" y1="20" x2="40" y2="35" stroke="#004791" stroke-width="1.5"/><line x1="20" y1="35" x2="40" y2="35" stroke="#2563eb" stroke-width="1.5"/><circle cx="30" cy="30" r="4" fill="#e85d26"/></svg>
+    </div>
+    <h1>AI &amp; the Future of Scientific Work</h1>
+    <div class="sub">A Faculty Workshop Proposal for Applied Physics</div>
+    <div class="meta">
+      Department of Applied Physics &bull; KTH Royal Institute of Technology<br>
+      <strong>Wei Ouyang &amp; Jonas Sellberg</strong> &bull; March 2026
+    </div>
+  </div>
+</section>
+
+<!-- 2: BACKGROUND -->
+<section>
+  <h2>Background: How We Got Here</h2>
+  <div class="g2">
+    <div>
+      <h3>The Engineering Mechanics Retreat (3 days)</h3>
+      <ul>
+        <li><strong>Day 1:</strong> ML foundations — SVD, regression, neural nets</li>
+        <li><strong>Day 2:</strong> CNNs, RNNs, Transformers</li>
+        <li><strong>Day 3:</strong> External AI coach — LLMs, coding assistants, demos</li>
+      </ul>
+      <p style="margin-top:0.3em;"><strong>Success factors:</strong> Domain-relevant examples, good &amp; bad AI examples, external expertise</p>
+    </div>
+    <div>
+      <h3>Feb 18 Handover Meeting (Wei + Jonas + Fredrik + Artem + Marco)</h3>
+      <ul>
+        <li>APHYS faculty have strong math — less need for derivations</li>
+        <li>Biggest gap: ML theory vs. <strong>practical AI tool usage</strong></li>
+        <li>AI agents have changed everything since that retreat</li>
+        <li>The urgent crisis: <strong>impact on teaching and learning</strong></li>
+      </ul>
+      <div class="hbox a" style="margin-top:0.3em;">
+        <strong>Key consensus:</strong> Adapt, don't copy. Shift from theory-heavy to agent-first. 2 days, not 3. Address the teaching crisis head-on.
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:0.3em;text-align:center;">
+    <svg width="600" height="42" viewBox="0 0 600 42"><rect x="0" y="6" width="150" height="30" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/><text x="75" y="25" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#004791">Eng. Mech. Retreat</text><path d="M155 21 L185 21" stroke="#2563eb" stroke-width="1.2" marker-end="url(#a1)"/><rect x="190" y="6" width="150" height="30" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/><text x="265" y="25" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#004791">Handover Meeting</text><path d="M345 21 L375 21" stroke="#e85d26" stroke-width="1.2" marker-end="url(#a2)"/><rect x="380" y="6" width="200" height="30" rx="6" fill="#ffedd5" stroke="#e85d26" stroke-width="1.2"/><text x="480" y="25" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#c2410c">APHYS Workshop Proposal</text><defs><marker id="a1" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto"><path d="M0 0L6 2.5L0 5" fill="#2563eb"/></marker><marker id="a2" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto"><path d="M0 0L6 2.5L0 5" fill="#e85d26"/></marker></defs></svg>
+  </div>
+</section>
+
+<!-- 3: COMBINED VISION -->
+<section>
+  <h2>Two Perspectives, One Workshop</h2>
+  <div style="text-align:center;margin:0.2em 0;">
+    <svg width="560" height="95" viewBox="0 0 560 95"><ellipse cx="200" cy="48" rx="155" ry="42" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2" opacity="0.7"/><text x="120" y="30" font-family="Inter" font-size="9" font-weight="600" fill="#1e40af">Jonas</text><text x="95" y="42" font-family="Inter" font-size="8" fill="#3b82f6">Physics-grounded pedagogy</text><text x="95" y="53" font-family="Inter" font-size="8" fill="#3b82f6">Critical thinking + failure modes</text><text x="95" y="64" font-family="Inter" font-size="8" fill="#3b82f6">Cross-division APHYS examples</text><text x="95" y="75" font-family="Inter" font-size="8" fill="#3b82f6">Interpretable &rarr; complex arc</text><ellipse cx="360" cy="48" rx="155" ry="42" fill="#fff7ed" stroke="#e85d26" stroke-width="1.2" opacity="0.7"/><text x="410" y="30" font-family="Inter" font-size="9" font-weight="600" fill="#c2410c">Wei</text><text x="395" y="42" font-family="Inter" font-size="8" fill="#e85d26">AI agents as the interface</text><text x="395" y="53" font-family="Inter" font-size="8" fill="#e85d26">Personalized AI tutor prompt</text><text x="395" y="64" font-family="Inter" font-size="8" fill="#e85d26">Teaching disruption &amp; ethics</text><text x="395" y="75" font-family="Inter" font-size="8" fill="#e85d26">Real work, real outcomes</text><text x="280" y="42" text-anchor="middle" font-family="Inter" font-size="8" font-weight="700" fill="#004791">Workshop</text><text x="280" y="53" text-anchor="middle" font-family="Inter" font-size="7" fill="#004791">Hands-on &bull; Critical</text><text x="280" y="63" text-anchor="middle" font-family="Inter" font-size="7" fill="#004791">Domain-grounded</text></svg>
+  </div>
+  <div class="g2" style="margin-top:0.2em;">
+    <div class="hbox">
+      <strong>Day 1 — AI Agent Onboarding:</strong> Personalized AI tutor for concepts (morning). Build real things — train models, create apps, automate workflows (afternoon).
+    </div>
+    <div class="hbox a">
+      <strong>Day 2 — Impact &amp; Action:</strong> Solve your own research/productivity problem with AI (morning). Teaching crisis, ethics, assignment redesign, action planning (afternoon).
+    </div>
+  </div>
+  <div class="hbox s" style="margin-top:0.3em;">
+    <strong>Design philosophy:</strong> Not a coding workshop. Not a lecture series. AI agents are the interface for everything. Faculty focus on understanding, judgment, and building — not typing code.
+  </div>
+</section>
+
+<!-- 4: THE AI TUTOR PROMPT -->
+<section>
+  <h2>Day 1 Morning: The AI Tutor Prompt</h2>
+  <blockquote>Each participant gets a personalized AI tutor — adapted to their research area, level, and interests.</blockquote>
+  <div class="g2" style="margin-top:0.2em;">
+    <div>
+      <h3>How It Works</h3>
+      <ul>
+        <li>Participants receive a crafted <strong>instruction prompt</strong></li>
+        <li>They provide their background: research area, ML familiarity, programming level</li>
+        <li>The AI generates <strong>tailored training materials</strong> covering:</li>
+      </ul>
+      <div style="font-size:0.44em; margin-left:1em; line-height:1.5;">
+        SVD, PCA, regression &rarr; Neural networks &rarr; CNNs, RNNs &rarr; Transformers &rarr; AI agents &amp; LLMs
+      </div>
+      <ul style="margin-top:0.2em;">
+        <li>All examples grounded in their specific physics domain</li>
+        <li>Self-paced: 2 hours of interactive exploration</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Why This Is Better Than Lectures</h3>
+      <div class="card" style="margin-bottom:0.3em;">
+        <p><strong>Personalized:</strong> A spectroscopist learns through spectroscopy. A biophysicist through microscopy.</p>
+      </div>
+      <div class="card" style="margin-bottom:0.3em;">
+        <p><strong>Adaptive:</strong> Experts get advanced material. Beginners get patient guidance. No one bored, no one lost.</p>
+      </div>
+      <div class="card" style="margin-bottom:0.3em;">
+        <p><strong>Meta-learning:</strong> They learn ABOUT AI BY USING AI. The medium teaches the message.</p>
+      </div>
+      <div class="card">
+        <p><strong>Interactive:</strong> Ask questions, get exercises, explore tangents — impossible in a lecture hall.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5: DAY 1 AFTERNOON -->
+<section>
+  <h2>Day 1 Afternoon: Build with AI Agents</h2>
+  <p><em>From understanding to doing — participants build real, working things with AI agents.</em></p>
+  <div class="sched"><div class="t">13:15</div><div class="s">Live Demo: What AI Agents Can Build <span>Train a classifier in minutes. Build a web app from a sketch photo. Automate a data pipeline.</span></div></div>
+  <div class="sched"><div class="t">13:45</div><div class="s">Hands-On: Build Your Own <span>Choose a challenge, work with AI agents, iterate and evaluate. Facilitators circulate.</span></div></div>
+  <div class="sched"><div class="t">15:15</div><div class="s">Showcase &amp; Reflection <span>Lightning presentations: what you built, what worked, what failed, what surprised you.</span></div></div>
+  <div class="g3" style="margin-top:0.4em;">
+    <div class="card" style="border-top:2px solid var(--blue);">
+      <h3>Train AI Models</h3>
+      <p>Build classifiers and regression models on real physics data — spectroscopy, microscopy, materials.</p>
+    </div>
+    <div class="card" style="border-top:2px solid var(--accent);">
+      <h3>Build Apps &amp; Dashboards</h3>
+      <p>Sketch an app, photograph it, AI builds it. Or create interactive data visualizations.</p>
+    </div>
+    <div class="card" style="border-top:2px solid var(--ok);">
+      <h3>Automate Workflows</h3>
+      <p>Turn repetitive analysis into reusable scripts. Convert old MATLAB/Fortran to Python.</p>
+    </div>
+  </div>
+  <div class="hbox" style="margin-top:0.4em;">
+    <strong>Key experience:</strong> The power of iterate-with-AI (prompt &rarr; result &rarr; refine &rarr; repeat). And the critical importance of evaluating outputs — AI is fast, not always right.
+  </div>
+</section>
+
+<!-- 6: DAY 2 MORNING -->
+<section>
+  <h2>Day 2 Morning: AI for Your Real Work</h2>
+  <blockquote>What wastes the most of your time? What tasks do you dread? AI can probably help.</blockquote>
+  <div class="g2" style="margin-top:0.2em;">
+    <div>
+      <h3>For Researchers</h3>
+      <ul>
+        <li>Analyze real experimental data from your lab</li>
+        <li>Build a model for a current research question</li>
+        <li>Create a literature review on your topic</li>
+        <li>Prototype a new analysis method</li>
+      </ul>
+      <h3 style="margin-top:0.3em;">For Educators</h3>
+      <ul>
+        <li>Review student exams with AI-assisted feedback</li>
+        <li>Generate suggestions on student reports</li>
+        <li>Create course materials and exercise templates</li>
+        <li>Redesign a grading or feedback workflow</li>
+      </ul>
+    </div>
+    <div>
+      <h3>For Daily Productivity</h3>
+      <ul>
+        <li>Organize and summarize meeting notes</li>
+        <li>Draft grant sections, committee reports, emails</li>
+        <li>Create financial plans and budget estimates</li>
+        <li>Build personal tools for recurring tasks</li>
+        <li>Automate any repetitive workflow</li>
+      </ul>
+      <div class="hbox s" style="margin-top:0.3em;">
+        <strong>2 hours of focused work</strong> on YOUR real problem — not a prepared exercise. Facilitators help you frame the task for AI and evaluate the results.
+      </div>
+      <div class="hbox a" style="margin-top:0.2em;">
+        <strong>Show &amp; Tell:</strong> Volunteers share what they accomplished. Group discusses: what should we always use AI for? Where to be cautious?
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7: THE UNCOMFORTABLE REALITY -->
+<section>
+  <h2>Day 2 Afternoon: The Uncomfortable Reality</h2>
+  <div class="g2">
+    <div>
+      <h3>The Assignment Demolition</h3>
+      <p>An AI agent completes a real APHYS course assignment — live, in front of everyone. Code, analysis, figures, written explanation. It would earn a good grade.</p>
+      <p style="margin-top:0.3em;"><strong>Then we discuss:</strong></p>
+      <ul>
+        <li>What were we actually testing with that assignment?</li>
+        <li>Can we tell AI output from a real student's work?</li>
+        <li>If a student uses AI and spends 30 min understanding &mdash; vs. 10 hours doing it manually &mdash; who learned more?</li>
+      </ul>
+      <div class="hbox d" style="margin-top:0.3em;">
+        <strong>The question is not</strong> "how do we stop students from using AI?" <strong>The question is</strong> "what do we want students to learn, and how do we know they learned it?"
+      </div>
+    </div>
+    <div>
+      <h3>The Bigger Picture</h3>
+      <ul>
+        <li><strong>Junior career squeeze:</strong> Companies use AI instead of hiring juniors</li>
+        <li>Entry-level roles in coding, analysis, writing — shrinking</li>
+        <li>The learn &rarr; junior role &rarr; expertise path is breaking</li>
+        <li>Young people losing the chance to <strong>learn through doing</strong></li>
+      </ul>
+      <h3 style="margin-top:0.3em;">Ethical Questions</h3>
+      <ul>
+        <li>What do we owe students about AI preparedness?</li>
+        <li>How do we prevent AI from widening inequality?</li>
+        <li>What is still uniquely human &mdash; and how do we cultivate it?</li>
+        <li>Should AI literacy be mandatory in physics education?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 8: RETHINKING TEACHING -->
+<section>
+  <h2>Rethinking Teaching: The Workshop Exercise</h2>
+  <blockquote>Human + AI &gt; AI alone &gt; Human alone — but only if the human brings real expertise.</blockquote>
+  <div class="g3" style="margin-top:0.2em;">
+    <div class="card" style="border-top:2px solid var(--blue);">
+      <h3>Deep Understanding</h3>
+      <p>Know <em>why</em>, not just <em>what</em>. First-principles reasoning.</p>
+    </div>
+    <div class="card" style="border-top:2px solid var(--accent);">
+      <h3>Critical Evaluation</h3>
+      <p>Spot errors AI misses. Physics judgment over computation.</p>
+    </div>
+    <div class="card" style="border-top:2px solid var(--ok);">
+      <h3>Problem Framing</h3>
+      <p>AI answers. Only humans know what to ask.</p>
+    </div>
+  </div>
+  <h3 style="margin-top:0.4em;">Each faculty member redesigns one real assignment:</h3>
+  <table>
+    <tr><th>Strategy</th><th>Idea</th><th>Example</th></tr>
+    <tr><td><strong>Process-based</strong></td><td>Assess the journey, not deliverable</td><td>Submit reasoning logs with dead ends</td></tr>
+    <tr><td><strong>AI-integrated</strong></td><td>AI is explicit tool; judgment required</td><td>"Use AI for 3 models; argue which is physical"</td></tr>
+    <tr><td><strong>Oral defense</strong></td><td>Explain &amp; defend work live</td><td>10-min viva after report</td></tr>
+    <tr><td><strong>Problem framing</strong></td><td>Students define the problem</td><td>"Find a research question in this dataset"</td></tr>
+    <tr><td><strong>Real-world task</strong></td><td>Requires lab or teamwork</td><td>Design experiment, run it, analyze with AI</td></tr>
+  </table>
+  <div class="hbox s" style="margin-top:0.3em;">
+    <strong>Gallery walk:</strong> Post redesigns, read each other's, leave feedback. Concrete changes, not just discussion.
+  </div>
+</section>
+
+<!-- 9: OUTCOMES -->
+<section>
+  <h2>Expected Outcomes &amp; What We Need</h2>
+  <div class="g3" style="margin-top:0.2em;">
+    <div class="card" style="border-top:2px solid var(--blue);">
+      <h3>AI Fluency</h3>
+      <p>Every faculty member has used AI agents hands-on for learning, building, and real work.</p>
+    </div>
+    <div class="card" style="border-top:2px solid var(--accent);">
+      <h3>Teaching Evolution</h3>
+      <p>Redesigned assignments. Shared strategies for assessment in the AI era.</p>
+    </div>
+    <div class="card" style="border-top:2px solid var(--ok);">
+      <h3>Critical Awareness</h3>
+      <p>Honest discussion about AI's impact on careers, learning, and society.</p>
+    </div>
+  </div>
+  <div class="g2" style="margin-top:0.4em;">
+    <div class="card" style="border-top:2px solid var(--warn);">
+      <h3>Personal Action Cards</h3>
+      <p>Every faculty member commits to: one AI research action, one teaching change, one concern for the department.</p>
+    </div>
+    <div class="card" style="border-top:2px solid var(--blue-l);">
+      <h3>Momentum</h3>
+      <p>Follow-up meeting in 1 month. Shared resource repo. Optional AI working group.</p>
+    </div>
+  </div>
+  <div class="hbox a" style="margin-top:0.4em;">
+    <strong>Our ask:</strong> Department support for venue, faculty time (2 full days), AI tool licenses, and a signal that this is a priority for Applied Physics.
+  </div>
+</section>
+
+<!-- 10: CLOSING -->
+<section>
+  <div class="title-slide">
+    <div style="margin-bottom:0.8em;">
+      <svg width="45" height="45" viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="none" stroke="#004791" stroke-width="2"/><circle cx="30" cy="30" r="20" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="30" cy="20" r="3" fill="#004791"/><circle cx="20" cy="35" r="3" fill="#2563eb"/><circle cx="40" cy="35" r="3" fill="#2563eb"/><line x1="30" y1="20" x2="20" y2="35" stroke="#004791" stroke-width="1.5"/><line x1="30" y1="20" x2="40" y2="35" stroke="#004791" stroke-width="1.5"/><line x1="20" y1="35" x2="40" y2="35" stroke="#2563eb" stroke-width="1.5"/><circle cx="30" cy="30" r="4" fill="#e85d26"/></svg>
+    </div>
+    <h1>Let's Build This Together</h1>
+    <div class="sub" style="margin-top:0.3em;">
+      AI is not coming — it's here.<br>
+      The question is whether we shape it, or it shapes us.
+    </div>
+    <div class="meta" style="margin-top:1.2em;">
+      <strong>Wei Ouyang &amp; Jonas Sellberg</strong><br>
+      Department of Applied Physics &bull; KTH &bull; March 2026
+    </div>
+    <div style="margin-top:1.5em; font-size:0.4em; color:var(--txt3);">
+      Questions &amp; Discussion
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  width: 960,
+  height: 600,
+  margin: 0.05,
+  minScale: 0.2,
+  maxScale: 2.0,
+  center: true,
+  transition: 'slide',
+  transitionSpeed: 'default',
+  progress: true,
+  controls: true,
+  keyboard: true,
+  overview: true,
+  touch: true,
+  slideNumber: 'c/t',
+});
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+document.addEventListener('keydown', e => {
+  if ((e.key==='f'||e.key==='F') && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) { e.preventDefault(); toggleFullscreen(); }
+});
+document.addEventListener('fullscreenchange', () => {
+  const b = document.getElementById('fs-btn');
+  b.innerHTML = document.fullscreenElement
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3m0 18v-3a2 2 0 012-2h3M3 16h3a2 2 0 012 2v3"/></svg> Exit'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg> Fullscreen';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPT Quick-Start Guide — AI @ Applied Physics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { kth: { DEFAULT:'#004791', light:'#2563eb', dark:'#003366' }, accent: { DEFAULT:'#6366f1', light:'#818cf8', dark:'#4f46e5' }, fire: { DEFAULT:'#f97316', light:'#fb923c' } },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+  }}
+}
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="font-sans text-slate-800 bg-white antialiased">
+
+<!-- Navigation -->
+<nav class="bg-slate-900 sticky top-0 z-50 shadow-lg">
+  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <a href="index.html" class="flex items-center gap-2.5 text-white font-bold text-sm">
+      <svg width="32" height="32" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/><circle cx="32" cy="16" r="4" fill="#818cf8"/><circle cx="18" cy="40" r="4" fill="#818cf8"/><circle cx="46" cy="40" r="4" fill="#818cf8"/><line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/><circle cx="32" cy="32" r="7" fill="#6366f1"/><text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text></svg>
+      AI @ Applied Physics
+    </a>
+    <button id="nav-toggle" class="md:hidden text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <ul id="nav-menu" class="hidden md:flex items-center gap-0 text-sm">
+      <li><a href="index.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Home</a></li>
+      <li><a href="getting-started.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Get Started</a></li>
+      <li><a href="chatgpt-quickstart.html" class="block px-3 py-4 text-white font-medium border-b-2 border-accent">ChatGPT</a></li>
+      <li><a href="ai-agents.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">AI Agents</a></li>
+      <li><a href="gallery.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Gallery</a></li>
+      <li><a href="events.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Events</a></li>
+      <li><a href="community.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Community</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="bg-gradient-to-br from-slate-900 via-slate-800 to-kth-dark text-white py-14 px-6 text-center">
+  <h1 class="text-3xl md:text-4xl font-bold mb-3">ChatGPT Quick-Start Guide</h1>
+  <p class="text-slate-300 text-lg max-w-2xl mx-auto">Master prompt engineering in 15 minutes. A one-page guide for Applied Physics faculty.</p>
+</header>
+
+<div class="max-w-5xl mx-auto px-4 py-12">
+
+  <!-- Setup -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Step 1: Get Access (2 minutes)</h2>
+    <ol class="text-slate-600 text-sm space-y-2 list-decimal list-inside leading-relaxed mt-4">
+      <li>Go to <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">chatgpt.com</code></li>
+      <li>Click "Log in" and sign in with your <strong>KTH credentials</strong> (institutional SSO)</li>
+      <li>You should have access to <strong>GPT-4o</strong> -- the most capable model. Verify by checking the model selector at the top of the chat.</li>
+      <li>Start a new conversation and type your first question.</li>
+    </ol>
+    <div class="bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 mt-4">
+      <strong>Tip:</strong> Use "New chat" for each distinct topic. ChatGPT remembers the conversation context within a chat -- keeping topics separate helps it give better answers.
+    </div>
+  </section>
+
+  <!-- Core Principles -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Step 2: The Five Principles of Effective Prompting</h2>
+    <p class="text-slate-500 mb-6">These patterns will improve your results by an order of magnitude.</p>
+
+    <div class="space-y-6">
+      <!-- Principle 1 -->
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-lg font-bold text-slate-900 mb-2">1. Be Specific -- State What You Want</h3>
+        <p class="text-slate-600 text-sm mb-4">Vague prompts give vague answers. Specify the task, the format, and the level of detail.</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <div class="relative prompt-box bg-red-50 border-l-4 border-red-400 rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"Tell me about PCA."</p>
+            </div>
+            <p class="text-xs text-red-500 font-medium mt-1.5">Too vague -- you get a generic textbook answer.</p>
+          </div>
+          <div>
+            <div class="relative prompt-box bg-emerald-50 border-l-4 border-emerald-400 rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"Explain PCA to a physicist who understands eigenvalue decomposition. Focus on how PCA relates to SVD, when to use it on spectroscopy data, and what the principal components physically represent. Keep it to 200 words."</p>
+            </div>
+            <p class="text-xs text-emerald-500 font-medium mt-1.5">Specific context, audience, scope, and format.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Principle 2 -->
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-lg font-bold text-slate-900 mb-2">2. Give Context -- Tell It Who You Are</h3>
+        <p class="text-slate-600 text-sm mb-4">The more context you provide, the more tailored the response. Tell it your role, domain, and what you are trying to achieve.</p>
+        <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+          <p>"I am a faculty member in applied physics at KTH, specializing in ultrafast spectroscopy. I have a dataset of pump-probe measurements (time delay vs. differential absorption). I want to extract the decay time constants. Suggest three approaches, starting with the simplest, and explain when each is appropriate."</p>
+        </div>
+      </div>
+
+      <!-- Principle 3 -->
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-lg font-bold text-slate-900 mb-2">3. Specify the Output Format</h3>
+        <p class="text-slate-600 text-sm mb-4">Tell ChatGPT exactly how you want the answer structured.</p>
+        <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+          <p>"Compare supervised and unsupervised learning methods for spectral classification. Format your answer as a table with columns: Method, When to Use, Strengths, Weaknesses, Example in Physics."</p>
+        </div>
+        <div class="bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 mt-3">
+          <strong>Useful format requests:</strong> "as a bullet list", "as a table", "as Python code", "in 3 paragraphs", "as a step-by-step procedure", "as a LaTeX equation".
+        </div>
+      </div>
+
+      <!-- Principle 4 -->
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-lg font-bold text-slate-900 mb-2">4. Iterate -- Refine the Output</h3>
+        <p class="text-slate-600 text-sm mb-4">Rarely is the first answer perfect. Treat it as a first draft and refine.</p>
+        <div class="flex flex-wrap gap-3 mt-3">
+          <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 flex-1 min-w-[200px]">
+            <p>"Make it shorter and more technical."</p>
+          </div>
+          <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 flex-1 min-w-[200px]">
+            <p>"Add a concrete example using Raman spectroscopy data."</p>
+          </div>
+          <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 flex-1 min-w-[200px]">
+            <p>"The equation in point 3 is wrong -- the damping term should be exponential, not Gaussian. Fix it."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Principle 5 -->
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-lg font-bold text-slate-900 mb-2">5. Assign a Role -- Frame the Expertise</h3>
+        <p class="text-slate-600 text-sm mb-4">Telling ChatGPT to adopt a specific role focuses its responses.</p>
+        <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+          <p>"You are an expert in optical spectroscopy and data analysis. A colleague asks you to review their Python script for fitting Lorentzian peaks to absorption spectra. Identify any issues with their fitting approach and suggest improvements."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Reference Card (MOVED BEFORE Cheat Sheet per Jonas's feedback) -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Quick Reference Card</h2>
+    <p class="text-slate-500 mb-6">Print this or keep it open in a tab.</p>
+
+    <div class="bg-slate-50 border-2 border-kth-light rounded-xl p-6 text-sm">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-base font-bold text-kth mb-3">The Prompt Formula</h3>
+          <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">[Role] + [Context] + [Task] + [Format] + [Constraints]</pre>
+          <p class="text-slate-600 mt-3">Example: "You are an expert in XPS analysis [role]. I have survey scan data from a Ti thin film [context]. Identify all peaks and assign chemical states [task]. Present as a table [format]. Focus on the Ti 2p and O 1s regions [constraints]."</p>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-kth mb-3">Power Phrases</h3>
+          <ul class="text-slate-600 space-y-1.5 leading-relaxed">
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"Think step by step"</code> -- improves reasoning</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"Be specific and concrete"</code> -- reduces vagueness</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"If you are unsure, say so"</code> -- reduces hallucination</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"Compare and contrast"</code> -- structured analysis</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"What am I missing?"</code> -- catches blind spots</li>
+            <li><code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs">"Simplify this for a [audience]"</code> -- adjusts level</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cheat Sheet -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Prompt Engineering Cheat Sheet</h2>
+    <p class="text-slate-500 mb-6">Quick patterns you can copy and adapt. Bookmark this section.</p>
+
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+        <div class="bg-kth text-white px-4 py-2 text-sm font-semibold">Explain a Concept</div>
+        <div class="p-5 text-sm">
+          <p class="italic text-slate-700">"Explain [concept] to someone with a background in [your field]. Use [physics analogy]. Keep it to [length]."</p>
+          <p class="text-slate-400 text-xs mt-2">Example: "Explain attention mechanisms in transformers to a physicist familiar with Fourier analysis. Use the analogy of selective frequency filtering."</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+        <div class="bg-fire text-white px-4 py-2 text-sm font-semibold">Analyze Data</div>
+        <div class="p-5 text-sm">
+          <p class="italic text-slate-700">"I have a dataset of [description]. The columns are [list]. I want to [goal]. Suggest an analysis approach and write Python code to implement it."</p>
+          <p class="text-slate-400 text-xs mt-2">Example: "I have XPS spectra with columns: binding_energy, intensity. I want to identify and fit the peaks. Write Python code using scipy."</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+        <div class="bg-emerald-600 text-white px-4 py-2 text-sm font-semibold">Draft Text</div>
+        <div class="p-5 text-sm">
+          <p class="italic text-slate-700">"Draft a [type of text] about [topic]. The audience is [who]. The tone should be [style]. Include [specific content]. Keep it to [length]."</p>
+          <p class="text-slate-400 text-xs mt-2">Example: "Draft a 200-word abstract for a paper on using CNNs for cell morphology classification in fluorescence microscopy."</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+        <div class="bg-purple-600 text-white px-4 py-2 text-sm font-semibold">Debug Code</div>
+        <div class="p-5 text-sm">
+          <p class="italic text-slate-700">"Here is my Python code: [paste code]. I get this error: [paste error]. Explain what is wrong, fix it, and explain the fix."</p>
+          <p class="text-slate-400 text-xs mt-2">Tip: Always paste the actual error message. ChatGPT is excellent at diagnosing stack traces.</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+        <div class="bg-kth text-white px-4 py-2 text-sm font-semibold">Literature Review</div>
+        <div class="p-5 text-sm">
+          <p class="italic text-slate-700">"I am writing a review section on [topic]. Summarize the key approaches, their strengths and limitations, and identify open questions. Structure it as: Background, Methods, Gaps."</p>
+          <p class="text-slate-400 text-xs mt-2">Warning: ChatGPT may generate plausible but fake references. Always verify citations independently.</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+        <div class="bg-fire text-white px-4 py-2 text-sm font-semibold">Create Teaching Material</div>
+        <div class="p-5 text-sm">
+          <p class="italic text-slate-700">"Create [N] exam questions on [topic] for a [level] physics course. Include model answers. Difficulty: [easy/medium/hard]. Format: [multiple choice / open-ended / calculation]."</p>
+          <p class="text-slate-400 text-xs mt-2">Example: "Create 5 exam questions on Fourier optics for a master's-level course. Mix conceptual and calculation questions."</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-sm text-slate-500 mt-6 text-center">Want to see real examples of what AI can produce? Check out the <a href="gallery.html" class="text-accent hover:underline font-medium">Gallery</a> for faculty-contributed AI outputs.</p>
+  </section>
+
+  <!-- Try It Yourself Exercises -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Try It Yourself</h2>
+    <p class="text-slate-500 mb-6">Practice writing prompts. Type your attempt, then reveal an example of a well-crafted prompt.</p>
+
+    <div class="space-y-6">
+      <!-- Exercise 1 -->
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+        <h3 class="text-base font-bold text-slate-900 mb-2">Exercise 1: Explain a concept from your field</h3>
+        <p class="text-slate-500 text-sm mb-3">Scenario: A master's student asks you to explain Bragg diffraction. Write a prompt that would get ChatGPT to give a clear, physics-appropriate explanation.</p>
+        <textarea class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-700 focus:ring-2 focus:ring-accent focus:border-accent outline-none resize-y" rows="3" placeholder="Write your prompt here..."></textarea>
+        <button class="exercise-reveal mt-3 text-sm font-medium text-accent hover:text-accent-dark transition cursor-pointer" onclick="this.nextElementSibling.classList.toggle('hidden')">Show example prompt &darr;</button>
+        <div class="hidden mt-3">
+          <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+            <p>"You are a physics professor. Explain Bragg diffraction to a master's student who understands wave mechanics but has not taken a crystallography course. Use the analogy of constructive interference in thin films. Include the Bragg equation and explain what each variable represents. Keep it to 150 words and include one concrete example with numerical values."</p>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">Note the elements: role, audience, analogy, specific content, format constraint.</p>
+        </div>
+      </div>
+
+      <!-- Exercise 2 -->
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+        <h3 class="text-base font-bold text-slate-900 mb-2">Exercise 2: Get help with data analysis</h3>
+        <p class="text-slate-500 text-sm mb-3">Scenario: You have a CSV file with two columns (temperature and resistance) from a superconductivity experiment. You want to find the critical temperature. Write a prompt.</p>
+        <textarea class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-700 focus:ring-2 focus:ring-accent focus:border-accent outline-none resize-y" rows="3" placeholder="Write your prompt here..."></textarea>
+        <button class="exercise-reveal mt-3 text-sm font-medium text-accent hover:text-accent-dark transition cursor-pointer" onclick="this.nextElementSibling.classList.toggle('hidden')">Show example prompt &darr;</button>
+        <div class="hidden mt-3">
+          <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+            <p>"I have a CSV file with columns: temperature_K and resistance_ohms, from a four-point probe measurement of a superconducting sample. I need to: (1) plot resistance vs temperature, (2) determine the critical temperature Tc defined as the midpoint of the resistive transition, (3) fit the transition region with a sigmoid function. Write Python code using pandas, numpy, scipy, and matplotlib. Add axis labels and a vertical line at Tc."</p>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">Specific about data format, analysis steps, definition of Tc, and visualization requirements.</p>
+        </div>
+      </div>
+
+      <!-- Exercise 3 -->
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+        <h3 class="text-base font-bold text-slate-900 mb-2">Exercise 3: Draft a professional communication</h3>
+        <p class="text-slate-500 text-sm mb-3">Scenario: You need to write an email to a journal editor requesting an extension on a revision deadline. Write a prompt.</p>
+        <textarea class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-700 focus:ring-2 focus:ring-accent focus:border-accent outline-none resize-y" rows="3" placeholder="Write your prompt here..."></textarea>
+        <button class="exercise-reveal mt-3 text-sm font-medium text-accent hover:text-accent-dark transition cursor-pointer" onclick="this.nextElementSibling.classList.toggle('hidden')">Show example prompt &darr;</button>
+        <div class="hidden mt-3">
+          <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+            <p>"Draft a polite, professional email to a journal editor (Physical Review Letters) requesting a 2-week extension on a manuscript revision deadline. The reason is that we need additional beam time at MAX IV to complete a requested control experiment. The tone should be respectful but confident. Keep it to 100 words. Sign it from 'Prof. [Name], KTH Royal Institute of Technology'."</p>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">Specific journal, concrete reason, defined tone, length constraint, and format.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advanced Tips -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Advanced Tips</h2>
+
+    <div class="space-y-3 mt-6">
+      <div class="accordion-item border border-slate-200 rounded-xl overflow-hidden">
+        <button class="accordion-header w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-slate-800 bg-white hover:bg-slate-50 transition">
+          Chain of thought: Ask it to reason step by step
+          <svg class="chevron w-5 h-5 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body hidden">
+          <div class="px-5 pb-5 text-sm text-slate-600 space-y-3">
+            <p>For complex problems, add <em>"Think step by step"</em> or <em>"Show your reasoning"</em> to your prompt. This forces the model to break down the problem, which usually improves accuracy -- similar to how showing your work in a derivation catches errors.</p>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"I need to design a bandpass filter for my optical setup. The requirements are: center wavelength 800nm, bandwidth 10nm, transmission >90%. Think step by step about the design options, trade-offs, and recommend a specific approach."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border border-slate-200 rounded-xl overflow-hidden">
+        <button class="accordion-header w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-slate-800 bg-white hover:bg-slate-50 transition">
+          Upload files for analysis
+          <svg class="chevron w-5 h-5 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body hidden">
+          <div class="px-5 pb-5 text-sm text-slate-600 space-y-3">
+            <p>ChatGPT Plus can process uploaded files -- CSV data, PDF papers, images, code files. Click the attachment icon and upload directly.</p>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"I have uploaded a CSV file with my experimental data. The columns are wavelength (nm) and absorbance (a.u.). Plot the spectrum, identify the main absorption peaks, and fit each peak with a Gaussian."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border border-slate-200 rounded-xl overflow-hidden">
+        <button class="accordion-header w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-slate-800 bg-white hover:bg-slate-50 transition">
+          Use Custom Instructions for persistent context
+          <svg class="chevron w-5 h-5 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body hidden">
+          <div class="px-5 pb-5 text-sm text-slate-600 space-y-3">
+            <p>In ChatGPT Settings > Personalization > Custom Instructions, you can set permanent context that applies to all conversations:</p>
+            <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700">
+              <p>"I am a faculty member in applied physics at KTH. My research focuses on ultrafast spectroscopy and nonlinear optics. When I ask about data analysis, use Python with numpy, scipy, and matplotlib. Prefer scientific rigor over simplification."</p>
+            </div>
+            <p>This saves you from repeating your background in every conversation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border border-slate-200 rounded-xl overflow-hidden">
+        <button class="accordion-header w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-slate-800 bg-white hover:bg-slate-50 transition">
+          Critical verification: Always check quantitative claims
+          <svg class="chevron w-5 h-5 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body hidden">
+          <div class="px-5 pb-5 text-sm text-slate-600 space-y-3">
+            <p><strong>This is the most important tip.</strong> ChatGPT is confident and articulate -- but it can be wrong. Especially with:</p>
+            <ul class="list-disc list-inside space-y-1 text-slate-500">
+              <li>Specific numerical values and physical constants</li>
+              <li>Paper citations and references (it frequently fabricates these)</li>
+              <li>Complex multi-step calculations</li>
+              <li>Niche domain-specific facts</li>
+            </ul>
+            <p>Rule of thumb: <strong>Use AI for speed, use your expertise for quality.</strong> AI is your fast first draft -- you are the reviewer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Next -->
+  <section class="text-center p-8 bg-slate-50 rounded-xl">
+    <h2 class="text-2xl font-bold text-slate-900 mb-3">Ready for More Power?</h2>
+    <p class="text-slate-600 mb-5">ChatGPT is great for conversational tasks. For autonomous multi-step work, meet AI agents.</p>
+    <a href="ai-agents.html" class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">Explore AI Agents &rarr;</a>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 text-center py-8 px-4 mt-16 text-sm">
+  <p>Department of Applied Physics &bull; School of Engineering Sciences &bull; KTH Royal Institute of Technology</p>
+  <p class="mt-1">Organized by <strong class="text-slate-200">Wei Ouyang</strong> &amp; <strong class="text-slate-200">Jonas Sellberg</strong> &bull; 2026</p>
+  <p class="mt-3 text-xs text-slate-500 max-w-lg mx-auto">This webpage was generated with the assistance of AI (Claude Code) and may contain errors or inaccuracies. Please cross-check important information independently.</p>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

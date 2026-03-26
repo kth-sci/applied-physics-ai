@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started — AI @ Applied Physics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { kth: { DEFAULT:'#004791', light:'#2563eb', dark:'#003366' }, accent: { DEFAULT:'#6366f1', light:'#818cf8', dark:'#4f46e5' }, fire: { DEFAULT:'#f97316', light:'#fb923c' } },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+  }}
+}
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="font-sans text-slate-800 bg-white antialiased">
+
+<!-- Navigation -->
+<nav class="bg-slate-900 sticky top-0 z-50 shadow-lg">
+  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <a href="index.html" class="flex items-center gap-2.5 text-white font-bold text-sm">
+      <svg width="32" height="32" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/><circle cx="32" cy="16" r="4" fill="#818cf8"/><circle cx="18" cy="40" r="4" fill="#818cf8"/><circle cx="46" cy="40" r="4" fill="#818cf8"/><line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/><circle cx="32" cy="32" r="7" fill="#6366f1"/><text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text></svg>
+      AI @ Applied Physics
+    </a>
+    <button id="nav-toggle" class="md:hidden text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <ul id="nav-menu" class="hidden md:flex items-center gap-0 text-sm">
+      <li><a href="index.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Home</a></li>
+      <li><a href="getting-started.html" class="block px-3 py-4 text-white font-medium border-b-2 border-accent">Get Started</a></li>
+      <li><a href="chatgpt-quickstart.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">ChatGPT</a></li>
+      <li><a href="ai-agents.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">AI Agents</a></li>
+      <li><a href="gallery.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Gallery</a></li>
+      <li><a href="events.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Events</a></li>
+      <li><a href="community.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Community</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="bg-gradient-to-br from-slate-900 via-slate-800 to-kth-dark text-white py-14 px-6 text-center">
+  <h1 class="text-3xl md:text-4xl font-bold mb-3">Getting Started with AI</h1>
+  <p class="text-slate-300 text-lg max-w-2xl mx-auto">A practical introduction for Applied Physics faculty -- what to use, why, and how to begin.</p>
+</header>
+
+<div class="max-w-5xl mx-auto px-4 py-12">
+
+  <!-- The Landscape -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">AI for Scientists: The Practical Landscape</h2>
+    <p class="text-slate-500 mb-6">You do not need to understand transformer architectures to use AI effectively. Here is what matters.</p>
+
+    <p class="text-slate-600 mb-4">As physicists, you already work with computational tools daily -- from numerical simulations to data analysis scripts. Modern AI tools are best understood as a new category of computational instrument: systems that can read, write, reason about, and generate text, code, and structured analysis. The key shift is that you interact with them using <strong>natural language</strong> rather than formal syntax.</p>
+
+    <p class="text-slate-600 mb-6">There are hundreds of AI tools available. We recommend starting with <strong>exactly two</strong>, chosen because they complement each other and are already accessible at KTH:</p>
+
+    <div class="grid md:grid-cols-2 gap-6 mt-6">
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition border-t-4 border-t-kth">
+        <span class="inline-block text-xs font-semibold bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full mb-3">Start Here</span>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">ChatGPT</h3>
+        <p class="text-slate-600 text-sm mb-2"><strong>What it is:</strong> A conversational AI by OpenAI. You type questions or instructions in natural language; it responds with text, code, analysis, or creative content.</p>
+        <p class="text-slate-600 text-sm font-semibold mt-2">Best for:</p>
+        <ul class="text-slate-500 text-sm mt-1 space-y-0.5 list-disc list-inside">
+          <li>Quick questions and explanations</li>
+          <li>Brainstorming and ideation</li>
+          <li>Drafting text (grants, emails, reports)</li>
+          <li>Summarizing papers and documents</li>
+          <li>Simple code generation and debugging</li>
+          <li>Data interpretation and analysis guidance</li>
+        </ul>
+        <p class="text-slate-600 text-sm mt-3"><strong>Access:</strong> KTH has procured institutional ChatGPT licenses. Log in with your KTH account at <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">chatgpt.com</code>.</p>
+        <div class="bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 mt-3">
+          <strong>Recommended plan:</strong> ChatGPT Plus (included in KTH procurement) gives access to GPT-4o, the most capable model, plus file uploads, image analysis, and advanced data analysis.
+        </div>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition border-t-4 border-t-accent">
+        <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded-full mb-3">Power Tool</span>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Claude Code (AI Agent)</h3>
+        <p class="text-slate-600 text-sm mb-2"><strong>What it is:</strong> An AI agent by Anthropic that runs in your terminal. Unlike a chatbot, it can autonomously read files, write code, run commands, search the web, and manage multi-step tasks.</p>
+        <p class="text-slate-600 text-sm font-semibold mt-2">Best for:</p>
+        <ul class="text-slate-500 text-sm mt-1 space-y-0.5 list-disc list-inside">
+          <li>Writing and debugging complex code</li>
+          <li>Analyzing large datasets end-to-end</li>
+          <li>Building web applications and dashboards</li>
+          <li>Automating multi-step research workflows</li>
+          <li>Working with repositories and codebases</li>
+          <li>Converting MATLAB/Fortran to modern Python</li>
+        </ul>
+        <p class="text-slate-600 text-sm mt-3"><strong>Access:</strong> Requires a personal Claude subscription from Anthropic.</p>
+        <div class="bg-orange-50 border-l-4 border-fire rounded-r-lg p-4 text-sm text-slate-700 mt-3">
+          <strong>Recommended plan:</strong> Claude Pro ($20/month) or Claude Max ($100/month for heavy use). The Pro plan is sufficient for most faculty needs.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why These Two -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Why These Two Tools?</h2>
+
+    <div class="overflow-x-auto mt-6">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-slate-800 text-white">
+            <th class="text-left px-4 py-3 font-semibold rounded-tl-lg">Criterion</th>
+            <th class="text-left px-4 py-3 font-semibold">ChatGPT</th>
+            <th class="text-left px-4 py-3 font-semibold rounded-tr-lg">Claude Code</th>
+          </tr>
+        </thead>
+        <tbody class="text-slate-600">
+          <tr class="border-b border-slate-100">
+            <td class="px-4 py-3 font-semibold text-slate-800">Learning curve</td>
+            <td class="px-4 py-3">Very low -- type and get answers</td>
+            <td class="px-4 py-3">Moderate -- requires terminal basics</td>
+          </tr>
+          <tr class="border-b border-slate-100 bg-slate-50">
+            <td class="px-4 py-3 font-semibold text-slate-800">Interaction mode</td>
+            <td class="px-4 py-3">Conversational (chat)</td>
+            <td class="px-4 py-3">Agentic (autonomous task execution)</td>
+          </tr>
+          <tr class="border-b border-slate-100">
+            <td class="px-4 py-3 font-semibold text-slate-800">File handling</td>
+            <td class="px-4 py-3">Upload files to chat</td>
+            <td class="px-4 py-3">Full filesystem access, reads/writes files</td>
+          </tr>
+          <tr class="border-b border-slate-100 bg-slate-50">
+            <td class="px-4 py-3 font-semibold text-slate-800">Code execution</td>
+            <td class="px-4 py-3">Sandboxed Python environment</td>
+            <td class="px-4 py-3">Full local environment (any language)</td>
+          </tr>
+          <tr class="border-b border-slate-100">
+            <td class="px-4 py-3 font-semibold text-slate-800">Ideal task size</td>
+            <td class="px-4 py-3">Single question or short task</td>
+            <td class="px-4 py-3">Multi-step projects and workflows</td>
+          </tr>
+          <tr>
+            <td class="px-4 py-3 font-semibold text-slate-800">KTH access</td>
+            <td class="px-4 py-3">Institutional license available</td>
+            <td class="px-4 py-3">Personal subscription required</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-r-lg p-4 text-sm text-slate-700 mt-6">
+      <strong>Think of it this way:</strong> ChatGPT is your quick-access colleague you can ask anything. Claude Code is your dedicated research assistant who can sit at your computer and do complex work autonomously. You will use both regularly.
+    </div>
+  </section>
+
+  <!-- Subscriptions -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Recommended Subscriptions &amp; Setup</h2>
+    <p class="text-slate-500 mb-6">What you need to get started -- and what it costs.</p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full mb-3">Free via KTH</span>
+        <h3 class="text-lg font-bold text-slate-900 mb-3">ChatGPT Plus (KTH License)</h3>
+        <ul class="text-slate-500 text-sm space-y-1.5 list-disc list-inside">
+          <li>Log in at <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">chatgpt.com</code> with your KTH credentials</li>
+          <li>Access to GPT-4o (most capable model)</li>
+          <li>File uploads, image analysis, code interpreter</li>
+          <li>Custom GPTs and memory features</li>
+        </ul>
+        <p class="text-sm text-slate-600 mt-3"><strong>Cost:</strong> Covered by KTH procurement</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded-full mb-3">Personal Subscription</span>
+        <h3 class="text-lg font-bold text-slate-900 mb-3">Claude Pro (Anthropic)</h3>
+        <ul class="text-slate-500 text-sm space-y-1.5 list-disc list-inside">
+          <li>Sign up at <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">claude.ai</code></li>
+          <li>Subscribe to Claude Pro ($20/month)</li>
+          <li>Install Claude Code: <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">npm install -g @anthropic-ai/claude-code</code></li>
+          <li>Authenticate with your Anthropic account</li>
+        </ul>
+        <p class="text-sm text-slate-600 mt-3"><strong>Cost:</strong> $20/month (Pro) or $100/month (Max)</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full mb-3">Optional</span>
+        <h3 class="text-lg font-bold text-slate-900 mb-3">Additional Tools</h3>
+        <ul class="text-slate-500 text-sm space-y-1.5 list-disc list-inside">
+          <li><strong>GitHub Copilot</strong> -- AI code completion in VS Code ($10/month, free for academics)</li>
+          <li><strong>Google NotebookLM</strong> -- AI-powered research notebook (free)</li>
+          <li><strong>Perplexity</strong> -- AI-powered search engine (free tier available)</li>
+        </ul>
+        <p class="text-sm text-slate-600 mt-3">These are useful but not essential for getting started.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Choose Your Path (Tabs) -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Choose Your Path</h2>
+    <p class="text-slate-500 mb-6">Where you start depends on your current experience.</p>
+
+    <div class="tabs">
+      <div class="flex gap-1 border-b border-slate-200 mb-6">
+        <button class="tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-accent text-accent bg-accent/5 active" data-tab="tab-beginner">New to AI</button>
+        <button class="tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition" data-tab="tab-some">Some Experience</button>
+        <button class="tab-btn px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition" data-tab="tab-advanced">Already Using AI</button>
+      </div>
+
+      <div id="tab-beginner" class="tab-panel active">
+        <h3 class="text-lg font-bold text-slate-900 mb-3">You have not used AI tools before</h3>
+        <ol class="text-slate-600 text-sm space-y-3 list-decimal list-inside leading-relaxed">
+          <li><strong>Start with ChatGPT</strong> -- Log in with your KTH account. Ask it a question about your research area.</li>
+          <li><strong>Read the <a href="chatgpt-quickstart.html" class="text-accent hover:underline">ChatGPT Quick-Start Guide</a></strong> -- Learn the basics of prompt engineering in 15 minutes.</li>
+          <li><strong>Try three tasks this week:</strong> Summarize a paper, draft an email, debug a piece of code.</li>
+          <li><strong>Attend the May 8 tutorial</strong> -- Hands-on guidance with facilitators.</li>
+          <li><strong>When ready</strong> -- Move to the <a href="ai-agents.html" class="text-accent hover:underline">AI Agents guide</a> to learn about Claude Code.</li>
+        </ol>
+      </div>
+
+      <div id="tab-some" class="tab-panel" style="display:none;">
+        <h3 class="text-lg font-bold text-slate-900 mb-3">You have tried ChatGPT or similar tools</h3>
+        <ol class="text-slate-600 text-sm space-y-3 list-decimal list-inside leading-relaxed">
+          <li><strong>Review the <a href="chatgpt-quickstart.html" class="text-accent hover:underline">prompt engineering cheat sheet</a></strong> -- You may be missing techniques that dramatically improve results.</li>
+          <li><strong>Try Claude Code</strong> -- Install it and give it a real task: analyze a dataset, convert some MATLAB code, build a visualization.</li>
+          <li><strong>Attend the May 26 hackathon</strong> -- Bring a real problem and build a solution with AI.</li>
+          <li><strong>Share your experiences</strong> in the <a href="community.html" class="text-accent hover:underline">Community section</a>.</li>
+        </ol>
+      </div>
+
+      <div id="tab-advanced" class="tab-panel" style="display:none;">
+        <h3 class="text-lg font-bold text-slate-900 mb-3">You regularly use AI tools in your work</h3>
+        <ol class="text-slate-600 text-sm space-y-3 list-decimal list-inside leading-relaxed">
+          <li><strong>Explore the <a href="ai-agents.html" class="text-accent hover:underline">AI Agents page</a></strong> -- Claude Code's agentic capabilities may surprise you even if you use Claude chat.</li>
+          <li><strong>Consider facilitating</strong> at the May events -- your experience is valuable.</li>
+          <li><strong>Contribute to the <a href="community.html" class="text-accent hover:underline">Community</a></strong> -- Share workflows, tips, and lessons learned.</li>
+          <li><strong>Help shape the October workshop</strong> -- We need input on advanced topics and real-world examples.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Concepts (Accordion) -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Key Concepts for Scientists</h2>
+    <p class="text-slate-500 mb-6">A mental model for understanding modern AI tools.</p>
+
+    <div class="space-y-3">
+      <div class="accordion-item border border-slate-200 rounded-xl overflow-hidden">
+        <button class="accordion-header w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-slate-800 bg-white hover:bg-slate-50 transition">
+          What is a Large Language Model (LLM)?
+          <svg class="chevron w-5 h-5 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body hidden">
+          <div class="px-5 pb-5 text-sm text-slate-600 space-y-2">
+            <p>An LLM is a neural network trained on vast amounts of text data. It learns statistical patterns in language -- essentially, given a sequence of words, it predicts what comes next. But these "predictions" are so sophisticated that the model can write code, explain physics, translate languages, and reason about problems.</p>
+            <p><strong>Analogy:</strong> Think of it like a very large basis set expansion. The model has learned to represent and combine concepts in a high-dimensional space, much like how you can represent any function as a superposition of basis functions. The more parameters (basis functions), the richer the representation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border border-slate-200 rounded-xl overflow-hidden">
+        <button class="accordion-header w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-slate-800 bg-white hover:bg-slate-50 transition">
+          What is the difference between a chatbot and an AI agent?
+          <svg class="chevron w-5 h-5 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body hidden">
+          <div class="px-5 pb-5 text-sm text-slate-600 space-y-2">
+            <p><strong>Chatbot (e.g., ChatGPT):</strong> You send a message, it replies. It is reactive -- it responds to each prompt independently (or with conversation context). It cannot take actions on its own.</p>
+            <p><strong>AI Agent (e.g., Claude Code):</strong> You describe a goal, it plans and executes a sequence of actions autonomously. It can read files, write code, run commands, search the web, and iterate on its own results. It is like the difference between asking a colleague a question vs. delegating a task to a research assistant.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border border-slate-200 rounded-xl overflow-hidden">
+        <button class="accordion-header w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-slate-800 bg-white hover:bg-slate-50 transition">
+          What is prompt engineering?
+          <svg class="chevron w-5 h-5 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body hidden">
+          <div class="px-5 pb-5 text-sm text-slate-600 space-y-2">
+            <p>Prompt engineering is the art of giving AI clear, effective instructions. Just as the quality of a scientific question determines the quality of the experiment, the quality of your prompt determines the quality of the AI's output.</p>
+            <p>Key principles: be specific, provide context, specify the output format you want, and iterate. See our <a href="chatgpt-quickstart.html" class="text-accent hover:underline">ChatGPT Quick-Start Guide</a> for a complete cheat sheet.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border border-slate-200 rounded-xl overflow-hidden">
+        <button class="accordion-header w-full flex items-center justify-between px-5 py-4 text-left font-semibold text-slate-800 bg-white hover:bg-slate-50 transition">
+          What are the limitations I should know about?
+          <svg class="chevron w-5 h-5 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="accordion-body hidden">
+          <div class="px-5 pb-5 text-sm text-slate-600 space-y-2">
+            <p><strong>Hallucination:</strong> AI can generate plausible-sounding but incorrect information -- including fake references, wrong equations, and incorrect numerical results. Always verify quantitative claims.</p>
+            <p><strong>No true understanding:</strong> The model does not understand physics the way you do. It can pattern-match and reason statistically, but it lacks the physical intuition built from years of lab work and theoretical study.</p>
+            <p><strong>Context limits:</strong> Models have a finite "context window" -- the amount of text they can consider at once. Very large documents or codebases may need to be processed in parts.</p>
+            <p><strong>Your domain expertise is the quality filter.</strong> AI is fast but not always right. The combination of AI speed and your scientific judgment is what makes this powerful.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Further Reading -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Further Reading &amp; Resources</h2>
+    <p class="text-slate-500 mb-6">Curated references for faculty who want to go deeper.</p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full mb-3">Official Docs</span>
+        <h3 class="text-lg font-bold text-slate-900 mb-3">Tool Documentation</h3>
+        <ul class="text-slate-500 text-sm space-y-2 leading-relaxed">
+          <li><strong>OpenAI ChatGPT</strong> -- <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">help.openai.com</code> (usage guides, prompt tips)</li>
+          <li><strong>Claude Code</strong> -- <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">docs.anthropic.com/en/docs/claude-code</code> (installation, features, best practices)</li>
+          <li><strong>Anthropic Claude</strong> -- <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">docs.anthropic.com</code> (model capabilities, API reference)</li>
+        </ul>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded-full mb-3">For Scientists</span>
+        <h3 class="text-lg font-bold text-slate-900 mb-3">AI in Research</h3>
+        <ul class="text-slate-500 text-sm space-y-2 leading-relaxed">
+          <li><strong>Prompt Engineering Guide</strong> -- <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">promptingguide.ai</code> (comprehensive, technique-focused)</li>
+          <li><strong>Papers With Code</strong> -- <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">paperswithcode.com</code> (ML methods with benchmarks and implementations)</li>
+          <li><strong>Google Colab</strong> -- <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">colab.research.google.com</code> (free GPU-enabled notebooks for ML experiments)</li>
+        </ul>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full mb-3">Physics + ML</span>
+        <h3 class="text-lg font-bold text-slate-900 mb-3">Domain-Specific References</h3>
+        <ul class="text-slate-500 text-sm space-y-2 leading-relaxed">
+          <li><strong>SciPy Lecture Notes</strong> -- <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">scipy-lectures.org</code> (scientific Python for physicists)</li>
+          <li><strong>PySINDy</strong> -- <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">pysindy.readthedocs.io</code> (data-driven equation discovery)</li>
+          <li><strong>scikit-learn</strong> -- <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">scikit-learn.org</code> (classical ML, excellent docs with physics-compatible examples)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- May 8 CTA -->
+  <section class="text-center p-8 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-xl">
+    <h2 class="text-2xl font-bold text-orange-700 mb-3">Your Next Step: May 8 Tutorial</h2>
+    <p class="text-slate-600 max-w-xl mx-auto mb-2">Put all of this into practice at our hands-on tutorial. Bring your laptop -- we will set up everything together and work through real examples with facilitators.</p>
+    <p class="text-sm text-slate-500 mb-5"><strong>May 8, 2026</strong> &bull; 13:00-17:00 &bull; APHYS Department</p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="events.html" class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">Event Details &rarr;</a>
+      <a href="chatgpt-quickstart.html" class="inline-block bg-white border border-slate-300 hover:border-accent text-slate-700 font-semibold text-sm px-5 py-2.5 rounded-lg transition">ChatGPT Guide</a>
+      <a href="ai-agents.html" class="inline-block bg-white border border-slate-300 hover:border-accent text-slate-700 font-semibold text-sm px-5 py-2.5 rounded-lg transition">AI Agents Guide</a>
+    </div>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 text-center py-8 px-4 mt-16 text-sm">
+  <p>Department of Applied Physics &bull; School of Engineering Sciences &bull; KTH Royal Institute of Technology</p>
+  <p class="mt-1">Organized by <strong class="text-slate-200">Wei Ouyang</strong> &amp; <strong class="text-slate-200">Jonas Sellberg</strong> &bull; 2026</p>
+  <p class="mt-3 text-xs text-slate-500 max-w-lg mx-auto">This webpage was generated with the assistance of AI (Claude Code) and may contain errors or inaccuracies. Please cross-check important information independently.</p>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

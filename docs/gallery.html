@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Use Case Gallery — AI @ Applied Physics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { kth: { DEFAULT:'#004791', light:'#2563eb', dark:'#003366' }, accent: { DEFAULT:'#6366f1', light:'#818cf8', dark:'#4f46e5' }, fire: { DEFAULT:'#f97316', light:'#fb923c' } },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+  }}
+}
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="font-sans text-slate-800 bg-slate-50 antialiased">
+
+<!-- Nav -->
+<nav class="bg-slate-900 sticky top-0 z-50 shadow-lg">
+  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <a href="index.html" class="flex items-center gap-2.5 text-white font-bold text-sm">
+      <svg width="32" height="32" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/><circle cx="32" cy="16" r="4" fill="#818cf8"/><circle cx="18" cy="40" r="4" fill="#818cf8"/><circle cx="46" cy="40" r="4" fill="#818cf8"/><line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/><circle cx="32" cy="32" r="7" fill="#6366f1"/><text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text></svg>
+      AI @ Applied Physics
+    </a>
+    <button id="nav-toggle" class="md:hidden text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <ul id="nav-menu" class="hidden md:flex items-center gap-0 text-sm">
+      <li><a href="index.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Home</a></li>
+      <li><a href="getting-started.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Get Started</a></li>
+      <li><a href="chatgpt-quickstart.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">ChatGPT</a></li>
+      <li><a href="ai-agents.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">AI Agents</a></li>
+      <li><a href="gallery.html" class="block px-3 py-4 text-white font-medium border-b-2 border-accent">Gallery</a></li>
+      <li><a href="events.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Events</a></li>
+      <li><a href="community.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Community</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="bg-gradient-to-br from-slate-900 via-slate-800 to-kth-dark text-white py-14 px-6 text-center">
+  <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">Use Case Gallery</h1>
+  <p class="text-slate-300 max-w-xl mx-auto font-light">A growing collection of AI agent use cases for Applied Physics. Browse what others have built — or submit your own.</p>
+</header>
+
+<div class="max-w-6xl mx-auto px-4 py-10">
+
+  <!-- Filters -->
+  <div class="flex flex-wrap gap-2 mb-8">
+    <button onclick="filterGallery('all')" class="filter-btn active bg-accent text-white text-xs font-semibold px-3 py-1.5 rounded-full transition" data-filter="all">All</button>
+    <button onclick="filterGallery('research')" class="filter-btn bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-slate-200 transition" data-filter="research">Research</button>
+    <button onclick="filterGallery('teaching')" class="filter-btn bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-slate-200 transition" data-filter="teaching">Teaching</button>
+    <button onclick="filterGallery('productivity')" class="filter-btn bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-slate-200 transition" data-filter="productivity">Productivity</button>
+    <button onclick="filterGallery('ChatGPT')" class="filter-btn bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-slate-200 transition" data-filter="ChatGPT">ChatGPT</button>
+    <button onclick="filterGallery('Claude Code')" class="filter-btn bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-slate-200 transition" data-filter="Claude Code">Claude Code</button>
+  </div>
+
+  <!-- Gallery Grid -->
+  <div id="gallery-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- Loading skeletons -->
+    <div class="animate-pulse bg-white rounded-xl h-64 border border-slate-200"></div>
+    <div class="animate-pulse bg-white rounded-xl h-64 border border-slate-200"></div>
+    <div class="animate-pulse bg-white rounded-xl h-64 border border-slate-200"></div>
+    <div class="animate-pulse bg-white rounded-xl h-64 border border-slate-200"></div>
+    <div class="animate-pulse bg-white rounded-xl h-64 border border-slate-200"></div>
+    <div class="animate-pulse bg-white rounded-xl h-64 border border-slate-200"></div>
+  </div>
+
+  <!-- Hackathon CTA -->
+  <div class="mt-12 bg-gradient-to-r from-indigo-50 to-orange-50 border border-indigo-200 rounded-2xl p-8 text-center reveal-on-scroll">
+    <h2 class="text-xl font-bold text-slate-900 mb-2">Contribute to the Gallery</h2>
+    <p class="text-slate-500 text-sm max-w-lg mx-auto mb-4">Built something with AI? Submit your use case to inspire your colleagues. Projects from the May 26 hackathon will be featured here.</p>
+    <button onclick="document.getElementById('submit-section').scrollIntoView({behavior:'smooth'})" class="bg-accent hover:bg-accent-dark text-white font-semibold px-5 py-2 rounded-lg transition text-sm">Submit a Use Case</button>
+  </div>
+
+  <!-- Submit Form -->
+  <section id="submit-section" class="mt-16 reveal-on-scroll">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Submit Your Use Case</h2>
+    <p class="text-slate-500 text-sm mb-6">Share what you have built so others can learn from your experience. Submissions are reviewed before appearing in the gallery.</p>
+    <form id="submit-form" class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Use Case Title *</label>
+          <input type="text" name="title" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-accent outline-none" placeholder="e.g., Automated Raman Spectroscopy Pipeline">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Primary Tool *</label>
+          <select name="tool" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-accent outline-none">
+            <option>ChatGPT</option>
+            <option>Claude Code</option>
+            <option>Both</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Description *</label>
+        <textarea name="description" required rows="4" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-accent outline-none resize-y" placeholder="What did you build? How does it work? What problem does it solve? How much time does it save?"></textarea>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Your Name</label>
+          <input type="text" name="author" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="Optional">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Category</label>
+          <select name="category" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-accent outline-none">
+            <option>Research</option>
+            <option>Teaching</option>
+            <option>Productivity</option>
+            <option>Code & Tools</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Repository URL</label>
+          <input type="url" name="repo" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="github.com/kth-applied-physics/...">
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Tags (comma-separated)</label>
+        <input type="text" name="tags" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-accent outline-none" placeholder="e.g., spectroscopy, data-analysis, BON">
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-slate-400">Submissions are added to the KTH-SCI Hypha collection for review.</span>
+        <button type="submit" class="bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-2 rounded-lg transition text-sm">Submit</button>
+      </div>
+      <div id="submit-status" class="hidden text-sm font-medium p-3 rounded-lg"></div>
+    </form>
+  </section>
+
+</div>
+
+<footer class="bg-slate-900 text-slate-400 text-center py-8 px-4 mt-16 text-sm">
+  <p>Department of Applied Physics &bull; School of Engineering Sciences &bull; KTH Royal Institute of Technology</p>
+  <p class="mt-1">Organized by <strong class="text-slate-200">Wei Ouyang</strong> &amp; <strong class="text-slate-200">Jonas Sellberg</strong> &bull; 2026</p>
+  <p class="mt-3 text-xs text-slate-500 max-w-lg mx-auto">This webpage was generated with the assistance of AI (Claude Code) and may contain errors. Please cross-check important information independently.</p>
+</footer>
+
+<script src="assets/main.js"></script>
+<script>
+const HYPHA_URL = 'https://hypha.aicell.io';
+const COLLECTION = 'kth-sci/aphys-ai-gallery';
+let allItems = [];
+
+// Icon SVG paths
+const iconPaths = {
+  'chart-bar': 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+  'eye': 'M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
+  'code': 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+  'layout-dashboard': 'M4 5a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zm0 6a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1h-4a1 1 0 01-1-1v-5zM4 13a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2z',
+  'book-open': 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+  'academic-cap': 'M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222',
+  'pencil': 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z',
+  'activity': 'M22 12h-4l-3 9L9 3l-3 9H2',
+  'image': 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z',
+  'clipboard-check': 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
+};
+
+const toolColors = {
+  'Claude Code': { iconBg:'#e0e7ff', iconColor:'#6366f1', badgeBg:'#e0e7ff', badgeColor:'#6366f1', borderColor:'#6366f1' },
+  'ChatGPT': { iconBg:'#d1fae5', iconColor:'#059669', badgeBg:'#d1fae5', badgeColor:'#047857', borderColor:'#10b981' },
+  'Both': { iconBg:'#ffedd5', iconColor:'#f97316', badgeBg:'#ffedd5', badgeColor:'#ea580c', borderColor:'#f97316' },
+};
+
+function renderCard(item) {
+  const m = item.manifest;
+  const tool = m.tool || 'AI';
+  const tc = toolColors[tool] || toolColors['Both'];
+  const tags = (m.tags || []).slice(0, 4);
+  const icon = iconPaths[m.icon] || iconPaths['code'];
+  const difficulty = m.difficulty || 'Intermediate';
+  const timeSaved = m.time_saved || '';
+  const divisions = (m.divisions || []).join(', ');
+
+  return `
+  <div class="gallery-card bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col group"
+       data-tags="${(m.tags||[]).join(',')}" data-tool="${tool}">
+    <div class="h-1" style="background:${tc.borderColor}"></div>
+    <div class="p-5 flex-1 flex flex-col">
+      <div class="flex items-start justify-between mb-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:${tc.iconBg};color:${tc.iconColor}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="${icon}"/></svg>
+        </div>
+        <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full" style="background:${tc.badgeBg};color:${tc.badgeColor}">${tool}</span>
+      </div>
+      <h3 class="font-bold text-slate-900 text-[15px] mb-2 leading-snug">${m.name}</h3>
+      <p class="text-slate-500 text-xs leading-relaxed mb-3 flex-1 line-clamp-4">${m.description || ''}</p>
+      <div class="flex flex-wrap gap-1.5 mb-3">
+        ${tags.map(t => `<span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">${t}</span>`).join('')}
+      </div>
+      <div class="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-slate-100">
+        <span>${difficulty}</span>
+        ${timeSaved ? `<span class="font-medium text-slate-500">${timeSaved}</span>` : ''}
+      </div>
+      ${divisions ? `<div class="text-[10px] text-slate-400 mt-1">Divisions: ${divisions}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+async function loadGallery() {
+  const grid = document.getElementById('gallery-grid');
+  try {
+    const res = await fetch(`${HYPHA_URL}/${COLLECTION}/children?pagination=true&limit=50&silent=true`);
+    const data = await res.json();
+    allItems = data.items || [];
+    grid.innerHTML = allItems.map(renderCard).join('');
+  } catch (e) {
+    grid.innerHTML = '<div class="col-span-full text-center py-12 text-slate-400">Failed to load gallery. Please try refreshing.</div>';
+  }
+}
+
+function filterGallery(filter) {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.className = b.dataset.filter === filter
+      ? 'filter-btn active bg-accent text-white text-xs font-semibold px-3 py-1.5 rounded-full transition'
+      : 'filter-btn bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-slate-200 transition';
+  });
+  const grid = document.getElementById('gallery-grid');
+  const filtered = filter === 'all' ? allItems : allItems.filter(item => {
+    const m = item.manifest;
+    return (m.tags || []).includes(filter) || m.tool === filter;
+  });
+  grid.innerHTML = filtered.length
+    ? filtered.map(renderCard).join('')
+    : '<div class="col-span-full text-center py-12 text-slate-400">No use cases match this filter.</div>';
+}
+
+// Submit form → create artifact via Hypha
+document.getElementById('submit-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const status = document.getElementById('submit-status');
+  const title = form.querySelector('[name="title"]').value.trim();
+  const desc = form.querySelector('[name="description"]').value.trim();
+  const tool = form.querySelector('[name="tool"]').value;
+  const author = form.querySelector('[name="author"]').value.trim();
+  const category = form.querySelector('[name="category"]').value.toLowerCase();
+  const repo = form.querySelector('[name="repo"]').value.trim();
+  const tags = form.querySelector('[name="tags"]').value.split(',').map(t => t.trim()).filter(Boolean);
+  tags.unshift(category);
+
+  const alias = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+
+  try {
+    const res = await fetch(`${HYPHA_URL}/public/services/artifact-manager/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        alias: alias + '-' + Date.now().toString(36),
+        parent_id: COLLECTION,
+        manifest: { name: title, description: desc, tool, tags, author: author || 'Anonymous', category, repo: repo || null, icon: 'code', difficulty: 'Intermediate', submitted: new Date().toISOString() },
+      })
+    });
+    const data = await res.json();
+    if (data.id) {
+      status.className = 'block text-sm font-medium p-3 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200';
+      status.textContent = 'Submitted successfully! Your use case will appear after review. Thank you for contributing!';
+      form.reset();
+      loadGallery();
+    } else {
+      throw new Error(data.detail || 'Unknown error');
+    }
+  } catch (err) {
+    status.className = 'block text-sm font-medium p-3 rounded-lg bg-red-50 text-red-700 border border-red-200';
+    status.textContent = 'Submission failed: ' + err.message + '. Please try again or contact the organizers.';
+  }
+});
+
+loadGallery();
+</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community — AI @ Applied Physics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { kth: { DEFAULT:'#004791', light:'#2563eb', dark:'#003366' }, accent: { DEFAULT:'#6366f1', light:'#818cf8', dark:'#4f46e5' }, fire: { DEFAULT:'#f97316', light:'#fb923c' } },
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+  }}
+}
+</script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="font-sans text-slate-800 bg-white antialiased">
+
+<!-- Navigation -->
+<nav class="bg-slate-900 sticky top-0 z-50 shadow-lg">
+  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <a href="index.html" class="flex items-center gap-2.5 text-white font-bold text-sm">
+      <svg width="32" height="32" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/><circle cx="32" cy="16" r="4" fill="#818cf8"/><circle cx="18" cy="40" r="4" fill="#818cf8"/><circle cx="46" cy="40" r="4" fill="#818cf8"/><line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/><circle cx="32" cy="32" r="7" fill="#6366f1"/><text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text></svg>
+      AI @ Applied Physics
+    </a>
+    <button id="nav-toggle" class="md:hidden text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <ul id="nav-menu" class="hidden md:flex items-center gap-0 text-sm">
+      <li><a href="index.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Home</a></li>
+      <li><a href="getting-started.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Get Started</a></li>
+      <li><a href="chatgpt-quickstart.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">ChatGPT</a></li>
+      <li><a href="ai-agents.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">AI Agents</a></li>
+      <li><a href="gallery.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Gallery</a></li>
+      <li><a href="events.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Events</a></li>
+      <li><a href="community.html" class="block px-3 py-4 text-white font-medium border-b-2 border-accent">Community</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="bg-gradient-to-br from-slate-900 via-slate-800 to-kth-dark text-white py-14 px-6 text-center">
+  <h1 class="text-3xl md:text-4xl font-bold mb-3">Community</h1>
+  <p class="text-slate-300 text-lg max-w-2xl mx-auto">Share experiences, ask questions, and learn from colleagues across Applied Physics.</p>
+</header>
+
+<div class="max-w-5xl mx-auto px-4 py-12">
+
+  <!-- Introduction -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Learn Together, Build Together</h2>
+    <p class="text-slate-500 mb-4">AI adoption is more effective as a community effort. Share what you have tried, what worked, and what did not.</p>
+    <p class="text-slate-600 text-sm">This space is for Applied Physics faculty and researchers to exchange experiences with AI tools. Whether you just built your first ChatGPT prompt or automated an entire analysis pipeline with Claude Code, your experience is valuable to others in the department.</p>
+  </section>
+
+  <!-- Discussion Topics -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Discussion Topics</h2>
+    <p class="text-slate-500 mb-6">Current conversations in the community. Click to join the discussion.</p>
+
+    <div class="space-y-3">
+      <!-- Topic 1 -->
+      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
+        <div class="flex flex-col items-center gap-1 min-w-[40px]">
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
+          <span class="font-bold text-lg text-slate-800">12</span>
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-semibold text-slate-800 mb-1">What repetitive task did you automate first with AI?</h4>
+          <p class="text-slate-500 text-sm">Share the first workflow you automated using ChatGPT or Claude Code. What was the task? How long did it take to set up vs. how much time does it save?</p>
+          <div class="flex gap-2 mt-2">
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">productivity</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">getting-started</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">8 replies</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 2 -->
+      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
+        <div class="flex flex-col items-center gap-1 min-w-[40px]">
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
+          <span class="font-bold text-lg text-slate-800">9</span>
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-semibold text-slate-800 mb-1">Using AI for spectroscopy data analysis -- tips and pitfalls</h4>
+          <p class="text-slate-500 text-sm">Those of you analyzing spectra (Raman, XPS, optical absorption) with AI -- what prompts work well? Where does the AI make mistakes that require your domain expertise to catch?</p>
+          <div class="flex gap-2 mt-2">
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">research</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">spectroscopy</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">5 replies</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 3 -->
+      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
+        <div class="flex flex-col items-center gap-1 min-w-[40px]">
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
+          <span class="font-bold text-lg text-slate-800">15</span>
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-semibold text-slate-800 mb-1">How are you handling AI in student assignments?</h4>
+          <p class="text-slate-500 text-sm">The elephant in the room. Students are using AI for assignments whether we like it or not. What policies are you adopting? Have you tried AI-integrated assignments? Oral defenses?</p>
+          <div class="flex gap-2 mt-2">
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">teaching</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">ethics</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">12 replies</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 4 -->
+      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
+        <div class="flex flex-col items-center gap-1 min-w-[40px]">
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
+          <span class="font-bold text-lg text-slate-800">7</span>
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-semibold text-slate-800 mb-1">I used AI to build this internal webpage</h4>
+          <p class="text-slate-500 text-sm">This entire site was built using Claude Code -- an AI agent. If you are curious about the process, ask questions here. It is a good example of what agents can do beyond data analysis.</p>
+          <div class="flex gap-2 mt-2">
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">ai-agents</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">web-development</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">meta</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">3 replies</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 5 -->
+      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
+        <div class="flex flex-col items-center gap-1 min-w-[40px]">
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
+          <span class="font-bold text-lg text-slate-800">6</span>
+          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-semibold text-slate-800 mb-1">Converting old MATLAB code to Python -- experiences?</h4>
+          <p class="text-slate-500 text-sm">Many of us have legacy MATLAB code for simulations and analysis. Has anyone used AI to convert it to Python? How accurate was the conversion? Any pitfalls to watch for?</p>
+          <div class="flex gap-2 mt-2">
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">code-conversion</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">matlab</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">python</span>
+            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">4 replies</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips from Colleagues -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Tips from Colleagues</h2>
+    <p class="text-slate-500 mb-6">Quick insights and recommendations from faculty who are already using AI.</p>
+
+    <div class="space-y-4">
+      <div class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-kth flex items-center justify-center text-white font-bold text-xs flex-shrink-0">WO</div>
+          <div>
+            <strong class="text-slate-800">Wei Ouyang</strong>
+            <span class="text-slate-400 text-xs"> &bull; Biophysics / AI for Cell Biology</span>
+          </div>
+        </div>
+        <p class="text-slate-600 text-sm">"Start by giving AI a task you already know how to do manually. That way, you can evaluate the output quality and learn how the tools work without risk. Once you trust your ability to judge the results, start using it for new tasks."</p>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs flex-shrink-0">JS</div>
+          <div>
+            <strong class="text-slate-800">Jonas Sellberg</strong>
+            <span class="text-slate-400 text-xs"> &bull; X-ray Physics / Ultrafast Science</span>
+          </div>
+        </div>
+        <p class="text-slate-600 text-sm">"When using AI for data analysis, always check the physics. The model might give you a mathematically correct fit that is physically meaningless. Your domain knowledge is the quality control. A PCA that explains 99% of variance is useless if the principal components have no physical interpretation."</p>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">FK</div>
+          <div>
+            <strong class="text-slate-800">Faculty Contributor</strong>
+            <span class="text-slate-400 text-xs"> &bull; Engineering Mechanics (organized original retreat)</span>
+          </div>
+        </div>
+        <p class="text-slate-600 text-sm">"The biggest surprise from our retreat was how much faculty productivity improved in the weeks after -- not from fancy ML models, but from simple things like using ChatGPT for grant writing, email drafts, and code debugging. Start simple."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Share Your Experience -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Share Your Experience</h2>
+    <p class="text-slate-500 mb-6">Tried something interesting with AI? Let your colleagues know.</p>
+
+    <form id="comment-form" class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Your Name</label>
+          <input type="text" name="name" placeholder="e.g., Anna Svensson" class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-accent outline-none" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Topic</label>
+          <select name="topic" class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-accent focus:border-accent outline-none">
+            <option>Research</option>
+            <option>Teaching</option>
+            <option>Productivity</option>
+            <option>Tools &amp; Setup</option>
+            <option>Question</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Your Message</label>
+      <textarea name="message" placeholder="Share a tip, ask a question, or describe something you built with AI..." class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-accent outline-none resize-y" rows="4" required></textarea>
+      <div class="flex justify-between items-center mt-3">
+        <span class="text-xs text-slate-400">Posts are visible to department members. Be constructive and collegial.</span>
+        <button type="submit" class="bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2 rounded-lg transition">Post</button>
+      </div>
+    </form>
+
+    <div id="comment-list" class="space-y-4 mt-6">
+      <!-- Demo comments -->
+      <div class="flex gap-4 items-start">
+        <div class="w-9 h-9 rounded-full bg-kth-light flex items-center justify-center text-white font-bold text-xs flex-shrink-0">AK</div>
+        <div class="flex-1">
+          <div class="text-sm text-slate-500 mb-1"><strong class="text-slate-700">Anna K.</strong> &bull; 2 days ago &bull; <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">Research</span></div>
+          <p class="text-slate-600 text-sm">Used Claude Code to process 200+ Raman spectra that had been sitting on my drive for months. Baseline correction, peak fitting, and a summary report -- all done in about 30 minutes. Would have taken me a full day manually. The key was being very specific about the fitting model (Voigt, not Gaussian) and the baseline method.</p>
+        </div>
+      </div>
+      <div class="flex gap-4 items-start">
+        <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">ML</div>
+        <div class="flex-1">
+          <div class="text-sm text-slate-500 mb-1"><strong class="text-slate-700">Marcus L.</strong> &bull; 5 days ago &bull; <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">Teaching</span></div>
+          <p class="text-slate-600 text-sm">I tried having ChatGPT generate exam questions for my optics course. The first attempt was mediocre -- too textbook-like. When I added "create questions that test physical intuition, not just formula application" and gave it two example questions I liked, the quality improved dramatically. Context matters.</p>
+        </div>
+      </div>
+      <div class="flex gap-4 items-start">
+        <div class="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs flex-shrink-0">ES</div>
+        <div class="flex-1">
+          <div class="text-sm text-slate-500 mb-1"><strong class="text-slate-700">Erik S.</strong> &bull; 1 week ago &bull; <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">Productivity</span></div>
+          <p class="text-slate-600 text-sm">Converted a 15-year-old Fortran simulation code to Python using Claude Code. It took about 2 hours of back-and-forth, but the results match to machine precision. The agent even added proper error handling and documentation that the original never had. Highly recommend for legacy code migration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call for Contributions -->
+  <section class="text-center p-8 bg-slate-50 rounded-xl mb-8">
+    <h2 class="text-2xl font-bold text-slate-900 mb-3">Want to Contribute?</h2>
+    <p class="text-slate-600 max-w-xl mx-auto mb-4">We are looking for faculty who want to share their AI workflows, contribute examples, or help facilitate events. Your expertise makes this initiative better for everyone.</p>
+    <p class="text-slate-500 text-sm">Contact <strong class="text-slate-700">Wei Ouyang</strong> or <strong class="text-slate-700">Jonas Sellberg</strong> to get involved.</p>
+  </section>
+
+  <!-- Link to Events -->
+  <section class="text-center p-8 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-xl">
+    <h2 class="text-2xl font-bold text-orange-700 mb-3">Join Us on May 8</h2>
+    <p class="text-slate-600 max-w-lg mx-auto mb-5">The best way to join this community is to attend our next event. Bring your laptop and your curiosity.</p>
+    <a href="events.html" class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">View Event Details &rarr;</a>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-400 text-center py-8 px-4 mt-16 text-sm">
+  <p>Department of Applied Physics &bull; School of Engineering Sciences &bull; KTH Royal Institute of Technology</p>
+  <p class="mt-1">Organized by <strong class="text-slate-200">Wei Ouyang</strong> &amp; <strong class="text-slate-200">Jonas Sellberg</strong> &bull; 2026</p>
+  <p class="mt-3 text-xs text-slate-500 max-w-lg mx-auto">This webpage was generated with the assistance of AI (Claude Code) and may contain errors or inaccuracies. Please cross-check important information independently.</p>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>
