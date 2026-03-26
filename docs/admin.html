@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Feedback Dashboard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="font-sans text-slate-800 bg-slate-50 antialiased">
+
+<!-- Nav -->
+<nav class="bg-slate-900 sticky top-0 z-50 shadow-lg">
+  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <a href="index.html" class="flex items-center gap-2.5 text-white font-bold text-sm">
+      <svg width="32" height="32" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/><circle cx="32" cy="16" r="4" fill="#818cf8"/><circle cx="18" cy="40" r="4" fill="#818cf8"/><circle cx="46" cy="40" r="4" fill="#818cf8"/><line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/><circle cx="32" cy="32" r="7" fill="#6366f1"/><text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text></svg>
+      AI @ Applied Physics
+    </a>
+    <span style="color:#94a3b8;font-size:0.8rem;font-weight:500;background:#1e293b;padding:0.2rem 0.75rem;border-radius:6px">Admin Dashboard</span>
+  </div>
+</nav>
+
+<!-- Login gate -->
+<div id="login-gate" style="max-width:24rem;margin:6rem auto;padding:2rem;text-align:center">
+  <div style="width:56px;height:56px;background:#eef2ff;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+  </div>
+  <h1 style="font-size:1.5rem;font-weight:700;color:#0f172a;margin-bottom:0.5rem">Feedback Dashboard</h1>
+  <p style="color:#64748b;font-size:0.875rem;margin-bottom:1.5rem">Enter the admin passphrase to view feedback.</p>
+  <input id="login-pass" type="password" placeholder="Passphrase"
+    style="width:100%;padding:0.6rem 0.75rem;border:2px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.9rem;text-align:center;outline:none;transition:border 0.2s"
+    onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'">
+  <button id="login-btn" style="margin-top:0.75rem;width:100%;background:#6366f1;color:#fff;font-weight:600;padding:0.6rem;border-radius:8px;border:none;cursor:pointer;font-size:0.9rem;font-family:inherit">
+    Sign In
+  </button>
+  <div id="login-error" style="display:none;color:#ef4444;font-size:0.82rem;margin-top:0.5rem;font-weight:500"></div>
+</div>
+
+<!-- Dashboard (hidden until login) -->
+<div id="dashboard" style="display:none">
+  <div class="max-w-5xl mx-auto px-4 py-8">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem">
+      <div>
+        <h1 style="font-size:1.75rem;font-weight:800;color:#0f172a;margin:0">Feedback Dashboard</h1>
+        <p style="color:#64748b;font-size:0.875rem;margin:0.25rem 0 0">All user feedback from the "Is this useful?" widget.</p>
+      </div>
+      <button onclick="loadFeedback()" style="background:#f1f5f9;color:#475569;font-weight:500;padding:0.4rem 1rem;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:0.82rem;font-family:inherit">
+        Refresh
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div id="stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center">
+        <div id="stat-total" style="font-size:1.75rem;font-weight:800;color:#0f172a">-</div>
+        <div style="font-size:0.75rem;color:#94a3b8;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Total</div>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:1rem;text-align:center">
+        <div id="stat-up" style="font-size:1.75rem;font-weight:800;color:#16a34a">-</div>
+        <div style="font-size:0.75rem;color:#16a34a;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Thumbs Up</div>
+      </div>
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:1rem;text-align:center">
+        <div id="stat-down" style="font-size:1.75rem;font-weight:800;color:#dc2626">-</div>
+        <div style="font-size:0.75rem;color:#dc2626;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Needs Work</div>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center">
+        <div id="stat-comments" style="font-size:1.75rem;font-weight:800;color:#6366f1">-</div>
+        <div style="font-size:0.75rem;color:#6366f1;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">With Comments</div>
+      </div>
+    </div>
+
+    <!-- Feedback list -->
+    <div id="feedback-list" style="display:flex;flex-direction:column;gap:0.75rem">
+      <div style="text-align:center;padding:3rem;color:#94a3b8">Loading feedback...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const HYPHA = 'https://hypha.aicell.io';
+const FEEDBACK_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-feedback/children`;
+const ADMIN_PASS = 'aphys2026';  // Simple passphrase for admin access
+const SESSION_ID = '53be87cd-3c5a-4899-b792-b78821590dee';
+
+// Login
+document.getElementById('login-btn').addEventListener('click', doLogin);
+document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+function doLogin() {
+  const pass = document.getElementById('login-pass').value;
+  if (pass === ADMIN_PASS) {
+    document.getElementById('login-gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    sessionStorage.setItem('admin-auth', '1');
+    loadFeedback();
+  } else {
+    const err = document.getElementById('login-error');
+    err.style.display = 'block';
+    err.textContent = 'Incorrect passphrase. Hint: department + year.';
+  }
+}
+
+// Auto-login if already authed this session
+if (sessionStorage.getItem('admin-auth')) {
+  document.getElementById('login-gate').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadFeedback();
+}
+
+async function loadFeedback() {
+  const list = document.getElementById('feedback-list');
+  list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">Loading...</div>';
+
+  try {
+    const res = await fetch(`${FEEDBACK_URL}?pagination=true&limit=100&silent=true&order_by=-created_at`);
+    const data = await res.json();
+    const items = data.items || [];
+
+    // Stats
+    const ups = items.filter(i => i.manifest?.vote === 'up').length;
+    const downs = items.filter(i => i.manifest?.vote === 'down').length;
+    const withComments = items.filter(i => i.manifest?.comment).length;
+    document.getElementById('stat-total').textContent = items.length;
+    document.getElementById('stat-up').textContent = ups;
+    document.getElementById('stat-down').textContent = downs;
+    document.getElementById('stat-comments').textContent = withComments;
+
+    if (!items.length) {
+      list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">No feedback yet.</div>';
+      return;
+    }
+
+    list.innerHTML = items.map(item => {
+      const m = item.manifest || {};
+      const isUp = m.vote === 'up';
+      const borderColor = isUp ? '#bbf7d0' : '#fecaca';
+      const iconBg = isUp ? '#f0fdf4' : '#fef2f2';
+      const iconColor = isUp ? '#16a34a' : '#dc2626';
+      const icon = isUp
+        ? '<path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>'
+        : '<path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10zM17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17"/>';
+      const ts = m.timestamp ? new Date(m.timestamp).toLocaleString() : 'Unknown time';
+
+      return `
+      <div style="background:#fff;border:1px solid ${borderColor};border-radius:10px;padding:1rem 1.25rem;display:flex;gap:1rem;align-items:flex-start">
+        <div style="width:36px;height:36px;border-radius:8px;background:${iconBg};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2">${icon}</svg>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.25rem">
+            <span style="font-weight:600;font-size:0.875rem;color:#0f172a">${m.page || 'Unknown page'}</span>
+            <span style="font-size:0.72rem;color:#94a3b8">${ts}</span>
+          </div>
+          ${m.comment ? `<p style="color:#475569;font-size:0.875rem;margin:0.25rem 0 0;line-height:1.5">${m.comment.replace(/</g,'&lt;')}</p>` : `<p style="color:#94a3b8;font-size:0.82rem;margin:0;font-style:italic">${isUp ? 'Positive feedback, no comment' : 'No comment provided'}</p>`}
+          ${m.comment && !isUp ? `
+          <button onclick="sendToAgent(this, '${m.page || 'unknown'}', \`${(m.comment||'').replace(/`/g,"'").replace(/\\/g,"\\\\")}\`)"
+            style="margin-top:0.5rem;background:#6366f1;color:#fff;font-weight:600;padding:0.35rem 1rem;border-radius:6px;border:none;cursor:pointer;font-size:0.78rem;font-family:inherit;transition:background 0.15s"
+            onmouseenter="this.style.background='#4f46e5'" onmouseleave="this.style.background='#6366f1'">
+            Send to AI Agent for Implementation
+          </button>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+
+  } catch(e) {
+    list.innerHTML = `<div style="text-align:center;padding:3rem;color:#ef4444">Failed to load feedback: ${e.message}</div>`;
+  }
+}
+
+async function sendToAgent(btn, page, comment) {
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  btn.style.background = '#94a3b8';
+
+  const message = `[Feedback Action Request] A user reported an issue on ${page}:\n\n"${comment}"\n\nPlease review this feedback and implement improvements to the page. After making changes, reply on Slack confirming what was done.`;
+
+  try {
+    // Use svamp CLI via a fetch to a local endpoint — but since we're in a browser,
+    // we'll store it as an artifact that the daemon can pick up
+    await fetch(HYPHA + '/public/services/artifact-manager/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        alias: 'action-' + Date.now().toString(36),
+        parent_id: 'kth-sci/aphys-ai-feedback',
+        manifest: {
+          name: 'Action Request: ' + page,
+          type: 'action-request',
+          page: page,
+          comment: comment,
+          prompt: message,
+          status: 'pending',
+          timestamp: new Date().toISOString(),
+          tags: ['action-request', page.replace('.html','')],
+        }
+      })
+    });
+    btn.textContent = 'Sent to Agent!';
+    btn.style.background = '#059669';
+  } catch(e) {
+    btn.textContent = 'Failed — try again';
+    btn.style.background = '#ef4444';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>

@@ -192,7 +192,7 @@ def check_slack_messages(state):
         send_to_session(
             f"[Slack from Jonas] {text}\n\n"
             f"(Reply via Slack or update the site accordingly.)",
-            urgency="urgent" if any(w in text.lower() for w in ["urgent", "fix", "broken", "error"]) else "normal",
+            urgency="urgent",
         )
 
 
@@ -227,7 +227,7 @@ def check_slack_messages_wei(state):
         log(f"New message from Wei: {text[:100]}")
         send_to_session(
             f"[Slack from Wei] {text}",
-            urgency="normal",
+            urgency="urgent",
         )
 
 
@@ -279,6 +279,51 @@ def check_gallery_submissions(state):
     state["known_gallery_aliases"] = list(current_aliases)
 
 
+# ── Poll: Action requests from admin dashboard ────────────────────────────
+FEEDBACK_CHILDREN_URL = f"{HYPHA_URL}/kth-sci/artifacts/aphys-ai-feedback/children"
+
+def check_action_requests(state):
+    """Check for pending action requests submitted from the admin dashboard."""
+    data = http_get(f"{FEEDBACK_CHILDREN_URL}?pagination=true&limit=100&silent=true")
+    if not data or "items" not in data:
+        return
+
+    known = set(state.get("known_feedback_aliases", []))
+    current = {item["alias"] for item in data["items"]}
+    new_aliases = current - known
+
+    if new_aliases and known:
+        for alias in new_aliases:
+            item = next((i for i in data["items"] if i["alias"] == alias), None)
+            if not item:
+                continue
+            m = item.get("manifest", {})
+
+            # Action requests from admin "Send to Agent" button
+            if m.get("type") == "action-request" and m.get("status") == "pending":
+                prompt = m.get("prompt", "")
+                page = m.get("page", "unknown")
+                log(f"Action request for {page}: {m.get('comment','')[:80]}")
+                send_to_session(
+                    f"[Admin Action Request] Implement feedback for {page}:\n\n"
+                    f"\"{m.get('comment', '')}\"\n\n"
+                    f"Please make the improvement and confirm on Slack.",
+                    urgency="urgent",
+                )
+                notify_organizers(
+                    f"Action request sent to AI agent for *{page}*:\n\"{m.get('comment', '')[:150]}\""
+                )
+
+            # Regular feedback (just notify, don't action)
+            elif m.get("vote") == "down" and m.get("comment"):
+                log(f"New negative feedback on {m.get('page','?')}: {m.get('comment','')[:80]}")
+                notify_organizers(
+                    f"New feedback on *{m.get('page', '?')}* (thumbs down):\n\"{m.get('comment', '')[:200]}\""
+                )
+
+    state["known_feedback_aliases"] = list(current)
+
+
 # ── Main loop ─────────────────────────────────────────────────────────────
 def main():
     log("=" * 60)
@@ -302,6 +347,13 @@ def main():
                 state[key] = data["messages"][0]["ts"]
                 log(f"Initialized {key} = {state[key]}")
 
+    # Initialize feedback baseline
+    if not state.get("known_feedback_aliases"):
+        data = http_get(f"{FEEDBACK_CHILDREN_URL}?pagination=true&limit=100&silent=true")
+        if data and "items" in data:
+            state["known_feedback_aliases"] = [i["alias"] for i in data["items"]]
+            log(f"Feedback baseline: {data['total']} items")
+
     # Initialize gallery baseline
     if not state.get("known_gallery_aliases"):
         data = http_get(f"{GALLERY_CHILDREN_URL}?pagination=true&limit=100&silent=true")
@@ -319,6 +371,7 @@ def main():
             check_slack_messages(state)
             check_slack_messages_wei(state)
             check_gallery_submissions(state)
+            check_action_requests(state)
             save_state(state)
             logger.debug("Poll cycle complete")
         except Exception as e:
