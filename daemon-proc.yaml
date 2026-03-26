@@ -1,0 +1,9 @@
+id: aphys-ai-daemon
+name: aphys-ai-daemon
+command: python3
+args: [daemon.py]
+workdir: /Users/weio/workspace/applied-physics-ai
+keepAlive: true
+env:
+  SVAMP_SESSION_ID: "53be87cd-3c5a-4899-b792-b78821590dee"
+  PYTHONUNBUFFERED: "1"

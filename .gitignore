@@ -30,3 +30,8 @@ _site/
 .jekyll-cache/
 .sass-cache/
 ai-workshop-2026/
+
+# Daemon state
+.daemon.log*
+.daemon.pid
+.daemon_state.json

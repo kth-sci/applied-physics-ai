@@ -92,11 +92,59 @@ The use case gallery connects to the Hypha artifact manager for dynamic content.
 
 ## Tech Stack
 
-- **CSS framework:** Tailwind CSS (CDN)
+- **CSS framework:** Tailwind CSS v4 (pre-built via `@tailwindcss/cli`, NOT CDN)
 - **Fonts:** Inter (Google Fonts)
 - **Icons:** Inline SVG
 - **Interactivity:** Vanilla JavaScript
 - **Backend:** Hypha artifact manager (REST API)
+- **Deployment:** GitHub Pages via GitHub Actions (builds CSS + deploys `docs/`)
+
+## Community Daemon (`daemon.py`)
+
+A continuously-running Python process that monitors external events and relays them to the active session.
+
+### What It Monitors
+
+| Source | What | Action |
+|--------|------|--------|
+| Slack DMs from Jonas | Feedback, site update requests | Relay to session via `svamp session send` |
+| Slack DMs from Wei | Instructions, requests | Relay to session via `svamp session send` |
+| Hypha gallery | New use case submissions | Notify Wei+Jonas on Slack + relay to session |
+
+### How It Works
+
+- Polls Slack conversations API every 30 seconds for new messages
+- Polls Hypha artifact children endpoint for new gallery items
+- Tracks state in `.daemon_state.json` (last seen timestamps, known artifacts)
+- Sends alerts to session via `svamp session send <session-id> <message>`
+- Notifies organizers on Slack when new submissions arrive
+
+### Management
+
+```bash
+# Start the daemon
+cd /Users/weio/workspace/applied-physics-ai
+nohup python3 daemon.py >> .daemon.log 2>&1 &
+echo $! > .daemon.pid
+
+# Check status
+cat .daemon.pid | xargs kill -0 2>/dev/null && echo "Running" || echo "Stopped"
+
+# View logs
+tail -30 .daemon.log
+
+# Stop
+kill $(cat .daemon.pid)
+
+# Restart
+kill $(cat .daemon.pid) 2>/dev/null; nohup python3 daemon.py >> .daemon.log 2>&1 & echo $! > .daemon.pid
+```
+
+### Files
+- `daemon.py` — The daemon script
+- `.daemon.log` — Stdout/stderr log (gitignored)
+- `.daemon.pid` — PID file (gitignored)
+- `.daemon_state.json` — Persisted state (gitignored)
 
 ## Agent Instructions
 
