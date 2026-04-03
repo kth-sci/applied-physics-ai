@@ -50,7 +50,22 @@
       <button onclick="filterGallery('Claude Code')" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-full transition" style="background:#f1f5f9;color:#475569" data-filter="Claude Code">Claude Code</button>
     </div>
 
-    <!-- Gallery Grid -->
+    <!-- Community Submissions (shown on top) -->
+    <div id="community-section" style="display:none;margin-bottom:2rem">
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <span style="font-size:0.82rem;font-weight:600;color:#6366f1;text-transform:uppercase;letter-spacing:0.05em">Community Submissions</span>
+      </div>
+      <div id="community-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </div>
+
+    <!-- AI-generated banner -->
+    <div id="ai-banner" style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0;margin-bottom:1rem;border-top:1px solid #e2e8f0;padding-top:1rem">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <span style="font-size:0.75rem;color:#94a3b8;font-weight:500">AI-generated examples to inspire your projects</span>
+    </div>
+
+    <!-- AI-generated Gallery Grid -->
     <div id="gallery-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       <div style="background:#f1f5f9;border-radius:12px;height:16rem;border:1px solid #e2e8f0"></div>
       <div style="background:#f1f5f9;border-radius:12px;height:16rem;border:1px solid #e2e8f0"></div>
@@ -355,14 +370,49 @@ async function showDetail(alias) {
   }
 }
 
+// ===== HELPERS =====
+function isUserSubmission(item) {
+  return !!item.manifest?.submitted;
+}
+
+function isHidden(item) {
+  return !!item.manifest?._hidden;
+}
+
+function renderGrids(items) {
+  const visible = items.filter(i => !isHidden(i));
+  const communityItems = visible.filter(isUserSubmission);
+  const aiItems = visible.filter(i => !isUserSubmission(i));
+
+  // Community section
+  const comSection = document.getElementById('community-section');
+  const comGrid = document.getElementById('community-grid');
+  if (communityItems.length) {
+    comSection.style.display = '';
+    comGrid.innerHTML = communityItems.map(renderCard).join('');
+  } else {
+    comSection.style.display = 'none';
+  }
+
+  // AI-generated section
+  const aiGrid = document.getElementById('gallery-grid');
+  const aiBanner = document.getElementById('ai-banner');
+  if (aiItems.length) {
+    aiBanner.style.display = '';
+    aiGrid.innerHTML = aiItems.map(renderCard).join('');
+  } else {
+    aiBanner.style.display = 'none';
+    aiGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#94a3b8">No use cases match this filter.</div>';
+  }
+}
+
 // ===== GALLERY LOADING & FILTERING =====
 async function loadGallery() {
-  const grid = document.getElementById('gallery-grid');
   try {
     const res = await fetch(`${CHILDREN_URL}?pagination=true&limit=50&silent=true`);
     const data = await res.json();
     allItems = data.items || [];
-    grid.innerHTML = allItems.map(renderCard).join('');
+    renderGrids(allItems);
 
     // Check if URL has a hash → open detail view
     if (location.hash) {
@@ -370,7 +420,7 @@ async function loadGallery() {
       if (alias) showDetail(alias);
     }
   } catch (e) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#94a3b8">Failed to load gallery. Please try refreshing.</div>';
+    document.getElementById('gallery-grid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#94a3b8">Failed to load gallery. Please try refreshing.</div>';
     console.error('Gallery load failed:', e);
   }
 }
@@ -381,14 +431,11 @@ function filterGallery(filter) {
     b.style.background = isActive ? '#6366f1' : '#f1f5f9';
     b.style.color = isActive ? '#fff' : '#475569';
   });
-  const grid = document.getElementById('gallery-grid');
   const filtered = filter === 'all' ? allItems : allItems.filter(item => {
     const m = item.manifest;
     return (m.tags || []).includes(filter) || m.tool === filter;
   });
-  grid.innerHTML = filtered.length
-    ? filtered.map(renderCard).join('')
-    : '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#94a3b8">No use cases match this filter.</div>';
+  renderGrids(filtered);
 }
 
 // Handle back button

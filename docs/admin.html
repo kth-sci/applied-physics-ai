@@ -70,9 +70,20 @@
       </div>
     </div>
 
+    <!-- Tabs: Feedback vs Gallery Submissions -->
+    <div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem">
+      <button id="tab-feedback-btn" onclick="switchAdminTab('feedback')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid #6366f1;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;font-weight:600;color:#0f172a;cursor:pointer">Page Feedback</button>
+      <button id="tab-submissions-btn" onclick="switchAdminTab('submissions')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer">Gallery Submissions</button>
+    </div>
+
     <!-- Feedback list -->
-    <div id="feedback-list" style="display:flex;flex-direction:column;gap:0.75rem">
+    <div id="tab-feedback" style="display:flex;flex-direction:column;gap:0.75rem">
       <div style="text-align:center;padding:3rem;color:#94a3b8">Loading feedback...</div>
+    </div>
+
+    <!-- Gallery submissions list -->
+    <div id="tab-submissions" style="display:none;flex-direction:column;gap:0.75rem">
+      <div style="text-align:center;padding:3rem;color:#94a3b8">Loading submissions...</div>
     </div>
   </div>
 </div>
@@ -80,8 +91,10 @@
 <script>
 const HYPHA = 'https://hypha.aicell.io';
 const FEEDBACK_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-feedback/children`;
-const ADMIN_PASS = 'aphys2026';  // Simple passphrase for admin access
+const GALLERY_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-gallery/children`;
+const ADMIN_PASS = 'aphys2026';
 const SESSION_ID = '53be87cd-3c5a-4899-b792-b78821590dee';
+const TOKEN = sessionStorage.getItem('hypha-token') || '';
 
 // Login
 document.getElementById('login-btn').addEventListener('click', doLogin);
@@ -93,7 +106,7 @@ function doLogin() {
     document.getElementById('login-gate').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     sessionStorage.setItem('admin-auth', '1');
-    loadFeedback();
+    loadAll();
   } else {
     const err = document.getElementById('login-error');
     err.style.display = 'block';
@@ -105,11 +118,24 @@ function doLogin() {
 if (sessionStorage.getItem('admin-auth')) {
   document.getElementById('login-gate').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
-  loadFeedback();
+  loadAll();
+}
+
+function loadAll() { loadFeedback(); loadSubmissions(); }
+
+function switchAdminTab(tab) {
+  document.getElementById('tab-feedback').style.display = tab === 'feedback' ? 'flex' : 'none';
+  document.getElementById('tab-submissions').style.display = tab === 'submissions' ? 'flex' : 'none';
+  document.getElementById('tab-feedback-btn').style.borderBottomColor = tab === 'feedback' ? '#6366f1' : 'transparent';
+  document.getElementById('tab-feedback-btn').style.color = tab === 'feedback' ? '#0f172a' : '#94a3b8';
+  document.getElementById('tab-feedback-btn').style.fontWeight = tab === 'feedback' ? '600' : '400';
+  document.getElementById('tab-submissions-btn').style.borderBottomColor = tab === 'submissions' ? '#6366f1' : 'transparent';
+  document.getElementById('tab-submissions-btn').style.color = tab === 'submissions' ? '#0f172a' : '#94a3b8';
+  document.getElementById('tab-submissions-btn').style.fontWeight = tab === 'submissions' ? '600' : '400';
 }
 
 async function loadFeedback() {
-  const list = document.getElementById('feedback-list');
+  const list = document.getElementById('tab-feedback');
   list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">Loading...</div>';
 
   try {
@@ -203,6 +229,119 @@ async function sendToAgent(btn, page, comment) {
     btn.style.background = '#ef4444';
     btn.disabled = false;
   }
+}
+
+// ===== GALLERY SUBMISSIONS MANAGEMENT =====
+async function loadSubmissions() {
+  const list = document.getElementById('tab-submissions');
+  list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">Loading...</div>';
+  list.style.display = list.style.display; // keep current display
+
+  try {
+    const res = await fetch(`${GALLERY_URL}?pagination=true&limit=100&silent=true`);
+    const data = await res.json();
+    const items = (data.items || []);
+
+    // Separate user submissions from AI-generated
+    const submissions = items.filter(i => i.manifest?.submitted);
+    const aiGenerated = items.filter(i => !i.manifest?.submitted);
+
+    if (!submissions.length) {
+      list.innerHTML = `<div style="text-align:center;padding:2rem;color:#94a3b8">No user submissions yet. ${aiGenerated.length} AI-generated examples in gallery.</div>`;
+      return;
+    }
+
+    list.innerHTML = `<div style="font-size:0.82rem;color:#64748b;margin-bottom:0.75rem">${submissions.length} user submission(s), ${aiGenerated.length} AI-generated examples</div>` +
+    submissions.map(item => {
+      const m = item.manifest || {};
+      const isHidden = !!m._hidden;
+      const isHighlighted = !!m._highlighted;
+      const ts = m.submitted ? new Date(m.submitted).toLocaleString() : 'Unknown';
+      const borderColor = isHidden ? '#fecaca' : isHighlighted ? '#bbf7d0' : '#e2e8f0';
+      const bgColor = isHidden ? '#fefefe' : isHighlighted ? '#f0fdf4' : '#fff';
+
+      return `
+      <div style="background:${bgColor};border:1px solid ${borderColor};border-radius:10px;padding:1rem 1.25rem;${isHidden?'opacity:0.5;':''}">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem">
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.25rem;flex-wrap:wrap">
+              <span style="font-weight:700;font-size:0.9rem;color:#0f172a">${(m.name||'Untitled').replace(/</g,'&lt;')}</span>
+              <span style="font-size:0.72rem;padding:1px 6px;border-radius:4px;background:#eef2ff;color:#6366f1;font-weight:500">${m.tool||'?'}</span>
+              ${isHidden ? '<span style="font-size:0.72rem;padding:1px 6px;border-radius:4px;background:#fef2f2;color:#dc2626;font-weight:500">Hidden</span>' : ''}
+              ${isHighlighted ? '<span style="font-size:0.72rem;padding:1px 6px;border-radius:4px;background:#f0fdf4;color:#16a34a;font-weight:500">Highlighted</span>' : ''}
+            </div>
+            <p style="color:#64748b;font-size:0.82rem;margin:0.25rem 0">${(m.description||'').replace(/</g,'&lt;').slice(0,200)}${(m.description||'').length>200?'...':''}</p>
+            <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.25rem">By ${(m.author||'Anonymous').replace(/</g,'&lt;')} &bull; ${ts}${m.repo ? ' &bull; <a href="'+m.repo+'" target="_blank" style="color:#6366f1">repo</a>' : ''}</div>
+          </div>
+          <div style="display:flex;gap:0.4rem;flex-shrink:0">
+            <button onclick="toggleSubmission('${item.id}','_hidden',${!isHidden})" title="${isHidden?'Show':'Hide'}"
+              style="width:32px;height:32px;border-radius:6px;border:1px solid #e2e8f0;background:${isHidden?'#fef2f2':'#fff'};cursor:pointer;display:flex;align-items:center;justify-content:center"
+              onmouseenter="this.style.borderColor='#6366f1'" onmouseleave="this.style.borderColor='#e2e8f0'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${isHidden?'#dc2626':'#94a3b8'}" stroke-width="2"><path d="${isHidden?'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22':'M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'}"/></svg>
+            </button>
+            <button onclick="toggleSubmission('${item.id}','_highlighted',${!isHighlighted})" title="${isHighlighted?'Remove highlight':'Highlight'}"
+              style="width:32px;height:32px;border-radius:6px;border:1px solid #e2e8f0;background:${isHighlighted?'#f0fdf4':'#fff'};cursor:pointer;display:flex;align-items:center;justify-content:center"
+              onmouseenter="this.style.borderColor='#6366f1'" onmouseleave="this.style.borderColor='#e2e8f0'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="${isHighlighted?'#f59e0b':'none'}" stroke="${isHighlighted?'#f59e0b':'#94a3b8'}" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </button>
+            <button onclick="editSubmission('${item.id}')" title="Edit"
+              style="width:32px;height:32px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center"
+              onmouseenter="this.style.borderColor='#6366f1'" onmouseleave="this.style.borderColor='#e2e8f0'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    list.innerHTML = `<div style="text-align:center;padding:3rem;color:#ef4444">Failed: ${e.message}</div>`;
+  }
+}
+
+async function toggleSubmission(artifactId, field, value) {
+  try {
+    // Read current manifest
+    const readRes = await fetch(`${HYPHA}/public/services/artifact-manager/read`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artifact_id: artifactId, silent: true })
+    });
+    const artifact = await readRes.json();
+    const manifest = { ...artifact.manifest, [field]: value };
+
+    // Update
+    await fetch(`${HYPHA}/public/services/artifact-manager/edit`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artifact_id: artifactId, manifest })
+    });
+    loadSubmissions();
+  } catch(e) { alert('Failed: ' + e.message); }
+}
+
+async function editSubmission(artifactId) {
+  try {
+    const readRes = await fetch(`${HYPHA}/public/services/artifact-manager/read`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artifact_id: artifactId, silent: true })
+    });
+    const artifact = await readRes.json();
+    const m = artifact.manifest;
+
+    const newName = prompt('Title:', m.name);
+    if (newName === null) return;
+    const newDesc = prompt('Description:', m.description);
+    if (newDesc === null) return;
+    const newTool = prompt('Tool (ChatGPT / Claude Code / Both):', m.tool);
+    if (newTool === null) return;
+
+    await fetch(`${HYPHA}/public/services/artifact-manager/edit`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        artifact_id: artifactId,
+        manifest: { ...m, name: newName, description: newDesc, tool: newTool }
+      })
+    });
+    loadSubmissions();
+  } catch(e) { alert('Failed: ' + e.message); }
 }
 </script>
 </body>
