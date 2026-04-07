@@ -300,19 +300,55 @@ const COMMUNITY_ID = 'kth-sci/aphys-ai-community';
 const COMMUNITY_URL = HYPHA + '/kth-sci/artifacts/aphys-ai-community/children';
 const avatarColors = ['#6366f1','#f97316','#10b981','#2563eb','#ec4899','#8b5cf6','#14b8a6','#f43f5e'];
 
+// APHYS / SCI faculty lookup: name → research keywords
+// Source: kth.se/aphys, kth.se/physics, kth.se/tekmek, kth.se/math
+const facultyKeywords = {
+  'jonas sellberg': 'X-ray physics, ultrafast science',
+  'wei ouyang': 'AI for bioimaging, computational microscopy',
+  'linda lundström': 'visual optics, ophthalmic optics',
+  'hans hertz': 'X-ray optics, biomedical imaging',
+  'jerker widengren': 'fluorescence spectroscopy, single-molecule',
+  'michael fokine': 'fiber optics, glass physics',
+  'carlota canalias gomez': 'nonlinear optics, ferroelectrics',
+  'ulrich vogt': 'X-ray microscopy, nanoimaging',
+  'anand srinivasan': 'nanophotonics, quantum dots',
+  'muhammet toprak': 'nanomaterials, energy materials',
+  'ilja sytjugov': 'luminescent materials, nanophosphors',
+  'gunnar björk': 'quantum optics, quantum information',
+  'jan linnros': 'nanostructures, silicon photonics',
+  'peter unsbo': 'visual optics, optical design',
+  'anna burvall': 'phase-contrast imaging, optics',
+  'vaishali adya': 'gravitational waves, precision measurement',
+  'hanna kylhammar': 'X-ray spectroscopy',
+};
+
+function lookupKeywords(name) {
+  if (!name) return '';
+  const key = name.toLowerCase().trim();
+  return facultyKeywords[key] || '';
+}
+
+function linkify(text) {
+  // Make URLs clickable
+  return text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener" style="color:#6366f1;text-decoration:underline">$1</a>');
+}
+
 function renderTip(m, pinned) {
   const initial = (m.name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
   const color = avatarColors[Math.abs([...initial].reduce((a,c)=>a+c.charCodeAt(0),0)) % avatarColors.length];
   const pinBadge = pinned ? '<span style="font-size:0.65rem;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:4px;font-weight:600;margin-left:0.5rem">Pinned</span>' : '';
+  const keywords = lookupKeywords(m.name);
+  const kwBadge = keywords ? `<span class="text-slate-400 text-xs"> &bull; ${keywords}</span>` : '';
+  const msgHtml = linkify((m.message||'').replace(/</g,'&lt;'));
   return `<div class="bg-white border border-slate-200 rounded-xl p-5">
     <div class="flex items-center gap-3 mb-3">
       <div class="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-xs flex-shrink-0" style="background:${color}">${initial}</div>
       <div>
         <strong class="text-slate-800">${(m.name||'Anonymous').replace(/</g,'&lt;')}</strong>${pinBadge}
-        <span class="text-slate-400 text-xs"> &bull; ${m.topic||'General'}</span>
+        <span class="text-slate-400 text-xs"> &bull; ${m.topic||'General'}</span>${kwBadge}
       </div>
     </div>
-    <p class="text-slate-600 text-sm">"${(m.message||'').replace(/</g,'&lt;')}"</p>
+    <p class="text-slate-600 text-sm">"${msgHtml}"</p>
   </div>`;
 }
 
