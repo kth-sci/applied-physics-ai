@@ -57,6 +57,7 @@
       <button id="tab-feedback-btn" onclick="switchAdminTab('feedback')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Page Feedback</button>
       <button id="tab-submissions-btn" onclick="switchAdminTab('submissions')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Gallery Submissions</button>
       <button id="tab-community-btn" onclick="switchAdminTab('community')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Community Messages</button>
+      <button id="tab-discussions-btn" onclick="switchAdminTab('discussions')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Discussion Topics</button>
       <button id="tab-attendees-btn" onclick="switchAdminTab('attendees')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">May 8 Attendees</button>
     </div>
 
@@ -80,6 +81,11 @@
       <div style="text-align:center;padding:3rem;color:#94a3b8">Loading messages...</div>
     </div>
 
+    <!-- Discussion Topics -->
+    <div id="tab-discussions" style="display:none;flex-direction:column;gap:0.75rem">
+      <div style="text-align:center;padding:3rem;color:#94a3b8">Loading discussions...</div>
+    </div>
+
     <!-- Attendees list -->
     <div id="tab-attendees" style="display:none;flex-direction:column;gap:0.75rem">
       <div style="text-align:center;padding:3rem;color:#94a3b8">Loading attendees...</div>
@@ -93,6 +99,7 @@ const FEEDBACK_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-feedback/children`;
 const GALLERY_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-gallery/children`;
 const REG_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-registrations/children`;
 const COMM_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-community/children`;
+const DISC_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-discussions/children`;
 const NAV_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-navigation/children`;
 const PAGES = ['index','getting-started','chatgpt-quickstart','ai-agents','gallery','events','community'];
 const PAGE_LABELS = {index:'Home', 'getting-started':'Getting Started', 'chatgpt-quickstart':'ChatGPT Guide', 'ai-agents':'AI Agents', gallery:'Gallery', events:'Events', community:'Community'};
@@ -126,9 +133,9 @@ if (sessionStorage.getItem('admin-auth')) {
   loadAll();
 }
 
-function loadAll() { loadPageViews(); loadFeedback(); loadSubmissions(); loadCommunity(); loadAttendees(); }
+function loadAll() { loadPageViews(); loadFeedback(); loadSubmissions(); loadCommunity(); loadDiscussions(); loadAttendees(); }
 
-const adminTabs = ['pageviews', 'feedback', 'submissions', 'community', 'attendees'];
+const adminTabs = ['pageviews', 'feedback', 'submissions', 'community', 'discussions', 'attendees'];
 function switchAdminTab(tab) {
   adminTabs.forEach(t => {
     const panel = document.getElementById('tab-' + t);
@@ -714,6 +721,56 @@ async function deleteCommunityMsg(artifactId) {
     try { const d = await res.json(); if (d && d.detail) throw new Error(d.detail); } catch(parseErr) { /* null response = success */ }
     loadCommunity();
   } catch(e) { alert('Delete failed: ' + e.message); }
+}
+
+// ===== DISCUSSION TOPICS =====
+async function loadDiscussions() {
+  const list = document.getElementById('tab-discussions');
+  list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">Loading...</div>';
+
+  try {
+    const res = await fetch(`${DISC_URL}?pagination=true&limit=20&silent=true`);
+    const data = await res.json();
+    const items = (data.items || []).sort((a,b) => ((b.manifest.upvotes||0)-(b.manifest.downvotes||0)) - ((a.manifest.upvotes||0)-(a.manifest.downvotes||0)));
+
+    if (!items.length) {
+      list.innerHTML = '<div style="text-align:center;padding:2rem;color:#94a3b8">No discussion topics yet.</div>';
+      return;
+    }
+
+    list.innerHTML = items.map(item => {
+      const m = item.manifest || {};
+      const up = m.upvotes || 0;
+      const down = m.downvotes || 0;
+      const net = up - down;
+      const subs = Array.isArray(m.subscribers) ? m.subscribers : [];
+
+      return `
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem 1.25rem">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem">
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;flex-wrap:wrap">
+              <span style="font-weight:700;font-size:0.95rem;color:#0f172a">${(m.name||'?').replace(/</g,'&lt;')}</span>
+              <div style="display:flex;gap:0.5rem;align-items:center">
+                <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#f0fdf4;color:#16a34a;font-weight:600">&#9650; ${up}</span>
+                <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#fef2f2;color:#dc2626;font-weight:600">&#9660; ${down}</span>
+                <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#eef2ff;color:#6366f1;font-weight:700">Net: ${net}</span>
+              </div>
+            </div>
+            ${subs.length ? `
+            <div style="margin-top:0.5rem;padding:0.75rem;background:#f8fafc;border-radius:8px;border:1px solid #f1f5f9">
+              <div style="font-size:0.72rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.4rem">Subscribers (${subs.length})</div>
+              <div style="display:flex;flex-direction:column;gap:0.25rem">
+                ${subs.map(s => `<div style="font-size:0.82rem;color:#475569">${(s.name||'?').replace(/</g,'&lt;')} — <span style="color:#6366f1">${(s.email||'?').replace(/</g,'&lt;')}</span> <span style="color:#cbd5e1;font-size:0.7rem">${s.timestamp ? new Date(s.timestamp).toLocaleDateString() : ''}</span></div>`).join('')}
+              </div>
+            </div>` : '<div style="font-size:0.78rem;color:#94a3b8;margin-top:0.25rem;font-style:italic">No subscribers yet</div>'}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    list.innerHTML = `<div style="text-align:center;padding:3rem;color:#ef4444">Failed: ${e.message}</div>`;
+  }
 }
 
 // ===== ATTENDEES =====

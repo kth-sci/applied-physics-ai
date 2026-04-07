@@ -56,105 +56,28 @@
     </div>
   </section>
 
-  <!-- Discussion Topics -->
+  <!-- Discussion Topics (loaded from Hypha) -->
   <section class="mb-16">
     <h2 class="text-2xl font-bold text-slate-900 mb-2">Discussion Topics</h2>
-    <p class="text-slate-500 mb-6">Current conversations in the community. Click to join the discussion.</p>
-
-    <div class="space-y-3">
-      <!-- Topic 1 -->
-      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
-        <div class="flex flex-col items-center gap-1 min-w-[40px]">
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
-          <span class="font-bold text-lg text-slate-800">12</span>
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
-        </div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-slate-800 mb-1">What repetitive task did you automate first with AI?</h4>
-          <p class="text-slate-500 text-sm">Share the first workflow you automated using ChatGPT or Claude Code. What was the task? How long did it take to set up vs. how much time does it save?</p>
-          <div class="flex gap-2 mt-2">
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">productivity</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">getting-started</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">8 replies</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topic 2 -->
-      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
-        <div class="flex flex-col items-center gap-1 min-w-[40px]">
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
-          <span class="font-bold text-lg text-slate-800">9</span>
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
-        </div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-slate-800 mb-1">Using AI for spectroscopy data analysis -- tips and pitfalls</h4>
-          <p class="text-slate-500 text-sm">Those of you analyzing spectra (Raman, XPS, optical absorption) with AI -- what prompts work well? Where does the AI make mistakes that require your domain expertise to catch?</p>
-          <div class="flex gap-2 mt-2">
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">research</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">spectroscopy</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">5 replies</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topic 3 -->
-      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
-        <div class="flex flex-col items-center gap-1 min-w-[40px]">
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
-          <span class="font-bold text-lg text-slate-800">15</span>
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
-        </div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-slate-800 mb-1">How are you handling AI in student assignments?</h4>
-          <p class="text-slate-500 text-sm">The elephant in the room. Students are using AI for assignments whether we like it or not. What policies are you adopting? Have you tried AI-integrated assignments? Oral defenses?</p>
-          <div class="flex gap-2 mt-2">
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">teaching</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">ethics</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">12 replies</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topic 4 -->
-      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
-        <div class="flex flex-col items-center gap-1 min-w-[40px]">
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
-          <span class="font-bold text-lg text-slate-800">7</span>
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
-        </div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-slate-800 mb-1">I used AI to build this internal webpage</h4>
-          <p class="text-slate-500 text-sm">This entire site was built using Claude Code -- an AI agent. If you are curious about the process, ask questions here. It is a good example of what agents can do beyond data analysis.</p>
-          <div class="flex gap-2 mt-2">
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">ai-agents</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">web-development</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">meta</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">3 replies</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topic 5 -->
-      <div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md hover:-translate-y-0.5 transition">
-        <div class="flex flex-col items-center gap-1 min-w-[40px]">
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="this.nextElementSibling.textContent = parseInt(this.nextElementSibling.textContent)+1">&#9650;</button>
-          <span class="font-bold text-lg text-slate-800">6</span>
-          <button class="text-slate-400 hover:text-kth-light transition" onclick="let c=this.previousElementSibling;c.textContent=Math.max(0,parseInt(c.textContent)-1)">&#9660;</button>
-        </div>
-        <div class="flex-1">
-          <h4 class="font-semibold text-slate-800 mb-1">Converting old MATLAB code to Python -- experiences?</h4>
-          <p class="text-slate-500 text-sm">Many of us have legacy MATLAB code for simulations and analysis. Has anyone used AI to convert it to Python? How accurate was the conversion? Any pitfalls to watch for?</p>
-          <div class="flex gap-2 mt-2">
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">code-conversion</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">matlab</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">python</span>
-            <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">4 replies</span>
-          </div>
-        </div>
-      </div>
+    <p class="text-slate-500 mb-6">Vote on topics you find interesting. Upvoting lets you join the email list for that discussion.</p>
+    <div id="discussion-topics" class="space-y-3">
+      <div style="text-align:center;padding:2rem;color:#94a3b8">Loading topics...</div>
     </div>
   </section>
+
+  <!-- Subscribe modal (hidden) -->
+  <div id="subscribe-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;display:none;align-items:center;justify-content:center">
+    <div style="background:#fff;border-radius:16px;padding:2rem;max-width:24rem;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.15)">
+      <h3 style="font-size:1.1rem;font-weight:700;color:#0f172a;margin:0 0 0.5rem">Join this discussion?</h3>
+      <p style="font-size:0.85rem;color:#64748b;margin:0 0 1rem">Add your name and email to be notified about this topic.</p>
+      <input id="sub-name" type="text" placeholder="Your name" style="width:100%;padding:0.5rem 0.75rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.875rem;margin-bottom:0.5rem;outline:none" onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'">
+      <input id="sub-email" type="email" placeholder="your.name@kth.se" style="width:100%;padding:0.5rem 0.75rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.875rem;margin-bottom:1rem;outline:none" onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'">
+      <div style="display:flex;gap:0.75rem;justify-content:flex-end">
+        <button id="sub-cancel" style="padding:0.45rem 1rem;border:1px solid #e2e8f0;border-radius:8px;background:#fff;font-family:inherit;font-size:0.85rem;cursor:pointer;color:#64748b">Skip</button>
+        <button id="sub-confirm" style="padding:0.45rem 1rem;border:none;border-radius:8px;background:#6366f1;color:#fff;font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer">Subscribe &amp; Vote</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Share Your Experience -->
   <section class="mb-16">
@@ -371,6 +294,115 @@ async function loadCommunityTips() {
     container.innerHTML = '<div style="text-align:center;padding:2rem;color:#94a3b8;font-size:0.875rem">Could not load tips. Try refreshing.</div>';
   }
 }
+
+// ===== DISCUSSION TOPICS =====
+const DISC_URL = HYPHA + '/kth-sci/artifacts/aphys-ai-discussions/children';
+let discTopics = [];
+let pendingVoteId = null;
+
+function getVoted() {
+  try { return JSON.parse(localStorage.getItem('aphys_disc_votes') || '{}'); } catch(e) { return {}; }
+}
+
+function renderDiscTopic(item) {
+  const m = item.manifest;
+  const votes = (m.upvotes||0) - (m.downvotes||0);
+  const voted = getVoted();
+  const myVote = voted[item.alias]; // 'up' or 'down' or undefined
+  const upColor = myVote === 'up' ? '#6366f1' : '#cbd5e1';
+  const downColor = myVote === 'down' ? '#ef4444' : '#cbd5e1';
+  const upCursor = myVote ? 'default' : 'pointer';
+  const downCursor = myVote ? 'default' : 'pointer';
+  const tags = (m.tags||[]).filter(t => t !== 'replies');
+
+  return `<div class="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md transition" data-alias="${item.alias}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:40px">
+      <button onclick="voteDisc('${item.alias}','up')" style="background:none;border:none;cursor:${upCursor};padding:2px;transition:color 0.15s;color:${upColor};font-size:1.1rem" ${myVote?'disabled':''}>&#9650;</button>
+      <span style="font-weight:800;font-size:1.1rem;color:#0f172a">${votes}</span>
+      <button onclick="voteDisc('${item.alias}','down')" style="background:none;border:none;cursor:${downCursor};padding:2px;transition:color 0.15s;color:${downColor};font-size:1.1rem" ${myVote?'disabled':''}>&#9660;</button>
+    </div>
+    <div class="flex-1">
+      <h4 class="font-semibold text-slate-800 mb-1">${(m.name||'').replace(/</g,'&lt;')}</h4>
+      <p class="text-slate-500 text-sm">${(m.description||'').replace(/</g,'&lt;')}</p>
+      <div style="display:flex;gap:6px;margin-top:0.5rem;flex-wrap:wrap">
+        ${tags.map(t => `<span style="font-size:0.7rem;background:#f1f5f9;color:#64748b;padding:2px 8px;border-radius:999px">${t}</span>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+async function loadDiscussionTopics() {
+  const container = document.getElementById('discussion-topics');
+  try {
+    const res = await fetch(DISC_URL + '?pagination=true&limit=20&silent=true');
+    const data = await res.json();
+    discTopics = (data.items || []).sort((a,b) => ((b.manifest.upvotes||0)-(b.manifest.downvotes||0)) - ((a.manifest.upvotes||0)-(a.manifest.downvotes||0)));
+    container.innerHTML = discTopics.map(renderDiscTopic).join('');
+  } catch(e) {
+    container.innerHTML = '<div style="text-align:center;padding:2rem;color:#94a3b8">Could not load topics.</div>';
+  }
+}
+
+function voteDisc(alias, direction) {
+  const voted = getVoted();
+  if (voted[alias]) return; // already voted
+  if (direction === 'up') {
+    // Show subscribe modal
+    pendingVoteId = alias;
+    const modal = document.getElementById('subscribe-modal');
+    modal.style.display = 'flex';
+    document.getElementById('sub-name').value = '';
+    document.getElementById('sub-email').value = '';
+    document.getElementById('sub-name').focus();
+  } else {
+    // Downvote: just record, no modal
+    submitVote(alias, 'down', null, null);
+  }
+}
+
+async function submitVote(alias, direction, subName, subEmail) {
+  const voted = getVoted();
+  if (voted[alias]) return;
+  voted[alias] = direction;
+  localStorage.setItem('aphys_disc_votes', JSON.stringify(voted));
+
+  const item = discTopics.find(t => t.alias === alias);
+  if (!item) return;
+  const m = { ...item.manifest };
+  if (direction === 'up') m.upvotes = (m.upvotes||0) + 1;
+  else m.downvotes = (m.downvotes||0) + 1;
+
+  // Add subscriber if provided
+  if (subName && subEmail) {
+    if (!Array.isArray(m.subscribers)) m.subscribers = [];
+    m.subscribers.push({ name: subName, email: subEmail, timestamp: new Date().toISOString() });
+  }
+
+  try {
+    await fetch(HYPHA + '/public/services/artifact-manager/edit', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artifact_id: item.id, manifest: m })
+    });
+  } catch(e) { /* best-effort */ }
+  loadDiscussionTopics();
+}
+
+// Modal handlers
+document.getElementById('sub-cancel')?.addEventListener('click', () => {
+  document.getElementById('subscribe-modal').style.display = 'none';
+  if (pendingVoteId) submitVote(pendingVoteId, 'up', null, null);
+  pendingVoteId = null;
+});
+
+document.getElementById('sub-confirm')?.addEventListener('click', () => {
+  const name = document.getElementById('sub-name').value.trim();
+  const email = document.getElementById('sub-email').value.trim();
+  document.getElementById('subscribe-modal').style.display = 'none';
+  if (pendingVoteId) submitVote(pendingVoteId, 'up', name || null, email || null);
+  pendingVoteId = null;
+});
+
+loadDiscussionTopics();
 
 // Attach form handler directly (main.js no longer handles comment-form)
 document.getElementById('comment-form')?.addEventListener('submit', async function(e) {
