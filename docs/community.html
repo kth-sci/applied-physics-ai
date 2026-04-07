@@ -145,43 +145,13 @@
     </div>
   </section>
 
-  <!-- Tips from Colleagues -->
+  <!-- Tips from Colleagues (user-submitted only) -->
   <section class="mb-16">
     <h2 class="text-2xl font-bold text-slate-900 mb-2">Tips from Colleagues</h2>
     <p class="text-slate-500 mb-6">Quick insights and recommendations from faculty who are already using AI.</p>
-
-    <div class="space-y-4">
-      <div class="bg-white border border-slate-200 rounded-xl p-5">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-9 h-9 rounded-full bg-kth flex items-center justify-center text-white font-bold text-xs flex-shrink-0">WO</div>
-          <div>
-            <strong class="text-slate-800">Wei Ouyang</strong>
-            <span class="text-slate-400 text-xs"> &bull; Biophysics / AI for Cell Biology</span>
-          </div>
-        </div>
-        <p class="text-slate-600 text-sm">"Start by giving AI a task you already know how to do manually. That way, you can evaluate the output quality and learn how the tools work without risk. Once you trust your ability to judge the results, start using it for new tasks."</p>
-      </div>
-
-      <div class="bg-white border border-slate-200 rounded-xl p-5">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs flex-shrink-0">JS</div>
-          <div>
-            <strong class="text-slate-800">Jonas Sellberg</strong>
-            <span class="text-slate-400 text-xs"> &bull; X-ray Physics / Ultrafast Science</span>
-          </div>
-        </div>
-        <p class="text-slate-600 text-sm">"When using AI for data analysis, always check the physics. The model might give you a mathematically correct fit that is physically meaningless. Your domain knowledge is the quality control. A PCA that explains 99% of variance is useless if the principal components have no physical interpretation."</p>
-      </div>
-
-      <div class="bg-white border border-slate-200 rounded-xl p-5">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">FK</div>
-          <div>
-            <strong class="text-slate-800">Faculty Contributor</strong>
-            <span class="text-slate-400 text-xs"> &bull; Engineering Mechanics (organized original retreat)</span>
-          </div>
-        </div>
-        <p class="text-slate-600 text-sm">"The biggest surprise from our retreat was how much faculty productivity improved in the weeks after -- not from fancy ML models, but from simple things like using ChatGPT for grant writing, email drafts, and code debugging. Start simple."</p>
+    <div id="community-tips" class="space-y-4">
+      <div style="text-align:center;padding:2rem;color:#94a3b8;font-size:0.875rem;border:1px dashed #e2e8f0;border-radius:12px">
+        No tips shared yet. Be the first to share your experience below!
       </div>
     </div>
   </section>
@@ -217,28 +187,81 @@
       </div>
     </form>
 
-    <div id="comment-list" class="space-y-4 mt-6">
-      <!-- Demo comments -->
-      <div class="flex gap-4 items-start">
-        <div class="w-9 h-9 rounded-full bg-kth-light flex items-center justify-center text-white font-bold text-xs flex-shrink-0">AK</div>
-        <div class="flex-1">
-          <div class="text-sm text-slate-500 mb-1"><strong class="text-slate-700">Anna K.</strong> &bull; 2 days ago &bull; <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">Research</span></div>
-          <p class="text-slate-600 text-sm">Used Claude Code to process 200+ Raman spectra that had been sitting on my drive for months. Baseline correction, peak fitting, and a summary report -- all done in about 30 minutes. Would have taken me a full day manually. The key was being very specific about the fitting model (Voigt, not Gaussian) and the baseline method.</p>
+    <div id="comment-list" class="space-y-4 mt-6"></div>
+  </section>
+
+  <!-- AI-generated quotes banner + quotes -->
+  <section class="mb-16">
+    <div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0;margin-bottom:1rem;border-top:1px solid #e2e8f0;padding-top:1rem">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <span style="font-size:0.75rem;color:#94a3b8;font-weight:500">AI-generated quotes to inspire your work</span>
+    </div>
+
+    <div class="space-y-4">
+      <div class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-kth flex items-center justify-center text-white font-bold text-xs flex-shrink-0">WO</div>
+          <div>
+            <strong class="text-slate-800">Wei Ouyang</strong>
+            <span class="text-slate-400 text-xs"> &bull; Biophysics / AI for Cell Biology</span>
+          </div>
         </div>
+        <p class="text-slate-600 text-sm">"Start by giving AI a task you already know how to do manually. That way, you can evaluate the output quality and learn how the tools work without risk. Once you trust your ability to judge the results, start using it for new tasks."</p>
       </div>
-      <div class="flex gap-4 items-start">
-        <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">ML</div>
-        <div class="flex-1">
-          <div class="text-sm text-slate-500 mb-1"><strong class="text-slate-700">Marcus L.</strong> &bull; 5 days ago &bull; <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">Teaching</span></div>
-          <p class="text-slate-600 text-sm">I tried having ChatGPT generate exam questions for my optics course. The first attempt was mediocre -- too textbook-like. When I added "create questions that test physical intuition, not just formula application" and gave it two example questions I liked, the quality improved dramatically. Context matters.</p>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs flex-shrink-0">JS</div>
+          <div>
+            <strong class="text-slate-800">Jonas Sellberg</strong>
+            <span class="text-slate-400 text-xs"> &bull; X-ray Physics / Ultrafast Science</span>
+          </div>
         </div>
+        <p class="text-slate-600 text-sm">"When using AI for data analysis, always check the physics. The model might give you a mathematically correct fit that is physically meaningless. Your domain knowledge is the quality control. A PCA that explains 99% of variance is useless if the principal components have no physical interpretation."</p>
       </div>
-      <div class="flex gap-4 items-start">
-        <div class="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs flex-shrink-0">ES</div>
-        <div class="flex-1">
-          <div class="text-sm text-slate-500 mb-1"><strong class="text-slate-700">Erik S.</strong> &bull; 1 week ago &bull; <span class="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">Productivity</span></div>
-          <p class="text-slate-600 text-sm">Converted a 15-year-old Fortran simulation code to Python using Claude Code. It took about 2 hours of back-and-forth, but the results match to machine precision. The agent even added proper error handling and documentation that the original never had. Highly recommend for legacy code migration.</p>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">FK</div>
+          <div>
+            <strong class="text-slate-800">Faculty Contributor</strong>
+            <span class="text-slate-400 text-xs"> &bull; Engineering Mechanics (organized original retreat)</span>
+          </div>
         </div>
+        <p class="text-slate-600 text-sm">"The biggest surprise from our retreat was how much faculty productivity improved in the weeks after -- not from fancy ML models, but from simple things like using ChatGPT for grant writing, email drafts, and code debugging. Start simple."</p>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-kth-light flex items-center justify-center text-white font-bold text-xs flex-shrink-0">AK</div>
+          <div>
+            <strong class="text-slate-800">Anna K.</strong>
+            <span class="text-slate-400 text-xs"> &bull; Research</span>
+          </div>
+        </div>
+        <p class="text-slate-600 text-sm">"Used Claude Code to process 200+ Raman spectra that had been sitting on my drive for months. Baseline correction, peak fitting, and a summary report -- all done in about 30 minutes. Would have taken me a full day manually. The key was being very specific about the fitting model (Voigt, not Gaussian) and the baseline method."</p>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">ML</div>
+          <div>
+            <strong class="text-slate-800">Marcus L.</strong>
+            <span class="text-slate-400 text-xs"> &bull; Teaching</span>
+          </div>
+        </div>
+        <p class="text-slate-600 text-sm">"I tried having ChatGPT generate exam questions for my optics course. The first attempt was mediocre -- too textbook-like. When I added 'create questions that test physical intuition, not just formula application' and gave it two example questions I liked, the quality improved dramatically. Context matters."</p>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs flex-shrink-0">ES</div>
+          <div>
+            <strong class="text-slate-800">Erik S.</strong>
+            <span class="text-slate-400 text-xs"> &bull; Productivity</span>
+          </div>
+        </div>
+        <p class="text-slate-600 text-sm">"Converted a 15-year-old Fortran simulation code to Python using Claude Code. It took about 2 hours of back-and-forth, but the results match to machine precision. The agent even added proper error handling and documentation that the original never had. Highly recommend for legacy code migration."</p>
       </div>
     </div>
   </section>
