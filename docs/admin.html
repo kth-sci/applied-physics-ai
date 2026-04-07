@@ -265,11 +265,17 @@ async function loadPageViews() {
       const ux = dx/dist, uy = dy/dist;
       const x1 = p1.x + ux*(nodeR+4), y1 = p1.y + uy*(nodeR+4);
       const x2 = p2.x - ux*(nodeR+8), y2 = p2.y - uy*(nodeR+8);
-      arrows += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#6366f1" stroke-width="${thickness}" opacity="${opacity}" marker-end="url(#arrowhead)"/>`;
+      // Draw line with rounded cap
+      arrows += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#818cf8" stroke-width="${thickness}" opacity="${opacity}" stroke-linecap="round"/>`;
+      // Draw arrowhead as a small triangle matching the line's opacity and color
+      const ax = x2 - ux*8, ay = y2 - uy*8;
+      const px1 = ax + uy*thickness*1.5, py1 = ay - ux*thickness*1.5;
+      const px2 = ax - uy*thickness*1.5, py2 = ay + ux*thickness*1.5;
+      arrows += `<polygon points="${x2},${y2} ${px1},${py1} ${px2},${py2}" fill="#818cf8" opacity="${opacity}"/>`;
       // Count label at midpoint
       if (count > 1) {
         const mx = (x1+x2)/2, my = (y1+y2)/2;
-        arrows += `<text x="${mx}" y="${my-4}" text-anchor="middle" font-family="Inter" font-size="8" fill="#6366f1" opacity="0.35">${count}</text>`;
+        arrows += `<text x="${mx}" y="${my-4}" text-anchor="middle" font-family="Inter" font-size="8" fill="#818cf8" opacity="${Math.min(opacity*1.5, 0.5)}">${count}</text>`;
       }
     });
 
@@ -295,7 +301,7 @@ async function loadPageViews() {
       <p style="font-size:0.75rem;color:#94a3b8;margin:0 0 1rem">How visitors move between pages. Arrow thickness = transition frequency. Node size = page views.</p>
       <div style="overflow-x:auto;text-align:center">
         <svg width="${svgW}" height="${svgH}" viewBox="0 0 ${svgW} ${svgH}" style="max-width:100%">
-          <defs><marker id="arrowhead" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto"><polygon points="0 0, 6 2.5, 0 5" fill="#6366f1" opacity="0.35"/></marker></defs>
+          <!-- arrows drawn inline with matching arrowheads -->
           ${arrows}
           ${nodes}
         </svg>
