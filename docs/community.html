@@ -45,6 +45,17 @@
     <p class="text-slate-600 text-sm">This space is for Applied Physics faculty and researchers to exchange experiences with AI tools. Whether you just built your first ChatGPT prompt or automated an entire analysis pipeline with Claude Code, your experience is valuable to others in the department.</p>
   </section>
 
+  <!-- Voices from Colleagues (loaded from Hypha) -->
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Voices from Colleagues</h2>
+    <p class="text-slate-500 mb-6">Perspectives, experiences, and reflections from faculty on using AI in their work.</p>
+    <div id="community-tips" class="space-y-4">
+      <div style="text-align:center;padding:2rem;color:#94a3b8;font-size:0.875rem;border:1px dashed #e2e8f0;border-radius:12px">
+        Loading...
+      </div>
+    </div>
+  </section>
+
   <!-- Discussion Topics -->
   <section class="mb-16">
     <h2 class="text-2xl font-bold text-slate-900 mb-2">Discussion Topics</h2>
@@ -141,17 +152,6 @@
             <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">4 replies</span>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Voices from Colleagues -->
-  <section class="mb-16">
-    <h2 class="text-2xl font-bold text-slate-900 mb-2">Voices from Colleagues</h2>
-    <p class="text-slate-500 mb-6">Perspectives, experiences, and reflections from faculty on using AI in their work.</p>
-    <div id="community-tips" class="space-y-4">
-      <div style="text-align:center;padding:2rem;color:#94a3b8;font-size:0.875rem;border:1px dashed #e2e8f0;border-radius:12px">
-        No tips shared yet. Be the first to share your experience below!
       </div>
     </div>
   </section>
@@ -304,7 +304,7 @@ const avatarColors = ['#6366f1','#f97316','#10b981','#2563eb','#ec4899','#8b5cf6
 // Source: kth.se/aphys, kth.se/physics, kth.se/tekmek, kth.se/math
 const facultyKeywords = {
   'jonas sellberg': 'X-ray physics, ultrafast science',
-  'wei ouyang': 'AI for bioimaging, computational microscopy',
+  'wei ouyang': 'Data-Driven Life Sciences Fellow, AI Imaging and Modeling, AICell Lab',
   'linda lundström': 'visual optics, ophthalmic optics',
   'hans hertz': 'X-ray optics, biomedical imaging',
   'jerker widengren': 'fluorescence spectroscopy, single-molecule',
@@ -338,7 +338,8 @@ function renderTip(m, pinned) {
   const color = avatarColors[Math.abs([...initial].reduce((a,c)=>a+c.charCodeAt(0),0)) % avatarColors.length];
   const pinBadge = pinned ? '<span style="font-size:0.65rem;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:4px;font-weight:600;margin-left:0.5rem">Pinned</span>' : '';
   const keywords = lookupKeywords(m.name);
-  const kwBadge = keywords ? `<span class="text-slate-400 text-xs"> &bull; ${keywords}</span>` : '';
+  const kwParts = keywords ? keywords.split(',').map(k => k.trim()).join(' &bull; ') : '';
+  const kwBadge = kwParts ? `<span class="text-slate-400 text-xs"> &bull; ${kwParts}</span>` : '';
   const topicBadge = `<span class="text-slate-400 text-xs"> &bull; ${m.topic||'General'}</span>`;
   const msgHtml = linkify((m.message||'').replace(/</g,'&lt;'));
   return `<div class="bg-white border border-slate-200 rounded-xl p-5">
