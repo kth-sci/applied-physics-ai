@@ -71,15 +71,21 @@
       </div>
     </div>
 
-    <!-- Tabs: Feedback vs Gallery Submissions -->
-    <div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem">
-      <button id="tab-feedback-btn" onclick="switchAdminTab('feedback')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid #6366f1;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;font-weight:600;color:#0f172a;cursor:pointer">Page Feedback</button>
-      <button id="tab-submissions-btn" onclick="switchAdminTab('submissions')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer">Gallery Submissions</button>
-      <button id="tab-attendees-btn" onclick="switchAdminTab('attendees')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer">Attendees</button>
+    <!-- Tabs -->
+    <div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem;overflow-x:auto">
+      <button id="tab-pageviews-btn" onclick="switchAdminTab('pageviews')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid #6366f1;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;font-weight:600;color:#0f172a;cursor:pointer;white-space:nowrap">Page Views</button>
+      <button id="tab-feedback-btn" onclick="switchAdminTab('feedback')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Page Feedback</button>
+      <button id="tab-submissions-btn" onclick="switchAdminTab('submissions')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Gallery Submissions</button>
+      <button id="tab-attendees-btn" onclick="switchAdminTab('attendees')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Attendees</button>
+    </div>
+
+    <!-- Page Views analytics -->
+    <div id="tab-pageviews" style="display:flex;flex-direction:column;gap:1.5rem">
+      <div style="text-align:center;padding:3rem;color:#94a3b8">Loading analytics...</div>
     </div>
 
     <!-- Feedback list -->
-    <div id="tab-feedback" style="display:flex;flex-direction:column;gap:0.75rem">
+    <div id="tab-feedback" style="display:none;flex-direction:column;gap:0.75rem">
       <div style="text-align:center;padding:3rem;color:#94a3b8">Loading feedback...</div>
     </div>
 
@@ -100,6 +106,9 @@ const HYPHA = 'https://hypha.aicell.io';
 const FEEDBACK_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-feedback/children`;
 const GALLERY_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-gallery/children`;
 const REG_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-registrations/children`;
+const NAV_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-navigation/children`;
+const PAGES = ['index','getting-started','chatgpt-quickstart','ai-agents','gallery','events','community'];
+const PAGE_LABELS = {index:'Home',  'getting-started':'Get Started', 'chatgpt-quickstart':'ChatGPT Guide', 'ai-agents':'AI Agents', gallery:'Gallery', events:'Events', community:'Community'};
 const ADMIN_PASS = 'aphys2026';
 const SESSION_ID = '53be87cd-3c5a-4899-b792-b78821590dee';
 const TOKEN = sessionStorage.getItem('hypha-token') || '';
@@ -129,9 +138,9 @@ if (sessionStorage.getItem('admin-auth')) {
   loadAll();
 }
 
-function loadAll() { loadFeedback(); loadSubmissions(); loadAttendees(); }
+function loadAll() { loadPageViews(); loadFeedback(); loadSubmissions(); loadAttendees(); }
 
-const adminTabs = ['feedback', 'submissions', 'attendees'];
+const adminTabs = ['pageviews', 'feedback', 'submissions', 'attendees'];
 function switchAdminTab(tab) {
   adminTabs.forEach(t => {
     const panel = document.getElementById('tab-' + t);
@@ -143,6 +152,224 @@ function switchAdminTab(tab) {
       btn.style.fontWeight = t === tab ? '600' : '400';
     }
   });
+}
+
+// ===== PAGE VIEWS ANALYTICS =====
+async function loadPageViews() {
+  const container = document.getElementById('tab-pageviews');
+  container.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">Loading analytics...</div>';
+
+  try {
+    // 1. Fetch view counts for all pages
+    const viewPromises = PAGES.map(p =>
+      fetch(`${HYPHA}/kth-sci/artifacts/views-${p}?silent=true`).then(r=>r.json()).catch(()=>({view_count:0}))
+    );
+    const viewData = await Promise.all(viewPromises);
+    const views = {};
+    let totalViews = 0;
+    PAGES.forEach((p,i) => { views[p] = Math.round(viewData[i].view_count||0); totalViews += views[p]; });
+
+    // 2. Fetch navigation data
+    const navRes = await fetch(`${NAV_URL}?pagination=true&limit=1000&silent=true`);
+    const navData = await navRes.json();
+    const navItems = navData.items || [];
+
+    // Aggregate transitions
+    const transitions = {}; // "from→to" => count
+    const sessions = new Set();
+    const sessionPages = {}; // sid => [pages]
+    navItems.forEach(item => {
+      const m = item.manifest || {};
+      const from = m.from || 'external';
+      const to = m.to || '?';
+      const key = from + '→' + to;
+      transitions[key] = (transitions[key] || 0) + 1;
+      if (m.session) {
+        sessions.add(m.session);
+        if (!sessionPages[m.session]) sessionPages[m.session] = [];
+        sessionPages[m.session].push(to);
+      }
+    });
+
+    // 3. Calculate churn & dropout
+    const sessionList = Object.values(sessionPages);
+    const totalSessions = sessionList.length;
+    const singlePageSessions = sessionList.filter(s => s.length <= 1).length;
+    const bounceRate = totalSessions > 0 ? Math.round(singlePageSessions / totalSessions * 100) : 0;
+    const avgPages = totalSessions > 0 ? (sessionList.reduce((a,s) => a+s.length, 0) / totalSessions).toFixed(1) : '0';
+
+    // Exit pages (last page in each session)
+    const exitCounts = {};
+    sessionList.forEach(s => { if(s.length) { const last = s[s.length-1]; exitCounts[last]=(exitCounts[last]||0)+1; }});
+
+    // Entry pages (from external)
+    const entryCounts = {};
+    navItems.forEach(item => {
+      const m = item.manifest||{};
+      if (m.from === 'external' && m.to) entryCounts[m.to] = (entryCounts[m.to]||0)+1;
+    });
+
+    // 4. Render
+    const maxViews = Math.max(...Object.values(views), 1);
+
+    // Sort pages by views descending
+    const sortedPages = [...PAGES].sort((a,b) => (views[b]||0) - (views[a]||0));
+
+    let html = '';
+
+    // ── Stats row ──
+    html += `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center">
+        <div style="font-size:1.75rem;font-weight:800;color:#0f172a">${totalViews.toLocaleString()}</div>
+        <div style="font-size:0.72rem;color:#94a3b8;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Total Page Views</div>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center">
+        <div style="font-size:1.75rem;font-weight:800;color:#6366f1">${totalSessions.toLocaleString()}</div>
+        <div style="font-size:0.72rem;color:#6366f1;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Sessions</div>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center">
+        <div style="font-size:1.75rem;font-weight:800;color:#f97316">${bounceRate}%</div>
+        <div style="font-size:0.72rem;color:#f97316;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Bounce Rate</div>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center">
+        <div style="font-size:1.75rem;font-weight:800;color:#10b981">${avgPages}</div>
+        <div style="font-size:0.72rem;color:#10b981;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Avg Pages / Session</div>
+      </div>
+    </div>`;
+
+    // ── Bar chart ──
+    html += `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1.5rem">
+      <h3 style="font-size:1rem;font-weight:700;color:#0f172a;margin:0 0 1rem">Page Views</h3>
+      <div style="display:flex;flex-direction:column;gap:0.6rem">`;
+    sortedPages.forEach(p => {
+      const v = views[p] || 0;
+      const pct = maxViews > 0 ? (v / maxViews * 100) : 0;
+      html += `<div style="display:grid;grid-template-columns:120px 1fr 50px;gap:0.75rem;align-items:center;font-size:0.82rem">
+        <span style="color:#475569;font-weight:500;text-align:right">${PAGE_LABELS[p]||p}</span>
+        <div style="background:#f1f5f9;border-radius:4px;height:24px;overflow:hidden">
+          <div style="background:linear-gradient(90deg,#6366f1,#818cf8);height:100%;width:${pct}%;border-radius:4px;transition:width 0.5s"></div>
+        </div>
+        <span style="color:#0f172a;font-weight:700;font-size:0.82rem">${v.toLocaleString()}</span>
+      </div>`;
+    });
+    html += `</div></div>`;
+
+    // ── Navigation Flow Network (SVG) ──
+    const nodeR = 32;
+    const svgW = 700, svgH = 420;
+    const cx = svgW/2, cy = svgH/2;
+    // Position pages in a circle + external at top
+    const allNodes = ['external', ...PAGES];
+    const nodePos = {};
+    allNodes.forEach((n,i) => {
+      if (n === 'external') {
+        nodePos[n] = { x: cx, y: 40 };
+      } else {
+        const angle = ((i-1) / PAGES.length) * Math.PI * 2 - Math.PI/2;
+        nodePos[n] = { x: cx + Math.cos(angle) * 160, y: cy + 30 + Math.sin(angle) * 140 };
+      }
+    });
+
+    const maxTrans = Math.max(...Object.values(transitions), 1);
+    let arrows = '';
+    Object.entries(transitions).forEach(([key, count]) => {
+      const [from,to] = key.split('→');
+      const p1 = nodePos[from], p2 = nodePos[to];
+      if (!p1 || !p2 || from === to) return;
+      const thickness = Math.max(1, (count / maxTrans) * 6);
+      const opacity = Math.max(0.15, Math.min(0.7, count / maxTrans));
+      // Shorten arrow to not overlap nodes
+      const dx = p2.x-p1.x, dy = p2.y-p1.y, dist = Math.sqrt(dx*dx+dy*dy);
+      if (dist < 1) return;
+      const ux = dx/dist, uy = dy/dist;
+      const x1 = p1.x + ux*(nodeR+4), y1 = p1.y + uy*(nodeR+4);
+      const x2 = p2.x - ux*(nodeR+8), y2 = p2.y - uy*(nodeR+8);
+      arrows += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#6366f1" stroke-width="${thickness}" opacity="${opacity}" marker-end="url(#arrowhead)"/>`;
+      // Count label at midpoint
+      if (count > 1) {
+        const mx = (x1+x2)/2, my = (y1+y2)/2;
+        arrows += `<text x="${mx}" y="${my-4}" text-anchor="middle" font-family="Inter" font-size="9" fill="#6366f1" opacity="0.7">${count}</text>`;
+      }
+    });
+
+    let nodes = '';
+    allNodes.forEach(n => {
+      const pos = nodePos[n];
+      const isExt = n === 'external';
+      const v = views[n] || 0;
+      const fill = isExt ? '#94a3b8' : '#6366f1';
+      const r = isExt ? 24 : Math.max(22, Math.min(38, 22 + (v/maxViews)*16));
+      nodes += `<circle cx="${pos.x}" cy="${pos.y}" r="${r}" fill="${fill}" opacity="0.9"/>`;
+      nodes += `<text x="${pos.x}" y="${pos.y + (isExt?3:2)}" text-anchor="middle" font-family="Inter" font-size="${isExt?8:9}" font-weight="600" fill="#fff">${isExt?'External':(PAGE_LABELS[n]||n).split(' ')[0]}</text>`;
+      if (!isExt) {
+        nodes += `<text x="${pos.x}" y="${pos.y + r + 14}" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#0f172a">${v}</text>`;
+      }
+    });
+
+    html += `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1.5rem">
+      <h3 style="font-size:1rem;font-weight:700;color:#0f172a;margin:0 0 0.5rem">Navigation Flow</h3>
+      <p style="font-size:0.75rem;color:#94a3b8;margin:0 0 1rem">How visitors move between pages. Arrow thickness = transition frequency. Node size = page views.</p>
+      <div style="overflow-x:auto;text-align:center">
+        <svg width="${svgW}" height="${svgH}" viewBox="0 0 ${svgW} ${svgH}" style="max-width:100%">
+          <defs><marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#6366f1" opacity="0.6"/></marker></defs>
+          ${arrows}
+          ${nodes}
+        </svg>
+      </div>
+    </div>`;
+
+    // ── Entry & Exit pages ──
+    html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">`;
+
+    // Entry points
+    html += `<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:1.25rem">
+      <h3 style="font-size:0.9rem;font-weight:700;color:#166534;margin:0 0 0.75rem">Entry Points (from external)</h3>`;
+    const sortedEntry = Object.entries(entryCounts).sort((a,b)=>b[1]-a[1]);
+    if (sortedEntry.length) {
+      sortedEntry.forEach(([p,c]) => {
+        html += `<div style="display:flex;justify-content:space-between;padding:0.3rem 0;font-size:0.82rem;border-bottom:1px solid #dcfce7">
+          <span style="color:#166534">${PAGE_LABELS[p]||p}</span><span style="font-weight:700;color:#166534">${c}</span></div>`;
+      });
+    } else { html += `<div style="color:#94a3b8;font-size:0.82rem">No data yet</div>`; }
+    html += `</div>`;
+
+    // Exit points (dropout)
+    html += `<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:1.25rem">
+      <h3 style="font-size:0.9rem;font-weight:700;color:#991b1b;margin:0 0 0.75rem">Dropout Pages (last page before leaving)</h3>`;
+    const sortedExit = Object.entries(exitCounts).sort((a,b)=>b[1]-a[1]);
+    if (sortedExit.length) {
+      sortedExit.forEach(([p,c]) => {
+        const dropPct = totalSessions > 0 ? Math.round(c/totalSessions*100) : 0;
+        html += `<div style="display:flex;justify-content:space-between;padding:0.3rem 0;font-size:0.82rem;border-bottom:1px solid #fecaca">
+          <span style="color:#991b1b">${PAGE_LABELS[p]||p}</span><span style="font-weight:700;color:#991b1b">${c} <span style="font-weight:400;opacity:0.6">(${dropPct}%)</span></span></div>`;
+      });
+    } else { html += `<div style="color:#94a3b8;font-size:0.82rem">No data yet</div>`; }
+    html += `</div></div>`;
+
+    // ── Churn summary ──
+    html += `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1.25rem">
+      <h3 style="font-size:0.9rem;font-weight:700;color:#0f172a;margin:0 0 0.75rem">Session Depth Distribution</h3>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">`;
+    const depthCounts = {};
+    sessionList.forEach(s => { const d = Math.min(s.length, 7); depthCounts[d] = (depthCounts[d]||0)+1; });
+    const depthLabels = {1:'1 page',2:'2 pages',3:'3 pages',4:'4 pages',5:'5 pages',6:'6 pages',7:'7+ pages'};
+    for (let d = 1; d <= 7; d++) {
+      const c = depthCounts[d] || 0;
+      const pct = totalSessions > 0 ? Math.round(c/totalSessions*100) : 0;
+      const bg = d === 1 ? '#fef2f2' : d <= 2 ? '#fffbeb' : '#f0fdf4';
+      const color = d === 1 ? '#991b1b' : d <= 2 ? '#92400e' : '#166534';
+      html += `<div style="background:${bg};border-radius:8px;padding:0.5rem 1rem;text-align:center;min-width:80px">
+        <div style="font-size:1.1rem;font-weight:800;color:${color}">${c}</div>
+        <div style="font-size:0.65rem;color:${color};opacity:0.7">${depthLabels[d]} (${pct}%)</div>
+      </div>`;
+    }
+    html += `</div></div>`;
+
+    container.innerHTML = html;
+
+  } catch(e) {
+    container.innerHTML = `<div style="text-align:center;padding:3rem;color:#ef4444">Failed to load analytics: ${e.message}</div>`;
+  }
 }
 
 async function loadFeedback() {
