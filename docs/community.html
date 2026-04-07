@@ -290,6 +290,84 @@
 </footer>
 
 <script src="assets/main.js"></script>
+<script>
+// Override main.js comment form — save to Hypha and load from Hypha
+const HYPHA = 'https://hypha.aicell.io';
+const COMMUNITY_ID = 'kth-sci/aphys-ai-community';
+const COMMUNITY_URL = HYPHA + '/kth-sci/artifacts/aphys-ai-community/children';
+const avatarColors = ['#6366f1','#f97316','#10b981','#2563eb','#ec4899','#8b5cf6','#14b8a6','#f43f5e'];
+
+function renderTip(m, pinned) {
+  const initial = (m.name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const color = avatarColors[Math.abs([...initial].reduce((a,c)=>a+c.charCodeAt(0),0)) % avatarColors.length];
+  const pinBadge = pinned ? '<span style="font-size:0.65rem;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:4px;font-weight:600;margin-left:0.5rem">Pinned</span>' : '';
+  return `<div class="bg-white border border-slate-200 rounded-xl p-5">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-xs flex-shrink-0" style="background:${color}">${initial}</div>
+      <div>
+        <strong class="text-slate-800">${(m.name||'Anonymous').replace(/</g,'&lt;')}</strong>${pinBadge}
+        <span class="text-slate-400 text-xs"> &bull; ${m.topic||'General'}</span>
+      </div>
+    </div>
+    <p class="text-slate-600 text-sm">"${(m.message||'').replace(/</g,'&lt;')}"</p>
+  </div>`;
+}
+
+async function loadCommunityTips() {
+  const container = document.getElementById('community-tips');
+  try {
+    const res = await fetch(COMMUNITY_URL + '?pagination=true&limit=100&silent=true');
+    const data = await res.json();
+    const items = (data.items || []).filter(i => !i.manifest?._hidden);
+    if (!items.length) {
+      container.innerHTML = '<div style="text-align:center;padding:2rem;color:#94a3b8;font-size:0.875rem;border:1px dashed #e2e8f0;border-radius:12px">No tips shared yet. Be the first to share your experience below!</div>';
+      return;
+    }
+    // Pinned first, then by time
+    const pinned = items.filter(i => i.manifest?._highlighted);
+    const rest = items.filter(i => !i.manifest?._highlighted);
+    container.innerHTML = [...pinned.map(i => renderTip(i.manifest, true)), ...rest.map(i => renderTip(i.manifest, false))].join('');
+  } catch(e) {
+    container.innerHTML = '<div style="text-align:center;padding:2rem;color:#94a3b8;font-size:0.875rem">Could not load tips. Try refreshing.</div>';
+  }
+}
+
+// Override the comment form from main.js
+const form = document.getElementById('comment-form');
+if (form) {
+  // Remove old listener by cloning
+  const newForm = form.cloneNode(true);
+  form.parentNode.replaceChild(newForm, form);
+
+  newForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = newForm.querySelector('[name="name"]').value.trim();
+    const topic = newForm.querySelector('[name="topic"]').value;
+    const message = newForm.querySelector('[name="message"]').value.trim();
+    if (!name || !message) return;
+
+    const alias = 'msg-' + Date.now().toString(36) + '-' + name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,8);
+    try {
+      const res = await fetch(HYPHA + '/public/services/artifact-manager/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          alias: alias,
+          parent_id: COMMUNITY_ID,
+          manifest: { name, topic, message, timestamp: new Date().toISOString() }
+        })
+      });
+      const data = await res.json();
+      if (data.id) {
+        newForm.reset();
+        loadCommunityTips();
+      }
+    } catch(err) { alert('Failed to post: ' + err.message); }
+  });
+}
+
+loadCommunityTips();
+</script>
 <script src="assets/feedback.js"></script>
 <script src="assets/pageviews.js"></script>
 </body>
