@@ -685,6 +685,7 @@ async function editCommunityMsg(artifactId) {
       body: JSON.stringify({ artifact_id: artifactId, silent: true })
     });
     const artifact = await readRes.json();
+    if (!artifact.manifest) throw new Error(artifact.detail || 'Could not read message');
     const m = artifact.manifest;
     const newName = prompt('Name:', m.name);
     if (newName === null) return;
@@ -692,23 +693,27 @@ async function editCommunityMsg(artifactId) {
     if (newTopic === null) return;
     const newMsg = prompt('Message:', m.message);
     if (newMsg === null) return;
-    await fetch(`${HYPHA}/public/services/artifact-manager/edit`, {
+    const editRes = await fetch(`${HYPHA}/public/services/artifact-manager/edit`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ artifact_id: artifactId, manifest: { ...m, name: newName, topic: newTopic, message: newMsg } })
     });
+    const editData = await editRes.json();
+    if (editData.detail) throw new Error(editData.detail);
     loadCommunity();
-  } catch(e) { alert('Failed: ' + e.message); }
+  } catch(e) { alert('Edit failed: ' + e.message); }
 }
 
 async function deleteCommunityMsg(artifactId) {
   if (!confirm('Delete this message permanently? This cannot be undone.')) return;
   try {
-    await fetch(`${HYPHA}/public/services/artifact-manager/delete`, {
+    const res = await fetch(`${HYPHA}/public/services/artifact-manager/delete`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ artifact_id: artifactId, delete_files: true })
     });
+    // delete may return null on success
+    try { const d = await res.json(); if (d && d.detail) throw new Error(d.detail); } catch(parseErr) { /* null response = success */ }
     loadCommunity();
-  } catch(e) { alert('Failed: ' + e.message); }
+  } catch(e) { alert('Delete failed: ' + e.message); }
 }
 
 // ===== ATTENDEES =====
