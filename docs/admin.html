@@ -75,6 +75,7 @@
     <div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem">
       <button id="tab-feedback-btn" onclick="switchAdminTab('feedback')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid #6366f1;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;font-weight:600;color:#0f172a;cursor:pointer">Page Feedback</button>
       <button id="tab-submissions-btn" onclick="switchAdminTab('submissions')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer">Gallery Submissions</button>
+      <button id="tab-attendees-btn" onclick="switchAdminTab('attendees')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer">Attendees</button>
     </div>
 
     <!-- Feedback list -->
@@ -86,6 +87,11 @@
     <div id="tab-submissions" style="display:none;flex-direction:column;gap:0.75rem">
       <div style="text-align:center;padding:3rem;color:#94a3b8">Loading submissions...</div>
     </div>
+
+    <!-- Attendees list -->
+    <div id="tab-attendees" style="display:none;flex-direction:column;gap:0.75rem">
+      <div style="text-align:center;padding:3rem;color:#94a3b8">Loading attendees...</div>
+    </div>
   </div>
 </div>
 
@@ -93,6 +99,7 @@
 const HYPHA = 'https://hypha.aicell.io';
 const FEEDBACK_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-feedback/children`;
 const GALLERY_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-gallery/children`;
+const REG_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-registrations/children`;
 const ADMIN_PASS = 'aphys2026';
 const SESSION_ID = '53be87cd-3c5a-4899-b792-b78821590dee';
 const TOKEN = sessionStorage.getItem('hypha-token') || '';
@@ -122,17 +129,20 @@ if (sessionStorage.getItem('admin-auth')) {
   loadAll();
 }
 
-function loadAll() { loadFeedback(); loadSubmissions(); }
+function loadAll() { loadFeedback(); loadSubmissions(); loadAttendees(); }
 
+const adminTabs = ['feedback', 'submissions', 'attendees'];
 function switchAdminTab(tab) {
-  document.getElementById('tab-feedback').style.display = tab === 'feedback' ? 'flex' : 'none';
-  document.getElementById('tab-submissions').style.display = tab === 'submissions' ? 'flex' : 'none';
-  document.getElementById('tab-feedback-btn').style.borderBottomColor = tab === 'feedback' ? '#6366f1' : 'transparent';
-  document.getElementById('tab-feedback-btn').style.color = tab === 'feedback' ? '#0f172a' : '#94a3b8';
-  document.getElementById('tab-feedback-btn').style.fontWeight = tab === 'feedback' ? '600' : '400';
-  document.getElementById('tab-submissions-btn').style.borderBottomColor = tab === 'submissions' ? '#6366f1' : 'transparent';
-  document.getElementById('tab-submissions-btn').style.color = tab === 'submissions' ? '#0f172a' : '#94a3b8';
-  document.getElementById('tab-submissions-btn').style.fontWeight = tab === 'submissions' ? '600' : '400';
+  adminTabs.forEach(t => {
+    const panel = document.getElementById('tab-' + t);
+    const btn = document.getElementById('tab-' + t + '-btn');
+    if (panel) panel.style.display = t === tab ? 'flex' : 'none';
+    if (btn) {
+      btn.style.borderBottomColor = t === tab ? '#6366f1' : 'transparent';
+      btn.style.color = t === tab ? '#0f172a' : '#94a3b8';
+      btn.style.fontWeight = t === tab ? '600' : '400';
+    }
+  });
 }
 
 async function loadFeedback() {
@@ -343,6 +353,75 @@ async function editSubmission(artifactId) {
     });
     loadSubmissions();
   } catch(e) { alert('Failed: ' + e.message); }
+}
+
+// ===== ATTENDEES =====
+async function loadAttendees() {
+  const list = document.getElementById('tab-attendees');
+  list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">Loading...</div>';
+
+  try {
+    const res = await fetch(`${REG_URL}?pagination=true&limit=200&silent=true`);
+    const data = await res.json();
+    const items = (data.items || []).sort((a,b) => (b.manifest?.timestamp||'').localeCompare(a.manifest?.timestamp||''));
+
+    const albanova = items.filter(i => i.manifest?.attendance === 'AlbaNova').length;
+    const zoom = items.filter(i => i.manifest?.attendance === 'Zoom').length;
+
+    if (!items.length) {
+      list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">No registrations yet.</div>';
+      return;
+    }
+
+    const header = `
+    <div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+        <div style="font-size:1.5rem;font-weight:800;color:#0f172a">${items.length}</div>
+        <div style="font-size:0.72rem;color:#94a3b8;font-weight:500;text-transform:uppercase">Total Registered</div>
+      </div>
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+        <div style="font-size:1.5rem;font-weight:800;color:#c2410c">${albanova}</div>
+        <div style="font-size:0.72rem;color:#c2410c;font-weight:500;text-transform:uppercase">AlbaNova</div>
+      </div>
+      <div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+        <div style="font-size:1.5rem;font-weight:800;color:#6366f1">${zoom}</div>
+        <div style="font-size:0.72rem;color:#6366f1;font-weight:500;text-transform:uppercase">Zoom</div>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:separate;border-spacing:0;border-radius:10px;overflow:hidden;font-size:0.82rem">
+      <thead>
+        <tr style="background:#1e293b;color:#fff">
+          <th style="text-align:left;padding:0.6rem 0.75rem;font-weight:600">#</th>
+          <th style="text-align:left;padding:0.6rem 0.75rem;font-weight:600">Name</th>
+          <th style="text-align:left;padding:0.6rem 0.75rem;font-weight:600">Email</th>
+          <th style="text-align:left;padding:0.6rem 0.75rem;font-weight:600">Attendance</th>
+          <th style="text-align:left;padding:0.6rem 0.75rem;font-weight:600">AI Experience</th>
+          <th style="text-align:left;padding:0.6rem 0.75rem;font-weight:600">Registered</th>
+        </tr>
+      </thead>
+      <tbody>` +
+    items.map((item, i) => {
+      const m = item.manifest || {};
+      const ts = m.timestamp ? new Date(m.timestamp).toLocaleDateString() : '?';
+      const attColor = m.attendance === 'AlbaNova' ? '#c2410c' : '#6366f1';
+      const attBg = m.attendance === 'AlbaNova' ? '#fff7ed' : '#eef2ff';
+      return `<tr style="border-bottom:1px solid #f1f5f9;background:${i%2===0?'#fff':'#f8fafc'}">
+        <td style="padding:0.5rem 0.75rem;color:#94a3b8">${i+1}</td>
+        <td style="padding:0.5rem 0.75rem;font-weight:500;color:#0f172a">${(m.name||'?').replace(/</g,'&lt;')}</td>
+        <td style="padding:0.5rem 0.75rem;color:#475569">${(m.email||'?').replace(/</g,'&lt;')}</td>
+        <td style="padding:0.5rem 0.75rem"><span style="font-size:0.72rem;font-weight:600;padding:2px 8px;border-radius:4px;background:${attBg};color:${attColor}">${m.attendance||'?'}</span></td>
+        <td style="padding:0.5rem 0.75rem;color:#64748b">${m.experience||'—'}</td>
+        <td style="padding:0.5rem 0.75rem;color:#94a3b8">${ts}</td>
+      </tr>`;
+    }).join('') +
+    `</tbody></table></div>`;
+
+    list.innerHTML = header;
+
+  } catch(e) {
+    list.innerHTML = '<div style="text-align:center;padding:3rem;color:#ef4444">Failed: ' + e.message + '</div>';
+  }
 }
 </script>
 </body>
