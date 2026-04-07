@@ -96,21 +96,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---- Comment form ----
-  const form = document.getElementById('comment-form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = form.querySelector('[name="name"]').value.trim();
-      const msg = form.querySelector('[name="message"]').value.trim();
-      if (!name || !msg) return;
-      const list = document.getElementById('comment-list');
-      const card = document.createElement('div');
-      card.className = 'flex gap-3 p-4 bg-white border border-slate-200 rounded-xl';
-      card.innerHTML = `<div class="w-9 h-9 bg-accent rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">${name.charAt(0).toUpperCase()}</div>
-        <div class="flex-1"><div class="text-xs text-slate-400 mb-1"><strong class="text-slate-700">${name}</strong> &bull; just now</div><p class="text-sm text-slate-600">${msg.replace(/</g,'&lt;')}</p></div>`;
-      list.prepend(card);
-      form.reset();
-    });
-  }
+  // Comment form handler removed — community.html has its own Hypha-backed handler
 });

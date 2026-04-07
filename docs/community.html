@@ -332,39 +332,47 @@ async function loadCommunityTips() {
   }
 }
 
-// Override the comment form from main.js
-const form = document.getElementById('comment-form');
-if (form) {
-  // Remove old listener by cloning
-  const newForm = form.cloneNode(true);
-  form.parentNode.replaceChild(newForm, form);
+// Attach form handler directly (main.js no longer handles comment-form)
+document.getElementById('comment-form')?.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const name = form.querySelector('[name="name"]').value.trim();
+  const topic = form.querySelector('[name="topic"]').value;
+  const message = form.querySelector('[name="message"]').value.trim();
+  if (!name || !message) return;
 
-  newForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const name = newForm.querySelector('[name="name"]').value.trim();
-    const topic = newForm.querySelector('[name="topic"]').value;
-    const message = newForm.querySelector('[name="message"]').value.trim();
-    if (!name || !message) return;
+  const btn = form.querySelector('button[type="submit"]');
+  const origText = btn.textContent;
+  btn.textContent = 'Posting...';
+  btn.disabled = true;
 
-    const alias = 'msg-' + Date.now().toString(36) + '-' + name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,8);
-    try {
-      const res = await fetch(HYPHA + '/public/services/artifact-manager/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          alias: alias,
-          parent_id: COMMUNITY_ID,
-          manifest: { name, topic, message, timestamp: new Date().toISOString() }
-        })
-      });
-      const data = await res.json();
-      if (data.id) {
-        newForm.reset();
-        loadCommunityTips();
-      }
-    } catch(err) { alert('Failed to post: ' + err.message); }
-  });
-}
+  const alias = 'msg-' + Date.now().toString(36) + '-' + name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,8);
+  try {
+    const res = await fetch(HYPHA + '/public/services/artifact-manager/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        alias: alias,
+        parent_id: COMMUNITY_ID,
+        manifest: { name, topic, message, timestamp: new Date().toISOString() }
+      })
+    });
+    const data = await res.json();
+    if (data.id) {
+      form.reset();
+      btn.textContent = 'Posted!';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = origText; btn.style.background = ''; btn.disabled = false; }, 2000);
+      loadCommunityTips();
+    } else {
+      throw new Error(data.detail || 'Unknown error');
+    }
+  } catch(err) {
+    alert('Failed to post: ' + err.message);
+    btn.textContent = origText;
+    btn.disabled = false;
+  }
+});
 
 loadCommunityTips();
 </script>
