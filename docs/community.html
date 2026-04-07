@@ -145,10 +145,10 @@
     </div>
   </section>
 
-  <!-- Tips from Colleagues (user-submitted only) -->
+  <!-- Voices from Colleagues -->
   <section class="mb-16">
-    <h2 class="text-2xl font-bold text-slate-900 mb-2">Tips from Colleagues</h2>
-    <p class="text-slate-500 mb-6">Quick insights and recommendations from faculty who are already using AI.</p>
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Voices from Colleagues</h2>
+    <p class="text-slate-500 mb-6">Perspectives, experiences, and reflections from faculty on using AI in their work.</p>
     <div id="community-tips" class="space-y-4">
       <div style="text-align:center;padding:2rem;color:#94a3b8;font-size:0.875rem;border:1px dashed #e2e8f0;border-radius:12px">
         No tips shared yet. Be the first to share your experience below!
@@ -348,7 +348,7 @@ function renderTip(m, pinned) {
         <strong class="text-slate-800">${(m.name||'Anonymous').replace(/</g,'&lt;')}</strong>${pinBadge}${kwBadge}${topicBadge}
       </div>
     </div>
-    <p class="text-slate-600 text-sm">"${msgHtml}"</p>
+    <p style="color:#475569;font-size:0.95rem;font-style:italic;line-height:1.7">"${msgHtml.replace(/\n/g,'<br>')}"</p>
   </div>`;
 }
 
