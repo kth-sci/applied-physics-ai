@@ -339,13 +339,13 @@ function renderTip(m, pinned) {
   const pinBadge = pinned ? '<span style="font-size:0.65rem;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:4px;font-weight:600;margin-left:0.5rem">Pinned</span>' : '';
   const keywords = lookupKeywords(m.name);
   const kwBadge = keywords ? `<span class="text-slate-400 text-xs"> &bull; ${keywords}</span>` : '';
+  const topicBadge = `<span class="text-slate-400 text-xs"> &bull; ${m.topic||'General'}</span>`;
   const msgHtml = linkify((m.message||'').replace(/</g,'&lt;'));
   return `<div class="bg-white border border-slate-200 rounded-xl p-5">
     <div class="flex items-center gap-3 mb-3">
       <div class="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-xs flex-shrink-0" style="background:${color}">${initial}</div>
       <div>
-        <strong class="text-slate-800">${(m.name||'Anonymous').replace(/</g,'&lt;')}</strong>${pinBadge}
-        <span class="text-slate-400 text-xs"> &bull; ${m.topic||'General'}</span>${kwBadge}
+        <strong class="text-slate-800">${(m.name||'Anonymous').replace(/</g,'&lt;')}</strong>${pinBadge}${kwBadge}${topicBadge}
       </div>
     </div>
     <p class="text-slate-600 text-sm">"${msgHtml}"</p>
