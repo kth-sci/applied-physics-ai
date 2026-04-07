@@ -43,32 +43,12 @@
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem">
       <div>
-        <h1 style="font-size:1.75rem;font-weight:800;color:#0f172a;margin:0">Feedback Dashboard</h1>
-        <p style="color:#64748b;font-size:0.875rem;margin:0.25rem 0 0">All user feedback from the "Is this useful?" widget.</p>
+        <h1 style="font-size:1.75rem;font-weight:800;color:#0f172a;margin:0">Admin Dashboard</h1>
+        <p style="color:#64748b;font-size:0.875rem;margin:0.25rem 0 0">Analytics, feedback, submissions, and event registrations.</p>
       </div>
-      <button onclick="loadFeedback()" style="background:#f1f5f9;color:#475569;font-weight:500;padding:0.4rem 1rem;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:0.82rem;font-family:inherit">
-        Refresh
+      <button onclick="loadAll()" style="background:#f1f5f9;color:#475569;font-weight:500;padding:0.4rem 1rem;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:0.82rem;font-family:inherit">
+        Refresh All
       </button>
-    </div>
-
-    <!-- Stats -->
-    <div id="stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem">
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center">
-        <div id="stat-total" style="font-size:1.75rem;font-weight:800;color:#0f172a">-</div>
-        <div style="font-size:0.75rem;color:#94a3b8;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Total</div>
-      </div>
-      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:1rem;text-align:center">
-        <div id="stat-up" style="font-size:1.75rem;font-weight:800;color:#16a34a">-</div>
-        <div style="font-size:0.75rem;color:#16a34a;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Thumbs Up</div>
-      </div>
-      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:1rem;text-align:center">
-        <div id="stat-down" style="font-size:1.75rem;font-weight:800;color:#dc2626">-</div>
-        <div style="font-size:0.75rem;color:#dc2626;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Needs Work</div>
-      </div>
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center">
-        <div id="stat-comments" style="font-size:1.75rem;font-weight:800;color:#6366f1">-</div>
-        <div style="font-size:0.75rem;color:#6366f1;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">With Comments</div>
-      </div>
     </div>
 
     <!-- Tabs -->
@@ -108,7 +88,8 @@ const GALLERY_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-gallery/children`;
 const REG_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-registrations/children`;
 const NAV_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-navigation/children`;
 const PAGES = ['index','getting-started','chatgpt-quickstart','ai-agents','gallery','events','community'];
-const PAGE_LABELS = {index:'Home',  'getting-started':'Get Started', 'chatgpt-quickstart':'ChatGPT Guide', 'ai-agents':'AI Agents', gallery:'Gallery', events:'Events', community:'Community'};
+const PAGE_LABELS = {index:'Home', 'getting-started':'Getting Started', 'chatgpt-quickstart':'ChatGPT Guide', 'ai-agents':'AI Agents', gallery:'Gallery', events:'Events', community:'Community'};
+const NODE_LABELS = {index:'Home', 'getting-started':'Getting\nStarted', 'chatgpt-quickstart':'ChatGPT', 'ai-agents':'AI Agents', gallery:'Gallery', events:'Events', community:'Community'};
 const ADMIN_PASS = 'aphys2026';
 const SESSION_ID = '53be87cd-3c5a-4899-b792-b78821590dee';
 const TOKEN = sessionStorage.getItem('hypha-token') || '';
@@ -276,8 +257,8 @@ async function loadPageViews() {
       const [from,to] = key.split('→');
       const p1 = nodePos[from], p2 = nodePos[to];
       if (!p1 || !p2 || from === to) return;
-      const thickness = Math.max(1, (count / maxTrans) * 6);
-      const opacity = Math.max(0.15, Math.min(0.7, count / maxTrans));
+      const thickness = Math.max(0.5, (count / maxTrans) * 3);
+      const opacity = Math.max(0.08, Math.min(0.35, count / maxTrans));
       // Shorten arrow to not overlap nodes
       const dx = p2.x-p1.x, dy = p2.y-p1.y, dist = Math.sqrt(dx*dx+dy*dy);
       if (dist < 1) return;
@@ -288,7 +269,7 @@ async function loadPageViews() {
       // Count label at midpoint
       if (count > 1) {
         const mx = (x1+x2)/2, my = (y1+y2)/2;
-        arrows += `<text x="${mx}" y="${my-4}" text-anchor="middle" font-family="Inter" font-size="9" fill="#6366f1" opacity="0.7">${count}</text>`;
+        arrows += `<text x="${mx}" y="${my-4}" text-anchor="middle" font-family="Inter" font-size="8" fill="#6366f1" opacity="0.35">${count}</text>`;
       }
     });
 
@@ -300,7 +281,10 @@ async function loadPageViews() {
       const fill = isExt ? '#94a3b8' : '#6366f1';
       const r = isExt ? 24 : Math.max(22, Math.min(38, 22 + (v/maxViews)*16));
       nodes += `<circle cx="${pos.x}" cy="${pos.y}" r="${r}" fill="${fill}" opacity="0.9"/>`;
-      nodes += `<text x="${pos.x}" y="${pos.y + (isExt?3:2)}" text-anchor="middle" font-family="Inter" font-size="${isExt?8:9}" font-weight="600" fill="#fff">${isExt?'External':(PAGE_LABELS[n]||n).split(' ')[0]}</text>`;
+      const label = isExt ? 'External' : (NODE_LABELS[n]||n);
+      const lines = label.split('\n');
+      const ly = pos.y - (lines.length-1)*5 + 2;
+      nodes += lines.map((l,li) => `<text x="${pos.x}" y="${ly+li*11}" text-anchor="middle" font-family="Inter" font-size="${isExt?8:8}" font-weight="600" fill="#fff">${l}</text>`).join('');
       if (!isExt) {
         nodes += `<text x="${pos.x}" y="${pos.y + r + 14}" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#0f172a">${v}</text>`;
       }
@@ -311,7 +295,7 @@ async function loadPageViews() {
       <p style="font-size:0.75rem;color:#94a3b8;margin:0 0 1rem">How visitors move between pages. Arrow thickness = transition frequency. Node size = page views.</p>
       <div style="overflow-x:auto;text-align:center">
         <svg width="${svgW}" height="${svgH}" viewBox="0 0 ${svgW} ${svgH}" style="max-width:100%">
-          <defs><marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#6366f1" opacity="0.6"/></marker></defs>
+          <defs><marker id="arrowhead" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto"><polygon points="0 0, 6 2.5, 0 5" fill="#6366f1" opacity="0.35"/></marker></defs>
           ${arrows}
           ${nodes}
         </svg>
@@ -385,17 +369,37 @@ async function loadFeedback() {
     const ups = items.filter(i => i.manifest?.vote === 'up').length;
     const downs = items.filter(i => i.manifest?.vote === 'down').length;
     const withComments = items.filter(i => i.manifest?.comment).length;
-    document.getElementById('stat-total').textContent = items.length;
-    document.getElementById('stat-up').textContent = ups;
-    document.getElementById('stat-down').textContent = downs;
-    document.getElementById('stat-comments').textContent = withComments;
+
+    // Build stats + description header
+    let html = `
+    <div style="margin-bottom:1rem">
+      <p style="font-size:0.875rem;color:#64748b;margin:0 0 1rem">All user feedback from the "Is this useful?" widget.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:0.75rem;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:#0f172a">${items.length}</div>
+          <div style="font-size:0.7rem;color:#94a3b8;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Total</div>
+        </div>
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:0.75rem;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:#16a34a">${ups}</div>
+          <div style="font-size:0.7rem;color:#16a34a;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Thumbs Up</div>
+        </div>
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:0.75rem;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:#dc2626">${downs}</div>
+          <div style="font-size:0.7rem;color:#dc2626;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Needs Work</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:0.75rem;text-align:center">
+          <div style="font-size:1.5rem;font-weight:800;color:#6366f1">${withComments}</div>
+          <div style="font-size:0.7rem;color:#6366f1;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">With Comments</div>
+        </div>
+      </div>
+    </div>`;
 
     if (!items.length) {
-      list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">No feedback yet.</div>';
+      list.innerHTML = html + '<div style="text-align:center;padding:2rem;color:#94a3b8">No feedback yet.</div>';
       return;
     }
 
-    list.innerHTML = items.map(item => {
+    list.innerHTML = html + items.map(item => {
       const m = item.manifest || {};
       const isUp = m.vote === 'up';
       const borderColor = isUp ? '#bbf7d0' : '#fecaca';
