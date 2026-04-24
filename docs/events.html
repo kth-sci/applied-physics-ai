@@ -383,7 +383,7 @@ document.getElementById('signup-form')?.addEventListener('submit', async functio
     if (data.id) {
       status.style.display = 'block';
       status.style.cssText = 'display:block;padding:0.75rem;border-radius:8px;font-size:0.9rem;font-weight:600;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;text-align:center';
-      status.textContent = 'You are registered! See you on May 8.';
+      status.textContent = 'You are registered! A confirmation email is on its way. See you on May 8.';
       form.querySelectorAll('input,select,button[type=submit]').forEach(el => el.disabled = true);
       // Update count badge
       const badge = document.getElementById('reg-count-badge');

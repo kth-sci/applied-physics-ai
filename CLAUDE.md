@@ -110,14 +110,28 @@ A continuously-running Python process that monitors external events and relays t
 | Slack DMs from Jonas | Feedback, site update requests | Relay to session via `svamp session send` |
 | Slack DMs from Wei | Instructions, requests | Relay to session via `svamp session send` |
 | Hypha gallery | New use case submissions | Notify Wei+Jonas on Slack + relay to session |
+| Hypha registrations | New May 8 tutorial registrations | Send confirmation email + notify organizers |
+| Hypha Claude requests | New / approved / rejected Claude Team seat requests | Send confirmation/decision email + notify organizers |
 
 ### How It Works
 
 - Polls Slack conversations API every 30 seconds for new messages
-- Polls Hypha artifact children endpoint for new gallery items
-- Tracks state in `.daemon_state.json` (last seen timestamps, known artifacts)
+- Polls Hypha artifact children endpoint for new gallery items, registrations, Claude requests
+- Tracks state in `.daemon_state.json` (last seen timestamps, known artifacts, request statuses)
 - Sends alerts to session via `svamp session send <session-id> <message>`
 - Notifies organizers on Slack when new submissions arrive
+- Sends confirmation/decision emails via Gmail SMTP (falls back to Slack notification if SMTP not configured)
+
+### Email setup (Gmail SMTP)
+
+To enable real confirmation emails, add to `.env`:
+```
+SMTP_USER=your.gmail@gmail.com
+SMTP_PASS=your-app-password   # Get one at https://myaccount.google.com/apppasswords (requires 2FA)
+SMTP_FROM_NAME=APHYS AI Initiative
+```
+
+Without SMTP credentials, the daemon falls back to posting the email content as a Slack notification to Wei+Jonas, who can then send manually.
 
 ### Management
 
