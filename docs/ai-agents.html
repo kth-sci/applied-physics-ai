@@ -136,9 +136,13 @@
     <h3 class="text-lg font-bold text-slate-900 mt-6 mb-3">Step 1: Get a Claude Account</h3>
     <ol class="text-slate-600 text-sm space-y-2 list-decimal list-inside leading-relaxed">
       <li>Go to <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">claude.ai</code> and create an account (or log in if you have one)</li>
-      <li>Subscribe to <strong>Claude Max</strong> ($100/month) or request a seat in the <strong>Claude Team</strong> license at Applied Physics</li>
+      <li>Subscribe to <strong>Claude Max</strong> ($100/month) or request a seat in the <strong>Claude Team</strong> license at Applied Physics &mdash; we supply all permanent staff at Applied Physics with a <strong>Claude Team</strong> standard seat when you join the tutorial</li>
       <li>The free Claude.ai plan does <strong>not</strong> include Claude Code access &mdash; a paid plan above <strong>Claude Pro</strong> is now required for Claude Code</li>
     </ol>
+    <div class="mt-4 flex gap-3 flex-wrap">
+      <a href="events.html" class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">Register For Tutorial &rarr;</a>
+      <button onclick="document.getElementById('claude-request-modal').style.display='flex'" class="inline-block bg-white hover:bg-slate-50 text-accent font-semibold text-sm px-5 py-2.5 rounded-lg transition border-2 border-accent">Request a Claude Team Seat</button>
+    </div>
 
     <!-- Claude Team request modal -->
     <div id="claude-request-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;padding:1rem;overflow-y:auto">
