@@ -55,6 +55,7 @@
     <div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem;overflow-x:auto">
       <button id="tab-pageviews-btn" onclick="switchAdminTab('pageviews')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid #6366f1;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;font-weight:600;color:#0f172a;cursor:pointer;white-space:nowrap">Page Views</button>
       <button id="tab-feedback-btn" onclick="switchAdminTab('feedback')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Page Feedback</button>
+      <button id="tab-claude-btn" onclick="switchAdminTab('claude')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Claude Requests</button>
       <button id="tab-submissions-btn" onclick="switchAdminTab('submissions')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Gallery Submissions</button>
       <button id="tab-community-btn" onclick="switchAdminTab('community')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Community Messages</button>
       <button id="tab-discussions-btn" onclick="switchAdminTab('discussions')" style="padding:0.6rem 1.2rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-family:inherit;font-size:0.875rem;color:#94a3b8;cursor:pointer;white-space:nowrap">Discussion Topics</button>
@@ -72,6 +73,10 @@
     </div>
 
     <!-- Gallery submissions list -->
+    <div id="tab-claude" style="display:none;flex-direction:column;gap:0.75rem">
+      <div style="text-align:center;padding:3rem;color:#94a3b8">Loading Claude requests...</div>
+    </div>
+
     <div id="tab-submissions" style="display:none;flex-direction:column;gap:0.75rem">
       <div style="text-align:center;padding:3rem;color:#94a3b8">Loading submissions...</div>
     </div>
@@ -99,6 +104,7 @@ const FEEDBACK_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-feedback/children`;
 const GALLERY_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-gallery/children`;
 const REG_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-registrations/children`;
 const COMM_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-community/children`;
+const CLAUDE_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-claude-requests/children`;
 const DISC_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-discussions/children`;
 const NAV_URL = `${HYPHA}/kth-sci/artifacts/aphys-ai-navigation/children`;
 const PAGES = ['index','getting-started','chatgpt-quickstart','ai-agents','gallery','events','community'];
@@ -133,9 +139,9 @@ if (sessionStorage.getItem('admin-auth')) {
   loadAll();
 }
 
-function loadAll() { loadPageViews(); loadFeedback(); loadSubmissions(); loadCommunity(); loadDiscussions(); loadAttendees(); }
+function loadAll() { loadPageViews(); loadFeedback(); loadClaudeRequests(); loadSubmissions(); loadCommunity(); loadDiscussions(); loadAttendees(); }
 
-const adminTabs = ['pageviews', 'feedback', 'submissions', 'community', 'discussions', 'attendees'];
+const adminTabs = ['pageviews', 'feedback', 'claude', 'submissions', 'community', 'discussions', 'attendees'];
 function switchAdminTab(tab) {
   adminTabs.forEach(t => {
     const panel = document.getElementById('tab-' + t);
@@ -603,6 +609,107 @@ async function editSubmission(artifactId) {
       })
     });
     loadSubmissions();
+  } catch(e) { alert('Failed: ' + e.message); }
+}
+
+// ===== CLAUDE TEAM REQUESTS =====
+async function loadClaudeRequests() {
+  const list = document.getElementById('tab-claude');
+  list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">Loading...</div>';
+  try {
+    const res = await fetch(`${CLAUDE_URL}?pagination=true&limit=200&silent=true`);
+    const data = await res.json();
+    const items = (data.items || []).sort((a,b) => (b.manifest?.timestamp||'').localeCompare(a.manifest?.timestamp||''));
+
+    const pending = items.filter(i => (i.manifest?.status||'pending') === 'pending').length;
+    const approved = items.filter(i => i.manifest?.status === 'approved').length;
+    const rejected = items.filter(i => i.manifest?.status === 'rejected').length;
+
+    let html = `
+    <div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+        <div style="font-size:1.5rem;font-weight:800;color:#0f172a">${items.length}</div>
+        <div style="font-size:0.7rem;color:#94a3b8;font-weight:500;text-transform:uppercase">Total</div>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+        <div style="font-size:1.5rem;font-weight:800;color:#92400e">${pending}</div>
+        <div style="font-size:0.7rem;color:#92400e;font-weight:500;text-transform:uppercase">Pending</div>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+        <div style="font-size:1.5rem;font-weight:800;color:#16a34a">${approved}</div>
+        <div style="font-size:0.7rem;color:#16a34a;font-weight:500;text-transform:uppercase">Approved</div>
+      </div>
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+        <div style="font-size:1.5rem;font-weight:800;color:#dc2626">${rejected}</div>
+        <div style="font-size:0.7rem;color:#dc2626;font-weight:500;text-transform:uppercase">Rejected</div>
+      </div>
+    </div>`;
+
+    if (!items.length) {
+      html += '<div style="text-align:center;padding:2rem;color:#94a3b8">No Claude Team requests yet.</div>';
+      list.innerHTML = html;
+      return;
+    }
+
+    html += items.map(item => {
+      const m = item.manifest || {};
+      const status = m.status || 'pending';
+      const statusColor = status === 'approved' ? '#16a34a' : status === 'rejected' ? '#dc2626' : '#92400e';
+      const statusBg = status === 'approved' ? '#f0fdf4' : status === 'rejected' ? '#fef2f2' : '#fffbeb';
+      const statusBorder = status === 'approved' ? '#bbf7d0' : status === 'rejected' ? '#fecaca' : '#fef3c7';
+      const ts = m.timestamp ? new Date(m.timestamp).toLocaleString() : '?';
+      const seatBg = m.seat === 'premium' ? '#ede9fe' : '#eef2ff';
+      const seatColor = m.seat === 'premium' ? '#7c3aed' : '#6366f1';
+
+      return `
+      <div style="background:#fff;border:1px solid ${statusBorder};border-radius:10px;padding:1rem 1.25rem">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div style="flex:1;min-width:240px">
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;flex-wrap:wrap">
+              <span style="font-weight:700;font-size:0.95rem;color:#0f172a">${(m.name||'?').replace(/</g,'&lt;')}</span>
+              <span style="font-size:0.72rem;padding:1px 8px;border-radius:4px;background:#f1f5f9;color:#64748b;font-weight:500">${(m.position||'?').replace(/</g,'&lt;')}</span>
+              <span style="font-size:0.72rem;padding:1px 8px;border-radius:4px;background:${seatBg};color:${seatColor};font-weight:600">${(m.seat||'standard').toUpperCase()}</span>
+              <span style="font-size:0.72rem;padding:1px 8px;border-radius:4px;background:${statusBg};color:${statusColor};font-weight:600;text-transform:uppercase">${status}</span>
+              <span style="font-size:0.72rem;color:#94a3b8">${ts}</span>
+            </div>
+            <div style="font-size:0.82rem;color:#475569;margin-bottom:0.4rem"><a href="mailto:${(m.email||'').replace(/"/g,'')}" style="color:#6366f1">${(m.email||'?').replace(/</g,'&lt;')}</a></div>
+            <p style="color:#475569;font-size:0.85rem;margin:0.25rem 0;line-height:1.5;font-style:italic">"${(m.motivation||'').replace(/</g,'&lt;')}"</p>
+            <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.4rem">Consent: ${m.consent ? '✓ Agreed to Gallery + GitHub publication' : '✗ Not agreed'}</div>
+          </div>
+          ${status === 'pending' ? `
+          <div style="display:flex;flex-direction:column;gap:0.4rem;flex-shrink:0">
+            <button onclick="setClaudeStatus('${item.id}','approved')" style="background:#16a34a;color:#fff;border:none;border-radius:6px;padding:0.4rem 1rem;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer">Approve</button>
+            <button onclick="setClaudeStatus('${item.id}','rejected')" style="background:#fff;color:#dc2626;border:1px solid #fecaca;border-radius:6px;padding:0.4rem 1rem;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer">Reject</button>
+          </div>` : `
+          <div style="display:flex;gap:0.4rem;flex-shrink:0">
+            <button onclick="setClaudeStatus('${item.id}','pending')" style="background:#f1f5f9;color:#64748b;border:none;border-radius:6px;padding:0.35rem 0.85rem;font-family:inherit;font-size:0.75rem;cursor:pointer">Reset</button>
+          </div>`}
+        </div>
+      </div>`;
+    }).join('');
+
+    list.innerHTML = html;
+  } catch(e) {
+    list.innerHTML = `<div style="text-align:center;padding:3rem;color:#ef4444">Failed: ${e.message}</div>`;
+  }
+}
+
+async function setClaudeStatus(artifactId, newStatus) {
+  try {
+    const readRes = await fetch(`${HYPHA}/public/services/artifact-manager/read`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artifact_id: artifactId, silent: true })
+    });
+    const artifact = await readRes.json();
+    if (!artifact.manifest) throw new Error(artifact.detail || 'Read failed');
+    const manifest = { ...artifact.manifest, status: newStatus, status_changed: new Date().toISOString() };
+    const editRes = await fetch(`${HYPHA}/public/services/artifact-manager/edit`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artifact_id: artifactId, manifest })
+    });
+    const editData = await editRes.json();
+    if (editData.detail) throw new Error(editData.detail);
+    loadClaudeRequests();
   } catch(e) { alert('Failed: ' + e.message); }
 }
 

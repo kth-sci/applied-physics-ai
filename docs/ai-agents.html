@@ -136,12 +136,123 @@
     <h3 class="text-lg font-bold text-slate-900 mt-6 mb-3">Step 1: Get a Claude Account</h3>
     <ol class="text-slate-600 text-sm space-y-2 list-decimal list-inside leading-relaxed">
       <li>Go to <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">claude.ai</code> and create an account (or log in if you have one)</li>
-      <li>Subscribe to <strong>Claude Max</strong> ($100/month) or register for the <a href="events.html" class="text-accent hover:underline font-semibold">May 8 Tutorial</a> &mdash; we supply all staff at Applied Physics with a <strong>Claude Team</strong> license (standard seat) when you join the tutorial</li>
+      <li>Subscribe to <strong>Claude Max</strong> ($100/month) or request a seat in the <strong>Claude Team</strong> license at Applied Physics</li>
       <li>The free Claude.ai plan does <strong>not</strong> include Claude Code access &mdash; a paid plan above <strong>Claude Pro</strong> is now required for Claude Code</li>
     </ol>
-    <div class="mt-4">
+    <div class="mt-4 flex gap-3 flex-wrap">
       <a href="events.html" class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">Register For Tutorial &rarr;</a>
+      <button onclick="document.getElementById('claude-request-modal').style.display='flex'" class="inline-block bg-white hover:bg-slate-50 text-accent font-semibold text-sm px-5 py-2.5 rounded-lg transition border-2 border-accent">Request a Claude Team Seat</button>
     </div>
+
+    <!-- Claude Team request modal -->
+    <div id="claude-request-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;padding:1rem;overflow-y:auto">
+      <div style="background:#fff;border-radius:16px;padding:2rem;max-width:36rem;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);position:relative;margin:auto">
+        <button onclick="document.getElementById('claude-request-modal').style.display='none'" style="position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;color:#94a3b8;font-size:1.5rem;line-height:1">&times;</button>
+        <h3 style="font-size:1.25rem;font-weight:700;color:#0f172a;margin:0 0 0.5rem">Request a Claude Team Seat</h3>
+        <p style="font-size:0.85rem;color:#64748b;margin:0 0 1.25rem">Apply for a seat in the Claude Team license at the Department of Applied Physics, KTH.</p>
+
+        <form id="claude-request-form" style="display:flex;flex-direction:column;gap:0.85rem">
+          <div>
+            <label style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.2rem;color:#0f172a">Name *</label>
+            <input type="text" name="name" required style="width:100%;padding:0.5rem 0.7rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.875rem;outline:none" onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'">
+          </div>
+          <div>
+            <label style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.2rem;color:#0f172a">Email *</label>
+            <input type="email" name="email" required placeholder="your.name@kth.se" style="width:100%;padding:0.5rem 0.7rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.875rem;outline:none" onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'">
+          </div>
+          <div>
+            <label style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.2rem;color:#0f172a">Position *</label>
+            <select name="position" required style="width:100%;padding:0.5rem 0.7rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.875rem;background:#fff;outline:none">
+              <option value="">-- Select --</option>
+              <option>Faculty</option>
+              <option>Post-doc</option>
+              <option>Researcher</option>
+              <option>Research Engineer</option>
+              <option>PhD Student</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.2rem;color:#0f172a">Why do you want a Claude Team seat? *</label>
+            <textarea name="motivation" required rows="3" placeholder="Briefly motivate your request: what would you use it for?" style="width:100%;padding:0.5rem 0.7rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.875rem;resize:vertical;outline:none" onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.5rem;color:#0f172a">Seat Type *</label>
+            <div style="display:flex;flex-direction:column;gap:0.5rem">
+              <label style="display:flex;gap:0.6rem;padding:0.65rem 0.85rem;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;align-items:flex-start" onmouseenter="this.style.borderColor='#c7d2fe'" onmouseleave="this.style.borderColor='#e2e8f0'">
+                <input type="radio" name="seat" value="standard" checked style="margin-top:3px;accent-color:#6366f1">
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:0.875rem;color:#0f172a">Standard Seat <span style="font-weight:400;color:#94a3b8;font-size:0.78rem">(default)</span></div>
+                  <div style="font-size:0.78rem;color:#64748b;margin-top:0.15rem">Sonnet 4.6 chat &amp; Claude Code, Projects, file uploads, web search, computer use, MCP tools, ~3-5x usage of Pro plan.</div>
+                </div>
+              </label>
+              <label style="display:flex;gap:0.6rem;padding:0.65rem 0.85rem;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;align-items:flex-start" onmouseenter="this.style.borderColor='#c7d2fe'" onmouseleave="this.style.borderColor='#e2e8f0'">
+                <input type="radio" name="seat" value="premium" style="margin-top:3px;accent-color:#6366f1">
+                <div style="flex:1">
+                  <div style="font-weight:600;font-size:0.875rem;color:#0f172a">Premium Seat</div>
+                  <div style="font-size:0.78rem;color:#64748b;margin-top:0.15rem">Everything in Standard plus Opus 4.7 access, ~20x usage limits, advanced research, longer context windows, priority access. For heavy daily users.</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <label style="display:flex;gap:0.5rem;font-size:0.82rem;color:#475569;align-items:flex-start;padding:0.75rem;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0">
+            <input type="checkbox" name="consent" required style="margin-top:3px;accent-color:#6366f1;flex-shrink:0">
+            <span>I agree that projects driven by Claude under this license will be documented in the <a href="gallery.html" target="_blank" style="color:#6366f1;font-weight:500">Gallery</a> and that code repositories will be made available under the <a href="https://github.com/kth-sci" target="_blank" style="color:#6366f1;font-weight:500">kth-sci GitHub Organization</a>.</span>
+          </label>
+          <div id="claude-request-status" style="display:none;padding:0.6rem 0.8rem;border-radius:8px;font-size:0.85rem;font-weight:500"></div>
+          <div style="display:flex;gap:0.6rem;justify-content:flex-end;margin-top:0.25rem">
+            <button type="button" onclick="document.getElementById('claude-request-modal').style.display='none'" style="padding:0.5rem 1.1rem;border:1px solid #e2e8f0;border-radius:8px;background:#fff;font-family:inherit;font-size:0.85rem;cursor:pointer;color:#64748b">Cancel</button>
+            <button type="submit" style="padding:0.5rem 1.4rem;border:none;border-radius:8px;background:#6366f1;color:#fff;font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer">Submit Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+    document.getElementById('claude-request-form')?.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const status = document.getElementById('claude-request-status');
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const data = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        position: form.position.value,
+        motivation: form.motivation.value.trim(),
+        seat: form.seat.value,
+        consent: form.consent.checked,
+      };
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      const alias = 'claudereq-' + Date.now().toString(36) + '-' + data.email.replace(/[^a-z0-9]/gi,'').slice(0,12);
+      try {
+        const res = await fetch('https://hypha.aicell.io/public/services/artifact-manager/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            alias: alias,
+            parent_id: 'kth-sci/aphys-ai-claude-requests',
+            manifest: { ...data, status: 'pending', timestamp: new Date().toISOString() }
+          })
+        });
+        const j = await res.json();
+        if (j.id) {
+          status.style.display = 'block';
+          status.style.cssText = 'display:block;padding:0.6rem 0.8rem;border-radius:8px;font-size:0.85rem;font-weight:500;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0';
+          status.textContent = 'Request submitted! We will review it and contact you by email.';
+          form.reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Request';
+          setTimeout(() => { document.getElementById('claude-request-modal').style.display='none'; status.style.display='none'; }, 3000);
+        } else { throw new Error(j.detail || 'Unknown error'); }
+      } catch(err) {
+        status.style.display = 'block';
+        status.style.cssText = 'display:block;padding:0.6rem 0.8rem;border-radius:8px;font-size:0.85rem;font-weight:500;background:#fef2f2;color:#991b1b;border:1px solid #fecaca';
+        status.textContent = 'Failed: ' + err.message;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Request';
+      }
+    });
+    </script>
 
     <h3 class="text-lg font-bold text-slate-900 mt-8 mb-3">Step 2: Choose Your Installation Method</h3>
     <p class="text-slate-600 text-sm mb-4">Claude Code is available in multiple environments. Pick the one that fits your workflow best.</p>
