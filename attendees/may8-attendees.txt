@@ -1,0 +1,47 @@
+# 41 unique attendees
+
+# All emails (paste into BCC):
+jonassel@kth.se, chohm@kth.se, at@kth.se, uvogt@kth.se, magnusan@kth.se, mats.persson@mi.physics.kth.se, ccg@kth.se, vp@kth.se, jingjian@kth.se, dendzik@kth.se, satwik@kth.se, bhowmick@kth.se, yangz3@kth.se, joydeep@kth.se, yaqun@kth.se, qichenx@kth.se, haichun@kth.se, zheheng@kth.se, kritikav@kth.se, tunhe@kth.se, stewen@kth.se, smariani@kth.se, chivs@kth.se, gaoc@kth.se, bmw@kth.se, andrvolp@kth.se, aleeds@kth.se, linda@biox.kth.se, mohylna@kth.se, renanm@kth.se, eholmgr@kth.se, jostran@kth.se, lucied@kth.se, bcin@kth.se, ascotti@kth.se, faeze@kth.se, palr2@kth.se, apku@kth.se, oozhan@kth.se, zayouna@kth.se, hertz@biox.kth.se
+
+# Detailed list:
+Jonas Sellberg <jonassel@kth.se>
+Christian Ohm <chohm@kth.se>
+Anna Burvall <at@kth.se>
+Ulrich Vogt <uvogt@kth.se>
+Magnus Andersson <magnusan@kth.se>
+Mats Persson <mats.persson@mi.physics.kth.se>
+Carlota Canalias <ccg@kth.se>
+Valdas Pasiskevicius <vp@kth.se>
+Jingjian Zhou <jingjian@kth.se>
+Maciej Dendzik <dendzik@kth.se>
+Satwik Mishra <satwik@kth.se>
+SANGITA BHOWMICK <bhowmick@kth.se>
+Yang Zhang <yangz3@kth.se>
+Joydeep Dutta <joydeep@kth.se>
+Yaqun Liu <yaqun@kth.se>
+Qichen Xu <qichenx@kth.se>
+Haichun Liu <haichun@kth.se>
+Zheheng Song <zheheng@kth.se>
+Kritika Vijay <kritikav@kth.se>
+Tunhe Zhou <tunhe@kth.se>
+Stefan Wennmalm <stewen@kth.se>
+Simone Mariani <smariani@kth.se>
+Chinmaya Venugopal Srambickal <chivs@kth.se>
+Gaolong Cao <gaoc@kth.se>
+Martin Viklund <bmw@kth.se>
+Andrea Volpato <andrvolp@kth.se>
+Alexander Edström <aleeds@kth.se>
+Linda Lundström <linda@biox.kth.se>
+Mariia Mohylna <mohylna@kth.se>
+Renan Maciel <renanm@kth.se>
+Erik Holmgren <eholmgr@kth.se>
+Jonas Strandberg <jostran@kth.se>
+Lucie Delemotte <lucied@kth.se>
+Björn-Christian Ingwersen <bcin@kth.se>
+Andrea Scotti <ascotti@kth.se>
+Faeze Mashayekhi <faeze@kth.se>
+Patricia Lopez <palr2@kth.se>
+Abhilash Kulkarni <apku@kth.se>
+Faik Ozan Özhan <oozhan@kth.se>
+Sarah Zayouna <zayouna@kth.se>
+Hans Hertz <hertz@biox.kth.se>
