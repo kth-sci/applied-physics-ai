@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APHYS AI Tutorial — Intro Slides (May 8, 2026)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --indigo: #6366f1; --indigo-l: #818cf8; --indigo-d: #4f46e5;
+    --fire: #f97316; --slate: #0f172a; --slate2: #475569; --slate3: #94a3b8;
+    --emerald: #10b981; --amber: #f59e0b;
+  }
+  .reveal { font-family: 'Inter', sans-serif; color: var(--slate); }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { padding: 18px 36px; box-sizing: border-box; }
+  .reveal h1, .reveal h2, .reveal h3 { font-weight: 700; color: var(--indigo); text-transform: none; letter-spacing: -0.02em; }
+  .reveal h1 { font-size: 1.7em; }
+  .reveal h2 { font-size: 1.15em; margin-bottom: 0.4em; }
+  .reveal h3 { font-size: 0.75em; color: var(--indigo-l); margin-bottom: 0.2em; font-weight: 600; }
+  .reveal p, .reveal li { font-size: 0.5em; line-height: 1.5; }
+  .reveal ul { list-style: none; padding-left: 0; }
+  .reveal ul li { padding-left: 1em; position: relative; margin-bottom: 0.2em; }
+  .reveal ul li::before { content:''; position: absolute; left: 0; top: 0.5em; width: 5px; height: 5px; border-radius: 50%; background: var(--indigo-l); }
+  .reveal blockquote { background: none; border: none; font-style: italic; font-size: 0.62em; color: var(--slate); padding: 0.3em 0 0.3em 1.5em; margin: 0.4em 0; box-shadow: none; position: relative; line-height: 1.5; }
+  .reveal blockquote::before { content:'\201C'; position: absolute; left: 0; top: -0.05em; font-size: 2.2em; color: var(--indigo-l); opacity: 0.35; font-style: normal; }
+  .attribution { font-size: 0.42em !important; color: var(--slate3); font-style: normal; margin-top: 0.3em; display: block; }
+  .hbox { border-left: 3px solid var(--indigo); padding: 0.4em 0.8em; border-radius: 0 5px 5px 0; margin: 0.35em 0; font-size: 0.5em; line-height: 1.5; background: linear-gradient(135deg,#eef2ff,#f8fafc); }
+  .hbox.fire { border-color: var(--fire); background: linear-gradient(135deg,#fff7ed,#fffbeb); }
+  .hbox.amber { border-color: var(--amber); background: linear-gradient(135deg,#fffbeb,#fefce8); }
+  .hbox.emerald { border-color: var(--emerald); background: linear-gradient(135deg,#ecfdf5,#f0fdf4); }
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9em; align-items: start; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7em; align-items: start; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.55em 0.7em; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .card h3 { margin-top: 0; }
+  .card p, .card li { font-size: 0.46em; }
+  .tag { display: inline-block; padding: 0.1em 0.5em; border-radius: 12px; font-size: 0.4em; font-weight: 600; margin-right: 0.3em; }
+  .tag.indigo { background: #eef2ff; color: var(--indigo); }
+  .tag.fire { background: #fff7ed; color: #c2410c; }
+  .tag.emerald { background: #ecfdf5; color: #047857; }
+  .tag.amber { background: #fffbeb; color: #92400e; }
+  .title-slide { text-align: center !important; }
+  .title-slide h1 { font-size: 2em; margin-bottom: 0.1em; font-weight: 800; }
+  .title-slide .sub { font-size: 0.85em; color: var(--indigo-l); font-weight: 400; margin-bottom: 0.9em; }
+  .title-slide .meta { font-size: 0.5em; color: var(--slate2); line-height: 1.7; }
+  .reveal table { font-size: 0.45em; border-collapse: separate; border-spacing: 0; width: 100%; margin: 0.4em 0; border-radius: 6px; overflow: hidden; }
+  .reveal table th { background: var(--indigo); color: #fff; padding: 0.45em 0.7em; font-weight: 600; text-align: left; }
+  .reveal table td { padding: 0.4em 0.7em; border-bottom: 1px solid #e2e8f0; background: #fff; }
+  .reveal table tr:nth-child(even) td { background: #f8fafc; }
+  .reveal .progress { height: 3px; color: var(--indigo); }
+  .reveal .slide-number { font-family: 'Inter'; font-size: 11px !important; color: var(--slate3) !important; background: none !important; }
+  .big-number { font-size: 2.4em; font-weight: 800; color: var(--indigo); line-height: 1; }
+  .big-number-label { font-size: 0.45em; color: var(--slate2); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6em; margin: 0.6em 0; }
+  .stat { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.6em 0.4em; text-align: center; }
+  .stat .n { font-size: 1.4em; font-weight: 800; color: var(--indigo); line-height: 1; }
+  .stat .l { font-size: 0.42em; color: var(--slate3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-top: 0.2em; }
+  .speaker-note { font-size: 0.4em !important; color: var(--slate3); font-style: italic; margin-top: 0.5em; padding: 0.3em 0.6em; background: #f8fafc; border-left: 2px solid var(--slate3); border-radius: 0 4px 4px 0; }
+  #fs-btn { position: fixed; top: 12px; right: 12px; z-index: 100; background: rgba(99,102,241,0.85); color: #fff; border: none; border-radius: 6px; padding: 6px 12px; font-family: 'Inter'; font-size: 12px; font-weight: 500; cursor: pointer; opacity: 0.6; transition: 0.2s; }
+  #fs-btn:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<button id="fs-btn" onclick="document.documentElement.requestFullscreen()">Fullscreen</button>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- 1. TITLE -->
+<section>
+  <div class="title-slide">
+    <div style="margin-bottom:1em;">
+      <svg width="60" height="60" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/><circle cx="32" cy="16" r="4" fill="#818cf8"/><circle cx="18" cy="40" r="4" fill="#818cf8"/><circle cx="46" cy="40" r="4" fill="#818cf8"/><line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/><circle cx="32" cy="32" r="7" fill="#6366f1"/><text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text></svg>
+    </div>
+    <h1>APHYS AI Agent Tutorial</h1>
+    <div class="sub">A practical 4-hour introduction to working with AI agents</div>
+    <div class="meta">
+      Department of Applied Physics &bull; KTH Royal Institute of Technology<br>
+      <strong>Wei Ouyang &amp; Jonas Sellberg</strong> &bull; with Christian Ohm<br>
+      May 8, 2026 &bull; FB53 AlbaNova
+    </div>
+  </div>
+</section>
+
+<!-- 2. WELCOME + LIVE AUDIENCE SNAPSHOT -->
+<section>
+  <h2>Welcome &mdash; and we already know you</h2>
+  <p>This site collected your registrations live. Here is the room as of this morning:</p>
+  <div class="stat-grid">
+    <div class="stat"><div class="n">41</div><div class="l">Registered</div></div>
+    <div class="stat"><div class="n">34 / 7</div><div class="l">Onsite / Zoom</div></div>
+    <div class="stat"><div class="n">~10</div><div class="l">Faculty</div></div>
+    <div class="stat"><div class="n">~10</div><div class="l">PhD Students</div></div>
+  </div>
+  <p style="font-size:0.5em;line-height:1.5;margin-top:0.6em">
+    BON, Biophysics, LAMP &mdash; plus colleagues from <strong>Particle Physics, Medical Imaging</strong> and beyond.
+    Self-reported AI experience: roughly <span class="tag amber">~30% beginners</span> <span class="tag indigo">~50% regular</span> <span class="tag emerald">~10% advanced</span>.
+  </p>
+  <div class="hbox">
+    Live page-view stats, registration count, attendee breakdown &mdash; this entire site (and the analytics behind it) was built by an AI agent in days. That is part of the message of today.
+  </div>
+  <div class="speaker-note">SPEAKER NOTE (Wei): Open the admin dashboard live for 5 seconds to show the actual live numbers. Tone: "you didn't sit through a registration spreadsheet to get here, an AI did."</div>
+</section>
+
+<!-- 3. WHERE AI IS — STAGE SETTING -->
+<section>
+  <h2>Where AI is in 2026 &mdash; and why this is not last year's conversation</h2>
+  <p>Forget the 2022 ChatGPT story. The interesting timeline is the last 18 months.</p>
+  <div class="g2">
+    <div class="card">
+      <h3>2024</h3>
+      <p>Chat with documents. Code completion. Hallucinations everywhere. Mostly toys for early adopters.</p>
+    </div>
+    <div class="card">
+      <h3>Mid 2025</h3>
+      <p>Agents start working on multi-step tasks. Coding tools become useful. Still brittle, requires babysitting.</p>
+    </div>
+    <div class="card">
+      <h3>Late 2025 / 2026</h3>
+      <p>Agentic workflows reliable enough to run unattended. Sub-agents coordinating. MCP, skills, memory across sessions.</p>
+    </div>
+  </div>
+  <div class="hbox fire" style="margin-top:0.5em">
+    <strong>If you opted out of paying attention 6 months ago, you are now significantly behind.</strong> That sentence is not hype &mdash; it is what people who do this for a living say about themselves.
+  </div>
+</section>
+
+<!-- 4. WAKE-UP CALL: KARPATHY — DEC 2025 -->
+<section>
+  <h2>The wake-up call &mdash; Andrej Karpathy, late 2025</h2>
+  <h3>Co-founder of OpenAI, ex-Tesla Director of AI, builds AI tools for a living</h3>
+  <blockquote>
+    I have never felt more behind as a programmer.
+    <span class="attribution">&mdash; Andrej Karpathy, late 2025</span>
+  </blockquote>
+  <p style="margin-top:0.4em">A few of his recent points worth letting sink in:</p>
+  <ul>
+    <li><strong>December 2025 was the real turning point.</strong> Not gradual improvement &mdash; a step change. Agentic workflows just suddenly worked reliably. A lot of people missed it.</li>
+    <li>He built a whole app (MenuGen) to show photos of restaurant menu items. Then watched someone solve the same problem with <strong>one prompt</strong> to a multimodal model. His own words: "my app shouldn't exist."</li>
+  </ul>
+  <div class="speaker-note">SPEAKER NOTE: Pause here. This lands harder than any benchmark chart. Audience first reaction will be skepticism &mdash; that is fine, mention it in passing.</div>
+</section>
+
+<!-- 5. VIBE CODING vs AGENTIC ENGINEERING -->
+<section>
+  <h2>Two very different things &mdash; do not confuse them</h2>
+  <div class="g2">
+    <div class="card">
+      <h3>Vibe coding</h3>
+      <p>Anyone can build something rough by just telling the AI what they want. Raises the floor for everyone &mdash; a non-programmer ships a working tool over a weekend.</p>
+      <p style="margin-top:0.3em"><em>Great for prototypes, scripts, one-off helpers, exploration.</em></p>
+    </div>
+    <div class="card">
+      <h3>Agentic engineering</h3>
+      <p>How professionals go faster <strong>without dropping the quality bar</strong>. Disciplined prompts, tested outputs, code review, rollback safety, version control.</p>
+      <p style="margin-top:0.3em"><em>Required when the work has to be correct, reproducible, or shipped to others.</em></p>
+    </div>
+  </div>
+  <div class="hbox emerald">
+    <strong>For our research:</strong> vibe coding is fine for an exploratory analysis script. Anything that ends up in a paper or a shared codebase needs the engineering mindset on top.
+  </div>
+  <p style="font-size:0.4em;color:#94a3b8;margin-top:0.5em">Distinction popularized by Karpathy, late 2025</p>
+</section>
+
+<!-- 6. JAGGED INTELLIGENCE -->
+<section>
+  <h2>Jagged intelligence &mdash; the part nobody warns you about</h2>
+  <blockquote>
+    The same model that can refactor a 100k-line codebase will tell you to walk 50 metres to a car wash to wash your car. Still cannot figure out you need to <em>drive</em> there.
+    <span class="attribution">&mdash; paraphrasing Karpathy</span>
+  </blockquote>
+  <ul style="margin-top:0.5em">
+    <li>Performance is wildly uneven across tasks &mdash; superhuman in one domain, naive in an adjacent one.</li>
+    <li>You cannot reason from "it nailed task A" to "it will nail task B."</li>
+    <li>Your <strong>physics intuition</strong> is exactly the missing piece &mdash; that is what catches the silly answers.</li>
+  </ul>
+  <div class="hbox amber">
+    The skill that newly matters most is <strong>knowing which outputs to trust</strong>. Domain expertise is not obsolete &mdash; it is the bottleneck.
+  </div>
+</section>
+
+<!-- 7. JOB MARKET / EDUCATION -->
+<section>
+  <h2>Job market &amp; education &mdash; what is actually shifting</h2>
+  <div class="g2">
+    <div>
+      <h3>Industry signals</h3>
+      <ul>
+        <li>Junior coding / analyst / writing roles getting absorbed by AI tools</li>
+        <li>"Learn the basics &rarr; junior role &rarr; expertise" path is breaking</li>
+        <li>Anthropic Economic Index (Feb 2026): early measurable shifts in entry-level work</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Implications for KTH</h3>
+      <ul>
+        <li>What does an engineering education that <em>cannot</em> be done by AI alone look like?</li>
+        <li>What do we owe students about AI preparedness?</li>
+        <li>How do we keep judgment, taste, deep understanding alive?</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox fire">
+    The question is no longer "should students use AI?" but "<strong>how do we teach them to use it responsibly, think beyond it, and thrive in a world where they will compete with it?</strong>"
+  </div>
+</section>
+
+<!-- 8. ETHICS — OPEN QUESTIONS, NO ANSWERS -->
+<section>
+  <h2>Open questions &mdash; nobody has good answers yet</h2>
+  <p>Three timelines. Same questions. Different acceptable answers in each column.</p>
+  <table>
+    <thead><tr><th>Question</th><th>5 years ago</th><th>Today</th><th>5 years from now?</th></tr></thead>
+    <tbody>
+      <tr><td>Use GenAI to write a research paper?</td><td>Unthinkable</td><td>Common &mdash; but contested</td><td>?</td></tr>
+      <tr><td>Use GenAI to grade student work?</td><td>Out of the question</td><td>Quietly happening</td><td>?</td></tr>
+      <tr><td>Use GenAI in a grant application?</td><td>Wouldn't dare</td><td>Most do, few admit</td><td>?</td></tr>
+      <tr><td>Use GenAI for internal documents?</td><td>Why would you</td><td>Default tool</td><td>?</td></tr>
+      <tr><td>What does "engineer" mean as a job?</td><td>Settled</td><td>Open</td><td>?</td></tr>
+    </tbody>
+  </table>
+  <div class="hbox">
+    Today is <strong>not</strong> the day we answer these. Today we surface them, agree they exist, and start a department conversation that continues at the June 15 teachers' meeting.
+  </div>
+</section>
+
+<!-- 9. THE LINE THAT MATTERS MOST -->
+<section>
+  <div class="title-slide">
+    <h2 style="font-size:1.4em;margin-bottom:0.5em">The one quote to take away</h2>
+    <blockquote style="font-size:1em !important;margin:0.8em auto;max-width:80%">
+      You can outsource your thinking, but you cannot outsource your understanding.
+      <span class="attribution" style="font-size:0.55em !important">&mdash; quoted by Karpathy from a conversation, late 2025</span>
+    </blockquote>
+    <p style="font-size:0.55em;color:#475569;margin-top:0.7em">Use AI to remove drudgery. Do not use it to skip the part where <em>you</em> understand the problem.</p>
+  </div>
+</section>
+
+<!-- 10. LLM MARKET TODAY -->
+<section>
+  <h2>Where the LLM market actually is today</h2>
+  <p>The point is not "which model is best." It is that there is a <strong>zoo</strong> of usable options and the leader changes every quarter.</p>
+  <table>
+    <thead><tr><th>Tool</th><th>Strong at</th><th>Free / paid</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ChatGPT</strong></td><td>General Q&amp;A, writing, daily productivity</td><td>Free + paid (KTH license possible)</td><td>Most-used at KTH today</td></tr>
+      <tr><td><strong>Claude</strong></td><td>Long context, careful reasoning, research</td><td>Pro / Max / Team</td><td>Behind Claude Code</td></tr>
+      <tr><td><strong>Claude Code</strong></td><td>Agentic coding, file/terminal access</td><td>Bundled with Claude plans</td><td>Today's main tool</td></tr>
+      <tr><td><strong>Cursor</strong></td><td>IDE-integrated coding</td><td>Free 1-year plan for students</td><td>Christian will demo</td></tr>
+      <tr><td><strong>Gemini CLI</strong></td><td>Google ecosystem, multimodal</td><td>Generous free tier</td><td>Worth trying alongside</td></tr>
+      <tr><td><strong>Open-source (Llama, Qwen, ...)</strong></td><td>Privacy, on-prem, customisation</td><td>Free (run yourself)</td><td>For sensitive data</td></tr>
+    </tbody>
+  </table>
+  <div class="hbox amber">
+    <strong>Recommendation:</strong> not "use this one model." Pick a couple, try them on real work, swap in 6 months. Your favorite today will not be your favorite next year.
+  </div>
+</section>
+
+<!-- 11. WHAT WE WILL DO TODAY -->
+<section>
+  <h2>What we will actually do for the next 4 hours</h2>
+  <table>
+    <thead><tr><th>Time</th><th>Block</th><th>Who</th></tr></thead>
+    <tbody>
+      <tr><td>13:00 - 13:30</td><td>This intro &mdash; vision, ethics, market</td><td>Wei</td></tr>
+      <tr><td>13:30 - 14:15</td><td>ChatGPT essentials &amp; prompting cheat sheet</td><td>Jonas</td></tr>
+      <tr><td>14:15 - 14:45</td><td>Live Claude Code demo on a real APHYS task</td><td>Wei + Jonas</td></tr>
+      <tr><td>14:45 - 15:00</td><td>Coffee &amp; fika</td><td>&mdash;</td></tr>
+      <tr><td>15:00 - 15:45</td><td>Advanced-user showcase</td><td>Christian Ohm</td></tr>
+      <tr><td>15:45 - 16:45</td><td>Hands-on: install + first agent task</td><td>Everyone</td></tr>
+      <tr><td>16:45 - 17:00</td><td>Show &amp; tell + bridge to May 26 Hackathon</td><td>All</td></tr>
+    </tbody>
+  </table>
+  <div class="hbox emerald">
+    By 17:00 you should have <strong>ChatGPT and Claude Code working on your laptop</strong>, run at least one real task on your own data, and know what to bring to the May 26 hackathon.
+  </div>
+</section>
+
+<!-- 12. HAND-OFF TO JONAS -->
+<section>
+  <div class="title-slide">
+    <h1 style="font-size:1.6em">Over to Jonas &mdash;</h1>
+    <div class="sub" style="margin-top:0.4em">ChatGPT essentials, the cheat sheet, and how to use ChatGPT to install Claude Code in 5 minutes.</div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true, width: 1100, height: 660, margin: 0.05,
+  minScale: 0.2, maxScale: 2.0, center: true,
+  transition: 'slide', progress: true, controls: true,
+  keyboard: true, overview: true, slideNumber: 'c/t',
+});
+</script>
+</body>
+</html>
