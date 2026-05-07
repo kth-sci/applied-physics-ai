@@ -1,0 +1,32 @@
+# 20 unique Claude Team requests (8 approved, 12 pending, 0 rejected)
+
+## Cross-check vs May 8 attendees
+  - Requests from May 8 attendees: 16
+  - Requests NOT registered for May 8: 4
+
+## APPROVED (8)
+  [✓ May 8] Jonas Sellberg <jonassel@kth.se> — Faculty / standard — BON
+  [✗ no May 8] Ali Elshaari <elshaari@kth.se> — Faculty / premium — LAMP
+  [✓ May 8] Maciej Dendzik <dendzik@kth.se> — Researcher / standard — LAMP
+  [✓ May 8] Anna Burvall <at@kth.se> — Faculty / standard — BON
+  [✓ May 8] Haichun LIU <haichun@kth.se> — Researcher / standard — BON
+  [✗ no May 8] Alexander Balatsky <balatsky@kth.se> — Faculty / premium — LAMP
+  [✗ no May 8] Vaishali Adya <adya@kth.se> — Faculty / premium — BON
+  [✓ May 8] Lucie Delemotte <lucied@kth.se> — Faculty / standard — Biophysics
+
+## PENDING (12)
+  [✓ May 8] Yang Zhang <yangz3@kth.se> — Post-doc / premium — Biophysics
+  [✓ May 8] Jingjian Zhou <jingjian@kth.se> — Post-doc / standard — BON
+  [✓ May 8] Qichen Xu <qichenx@kth.se> — Post-doc / premium — LAMP
+  [✓ May 8] Zheheng Song <zheheng@kth.se> — PhD Student / premium — BON
+  [✓ May 8] Kritika Vijay <kritikav@kth.se> — Post-doc / standard — LAMP
+  [✓ May 8] Tunhe Zhou <tunhe@kth.se> — Researcher / standard — BON
+  [✓ May 8] Stefan Wennmalm <stewen@kth.se> — Researcher / standard — Biophysics
+  [✗ no May 8] Lukas Müllender <lukasmu@kth.se> — PhD Student / standard — LAMP
+  [✓ May 8] Simone Mariani <smariani@kth.se> — Post-doc / premium — Biophysics
+  [✓ May 8] Gaolong Cao <gaoc@kth.se> — Researcher / standard — LAMP
+  [✓ May 8] Andrea Volpato <andrvolp@kth.se> — Researcher / premium — Biophysics
+  [✓ May 8] Mariia Mohylna <mohylna@kth.se> — Post-doc / premium — LAMP
+
+## All emails (paste into BCC for any blast):
+jonassel@kth.se, elshaari@kth.se, dendzik@kth.se, at@kth.se, yangz3@kth.se, jingjian@kth.se, qichenx@kth.se, haichun@kth.se, zheheng@kth.se, kritikav@kth.se, tunhe@kth.se, stewen@kth.se, lukasmu@kth.se, smariani@kth.se, balatsky@kth.se, gaoc@kth.se, andrvolp@kth.se, mohylna@kth.se, adya@kth.se, lucied@kth.se

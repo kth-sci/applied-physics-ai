@@ -1,47 +1,49 @@
-# 41 unique attendees
+# 43 unique attendees
 
 # All emails (paste into BCC):
-jonassel@kth.se, chohm@kth.se, at@kth.se, uvogt@kth.se, magnusan@kth.se, mats.persson@mi.physics.kth.se, ccg@kth.se, vp@kth.se, jingjian@kth.se, dendzik@kth.se, satwik@kth.se, bhowmick@kth.se, yangz3@kth.se, joydeep@kth.se, yaqun@kth.se, qichenx@kth.se, haichun@kth.se, zheheng@kth.se, kritikav@kth.se, tunhe@kth.se, stewen@kth.se, smariani@kth.se, chivs@kth.se, gaoc@kth.se, bmw@kth.se, andrvolp@kth.se, aleeds@kth.se, linda@biox.kth.se, mohylna@kth.se, renanm@kth.se, eholmgr@kth.se, jostran@kth.se, lucied@kth.se, bcin@kth.se, ascotti@kth.se, faeze@kth.se, palr2@kth.se, apku@kth.se, oozhan@kth.se, zayouna@kth.se, hertz@biox.kth.se
+jonassel@kth.se, chohm@kth.se, at@kth.se, uvogt@kth.se, magnusan@kth.se, mats.persson@mi.physics.kth.se, ccg@kth.se, vp@kth.se, jingjian@kth.se, dendzik@kth.se, satwik@kth.se, bhowmick@kth.se, yangz3@kth.se, joydeep@kth.se, yaqun@kth.se, qichenx@kth.se, haichun@kth.se, zheheng@kth.se, kritikav@kth.se, tunhe@kth.se, stewen@kth.se, smariani@kth.se, chivs@kth.se, gaoc@kth.se, bmw@kth.se, andrvolp@kth.se, aleeds@kth.se, linda@biox.kth.se, mohylna@kth.se, renanm@kth.se, eholmgr@kth.se, jostran@kth.se, lucied@kth.se, bcin@kth.se, ascotti@kth.se, faeze@kth.se, palr2@kth.se, apku@kth.se, oozhan@kth.se, zayouna@kth.se, hertz@biox.kth.se, toprak@kth.se, iovan@kth.se
 
 # Detailed list:
-Jonas Sellberg <jonassel@kth.se>
-Christian Ohm <chohm@kth.se>
-Anna Burvall <at@kth.se>
-Ulrich Vogt <uvogt@kth.se>
-Magnus Andersson <magnusan@kth.se>
-Mats Persson <mats.persson@mi.physics.kth.se>
-Carlota Canalias <ccg@kth.se>
-Valdas Pasiskevicius <vp@kth.se>
-Jingjian Zhou <jingjian@kth.se>
-Maciej Dendzik <dendzik@kth.se>
-Satwik Mishra <satwik@kth.se>
-SANGITA BHOWMICK <bhowmick@kth.se>
-Yang Zhang <yangz3@kth.se>
-Joydeep Dutta <joydeep@kth.se>
-Yaqun Liu <yaqun@kth.se>
-Qichen Xu <qichenx@kth.se>
-Haichun Liu <haichun@kth.se>
-Zheheng Song <zheheng@kth.se>
-Kritika Vijay <kritikav@kth.se>
-Tunhe Zhou <tunhe@kth.se>
-Stefan Wennmalm <stewen@kth.se>
-Simone Mariani <smariani@kth.se>
-Chinmaya Venugopal Srambickal <chivs@kth.se>
-Gaolong Cao <gaoc@kth.se>
-Martin Viklund <bmw@kth.se>
-Andrea Volpato <andrvolp@kth.se>
-Alexander Edström <aleeds@kth.se>
-Linda Lundström <linda@biox.kth.se>
-Mariia Mohylna <mohylna@kth.se>
-Renan Maciel <renanm@kth.se>
-Erik Holmgren <eholmgr@kth.se>
-Jonas Strandberg <jostran@kth.se>
-Lucie Delemotte <lucied@kth.se>
-Björn-Christian Ingwersen <bcin@kth.se>
-Andrea Scotti <ascotti@kth.se>
-Faeze Mashayekhi <faeze@kth.se>
-Patricia Lopez <palr2@kth.se>
-Abhilash Kulkarni <apku@kth.se>
-Faik Ozan Özhan <oozhan@kth.se>
-Sarah Zayouna <zayouna@kth.se>
-Hans Hertz <hertz@biox.kth.se>
+ 1. Jonas Sellberg <jonassel@kth.se> — BON [Associate Professor]  (AlbaNova, regular)
+ 2. Christian Ohm <chohm@kth.se> — Particle Physics, Astro & Med Physics (KTH) [Senior Lecturer (Master's Prog. Director)]  (AlbaNova, advanced)
+ 3. Anna Burvall <at@kth.se> — BON [Associate Professor]  (AlbaNova, beginner)
+ 4. Ulrich Vogt <uvogt@kth.se> — BON [Professor (Deputy Head of Dept)]  (AlbaNova, beginner)
+ 5. Magnus Andersson <magnusan@kth.se> — LAMP [Associate Professor]  (AlbaNova, beginner)
+ 6. Mats Persson <mats.persson@mi.physics.kth.se> — Medical Imaging Physics (KTH) [Researcher]  (AlbaNova, regular)
+ 7. Carlota Canalias <ccg@kth.se> — BON [Professor (Head of Department)]  (AlbaNova, beginner)
+ 8. Valdas Pasiskevicius <vp@kth.se> — Laser Physics, KTH [Faculty]  (AlbaNova, Not specified)
+ 9. Jingjian Zhou <jingjian@kth.se> — BON [Postdoc]  (AlbaNova, regular)
+10. Maciej Dendzik <dendzik@kth.se> — LAMP [Researcher]  (AlbaNova, beginner)
+11. Satwik Mishra <satwik@kth.se> — LAMP [PhD Student]  (AlbaNova, regular)
+12. SANGITA BHOWMICK <bhowmick@kth.se> — LAMP [Researcher]  (AlbaNova, regular)
+13. Yang Zhang <yangz3@kth.se> — Biophysics [Postdoc]  (AlbaNova, regular)
+14. Joydeep Dutta <joydeep@kth.se> — LAMP [Professor]  (AlbaNova, beginner)
+15. Yaqun Liu <yaqun@kth.se> — LAMP [Postdoc]  (Zoom, regular)
+16. Qichen Xu <qichenx@kth.se> — LAMP [Postdoc]  (AlbaNova, advanced)
+17. Haichun Liu <haichun@kth.se> — BON [Researcher]  (AlbaNova, regular)
+18. Zheheng Song <zheheng@kth.se> — BON [PhD Student]  (AlbaNova, regular)
+19. Kritika Vijay <kritikav@kth.se> — LAMP [Postdoc]  (Zoom, beginner)
+20. Tunhe Zhou <tunhe@kth.se> — BON [Researcher]  (AlbaNova, regular)
+21. Stefan Wennmalm <stewen@kth.se> — Biophysics [Researcher]  (Zoom, regular)
+22. Simone Mariani <smariani@kth.se> — Biophysics [Postdoc]  (Zoom, regular)
+23. Chinmaya Venugopal Srambickal <chivs@kth.se> — BON [Postdoc]  (AlbaNova, beginner)
+24. Gaolong Cao <gaoc@kth.se> — LAMP [Researcher]  (AlbaNova, beginner)
+25. Martin Viklund <bmw@kth.se> — Biophysics [Professor (Head of Biophysics)]  (AlbaNova, regular)
+26. Andrea Volpato <andrvolp@kth.se> — Biophysics [Researcher]  (AlbaNova, regular)
+27. Alexander Edström <aleeds@kth.se> — LAMP [Researcher]  (Zoom, regular)
+28. Linda Lundström <linda@biox.kth.se> — BON [Professor (Head of BON)]  (AlbaNova, beginner)
+29. Mariia Mohylna <mohylna@kth.se> — LAMP [Postdoc]  (Zoom, regular)
+30. Renan Maciel <renanm@kth.se> — LAMP [PhD Student]  (AlbaNova, advanced)
+31. Erik Holmgren <eholmgr@kth.se> — LAMP [Research Engineer]  (AlbaNova, beginner)
+32. Jonas Strandberg <jostran@kth.se> — Particle Physics, Astro & Med Physics (KTH) [Associate Professor]  (AlbaNova, beginner)
+33. Lucie Delemotte <lucied@kth.se> — Biophysics [Professor (Deputy Head of Dept)]  (Zoom, regular)
+34. Björn-Christian Ingwersen <bcin@kth.se> — BON [Industry PhD Student]  (AlbaNova, advanced)
+35. Andrea Scotti <ascotti@kth.se> — LAMP [PhD Student]  (AlbaNova, beginner)
+36. Faeze Mashayekhi <faeze@kth.se> — BON [PhD Student]  (AlbaNova, regular)
+37. Patricia Lopez <palr2@kth.se> — BON [PhD Student]  (AlbaNova, Not specified)
+38. Abhilash Kulkarni <apku@kth.se> — BON [PhD Student]  (AlbaNova, beginner)
+39. Faik Ozan Özhan <oozhan@kth.se> — BON [PhD Student]  (AlbaNova, regular)
+40. Sarah Zayouna <zayouna@kth.se> [(unknown — check KTH directory)]  (AlbaNova, Not specified)
+41. Hans Hertz <hertz@biox.kth.se> — BON [Senior Professor]  (AlbaNova, beginner)
+42. Muhammet Toprak <toprak@kth.se> — BON [Professor]  (AlbaNova, beginner)
+43. adrian iovan <iovan@kth.se> — LAMP [Researcher]  (AlbaNova, regular)
