@@ -31,11 +31,11 @@
 </nav>
 
 <!-- Hero -->
-<header class="bg-gradient-to-br from-orange-500 via-fire to-amber-600 text-white py-14 px-6 text-center">
-  <div class="max-w-3xl mx-auto">
+<header class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-kth-dark text-white py-14 px-6 text-center overflow-hidden">
+  <div class="max-w-3xl mx-auto relative z-10">
     <span class="inline-block bg-white/15 text-white text-xs font-bold px-3 py-1 rounded-full mb-3 border border-white/20">MAY 8, 2026 &bull; 13:00–17:00 CET</span>
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">APHYS AI Agent Tutorial</h1>
-    <p class="text-white/90 max-w-xl mx-auto">A 4-hour hands-on introduction to AI agents for research, teaching, and productivity at the Department of Applied Physics, KTH.</p>
+    <p class="text-white/80 max-w-xl mx-auto">A 4-hour hands-on introduction to AI agents for research, teaching, and productivity at the Department of Applied Physics, KTH.</p>
     <div class="flex flex-wrap gap-2 justify-center mt-5 text-sm">
       <span class="bg-white/15 px-3 py-1.5 rounded-full">FB53, AlbaNova University Center</span>
       <span class="bg-white/15 px-3 py-1.5 rounded-full">Wei Ouyang &amp; Jonas Sellberg</span>
@@ -45,6 +45,11 @@
 </header>
 
 <div class="max-w-4xl mx-auto px-4 py-12">
+
+  <!-- Info box for direct visitors -->
+  <div class="bg-indigo-50 border border-indigo-100 border-l-4 border-l-accent rounded-r-xl p-4 mb-10 text-sm text-slate-700">
+    <strong class="text-slate-900">New here?</strong> This is the detailed agenda page for the May 8 tutorial — a hands-on 4-hour session for KTH Applied Physics faculty, researchers, and PhD students. For background on the initiative, visit the <a href="index.html" class="text-accent hover:underline font-medium">home page</a>.
+  </div>
 
   <!-- Goals -->
   <section class="mb-12">
@@ -68,32 +73,29 @@
       <div class="bg-amber-50 border border-amber-100 rounded-xl p-5">
         <div class="text-3xl mb-2">&#x1F517;</div>
         <h3 class="font-bold text-slate-900 mb-1">A path forward</h3>
-        <p class="text-slate-600 text-sm">A clear bridge to the May 26 SCI Hackathon and the rest of the 2026 series.</p>
+        <p class="text-slate-600 text-sm">Resources, community, and a personal action plan to keep building momentum after the session.</p>
       </div>
     </div>
   </section>
 
   <!-- Detailed agenda -->
   <section class="mb-12">
-    <h2 class="text-2xl font-bold text-slate-900 mb-2">Detailed Agenda</h2>
-    <p class="text-slate-500 mb-6 text-sm">Roughly 4 hours, 13:00–17:00. Times are approximate; we keep the pace driven by the room.</p>
+    <h2 class="text-2xl font-bold text-slate-900 mb-1">Agenda &mdash; May 8, 2026</h2>
+    <p class="text-slate-500 mb-6 text-sm">13:00–17:00 CET &bull; FB53, AlbaNova &bull; Times are approximate.</p>
 
     <div class="space-y-3">
 
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+        <span class="font-semibold text-slate-500 text-sm">13:00 – 13:15 &bull; Arrival &amp; setup</span>
+      </div>
+
       <div class="border-l-4 border-orange-400 bg-white border border-slate-200 rounded-r-xl p-5 shadow-sm">
         <div class="flex flex-wrap items-center gap-3 mb-1">
-          <span class="font-bold text-orange-600">13:00 – 13:30</span>
-          <span class="text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Wei</span>
+          <span class="font-bold text-orange-600">13:15 – 13:30</span>
+          <span class="text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Wei + Jonas</span>
           <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Intro</span>
         </div>
-        <h3 class="font-bold text-slate-800 mb-1">Welcome &amp; the AI big picture</h3>
-        <ul class="text-slate-600 text-sm list-disc list-inside space-y-0.5">
-          <li>Live audience snapshot (this site already knows who is here)</li>
-          <li>Where AI is in 2026 — recent breakthroughs, mind-blowing demos</li>
-          <li>Job-market shift &amp; implications for engineering education</li>
-          <li>Ethics — open questions, no easy answers (writing papers, student work, applications, …)</li>
-          <li>One slide: where the LLM market actually is today</li>
-        </ul>
+        <h3 class="font-bold text-slate-800">Welcome &amp; the AI big picture</h3>
       </div>
 
       <div class="border-l-4 border-kth-light bg-white border border-slate-200 rounded-r-xl p-5 shadow-sm">
@@ -102,74 +104,49 @@
           <span class="text-xs font-semibold bg-blue-100 text-kth-light px-2 py-0.5 rounded-full">Jonas</span>
           <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">ChatGPT</span>
         </div>
-        <h3 class="font-bold text-slate-800 mb-1">ChatGPT essentials &amp; prompting cheat sheet</h3>
-        <ul class="text-slate-600 text-sm list-disc list-inside space-y-0.5">
-          <li>From quick chat to structured work: prompt patterns that matter</li>
-          <li>Levels: general → context → role → critical evaluation</li>
-          <li>Try it: extract structured information from a research article</li>
-          <li>Setup helper: use ChatGPT to bootstrap your Claude Code install</li>
-        </ul>
+        <h3 class="font-bold text-slate-800">ChatGPT essentials &amp; hands-on</h3>
       </div>
 
       <div class="border-l-4 border-accent bg-white border border-slate-200 rounded-r-xl p-5 shadow-sm">
         <div class="flex flex-wrap items-center gap-3 mb-1">
-          <span class="font-bold text-accent">14:15 – 14:45</span>
-          <span class="text-xs font-semibold bg-indigo-100 text-accent px-2 py-0.5 rounded-full">Wei + Jonas</span>
-          <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Live demo</span>
+          <span class="font-bold text-accent">14:15 – 15:00</span>
+          <span class="text-xs font-semibold bg-indigo-100 text-accent px-2 py-0.5 rounded-full">Wei</span>
+          <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Claude Code</span>
         </div>
-        <h3 class="font-bold text-slate-800 mb-1">Live Claude Code demo on a real APHYS task</h3>
-        <ul class="text-slate-600 text-sm list-disc list-inside space-y-0.5">
-          <li>Jonas frames a real physics task; Wei drives Claude Code</li>
-          <li>Show planning, tool use, file reads/writes, and iteration</li>
-          <li>Outcome: an annotated, publication-style figure</li>
-        </ul>
+        <h3 class="font-bold text-slate-800">Claude Code intro &amp; hands-on</h3>
       </div>
 
       <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
-        <span class="font-semibold text-slate-600 text-sm">14:45 – 15:00 &bull; Coffee &amp; fika</span>
+        <span class="font-semibold text-slate-500 text-sm">15:00 – 15:15 &bull; Coffee &amp; fika</span>
       </div>
 
       <div class="border-l-4 border-emerald-500 bg-white border border-slate-200 rounded-r-xl p-5 shadow-sm">
         <div class="flex flex-wrap items-center gap-3 mb-1">
-          <span class="font-bold text-emerald-600">15:00 – 15:45</span>
+          <span class="font-bold text-emerald-600">15:15 – 16:00</span>
+          <span class="text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Jonas</span>
+          <span class="text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Wei</span>
           <span class="text-xs font-semibold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">Christian Ohm</span>
           <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Showcase</span>
         </div>
-        <h3 class="font-bold text-slate-800 mb-1">Advanced-user showcase &mdash; Christian Ohm</h3>
-        <ul class="text-slate-600 text-sm list-disc list-inside space-y-0.5">
-          <li>Tour through tools used in real research workflows</li>
-          <li>GitHub Copilot in VS Code, Cursor (free 1-year student plan), Claude Code CLI, OpenCode</li>
-          <li>MCP &amp; advanced agent capabilities — possibly a CAD-via-MCP demo</li>
-        </ul>
+        <h3 class="font-bold text-slate-800">Advanced use cases &amp; showcase</h3>
       </div>
 
       <div class="border-l-4 border-fire bg-white border border-slate-200 rounded-r-xl p-5 shadow-sm">
         <div class="flex flex-wrap items-center gap-3 mb-1">
-          <span class="font-bold text-fire">15:45 – 16:45</span>
+          <span class="font-bold text-fire">16:00 – 16:45</span>
           <span class="text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Hands-on</span>
           <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Everyone</span>
         </div>
-        <h3 class="font-bold text-slate-800 mb-1">Build something with Claude Code</h3>
-        <ul class="text-slate-600 text-sm list-disc list-inside space-y-0.5">
-          <li>Run your first agent task end-to-end on your own laptop</li>
-          <li>Write a project <code>CLAUDE.md</code> so the agent knows your conventions</li>
-          <li>Install one or two agent skills and use them in a workflow</li>
-          <li>Beginner safety net: ChatGPT helps you debug any install issues</li>
-          <li>Advanced track: stretch challenges (build an MCP server, custom skill)</li>
-        </ul>
+        <h3 class="font-bold text-slate-800">Build something with Claude Code</h3>
       </div>
 
       <div class="border-l-4 border-violet-500 bg-white border border-slate-200 rounded-r-xl p-5 shadow-sm">
         <div class="flex flex-wrap items-center gap-3 mb-1">
           <span class="font-bold text-violet-600">16:45 – 17:00</span>
           <span class="text-xs font-semibold bg-violet-100 text-violet-700 px-2 py-0.5 rounded-full">Wrap-up</span>
+          <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Wei + Jonas</span>
         </div>
-        <h3 class="font-bold text-slate-800 mb-1">Show &amp; tell + bridge to the Hackathon</h3>
-        <ul class="text-slate-600 text-sm list-disc list-inside space-y-0.5">
-          <li>Three short volunteer demos of what they built today</li>
-          <li>How to bring your real research / teaching question to the May 26 Hackathon</li>
-          <li>Where to keep going: Gallery, Community, follow-up resources</li>
-        </ul>
+        <h3 class="font-bold text-slate-800">Show &amp; tell</h3>
       </div>
 
     </div>
@@ -187,22 +164,6 @@
     </ol>
   </section>
 
-  <!-- Slides preview -->
-  <section class="mb-12">
-    <h2 class="text-2xl font-bold text-slate-900 mb-3">Slides</h2>
-    <p class="text-slate-500 text-sm mb-4">Work in progress &mdash; updated continuously up to May 8.</p>
-    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 flex items-center gap-4 flex-wrap">
-      <div class="flex-1 min-w-[200px]">
-        <h3 class="font-semibold text-slate-900 text-sm">Intro deck (Wei, 13:00&ndash;13:30)</h3>
-        <p class="text-slate-500 text-xs mt-1">Welcome &middot; vision &middot; wake-up call (Karpathy) &middot; vibe vs agentic engineering &middot; jagged intelligence &middot; ethics &middot; LLM market today.</p>
-      </div>
-      <a href="slides/may-8-intro.html" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-4 py-2 rounded-lg transition">
-        Open slides
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-    </div>
-  </section>
-
   <!-- Follow-up resources -->
   <section class="mb-12">
     <h2 class="text-2xl font-bold text-slate-900 mb-3">Follow-up Resources</h2>
@@ -212,15 +173,7 @@
       <li><a href="ai-agents.html" class="text-accent hover:underline">AI Agents Guide</a> — installation, concepts, common workflows</li>
       <li><a href="gallery.html" class="text-accent hover:underline">Use Case Gallery</a> — community-submitted real examples</li>
       <li><a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet" target="_blank" rel="noopener" class="text-accent hover:underline">Claude Code official cheatsheet</a></li>
-      <li><span class="text-slate-400">Stuart McAndrew's deep technical talk on Claude Code (Oscar Klein Center) &mdash; link pending speaker permission</span></li>
     </ul>
-  </section>
-
-  <!-- Bridge to next event -->
-  <section class="text-center bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-8 border border-indigo-100">
-    <h2 class="text-xl font-bold text-slate-900 mb-2">Next: SCI AI Agent Hackathon &mdash; May 26</h2>
-    <p class="text-slate-600 max-w-xl mx-auto mb-4 text-sm">The skills you build here apply directly. Bring a real research or teaching problem and a working laptop.</p>
-    <a href="events.html" class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">View All Events &rarr;</a>
   </section>
 
 </div>
