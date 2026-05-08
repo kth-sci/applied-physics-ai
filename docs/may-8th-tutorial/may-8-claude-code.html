@@ -7,33 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:     #ffffff;
-  --bg-2:   #f8fafc;
-  --bg-3:   #f1f5f9;
-  --fg:     #0f172a;
-  --fg-2:   #334155;
-  --fg-3:   #64748b;
-  --line:   #e2e8f0;
-  --line-2: #cbd5e1;
-
-  /* APHYS brand */
-  --indigo:   #6366f1;
-  --indigo-d: #4f46e5;
-  --indigo-l: #818cf8;
-  --sky:      #2563eb;
-  --green:    #10b981;
-  --amber:    #f59e0b;
-  --red:      #ef4444;
-  --slate:    #475569;
-
-  --fs-h1:   42px;
-  --fs-h2:   32px;
-  --fs-lead: 20px;
-  --fs-body: 16px;
-  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px;
+  --bg:#ffffff; --bg-2:#f8fafc; --bg-3:#f1f5f9;
+  --fg:#0f172a; --fg-2:#334155; --fg-3:#64748b;
+  --line:#e2e8f0; --line-2:#cbd5e1;
+  --indigo:#6366f1; --indigo-d:#4f46e5; --indigo-l:#818cf8;
+  --sky:#2563eb; --green:#10b981; --amber:#f59e0b; --red:#ef4444;
+  --violet:#7c3aed; --slate:#475569;
+  --fs-h1:42px; --fs-h2:32px; --fs-lead:20px; --fs-body:16px;
+  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;
   --pad-x:88px;--pad-y:64px;--inner:1280px;
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-snap-type:y mandatory;scroll-behavior:smooth;background:var(--bg)}
 body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;
@@ -43,23 +26,18 @@ body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-ser
 a{color:var(--indigo);text-decoration:none;border-bottom:1px solid rgba(99,102,241,0.3)}
 a:hover{border-bottom-color:var(--indigo)}
 
-/* ── SLIDE BASE ────────────────────────────────── */
-.slide{
-  width:100%;min-height:100vh;background:var(--bg);color:var(--fg);
-  padding:var(--pad-y) var(--pad-x);
-  scroll-snap-align:start;position:relative;
-  display:flex;flex-direction:column;justify-content:center;overflow:hidden
-}
+/* ── SLIDE BASE ─────────────────────────────── */
+.slide{width:100%;min-height:100vh;background:var(--bg);color:var(--fg);
+  padding:var(--pad-y) var(--pad-x);scroll-snap-align:start;position:relative;
+  display:flex;flex-direction:column;justify-content:center;overflow:hidden}
 .slide>.inner{max-width:var(--inner);margin:0 auto;width:100%}
-
-/* Brand + page labels */
 .slide .brand{position:absolute;top:var(--s4);left:var(--pad-x);
   font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-3);letter-spacing:.04em}
 .slide .brand b{color:var(--fg);font-weight:700}
 .slide .page{position:absolute;top:var(--s4);right:var(--pad-x);
   font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-3);letter-spacing:.18em}
 
-/* ── TYPOGRAPHY ───────────────────────────────── */
+/* ── TYPOGRAPHY ────────────────────────────── */
 .kicker{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;
   letter-spacing:.22em;color:var(--indigo);margin-bottom:var(--s3);display:inline-block}
 .rule{height:2px;width:52px;background:var(--indigo);margin:var(--s2) 0 var(--s4)}
@@ -70,66 +48,76 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
 .slide p{font-size:var(--fs-body);line-height:1.6;color:var(--fg-2);max-width:1000px}
 .slide p.lead{font-size:var(--fs-lead);line-height:1.5;color:var(--fg);max-width:1100px;font-weight:400}
 
-/* ── CALLOUT / QUOTE ──────────────────────────── */
+/* ── CALLOUT ───────────────────────────────── */
 .callout{border-left:3px solid var(--indigo);padding:var(--s3) var(--s4);
   background:var(--bg-2);font-size:15px;line-height:1.65;color:var(--fg-2);max-width:none}
 .callout b{color:var(--fg)}
 .callout.green{border-left-color:var(--green);background:rgba(16,185,129,0.04)}
-.callout.red{border-left-color:var(--red);background:rgba(239,68,68,0.04)}
 .callout.amber{border-left-color:var(--amber);background:rgba(245,158,11,0.04)}
+.callout.red{border-left-color:var(--red);background:rgba(239,68,68,0.04)}
+.callout.sky{border-left-color:var(--sky);background:rgba(37,99,235,0.04)}
+.callout.violet{border-left-color:var(--violet);background:rgba(124,58,237,0.04)}
 
-/* ── TITLE SLIDE ─────────────────────────────── */
-.title-slide{background:var(--bg)}
+/* ── TITLE SLIDE ───────────────────────────── */
 .title-slide .inner{display:grid;grid-template-columns:1.2fr 1fr;gap:var(--s5);align-items:center}
-.title-slide .logo{font-size:54px;line-height:.95;font-weight:900;letter-spacing:-0.04em;color:var(--fg)}
+.title-slide .logo{font-size:52px;line-height:.95;font-weight:900;letter-spacing:-0.04em;color:var(--fg)}
 .title-slide .logo span{color:var(--indigo)}
-.title-slide .tag{font-size:22px;font-weight:500;margin-top:var(--s3);letter-spacing:-0.01em;
-  line-height:1.3;color:var(--fg-2)}
-.title-slide .tag em{font-style:normal;color:var(--indigo);font-weight:600}
 .title-slide .bar{height:3px;background:var(--indigo);width:80px;margin:var(--s4) 0 var(--s3)}
-.title-slide .desc{font-size:16px;line-height:1.6;color:var(--fg-3);font-weight:400}
 .title-side{background:var(--bg-2);border:1px solid var(--line);padding:var(--s4);
   display:flex;flex-direction:column;gap:var(--s3)}
 .title-side .stat{border-left:2px solid var(--indigo);padding-left:var(--s2)}
 .title-side .stat .l{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;
   letter-spacing:.16em;color:var(--indigo);margin-bottom:4px}
-.title-side .stat .v{font-size:26px;font-weight:800;color:var(--fg);letter-spacing:-0.03em}
+.title-side .stat .v{font-size:24px;font-weight:800;color:var(--fg);letter-spacing:-0.03em}
 .title-side .stat .s{font-size:13px;color:var(--fg-3);margin-top:2px}
 
-/* ── PILLARS GRID ────────────────────────────── */
+/* ── PILLARS ───────────────────────────────── */
 .pillars{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s4)}
-.pillars.five{grid-template-columns:repeat(5,1fr)}
 .pillars.four{grid-template-columns:repeat(4,1fr)}
 .pillars.three{grid-template-columns:repeat(3,1fr)}
 .pillars.two{grid-template-columns:repeat(2,1fr)}
-.pillar{background:var(--bg);padding:var(--s4);display:flex;flex-direction:column;min-height:220px}
+.pillar{background:var(--bg);padding:var(--s4);display:flex;flex-direction:column;min-height:200px}
 .pillar .n{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;
   font-weight:700;margin-bottom:var(--s2);text-transform:uppercase}
-.pillar h3{font-size:20px;margin-bottom:var(--s2);line-height:1.2}
-.pillar p{font-size:13px;line-height:1.6;color:var(--fg-2);margin-bottom:var(--s2);flex:1}
+.pillar.p1 .n{color:var(--red)}   .pillar.p2 .n{color:var(--indigo)}
+.pillar.p3 .n{color:var(--amber)} .pillar.p4 .n{color:var(--sky)}
+.pillar.p5 .n{color:var(--green)} .pillar.p6 .n{color:var(--violet)}
+.pillar h3{font-size:18px;margin-bottom:var(--s2);line-height:1.2}
+.pillar p{font-size:13px;line-height:1.6;color:var(--fg-2);flex:1}
 .pillar .eg{font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.5;
   color:var(--fg-3);border-top:1px solid var(--line);padding-top:var(--s2);margin-top:auto}
-.pillar.p1 .n{color:var(--red)}
-.pillar.p2 .n{color:var(--indigo)}
-.pillar.p3 .n{color:var(--amber)}
-.pillar.p4 .n{color:var(--sky)}
-.pillar.p5 .n{color:var(--green)}
 
-/* ── SCENARIO / STEPS ────────────────────────── */
-.scenario{border:1px solid var(--line);padding:var(--s4);background:var(--bg-2);margin-top:var(--s3)}
-.scenario .q{font-size:18px;font-weight:600;color:var(--fg);line-height:1.45;
-  letter-spacing:-0.01em;margin-bottom:var(--s3)}
-.scenario .q em{font-style:normal;color:var(--indigo);font-weight:700}
-.scenario .steps{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
-.scenario .steps.four{grid-template-columns:repeat(4,1fr)}
-.scenario .steps.three{grid-template-columns:repeat(3,1fr)}
-.scenario .step{background:var(--bg);padding:var(--s3);display:flex;flex-direction:column}
-.scenario .step .sn{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--indigo);
-  letter-spacing:.16em;font-weight:700;text-transform:uppercase}
-.scenario .step h4{font-size:15px;font-weight:700;margin:6px 0 4px;line-height:1.25;color:var(--fg)}
-.scenario .step p{font-size:13px;line-height:1.5;color:var(--fg-2);max-width:none}
+/* ── TWO-SYSTEMS ───────────────────────────── */
+.two-sys{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s4)}
+.sys{border:2px solid var(--line);padding:var(--s4);position:relative}
+.sys.green-b{border-color:var(--green)} .sys.red-b{border-color:var(--red)}
+.sys.sky-b{border-color:var(--sky)}     .sys.amber-b{border-color:var(--amber)}
+.sys.indigo-b{border-color:var(--indigo)} .sys.violet-b{border-color:var(--violet)}
+.sys .stag{position:absolute;top:-13px;left:var(--s3);background:var(--bg);
+  padding:0 var(--s2);font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.18em;font-weight:700;text-transform:uppercase}
+.sys.green-b .stag{color:var(--green)} .sys.red-b .stag{color:var(--red)}
+.sys.sky-b .stag{color:var(--sky)}     .sys.amber-b .stag{color:var(--amber)}
+.sys.indigo-b .stag{color:var(--indigo)} .sys.violet-b .stag{color:var(--violet)}
+.sys h3{font-size:22px;margin-bottom:var(--s2);color:var(--fg)}
+.sys ul{list-style:none;padding:0}
+.sys li{padding:6px 0 6px 20px;position:relative;font-size:14px;line-height:1.5;color:var(--fg-2)}
+.sys li::before{content:"→";position:absolute;left:0;top:6px;
+  font-family:'JetBrains Mono',monospace;font-size:11px}
+.sys.green-b li::before{color:var(--green)} .sys.red-b li::before{color:var(--red)}
+.sys.sky-b li::before{color:var(--sky)}     .sys.amber-b li::before{color:var(--amber)}
+.sys.indigo-b li::before{color:var(--indigo)} .sys.violet-b li::before{color:var(--violet)}
 
-/* ── FACT ROW ─────────────────────────────────── */
+/* ── LAB CARDS ─────────────────────────────── */
+.lab-bullets{display:flex;flex-direction:column;gap:var(--s2)}
+.lab-card{border-left:2px solid var(--indigo);padding:var(--s2) var(--s3);background:var(--bg-2)}
+.lab-card.sky{border-left-color:var(--sky)} .lab-card.green{border-left-color:var(--green)}
+.lab-card.amber{border-left-color:var(--amber)} .lab-card.red{border-left-color:var(--red)}
+.lab-card.violet{border-left-color:var(--violet)}
+.lab-card h4{font-size:14px;font-weight:700;margin-bottom:3px;color:var(--fg)}
+.lab-card p{font-size:13px;line-height:1.55;color:var(--fg-2);max-width:none}
+
+/* ── FACT ROW ──────────────────────────────── */
 .fact-row{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s4)}
 .fact-row.three{grid-template-columns:repeat(3,1fr)}
 .fact-row.four{grid-template-columns:repeat(4,1fr)}
@@ -139,100 +127,78 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
 .fact .v{font-size:22px;font-weight:800;color:var(--fg);line-height:1.15;letter-spacing:-0.02em}
 .fact .s{font-size:13px;color:var(--fg-3);margin-top:4px;line-height:1.5}
 
-/* ── TWO-SYSTEMS ─────────────────────────────── */
-.two-sys{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s4)}
-.sys{border:2px solid var(--line);padding:var(--s4);position:relative}
-.sys.green-b{border-color:var(--green)}
-.sys.red-b{border-color:var(--red)}
-.sys.sky-b{border-color:var(--sky)}
-.sys.amber-b{border-color:var(--amber)}
-.sys.indigo-b{border-color:var(--indigo)}
-.sys .stag{position:absolute;top:-13px;left:var(--s3);background:var(--bg);
-  padding:0 var(--s2);font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:.18em;font-weight:700;text-transform:uppercase}
-.sys.green-b .stag{color:var(--green)}
-.sys.red-b .stag{color:var(--red)}
-.sys.sky-b .stag{color:var(--sky)}
-.sys.amber-b .stag{color:var(--amber)}
-.sys.indigo-b .stag{color:var(--indigo)}
-.sys h3{font-size:22px;margin-bottom:var(--s2);line-height:1.1;color:var(--fg)}
-.sys ul{list-style:none;padding:0}
-.sys li{padding:6px 0 6px 20px;position:relative;font-size:14px;line-height:1.5;color:var(--fg-2)}
-.sys li::before{content:"→";position:absolute;left:0;top:6px;
-  font-family:'JetBrains Mono',monospace;font-size:11px}
-.sys.green-b li::before{color:var(--green)}
-.sys.red-b li::before{color:var(--red)}
-.sys.sky-b li::before{color:var(--sky)}
-.sys.amber-b li::before{color:var(--amber)}
-.sys.indigo-b li::before{color:var(--indigo)}
+/* ── SCENARIO STEPS ────────────────────────── */
+.scenario{border:1px solid var(--line);padding:var(--s4);background:var(--bg-2);margin-top:var(--s3)}
+.scenario .q{font-size:17px;font-weight:600;color:var(--fg);line-height:1.45;
+  letter-spacing:-0.01em;margin-bottom:var(--s3)}
+.scenario .q em{font-style:normal;color:var(--indigo);font-weight:700}
+.scenario .steps{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.scenario .steps.four{grid-template-columns:repeat(4,1fr)}
+.scenario .steps.five{grid-template-columns:repeat(5,1fr)}
+.scenario .step{background:var(--bg);padding:var(--s3);display:flex;flex-direction:column}
+.scenario .step .sn{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--indigo);
+  letter-spacing:.16em;font-weight:700;text-transform:uppercase}
+.scenario .step h4{font-size:14px;font-weight:700;margin:6px 0 4px;line-height:1.25;color:var(--fg)}
+.scenario .step p{font-size:12.5px;line-height:1.5;color:var(--fg-2);max-width:none}
+.scenario .step code{font-family:'JetBrains Mono',monospace;font-size:.85em;
+  background:var(--bg-3);border:1px solid var(--line);padding:1px 4px;border-radius:3px;color:var(--indigo)}
 
-/* ── LAB CARDS (left-border) ─────────────────── */
-.lab-bullets{display:flex;flex-direction:column;gap:var(--s2)}
-.lab-card{border-left:2px solid var(--indigo);padding:var(--s2) var(--s3);background:var(--bg-2)}
-.lab-card.sky{border-left-color:var(--sky)}
-.lab-card.green{border-left-color:var(--green)}
-.lab-card.amber{border-left-color:var(--amber)}
-.lab-card.red{border-left-color:var(--red)}
-.lab-card h4{font-size:14px;font-weight:700;margin-bottom:3px;color:var(--fg)}
-.lab-card p{font-size:13px;line-height:1.55;color:var(--fg-2);max-width:none}
-
-/* ── LINK GRID ───────────────────────────────── */
-.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s3)}
-.link-card{border:1px solid var(--line);padding:var(--s3) var(--s4);
-  background:var(--bg-2);display:flex;flex-direction:column;gap:5px;
-  text-decoration:none;border-bottom:none;transition:border-color .15s}
-.link-card:hover{border-color:var(--indigo)}
-.link-card .lkick{font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:.16em;color:var(--indigo);text-transform:uppercase}
-.link-card h4{font-size:15px;font-weight:700;color:var(--fg);line-height:1.3}
-.link-card .url{font-family:'JetBrains Mono',monospace;font-size:11px;
-  color:var(--sky);word-break:break-all;line-height:1.5}
-
-/* ── ANATOMY BOX ─────────────────────────────── */
-.anatomy{font-family:'JetBrains Mono',monospace;background:var(--bg-3);
-  border:1px solid var(--line);border-radius:4px;padding:var(--s3) var(--s4);
-  font-size:13px;line-height:1.9;color:var(--fg-2)}
-.a-role{color:#7c3aed}
-.a-task{color:#dc2626}
-.a-ctx{color:#059669}
-.a-fmt{color:#2563eb}
-.a-ann{color:var(--fg-3);font-size:.82em;margin-left:.5em}
-
-/* ── PROMPT BOX ──────────────────────────────── */
+/* ── PROMPT BOX ────────────────────────────── */
 .prompt-box{font-family:'JetBrains Mono',monospace;background:var(--bg-3);
   border:1px solid rgba(99,102,241,.3);border-radius:4px;
   padding:var(--s3) var(--s4);font-size:12.5px;line-height:1.75;
   color:var(--fg-2);white-space:pre-wrap}
 
-/* ── DIVIDER SLIDE ───────────────────────────── */
+/* ── COMMAND LIST ──────────────────────────── */
+.cmd-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s3)}
+.cmd-row{display:grid;grid-template-columns:280px 1fr;background:var(--bg)}
+.cmd-row .cmd{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:var(--indigo);
+  padding:var(--s3) var(--s4);background:var(--bg-2);border-right:1px solid var(--line);display:flex;align-items:center}
+.cmd-row .desc{padding:var(--s3) var(--s4);font-size:13.5px;color:var(--fg-2);display:flex;align-items:center;line-height:1.5}
+.cmd-row.danger .cmd{color:var(--red);background:rgba(239,68,68,0.04)}
+
+/* ── IDEA GRID ─────────────────────────────── */
+.idea-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s3)}
+.idea{background:var(--bg);padding:var(--s3) var(--s4)}
+.idea .tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:6px;font-weight:700}
+.idea .tag.t1{color:var(--indigo)} .idea .tag.t2{color:var(--sky)}
+.idea .tag.t3{color:var(--green)} .idea .tag.t4{color:var(--amber)}
+.idea .tag.t5{color:var(--red)}   .idea .tag.t6{color:var(--violet)}
+.idea h3{font-size:15px;font-weight:700;margin-bottom:4px;letter-spacing:-0.01em}
+.idea p{font-size:13px;color:var(--fg-3);line-height:1.5;max-width:none}
+
+/* ── DIVIDER SLIDE ─────────────────────────── */
 .divider{background:linear-gradient(135deg,var(--bg-2) 0%,var(--bg) 100%);
   border-top:3px solid var(--indigo)}
 
-/* ── NAV PROGRESS ────────────────────────────── */
+/* ── NAV PROGRESS ──────────────────────────── */
 .nav-progress{position:fixed;top:0;left:0;height:2px;background:var(--indigo);
   z-index:98;transition:width .15s ease}
 
-/* ── COMMAND LIST ────────────────────────────── */
-.cmd-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s4)}
-.cmd-row{display:grid;grid-template-columns:260px 1fr;background:var(--bg)}
-.cmd-row .cmd{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--indigo);padding:var(--s3) var(--s4);background:var(--bg-2);border-right:1px solid var(--line);display:flex;align-items:center}
-.cmd-row .desc{padding:var(--s3) var(--s4);font-size:14px;color:var(--fg-2);display:flex;align-items:center}
+/* ── AGENT SVG ANIMATION ───────────────────── */
+@keyframes agentflow{from{stroke-dashoffset:26}to{stroke-dashoffset:0}}
+@keyframes llmpulse{0%,100%{opacity:1}50%{opacity:.82}}
+.aflow{stroke-dasharray:8 5;animation:agentflow 1.8s linear infinite}
+.aflow.d1{animation-delay:0s} .aflow.d2{animation-delay:-.36s}
+.aflow.d3{animation-delay:-.72s} .aflow.d4{animation-delay:-1.08s}
+.aflow.d5{animation-delay:-1.44s}
+.llmpulse{animation:llmpulse 3s ease-in-out infinite}
 
-/* ── RESPONSIVE ──────────────────────────────── */
+/* ── RESPONSIVE ────────────────────────────── */
 @media(max-width:1100px){
   :root{--pad-x:36px;--pad-y:44px;--fs-h1:30px;--fs-h2:24px;--fs-lead:17px;--fs-body:14px}
-  .pillars.five,.pillars.four,.pillars.three{grid-template-columns:1fr 1fr}
-  .two-sys,.fact-row.four,.fact-row.three,.link-grid{grid-template-columns:1fr}
+  .pillars.four,.pillars.three{grid-template-columns:1fr 1fr}
+  .two-sys,.idea-grid{grid-template-columns:1fr}
   .title-slide .inner{grid-template-columns:1fr}
   .title-side{display:none}
-  .scenario .steps.four{grid-template-columns:1fr 1fr}
+  .scenario .steps.four,.scenario .steps.five{grid-template-columns:1fr 1fr}
   .cmd-row{grid-template-columns:1fr}
   .cmd-row .cmd{border-right:none;border-bottom:1px solid var(--line)}
 }
 </style>
 </head>
 <body>
-
 <div class="nav-progress" id="np"></div>
 
 <!-- ═══════════════════════════════════════════
@@ -240,44 +206,146 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
 ═══════════════════════════════════════════ -->
 <section class="slide title-slide" id="s1">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">01 / 19 · Wei Ouyang</div>
+  <div class="page">01 / 13 · Wei Ouyang</div>
   <div class="inner">
-    <div class="title-text">
-      <div class="kicker">Claude Code Essentials · 14:15 – 15:00</div>
-      <div class="logo">From answering questions —<br/>to <span>doing work.</span></div>
+    <div>
+      <div class="kicker">Claude Code Essentials · 14:00 – 14:15</div>
+      <div class="logo">Claude <span>Code</span></div>
       <div class="bar"></div>
-      <p class="tag">AI agents that read your files, run your code, and <em>write results to disk.</em></p>
-      <p style="margin-top:var(--s3);font-size:15px;color:var(--fg-3);">
-        Two parts: Claude Code essentials — concepts, tools, and use cases · then a 90-minute
-        hands-on session where you produce a real output from your own research.
+      <div style="display:flex;flex-direction:column;gap:var(--s1);margin-bottom:var(--s4);">
+        <div style="font-size:20px;color:var(--fg-3);font-weight:500;letter-spacing:-0.01em;">Answer questions &nbsp;<span style="color:var(--line-2);">→</span></div>
+        <div style="font-size:20px;color:var(--fg-2);font-weight:500;letter-spacing:-0.01em;">Do work &nbsp;<span style="color:var(--line-2);">→</span></div>
+        <div style="font-size:22px;color:var(--indigo);font-weight:700;letter-spacing:-0.02em;">AI Agents</div>
+      </div>
+      <p style="font-size:15px;color:var(--fg-3);max-width:560px;line-height:1.6;">
+        15 min: what an AI agent is, how Claude Code works, and the three tools you'll use today.<br/>
+        Then 15 min hands-on: you build something real.
       </p>
     </div>
     <div class="title-side">
       <div class="stat">
         <div class="l">In the room</div>
-        <div class="v">46</div>
-        <div class="s">faculty, postdocs, PhD students across BON, LAMP, Biophysics</div>
+        <div class="v">44</div>
+        <div class="s">faculty, postdocs, PhD students — BON, LAMP, Biophysics</div>
       </div>
       <div class="stat" style="border-color:var(--sky)">
         <div class="l" style="color:var(--sky)">This slot</div>
-        <div class="v" style="font-size:18px;letter-spacing:-0.01em;">14:15</div>
-        <div class="s">Claude Code Essentials — 45 min</div>
+        <div class="v" style="font-size:18px;letter-spacing:-0.01em;">14:00–14:15</div>
+        <div class="s">Claude Code concepts — 15 min, then straight to hands-on</div>
       </div>
       <div class="stat" style="border-color:var(--green)">
-        <div class="l" style="color:var(--green)">First agent task</div>
-        <div class="v" style="font-size:18px;letter-spacing:-0.01em;">in 45 min</div>
-        <div class="s">hands-on session starts at 15:15 — you will produce a real file</div>
+        <div class="l" style="color:var(--green)">After this</div>
+        <div class="v" style="font-size:18px;letter-spacing:-0.01em;">14:15–14:30</div>
+        <div class="s">Hands-on: your own project, your own data</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     02 · AGENT RECAP
+     02 · WHAT IS AN AI AGENT
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s2">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">02 / 19 · Wei Ouyang</div>
+  <div class="page">02 / 13 · Wei Ouyang</div>
+  <div class="inner" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:center;">
+    <div>
+      <div class="kicker">Foundation</div>
+      <h2>What is an AI agent?</h2>
+      <div class="rule"></div>
+      <p class="lead" style="margin-bottom:var(--s4);">A language model that doesn't just answer — it <strong>decides what to do and does it.</strong></p>
+
+      <div class="lab-bullets">
+        <div class="lab-card green">
+          <h4>Perceive — reads the world</h4>
+          <p>Files, code, data, PDFs, terminal output, web pages — the agent observes its environment before acting.</p>
+        </div>
+        <div class="lab-card sky">
+          <h4>Plan — breaks goals into steps</h4>
+          <p>Given a high-level goal, it decides which tools to use, in what order, and checks the result before continuing.</p>
+        </div>
+        <div class="lab-card amber">
+          <h4>Act — uses tools</h4>
+          <p>Writes files, runs code, calls APIs, controls instruments. Output lives on disk — not in a chat window.</p>
+        </div>
+        <div class="lab-card">
+          <h4>Remember — persists knowledge</h4>
+          <p>Context window for this session, CLAUDE.md for every session. Memory you design and control.</p>
+        </div>
+        <div class="lab-card red">
+          <h4>Iterate — loops until done</h4>
+          <p>Observe → Plan → Act → Observe → … Reads errors, fixes them, re-runs. You intervene when it asks.</p>
+        </div>
+      </div>
+
+      <div class="callout violet" style="margin-top:var(--s4);font-size:13px;">
+        <b>Harness engineering:</b> structuring the context, memory, and tools that shape agent behavior. Beyond prompting — you design the environment the agent operates in.
+      </div>
+    </div>
+
+    <!-- Animated SVG -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:var(--s3);">
+      <svg viewBox="0 0 400 270" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;">
+
+        <!-- Animated flow lines (satellite → LLM center at 200,155) -->
+        <!-- Memory top (200,58) → center -->
+        <line x1="200" y1="68" x2="200" y2="110" class="aflow d1" stroke="#6366f1" stroke-width="2.5" opacity="0.55"/>
+        <!-- Files left-top (55,105) → center -->
+        <line x1="94" y1="110" x2="162" y2="136" class="aflow d2" stroke="#10b981" stroke-width="2.5" opacity="0.55"/>
+        <!-- Terminal right-top (345,105) → center -->
+        <line x1="306" y1="110" x2="238" y2="136" class="aflow d3" stroke="#2563eb" stroke-width="2.5" opacity="0.55"/>
+        <!-- Tools left-bottom (55,210) → center -->
+        <line x1="94" y1="210" x2="162" y2="174" class="aflow d4" stroke="#f59e0b" stroke-width="2.5" opacity="0.55"/>
+        <!-- Web right-bottom (345,210) → center -->
+        <line x1="306" y1="210" x2="238" y2="174" class="aflow d5" stroke="#7c3aed" stroke-width="2.5" opacity="0.55"/>
+
+        <!-- Central LLM node -->
+        <rect x="146" y="110" width="108" height="60" rx="10" fill="#6366f1" class="llmpulse"/>
+        <text x="200" y="133" text-anchor="middle" fill="white" font-family="Inter,system-ui" font-size="13" font-weight="800" letter-spacing="-0.5">LLM</text>
+        <text x="200" y="150" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="Inter,system-ui" font-size="10">Observe · Plan · Act</text>
+        <text x="200" y="163" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="JetBrains Mono,monospace" font-size="8.5">Iterate until done</text>
+
+        <!-- Memory (top) -->
+        <rect x="148" y="14" width="104" height="46" rx="7" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+        <text x="200" y="32" text-anchor="middle" fill="#4f46e5" font-family="Inter,system-ui" font-size="10" font-weight="700">MEMORY</text>
+        <text x="200" y="47" text-anchor="middle" fill="#64748b" font-family="JetBrains Mono,monospace" font-size="7.5">CLAUDE.md · context window</text>
+
+        <!-- Files (left-top) -->
+        <rect x="6" y="82" width="84" height="52" rx="7" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+        <text x="48" y="103" text-anchor="middle" fill="#059669" font-family="Inter,system-ui" font-size="10" font-weight="700">FILES</text>
+        <text x="48" y="120" text-anchor="middle" fill="#64748b" font-family="JetBrains Mono,monospace" font-size="7">code · data · PDFs</text>
+
+        <!-- Terminal (right-top) -->
+        <rect x="310" y="82" width="84" height="52" rx="7" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+        <text x="352" y="103" text-anchor="middle" fill="#2563eb" font-family="Inter,system-ui" font-size="10" font-weight="700">TERMINAL</text>
+        <text x="352" y="120" text-anchor="middle" fill="#64748b" font-family="JetBrains Mono,monospace" font-size="7">python · bash · git</text>
+
+        <!-- Tools/APIs (left-bottom) -->
+        <rect x="6" y="184" width="84" height="52" rx="7" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.5"/>
+        <text x="48" y="205" text-anchor="middle" fill="#d97706" font-family="Inter,system-ui" font-size="10" font-weight="700">TOOLS</text>
+        <text x="48" y="222" text-anchor="middle" fill="#64748b" font-family="JetBrains Mono,monospace" font-size="7">MCP · skills · APIs</text>
+
+        <!-- Web (right-bottom) -->
+        <rect x="310" y="184" width="84" height="52" rx="7" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="352" y="205" text-anchor="middle" fill="#7c3aed" font-family="Inter,system-ui" font-size="10" font-weight="700">WEB</text>
+        <text x="352" y="222" text-anchor="middle" fill="#64748b" font-family="JetBrains Mono,monospace" font-size="7">docs · papers · search</text>
+
+      </svg>
+
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-3);text-align:center;line-height:1.8;">
+        <span style="color:var(--red);">Chatbot:</span> text in, text out.<br/>
+        <span style="color:var(--indigo);font-weight:700;">Agent:</span> goal in, result on disk.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     03 · CHATGPT vs CLAUDE CODE
+═══════════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">03 / 13 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Recap</div>
     <h2>You already know the key idea.</h2>
@@ -289,15 +357,15 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
         <h3 style="color:var(--red);">Text in. Text out.</h3>
         <ul>
           <li>Replies once, then waits</li>
-          <li>No access to your files</li>
+          <li>No access to your files or disk</li>
           <li>No memory between sessions</li>
           <li>You copy-paste everything manually</li>
           <li>Output lives only in the chat window</li>
         </ul>
       </div>
       <div class="sys green-b">
-        <div class="stag">Claude Code</div>
-        <h3 style="color:var(--green);">Acts in your project.</h3>
+        <div class="stag">Claude Code (AI Agent)</div>
+        <h3 style="color:var(--green);">Goal in. Result on disk.</h3>
         <ul>
           <li>Reads your files — code, data, PDFs, notebooks</li>
           <li>Runs terminal commands — python, bash, git, conda</li>
@@ -309,17 +377,17 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
     </div>
 
     <div class="callout green" style="margin-top:var(--s4);">
-      <b>Today: you don't learn a new concept. You learn the tool.</b> You already understand what an AI agent is. The next 45 minutes are about the specific commands, workflows, and use cases that make Claude Code productive for Applied Physics research.
+      <b>The fundamental shift:</b> Claude Code doesn't produce text for you to copy. It produces files on your disk, code that runs in your environment, and results you can open immediately.
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     03 · YOUR PROJECT FOLDER
+     04 · START WITH A FOLDER
 ═══════════════════════════════════════════ -->
-<section class="slide" id="s3">
+<section class="slide" id="s4">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">03 / 19 · Wei Ouyang</div>
+  <div class="page">04 / 13 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Foundation</div>
     <h2>Start with a folder, not a chat window.</h2>
@@ -328,55 +396,58 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
 
     <div class="fact-row three" style="margin-top:var(--s4);">
       <div class="fact">
-        <div class="l">Files it can read</div>
-        <div class="v" style="font-size:17px;letter-spacing:-0.01em;">Your code, data, docs, PDFs</div>
-        <div class="s">Python scripts, CSV data files, Jupyter notebooks, papers, notes — anything in the directory tree</div>
+        <div class="l">Files it reads</div>
+        <div class="v" style="font-size:16px;letter-spacing:-0.01em;">Code, data, docs, PDFs</div>
+        <div class="s">Python scripts, CSV files, Jupyter notebooks, papers, notes — anything in the directory tree</div>
       </div>
       <div class="fact">
-        <div class="l" style="color:var(--sky)">Commands it can run</div>
-        <div class="v" style="font-size:17px;letter-spacing:-0.01em;color:var(--sky)">python, bash, git, pip</div>
-        <div class="s">Any command your shell can run — including conda environments, custom scripts, and SLURM job submissions</div>
+        <div class="l" style="color:var(--sky)">Commands it runs</div>
+        <div class="v" style="font-size:16px;letter-spacing:-0.01em;color:var(--sky)">python, bash, git, pip</div>
+        <div class="s">Any command your shell can run — conda environments, custom scripts, SLURM job submissions</div>
       </div>
       <div class="fact">
         <div class="l" style="color:var(--green)">Output it saves</div>
-        <div class="v" style="font-size:17px;letter-spacing:-0.01em;color:var(--green)">Figures, reports, scripts</div>
+        <div class="v" style="font-size:16px;letter-spacing:-0.01em;color:var(--green)">Figures, reports, scripts</div>
         <div class="s">PNG figures, markdown reports, HTML pages, edited source files — real artifacts on your disk</div>
       </div>
     </div>
 
     <div class="callout" style="margin-top:var(--s4);">
-      <b>Getting started is one line:</b> open a terminal → navigate to your project folder → type <code style="font-family:'JetBrains Mono',monospace;color:var(--indigo);font-weight:600;">claude</code> → you're in. Claude immediately reads the directory and knows your project.
+      <b>Getting started is one line:</b><br/>
+      Open a terminal → navigate to your project folder → type <code style="font-family:'JetBrains Mono',monospace;color:var(--indigo);font-weight:600;">claude</code> → Claude reads the directory and knows your project immediately.
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     04 · CLAUDE.MD
+     05 · CLAUDE.MD
 ═══════════════════════════════════════════ -->
-<section class="slide" id="s4">
+<section class="slide" id="s5">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">04 / 19 · Wei Ouyang</div>
+  <div class="page">05 / 13 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Standing Instructions</div>
     <h2>One file. Every session.</h2>
     <div class="rule"></div>
-    <p class="lead" style="margin-bottom:var(--s4);">CLAUDE.md is a plain-text file at the root of your project. Claude reads it at the start of every session — automatically, without you saying anything.</p>
+    <p class="lead" style="margin-bottom:var(--s4);">CLAUDE.md is a plain-text file at the root of your project. Claude reads it automatically at the start of every session — without you saying anything.</p>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);">
-      <div>
-        <div class="lab-bullets">
-          <div class="lab-card">
-            <h4>① Project context</h4>
-            <p>What this folder is for, what data format you're working with, what tools and libraries are installed.</p>
-          </div>
-          <div class="lab-card sky">
-            <h4>② Conventions</h4>
-            <p>"Always save figures to ./figures/" · "Use seaborn-whitegrid style" · "Never modify raw data files"</p>
-          </div>
-          <div class="lab-card amber">
-            <h4>③ Constraints</h4>
-            <p>What NOT to do, which directories are off-limits, who to ask before deleting files, safety rails for the project.</p>
-          </div>
+      <div class="lab-bullets">
+        <div class="lab-card">
+          <h4>① Project context</h4>
+          <p>What this folder is for, what data format you use, what tools and libraries are installed.</p>
+        </div>
+        <div class="lab-card sky">
+          <h4>② Conventions</h4>
+          <p>"Always save figures to ./figures/" · "Use seaborn-whitegrid style" · "Never modify raw data files"</p>
+        </div>
+        <div class="lab-card amber">
+          <h4>③ Constraints &amp; safety rails</h4>
+          <p>What NOT to do, which directories are off-limits, when to ask before deleting — your guardrails.</p>
+        </div>
+        <div class="lab-card green">
+          <h4>④ Generate it instantly</h4>
+          <p>Type <code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);">/init</code> in any project — Claude writes a CLAUDE.md from your existing files. Edit to add your domain context.</p>
         </div>
       </div>
       <div>
@@ -390,144 +461,86 @@ Save all figures to ./figures/ as 300 dpi PNG.
 Never modify files in ./raw_data/.
 Python environment: conda env 'spectro'
   (python 3.11, numpy, scipy, matplotlib).</div>
-        <p style="font-size:12px;color:var(--fg-3);margin-top:var(--s2);line-height:1.5;font-family:'JetBrains Mono',monospace;">
-          <code style="color:var(--indigo);font-weight:600;">/init</code> generates a CLAUDE.md from your project automatically — run it on any existing folder to get a starting point.
-        </p>
+        <div class="callout" style="margin-top:var(--s3);font-size:13px;">
+          <b>Keep it short.</b> CLAUDE.md loads every session and burns tokens every time. Aim for 10–20 lines. If it's too long, Claude ignores half of it. Use Skills (slide 9) for domain knowledge that only applies sometimes.
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     05 · CONTEXT ENGINEERING
+     06 · CONTEXT ENGINEERING
 ═══════════════════════════════════════════ -->
-<section class="slide" id="s5">
+<section class="slide" id="s6">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">05 / 19 · Wei Ouyang</div>
+  <div class="page">06 / 13 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">The Key Mindset Shift</div>
     <h2>The question is not: what prompt should I write?<br/>The question is: what should Claude know?</h2>
     <div class="rule"></div>
 
-    <p class="lead" style="margin-bottom:var(--s3);">Context engineering — deliberately shaping what's in the context window — is the core skill of working with AI agents. <strong>The context window is your most important resource to manage.</strong></p>
+    <p class="lead" style="margin-bottom:var(--s3);">Context engineering — deliberately shaping what's in the context window — is the core skill of working with AI agents.</p>
 
     <div class="pillars four">
       <div class="pillar p1">
         <div class="n">The Constraint</div>
-        <h3>Context fills up fast</h3>
-        <p>Every file read, every command output, every message enters the window. A single debugging session can consume tens of thousands of tokens. <strong>LLM performance degrades as context fills</strong> — Claude starts forgetting earlier instructions.</p>
-        <div class="eg">A 10-file codebase exploration + 20 messages = context half gone before you start the real task.</div>
+        <h3>Context fills fast</h3>
+        <p>Every file read, every command output, every message enters the window. Performance degrades as context fills — Claude starts forgetting earlier instructions.</p>
+        <div class="eg">10 files + 20 messages = context half gone before the real task starts.</div>
       </div>
       <div class="pillar p2">
         <div class="n">Three Levers</div>
         <h3>Shape what Claude knows</h3>
-        <p><strong>CLAUDE.md</strong> — always loaded, every session; <strong>Files you reference</strong> — read only when you mention them; <strong>Skills</strong> — description pre-loaded (~100 tokens), body loaded on demand. Use each at the right granularity.</p>
+        <p><strong>CLAUDE.md</strong> — always loaded; <strong>@file</strong> — read when you mention it; <strong>Skills</strong> — description pre-loaded (~100 tokens), full body only on trigger.</p>
         <div class="eg">CLAUDE.md for universal rules · Skills for domain workflows · @file for one-off context.</div>
       </div>
       <div class="pillar p5">
         <div class="n">Rich Context → Rich Output</div>
         <h3>The compounding effect</h3>
-        <p>A vague prompt + blank context = generic output. Precise task + well-structured project + tight CLAUDE.md = working, domain-specific results.</p>
-        <div class="eg">"Analyse my data" → generic. "Read pump_probe.csv, fit 550 nm with biexponential, plot fit vs data" → working figure.</div>
+        <p>Vague prompt + blank context = generic output. Precise task + tight CLAUDE.md + right files = working domain-specific results.</p>
+        <div class="eg">"Analyse my data" → generic. "Read pump_probe.csv, fit 550 nm biexponential, plot" → working figure.</div>
       </div>
       <div class="pillar p3">
         <div class="n">Context Management</div>
         <h3>Keep it clean</h3>
-        <p><code style="font-family:'JetBrains Mono',monospace;font-size:11px;">/clear</code> — reset between unrelated tasks. <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">/btw</code> — side question that <em>never enters history</em>. Subagents — investigate in a separate context window, report back summaries without cluttering yours.</p>
-        <div class="eg">If you've corrected Claude twice on the same issue: /clear and start fresh with a better prompt.</div>
-      </div>
-    </div>
-
-    <div class="callout amber" style="margin-top:var(--s3);">
-      <b>CLAUDE.md is loaded every session — keep it ruthlessly short.</b> If it's too long, Claude ignores half of it. For each line, ask: "Would removing this cause Claude to make mistakes?" If not, cut it. Use Skills for domain knowledge that only applies sometimes.
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     06 · TOOLS & PERMISSIONS
-═══════════════════════════════════════════ -->
-<section class="slide" id="s6">
-  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">06 / 19 · Wei Ouyang</div>
-  <div class="inner">
-    <div class="kicker">What It Can Do</div>
-    <h2>Tools Claude Code can use — and how to control them.</h2>
-    <div class="rule"></div>
-
-    <div class="pillars four">
-      <div class="pillar p2">
-        <div class="n">Read &amp; Write Files</div>
-        <h3>Your project, fully accessible</h3>
-        <p>Reads any file in your directory — Python, CSV, TIFF, PDF, notebook. Writes, creates, and edits files with your confirmation before any destructive action.</p>
-        <div class="eg">Read ta_data.csv → write analysis.py → save figure_2a.png</div>
-      </div>
-      <div class="pillar p4">
-        <div class="n">Run Terminal Commands</div>
-        <h3>Your shell, on demand</h3>
-        <p>Executes python, bash, git, curl, conda — anything your shell can run. It reads the output, handles errors, and retries. You don't need to copy-paste error messages.</p>
-        <div class="eg">python fit_decay.py → read traceback → fix the code → re-run</div>
-      </div>
-      <div class="pillar p5">
-        <div class="n">Search the Web</div>
-        <h3>Docs, papers, Stack Overflow</h3>
-        <p>Built-in web search for documentation, recent papers, package references, and error solutions — when enabled. Searches in context of your actual task.</p>
-        <div class="eg">"Find the scipy.signal docs for savgol_filter and show me the right window_length argument"</div>
-      </div>
-      <div class="pillar p3">
-        <div class="n">MCP Tools</div>
-        <h3>Connect to external apps</h3>
-        <p>The Model Context Protocol connects Claude Code to databases, browsers, CAD tools, and lab instruments. Blender, Playwright, SQL — extensible by design. (More on this later.)</p>
-        <div class="eg">Browser automation · Blender scene control · database queries</div>
-      </div>
-    </div>
-
-    <div class="two-sys" style="margin-top:var(--s3);">
-      <div class="sys sky-b" style="padding:var(--s3) var(--s4);">
-        <div class="stag">Permission Modes</div>
-        <ul>
-          <li><strong>Default</strong> — asks before every action that changes files or runs commands</li>
-          <li><strong>--dangerously-skip-permissions</strong> — auto-approve all actions; use only in trusted, version-controlled projects</li>
-        </ul>
-      </div>
-      <div class="sys amber-b" style="padding:var(--s3) var(--s4);">
-        <div class="stag">Safety Controls</div>
-        <ul>
-          <li><strong>Esc</strong> — interrupt the running action immediately</li>
-          <li><strong>Esc + Esc</strong> — undo the last file change</li>
-          <li>Always <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">git commit</code> before asking Claude to do anything risky</li>
-        </ul>
+        <p><code style="font-family:'JetBrains Mono',monospace;font-size:11px;">/clear</code> — reset between unrelated tasks. <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">/btw</code> — side question that never enters history. Subagents — investigate in a separate window, report summaries back.</p>
+        <div class="eg">Corrected Claude twice on the same issue? /clear and restart with a better prompt.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     07 · COMMAND LINE ESSENTIALS
+     07 · COMMANDS + PERMISSIONS
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s7">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">07 / 19 · Wei Ouyang</div>
+  <div class="page">07 / 13 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">The Commands You Need</div>
-    <h2>Nine commands + one principle cover daily usage.</h2>
+    <h2>Daily usage in ten commands.</h2>
     <div class="rule"></div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s3) var(--s4);margin-top:var(--s3);">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s3) var(--s4);margin-top:var(--s2);">
       <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--indigo);text-transform:uppercase;margin-bottom:var(--s2);">Start & Run</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--indigo);text-transform:uppercase;margin-bottom:var(--s2);">Start &amp; Run</div>
         <div class="cmd-list">
           <div class="cmd-row">
             <div class="cmd">claude</div>
-            <div class="desc">Start an interactive session — reads directory + CLAUDE.md immediately</div>
+            <div class="desc">Start interactive session — reads directory + CLAUDE.md immediately</div>
           </div>
           <div class="cmd-row">
             <div class="cmd">claude -p "task"</div>
-            <div class="desc">One-shot non-interactive run — pipe into scripts, CI, or batch automation</div>
+            <div class="desc">One-shot non-interactive run — pipe into scripts or batch automation</div>
           </div>
           <div class="cmd-row">
             <div class="cmd">--permission-mode auto</div>
-            <div class="desc">Classifier approves routine actions silently; only blocks scope escalation — reduces click-through fatigue</div>
+            <div class="desc">Auto-approve routine actions silently; only prompts for risky steps</div>
+          </div>
+          <div class="cmd-row danger">
+            <div class="cmd">--dangerously-skip-permissions</div>
+            <div class="desc"><strong>Advanced:</strong> fully autonomous — skips all prompts. Use only in git-tracked projects where you can revert. Ideal for overnight or unattended runs.</div>
           </div>
         </div>
       </div>
@@ -536,84 +549,121 @@ Python environment: conda env 'spectro'
         <div class="cmd-list">
           <div class="cmd-row">
             <div class="cmd">/init</div>
-            <div class="desc">Generate CLAUDE.md from current project — run once per project, then edit</div>
+            <div class="desc">Generate CLAUDE.md from current project — run once, then edit</div>
           </div>
           <div class="cmd-row">
             <div class="cmd">#add a convention</div>
-            <div class="desc">Append a line to CLAUDE.md without executing — build it incrementally as you work</div>
+            <div class="desc">Append a line to CLAUDE.md without executing — build it incrementally</div>
           </div>
         </div>
-      </div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--amber);text-transform:uppercase;margin-bottom:var(--s2);">Manage Context</div>
+
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--amber);text-transform:uppercase;margin:var(--s3) 0 var(--s2);">Manage Context</div>
         <div class="cmd-list">
           <div class="cmd-row">
             <div class="cmd">/clear</div>
-            <div class="desc">Reset context entirely — use between unrelated tasks; prevents noise degrading quality</div>
+            <div class="desc">Reset context — use between unrelated tasks</div>
           </div>
           <div class="cmd-row">
             <div class="cmd">/btw [question]</div>
-            <div class="desc">Side question in a dismissible overlay — <strong>never enters conversation history</strong>; check a fact without spending tokens</div>
+            <div class="desc">Side question that <strong>never enters conversation history</strong></div>
           </div>
         </div>
-      </div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--red);text-transform:uppercase;margin-bottom:var(--s2);">Control & Undo</div>
+
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--red);text-transform:uppercase;margin:var(--s3) 0 var(--s2);">Control &amp; Undo</div>
         <div class="cmd-list">
           <div class="cmd-row">
-            <div class="cmd">Esc</div>
-            <div class="desc">Interrupt current action — stops Claude mid-run, preserves context</div>
-          </div>
-          <div class="cmd-row">
-            <div class="cmd">Esc + Esc · /rewind</div>
-            <div class="desc">Restore previous file state or rewind conversation to any checkpoint</div>
+            <div class="cmd">Esc · Esc+Esc</div>
+            <div class="desc">Interrupt running action · restore previous file state</div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="callout" style="margin-top:var(--s3);font-size:13px;">
-      <b>CLI tools are the most context-efficient way to interact with external services.</b> Install <code style="font-family:'JetBrains Mono',monospace;">gh</code> for GitHub, <code style="font-family:'JetBrains Mono',monospace;">aws</code>, <code style="font-family:'JetBrains Mono',monospace;">gcloud</code> — Claude uses them natively. New tool? Tell Claude: <em>"Use foo-cli --help to learn it, then use it to do X."</em>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     08 · AGENT SKILLS
+     08 · MCP
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s8">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">08 / 19 · Wei Ouyang</div>
+  <div class="page">08 / 13 · Wei Ouyang</div>
   <div class="inner">
-    <div class="kicker">Extending Claude Code</div>
-    <h2>Skills: domain knowledge that costs ~100 tokens to load.</h2>
+    <div class="kicker">Extending Claude Code · Part 1</div>
+    <h2>MCP: connect Claude to any external app.</h2>
+    <div class="rule"></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s3);margin-top:var(--s3);">
+      <div class="sys sky-b" style="border-width:2px;">
+        <div class="stag">What MCP Is</div>
+        <ul>
+          <li><strong>Model Context Protocol</strong> — a standard for connecting Claude to external apps</li>
+          <li>Databases, browsers, CAD tools, lab instruments, live APIs</li>
+          <li>Blender, Playwright, SQL, Figma — extensible by design</li>
+          <li>Jonas used it for Blender — controlled 3D objects with natural language</li>
+        </ul>
+      </div>
+      <div class="sys red-b" style="border-width:2px;">
+        <div class="stag">The Cost</div>
+        <ul>
+          <li>Connecting an MCP server loads <strong>all its tool definitions</strong> into context — even unused tools</li>
+          <li>Requires a running server process + config file</li>
+          <li>Complex setup: install → start server → add to config → test connection</li>
+          <li>Token-heavy from the moment it connects</li>
+        </ul>
+      </div>
+      <div class="sys green-b" style="border-width:2px;">
+        <div class="stag">When to Use It</div>
+        <ul>
+          <li><strong>Real-time app control</strong> — Blender, Figma, live databases where you need two-way state sync</li>
+          <li><strong>Browser automation</strong> — Playwright MCP is the best option here</li>
+          <li><strong>No CLI exists</strong> and the REST API is complex</li>
+          <li>Rule: if a CLI exists, use the CLI. If you need live bidirectional control, use MCP.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout amber" style="margin-top:var(--s3);font-size:13px;">
+      <b>For most research workflows:</b> MCP is overkill. The better default is the combination on the next two slides — Skills + CLI tools. Same power, a fraction of the token cost.
+      <span style="display:block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sky);">registry: github.com/modelcontextprotocol/servers</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     09 · AGENT SKILLS
+═══════════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">09 / 13 · Wei Ouyang</div>
+  <div class="inner">
+    <div class="kicker">Extending Claude Code · Part 2</div>
+    <h2>Skills: domain knowledge that costs ~100 tokens.</h2>
     <div class="rule"></div>
 
     <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:var(--s4);align-items:start;margin-top:var(--s3);">
-
-      <div style="display:flex;flex-direction:column;gap:var(--s3);">
+      <div class="lab-bullets">
         <div class="lab-card">
           <h4>How Skills work — progressive disclosure</h4>
-          <p>At startup: only <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">name</code> + <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">description</code> pre-loaded (~100 tokens for all installed skills). When triggered: full <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">SKILL.md</code> body loaded (keep under 500 lines). Reference files (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;">references/</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">scripts/</code>): loaded only when needed. Zero cost until relevant.</p>
+          <p>At startup: only name + description loaded (~100 tokens total for all installed skills). When triggered: full SKILL.md body loaded. Reference files: loaded only when needed. Zero cost until relevant.</p>
         </div>
         <div class="lab-card sky">
           <h4>CLAUDE.md vs Skills — when to use which</h4>
-          <p><strong>CLAUDE.md</strong> — loaded every session, always burns tokens. Use only for rules that apply to <em>every single task</em>. Keep ruthlessly short (10–20 lines max).<br/><strong>Skills</strong> — triggered on demand. Use for domain workflows, dataset schemas, instrument conventions, analysis pipelines. No cost until you need them.</p>
+          <p><strong>CLAUDE.md</strong> — loaded every session, always burns tokens. Use only for rules that apply to every single task. Keep ruthlessly short.<br/><strong>Skills</strong> — triggered on demand. Use for domain workflows, dataset schemas, instrument conventions, analysis pipelines.</p>
         </div>
         <div class="lab-card green">
-          <h4>Install from registries or write your own</h4>
-          <p><code style="font-family:'JetBrains Mono',monospace;font-size:12px;">svamp skills install &lt;name&gt;</code> · <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">agentskills.io</code> · or write a <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">SKILL.md</code> in <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">.claude/skills/&lt;name&gt;/</code>. This tutorial runs on Svamp + Hypha skills. Jonas's demo used the Blender MCP skill.</p>
+          <h4>Install or write your own</h4>
+          <p><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);">svamp skills install &lt;name&gt;</code> · <code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);">agentskills.io</code> · or write a SKILL.md in <code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);">.claude/skills/&lt;name&gt;/</code>. This tutorial runs on Svamp + Hypha skills.</p>
         </div>
       </div>
-
       <div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--indigo);text-transform:uppercase;margin-bottom:var(--s2);">Minimal SKILL.md for your lab</div>
         <div class="prompt-box" style="font-size:12px;">---
 name: spectroscopy-analysis
-description: Analyze pump-probe TA data: plot
-  transient absorption maps, fit decay curves,
-  export publication figures. Use when working
-  with time-resolved spectroscopy or delta_OD.
+description: Analyze pump-probe TA data:
+  plot transient absorption maps, fit decay
+  curves, export publication figures.
+  Use when working with time-resolved
+  spectroscopy or delta_OD data.
 ---
 ## Data format
 CSV — columns: time_ps, wavelength_nm, delta_OD
@@ -626,573 +676,220 @@ Figures → ./figures/ at 300 dpi PNG.
 3. Fit decay at requested λ with biexponential
 4. Report τ₁, τ₂, amplitudes, R²
 5. Save figure as fig_&lt;wavelength&gt;nm_decay.png</div>
-        <p style="font-size:12px;color:var(--fg-3);margin-top:var(--s2);">The <b>description</b> must say <em>what it does</em> AND <em>when to use it</em> — Claude picks from 100+ skills using just this field.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     09 · USE CASE: DEEP RESEARCH
-═══════════════════════════════════════════ -->
-<section class="slide" id="s9">
-  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">09 / 19 · Wei Ouyang</div>
-  <div class="inner">
-    <div class="kicker">Use Case 01</div>
-    <h2>Read 10 papers. Synthesize. Write the report.</h2>
-    <div class="rule"></div>
-    <p class="lead" style="margin-bottom:var(--s2);">Give Claude a folder of PDFs. Ask it to extract, compare, and summarize. It reads the actual text — not its training data.</p>
-
-    <div class="scenario">
-      <div class="q">"Read the 8 PDFs in ./papers/. For each: extract the key finding, the experimental method, and the sample system. Then write a structured comparison table as <em>literature_review.md</em>. Flag any papers that contradict each other."</div>
-      <div class="steps four">
-        <div class="step">
-          <div class="sn">Step 1</div>
-          <h4>Claude reads each PDF</h4>
-          <p>Uses the Read tool on every PDF in the folder — actual document text, not a summary from training data.</p>
-        </div>
-        <div class="step">
-          <div class="sn">Step 2</div>
-          <h4>Extracts structured data</h4>
-          <p>Key finding, experimental method, and sample system per paper — exactly the fields you specified.</p>
-        </div>
-        <div class="step">
-          <div class="sn">Step 3</div>
-          <h4>Identifies contradictions</h4>
-          <p>Compares claims across papers, flags disagreements — the kind of cross-paper synthesis that takes hours manually.</p>
-        </div>
-        <div class="step">
-          <div class="sn">Step 4</div>
-          <h4>Writes to disk</h4>
-          <p>Saves literature_review.md directly to your project folder — editable markdown, not locked in chat.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="fact-row three">
-      <div class="fact">
-        <div class="l">Time saved</div>
-        <div class="v">2–3 hrs → 8 min</div>
-        <div class="s">Typical reading and synthesis time vs. Claude Code on 8 papers</div>
-      </div>
-      <div class="fact">
-        <div class="l" style="color:var(--sky)">Output format</div>
-        <div class="v" style="color:var(--sky);">Editable markdown</div>
-        <div class="s">Not locked in a chat window — a real file you can revise, extend, and cite from</div>
-      </div>
-      <div class="fact">
-        <div class="l" style="color:var(--green)">Physics-specific</div>
-        <div class="v" style="font-size:16px;color:var(--green);">Works for your field</div>
-        <div class="s">Spectroscopy reviews, crystallography, X-ray imaging methods, microscopy technique comparisons</div>
+        <p style="font-size:12px;color:var(--fg-3);margin-top:var(--s2);line-height:1.6;">The <b>description</b> must say what it does <em>and when to use it</em> — Claude picks from all installed skills using just this field.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     10 · USE CASE: WEBSITE & FIGURES
+     10 · RECOMMENDED STACK + Q&A
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s10">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">10 / 19 · Wei Ouyang</div>
+  <div class="page">10 / 13 · Wei Ouyang</div>
   <div class="inner">
-    <div class="kicker">Use Case 02</div>
-    <h2>Describe it. Claude builds it.</h2>
+    <div class="kicker">The Recommended Stack</div>
+    <h2>For most research tasks:<br/>Skills + CLAUDE.md + CLI tools.</h2>
     <div class="rule"></div>
 
-    <div class="two-sys">
-      <div class="sys green-b">
-        <div class="stag">Lab Website</div>
-        <h3>From description to HTML file</h3>
-        <p style="font-size:13px;color:var(--fg-2);margin-bottom:var(--s2);">
-          "Build a single-page website for the X-ray Imaging group at KTH Applied Physics. Include: group name, a short research description I'll give you, team placeholder (3 members), and a contact section. Minimal design, slate/indigo palette. Save as index.html."
-        </p>
-        <ul>
-          <li>Claude writes index.html to your disk</li>
-          <li>You open it in a browser immediately</li>
-          <li>"Make the header darker" edits the actual file</li>
-          <li>No copy-paste — changes are live on your filesystem</li>
-        </ul>
-      </div>
-      <div class="sys sky-b">
-        <div class="stag">Publication Figure</div>
-        <h3>Data → 300 dpi figure</h3>
-        <p style="font-size:13px;color:var(--fg-2);margin-bottom:var(--s2);">
-          "Read ta_data.csv (time_ps, wavelength_nm, delta_OD). Plot transient absorption maps at t = 1 ps, 10 ps, 100 ps. Use a diverging colormap. Save as figure_2a.png at 300 dpi."
-        </p>
-        <ul>
-          <li>Claude writes the Python plotting script</li>
-          <li>Runs it immediately in your conda environment</li>
-          <li>Reads any error output, fixes the code, re-runs</li>
-          <li>Saves the final figure — you didn't touch the terminal</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="callout green" style="margin-top:var(--s4);">
-      <b>Claude Code doesn't produce text to copy-paste. It produces files on your disk.</b> This is the fundamental difference from ChatGPT — and why it changes what's possible in a research workflow.
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     11 · USE CASE: DATA ANALYSIS
-═══════════════════════════════════════════ -->
-<section class="slide" id="s11">
-  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">11 / 19 · Wei Ouyang</div>
-  <div class="inner">
-    <div class="kicker">Use Case 03</div>
-    <h2>Your data. Claude writes, runs, and fixes the code.</h2>
-    <div class="rule"></div>
-
-    <div class="pillars four">
-      <div class="pillar p4">
-        <div class="n">LAMP / Spectroscopy</div>
-        <h3>Decay fitting</h3>
-        <p>"Read pump_probe.csv. Fit the 550 nm decay with a biexponential. Report τ₁, τ₂, and amplitude ratio. Plot fit vs data. Save as decay_fit.png."</p>
-        <div class="eg">Claude writes the scipy.optimize script, runs it, reads any fitting error, adjusts initial parameters, re-runs.</div>
-      </div>
+    <div class="pillars three" style="margin-bottom:var(--s4);">
       <div class="pillar p2">
-        <div class="n">BON / X-ray Imaging</div>
-        <h3>Image segmentation</h3>
-        <p>"Read cell_images/*.tif. Segment nuclei, measure area. Plot histogram. Flag cells more than 3σ from the mean. Export flagged_cells.csv."</p>
-        <div class="eg">Claude writes scikit-image segmentation code, handles multiple TIF files in a loop, exports the flagged subset.</div>
+        <div class="n">① CLAUDE.md</div>
+        <h3>The permanent brief</h3>
+        <p>10–20 lines. Who you are, what project this is, non-negotiable conventions. Loaded every session. Every token here is always spent — make it count.</p>
+        <div class="eg">eg: "KTH LAMP ultrafast spectroscopy. Python 3.11. Save figures to ./figures/"</div>
       </div>
       <div class="pillar p5">
-        <div class="n">Biophysics</div>
-        <h3>Structure visualization</h3>
-        <p>"Read structure.pdb. Generate a matplotlib figure of the backbone colored by B-factor. Export as b_factor_map.png."</p>
-        <div class="eg">Claude uses BioPython or MDAnalysis, reads the PDB, extracts B-factor column, renders the figure.</div>
+        <div class="n">② Agent Skills</div>
+        <h3>Domain workflows on demand</h3>
+        <p>Write one Skill per workflow type: spectroscopy analysis, image segmentation, literature synthesis, instrument control. Loaded only when triggered — zero cost otherwise.</p>
+        <div class="eg">eg: "spectroscopy-analysis" triggers on time-resolved data mentions</div>
       </div>
-      <div class="pillar p3">
-        <div class="n">Universal</div>
-        <h3>Noisy time-series</h3>
-        <p>"I have a CSV with noisy time-series data. Write a Savitzky-Golay filter, apply it, plot raw vs filtered, and explain the window size choice."</p>
-        <div class="eg">Works for any time-series: pump-probe, optical coherence, acoustofluidic measurements.</div>
-      </div>
-    </div>
-
-    <div class="callout" style="margin-top:var(--s3);">
-      <b>The key difference from ChatGPT:</b> Claude runs the code, reads the error, fixes the bug, re-runs — without you copy-pasting anything. The iteration loop that takes 20 minutes in a notebook takes 2 minutes in Claude Code.
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     12 · USE CASE: REMOTE SERVERS & BUG FIXING
-═══════════════════════════════════════════ -->
-<section class="slide" id="s12">
-  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">12 / 19 · Wei Ouyang</div>
-  <div class="inner">
-    <div class="kicker">Use Case 04</div>
-    <h2>SSH into your compute cluster. Fix the bug in context.</h2>
-    <div class="rule"></div>
-
-    <div class="two-sys">
-      <div class="sys sky-b">
-        <div class="stag">Remote Server</div>
-        <h3>Your HPC cluster, conversational</h3>
-        <p style="font-size:13px;color:var(--fg-2);margin-bottom:var(--s3);">
-          Claude Code can SSH into a remote machine, navigate the filesystem, submit jobs to a scheduler (SLURM), monitor output files, and download results — all through natural language. Your compute cluster becomes as easy to use as a chat window.
-        </p>
-        <ul>
-          <li>"Submit the job array in ./scripts/sweep.sh with 16 tasks"</li>
-          <li>"Check the status of my running jobs and show me which ones finished"</li>
-          <li>"Download the output from run_42/ and plot the loss curve"</li>
-        </ul>
-      </div>
-      <div class="sys amber-b">
-        <div class="stag">Bug Fixing</div>
-        <h3>Full context, not just the error line</h3>
-        <p style="font-size:13px;color:var(--fg-2);margin-bottom:var(--s3);">
-          Paste the error message. Claude reads the full file — not just the snippet you showed. It understands the surrounding code, applies the fix, and asks you to confirm before writing. Not "here's how to fix it" — it actually fixes it.
-        </p>
-        <ul>
-          <li>Reads the full source file for context</li>
-          <li>Understands the data shape from earlier in the script</li>
-          <li>Applies the fix and confirms before writing</li>
-          <li>If the fix doesn't work, reads the new error and tries again</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="fact-row three">
-      <div class="fact">
-        <div class="l">No copy-paste</div>
-        <div class="v" style="font-size:17px;">Direct read+write</div>
-        <div class="s">Claude reads and writes files directly — no clipboard intermediary</div>
-      </div>
-      <div class="fact">
-        <div class="l" style="color:var(--sky)">Full context</div>
-        <div class="v" style="font-size:17px;color:var(--sky);">Entire file</div>
-        <div class="s">Not just the error line — the whole file, including the data structures defined 50 lines earlier</div>
-      </div>
-      <div class="fact">
-        <div class="l" style="color:var(--green)">Iterative</div>
-        <div class="v" style="font-size:17px;color:var(--green);">Until it works</div>
-        <div class="s">If the fix introduces a new error, Claude reads it and tries again — automatically</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     13 · MCPs: A WORD
-═══════════════════════════════════════════ -->
-<section class="slide" id="s13">
-  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">13 / 19 · Wei Ouyang</div>
-  <div class="inner">
-    <div class="kicker">Token Cost · Architecture · Best Practice</div>
-    <h2>MCP: powerful, but token-expensive. Here's why.</h2>
-    <div class="rule"></div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s3);margin-top:var(--s3);">
-
-      <div class="sys red-b" style="border-width:2px;">
-        <div class="stag" style="color:var(--red);">Why MCP costs tokens</div>
-        <ul>
-          <li>Connecting an MCP server loads <strong>all its tool definitions</strong> into context — even tools you never use that session</li>
-          <li>Requires a running server process + config file per application</li>
-          <li>Each tool call can round-trip through the server, adding latency and output tokens</li>
-          <li>Complex setup: install addon → start server → add to Claude config → test connection</li>
-        </ul>
-      </div>
-
-      <div class="sys green-b" style="border-width:2px;">
-        <div class="stag" style="color:var(--green);">Better default: Skills + CLI tools</div>
-        <ul>
-          <li><strong>Skills</strong> — only ~100 tokens at startup; body loaded on demand; stateless markdown files, zero server overhead</li>
-          <li><strong>CLI tools</strong> (<code style="font-family:'JetBrains Mono',monospace;font-size:11px;">gh</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">aws</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">gcloud</code>) — Claude uses them natively; already authenticated; no extra process needed</li>
-          <li>New CLI? Tell Claude: <em>"Use foo --help to learn it, then do X."</em></li>
-          <li>For most workflows: write a Skill + a CLI tool beats an MCP server</li>
-        </ul>
-      </div>
-
-      <div class="sys sky-b" style="border-width:2px;">
-        <div class="stag" style="color:var(--sky);">When MCP is still right</div>
-        <ul>
-          <li><strong>Real-time app control</strong> — Blender, Figma, live databases: you need two-way state sync that a CLI can't give you</li>
-          <li><strong>No CLI exists</strong> for the service and the REST API is complex enough that an MCP wrapper is cleaner</li>
-          <li><strong>Browser automation</strong> — Playwright MCP is the best interface for this use case</li>
-          <li>Rule of thumb: if a CLI exists for it, use the CLI. If you need live bidirectional control, use MCP.</li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="callout" style="margin-top:var(--s3);font-size:13px;">
-      Token cost comparison: <strong>MCP server connected</strong> = all tool schemas loaded into context permanently. <strong>Skill triggered</strong> = ~100 tokens description + body on demand. <strong>CLI call</strong> = only the output of the command. Prefer Skills + CLI tools as your default extension pattern.
-      <span style="display:inline-block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sky);">registry: github.com/modelcontextprotocol/servers · agentskills.io</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     14 · RALPH LOOP (ADVANCED)
-═══════════════════════════════════════════ -->
-<section class="slide" id="s14">
-  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">14 / 19 · Wei Ouyang</div>
-  <div class="inner">
-    <div class="kicker">Advanced Extension</div>
-    <h2>Ralph Loop: autonomous, iterative, self-scheduling.</h2>
-    <div class="rule"></div>
-    <p class="lead" style="margin-bottom:var(--s3);">A Ralph Loop is a structured agentic workflow where Claude Code self-paces iterations of a task — waking up periodically, checking state, acting, and sleeping again — until a condition is met.</p>
-
-    <div class="pillars three">
       <div class="pillar p4">
-        <div class="n" style="color:var(--sky)">The Pattern</div>
-        <h3>Define · Act · Check · Repeat</h3>
-        <p>Define a task with an explicit exit condition. Claude acts, checks state, schedules the next wake-up, and repeats. You only intervene when it surfaces a decision that requires your judgment.</p>
-        <div class="eg">While new_data_files: analyze → append to report → sleep 5 min → wake → check for new files → repeat</div>
-      </div>
-      <div class="pillar p5">
-        <div class="n" style="color:var(--green)">Physics Use Cases</div>
-        <h3>Overnight experiments</h3>
-        <p>Monitor an experiment data folder — when a new CSV appears, analyze it and append to the report. Run a parameter sweep overnight; surface only runs that meet a quality threshold in the morning.</p>
-        <div class="eg">Watch ./data/ → new pump_probe_*.csv → fit → append to summary.md → Slack notification</div>
-      </div>
-      <div class="pillar p1">
-        <div class="n" style="color:var(--red)">Caution</div>
-        <h3>Autonomous = less oversight</h3>
-        <p>Always set a clear exit condition — a loop without one runs forever. Review what Claude did before the next iteration. Never use for tasks with irreversible or high-stakes actions without review gates.</p>
-        <div class="eg">git commit before each iteration · define max_iterations · log every action to a file</div>
+        <div class="n">③ CLI Tools</div>
+        <h3>Native integrations, zero overhead</h3>
+        <p>Claude uses <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">gh</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">aws</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">hypha</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">svamp</code> natively — already authenticated, no server process needed. New tool? Tell Claude: "Use foo --help to learn it, then do X."</p>
+        <div class="eg">Skills + CLI beats MCP for almost every research workflow</div>
       </div>
     </div>
 
-    <div class="callout amber" style="margin-top:var(--s3);">
-      <b>Ralph Loop is how Wei runs this tutorial website.</b> The daemon.py process monitors Slack and the Hypha API, relays messages to the active session, and acts on new registrations and feedback — autonomously. It ran during this tutorial.
+    <div class="callout green" style="margin-bottom:var(--s3);">
+      <b>Together:</b> a specialized, token-efficient, extensible agent without MCP overhead. CLAUDE.md for identity, Skills for expertise, CLI for actions. Add MCP only when you need live bidirectional app control.
+    </div>
+
+    <div style="border:2px solid var(--indigo);padding:var(--s3) var(--s4);display:flex;align-items:center;gap:var(--s4);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:28px;color:var(--indigo);font-weight:900;flex-shrink:0;">?</div>
+      <div>
+        <div style="font-size:17px;font-weight:700;color:var(--fg);margin-bottom:4px;">Questions before we build?</div>
+        <div style="font-size:14px;color:var(--fg-3);">This is the end of the concepts section. In 2 minutes we switch to the hands-on session — you'll apply all of this to a real project.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     15 · SUMMARY → HANDS-ON
+     11 · HANDS-ON DIVIDER
 ═══════════════════════════════════════════ -->
-<section class="slide" id="s15">
+<section class="slide divider" id="s11">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">15 / 19 · Wei Ouyang</div>
-  <div class="inner">
-    <div class="kicker">What You Have Now</div>
-    <h2>Concepts you carry into the hands-on session.</h2>
-    <div class="rule"></div>
-
-    <div class="fact-row four">
-      <div class="fact">
-        <div class="l">CLAUDE.md</div>
-        <div class="v" style="font-size:17px;">Standing instructions</div>
-        <div class="s">One file that persists across every session — your project context, conventions, and constraints</div>
-      </div>
-      <div class="fact">
-        <div class="l" style="color:var(--sky)">Context engineering</div>
-        <div class="v" style="font-size:17px;color:var(--sky);">Shape what Claude knows</div>
-        <div class="s">The core skill: deliberately loading the right files, instructions, and task framing before you type</div>
-      </div>
-      <div class="fact">
-        <div class="l" style="color:var(--indigo)">Tools</div>
-        <div class="v" style="font-size:17px;color:var(--indigo);">Files, terminal, web, MCP</div>
-        <div class="s">Read, write, run, search — all controllable, all auditable, all interruptible</div>
-      </div>
-      <div class="fact">
-        <div class="l" style="color:var(--green)">Agentic loop</div>
-        <div class="v" style="font-size:17px;color:var(--green);">Plan → Act → Fix → Repeat</div>
-        <div class="s">Claude doesn't give up on the first error — it reads the output and iterates until done</div>
-      </div>
-    </div>
-
-    <div class="callout green" style="margin-top:var(--s4);">
-      <b>For the next 90 minutes — you will choose a task from your own research or teaching and do it with Claude Code.</b> No fixed instructions to follow exactly. The AI tutor prompt from the ChatGPT session will adapt to your specific project, your data, and your research area.
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s3);margin-top:var(--s3);">
-      <div class="lab-card">
-        <h4>Path A · Getting Started</h4>
-        <p>Create a project folder, write CLAUDE.md, build a webpage from your own content. First-time users.</p>
-      </div>
-      <div class="lab-card sky">
-        <h4>Path B · Research Task</h4>
-        <p>Bring a real data file, a PDF pile, or a draft. Produce one concrete research output with Claude Code.</p>
-      </div>
-      <div class="lab-card green">
-        <h4>Path C · Advanced</h4>
-        <p>Browser automation, remote server SSH, custom MCP, or Ralph Loop sketch. For Christian, Qichen, Renan, Björn-Christian.</p>
-      </div>
-    </div>
-
-    <div style="margin-top:var(--s3);display:flex;gap:var(--s4);flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-3);">
-      <a href="https://code.claude.com/docs/en/best-practices" target="_blank" style="color:var(--sky);border-bottom:none;">code.claude.com/docs/en/best-practices</a>
-      <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices" target="_blank" style="color:var(--sky);border-bottom:none;">platform.claude.com — agent skills best practices</a>
-      <a href="https://agentskills.io/specification" target="_blank" style="color:var(--sky);border-bottom:none;">agentskills.io/specification</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     16 · HANDS-ON OVERVIEW (DIVIDER)
-═══════════════════════════════════════════ -->
-<section class="slide divider" id="s16">
-  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">16 / 19 · Wei Ouyang</div>
+  <div class="page">11 / 13 · Wei Ouyang</div>
   <div class="inner" style="max-width:900px;">
-    <div class="kicker" style="color:var(--sky)">Hands-On Session · 15:15 – 16:45</div>
-    <h1 style="font-size:48px;margin-bottom:var(--s3);">Choose your path.</h1>
+    <div class="kicker" style="color:var(--sky)">Hands-On Session · 14:15 – 14:30</div>
+    <h1 style="font-size:52px;margin-bottom:var(--s3);">Your turn.<br/>Build something.</h1>
     <div class="rule" style="background:var(--sky)"></div>
     <p class="lead" style="margin-bottom:var(--s4);">
-      Pick a starting point that matches your experience level. You can switch paths at any time. The AI tutor prompt adapts to your project.
+      15 minutes. One task from your own research, teaching, or workflow. The next two slides are your guide.
     </p>
 
     <div class="pillars three">
-      <div class="pillar p2">
-        <div class="n" style="color:var(--indigo)">Path A · Getting Started</div>
-        <h3>Create → Instruct → Build</h3>
-        <p>Create a project folder · Write CLAUDE.md · Build a webpage from your own content. <strong>Ideal for:</strong> first-time Claude Code users. Goal: a running webpage from your own content at the end.</p>
-        <div class="eg">→ slide 17</div>
+      <div class="pillar p4">
+        <div class="n" style="color:var(--sky)">Slide 12</div>
+        <h3>Start your first project</h3>
+        <p>Step-by-step: folder → CLAUDE.md → first task. Covers beginners and anyone who hasn't set up a project folder yet.</p>
+        <div class="eg">→ go to slide 12</div>
       </div>
       <div class="pillar p5">
-        <div class="n" style="color:var(--green)">Path B · Research Task</div>
-        <h3>Real data. Real output.</h3>
-        <p>Give Claude a real task from your research — analyse data, write a literature summary, draft a methods section. <strong>Ideal for:</strong> regular AI users. Goal: one concrete research output.</p>
-        <div class="eg">→ slide 18</div>
+        <div class="n" style="color:var(--green)">Slide 13</div>
+        <h3>Use case ideas</h3>
+        <p>Six lightweight tasks tailored to the Applied Physics divisions in this room. Pick one that fits your work.</p>
+        <div class="eg">→ go to slide 13</div>
       </div>
-      <div class="pillar p4">
-        <div class="n" style="color:var(--sky)">Path C · Advanced</div>
-        <h3>Push a boundary.</h3>
-        <p>Browser automation, remote server SSH, custom MCP, or a Ralph Loop sketch. <strong>Ideal for:</strong> Christian, Qichen, Renan, Björn-Christian. Goal: explore something you haven't tried.</p>
-        <div class="eg">→ slide 19</div>
+      <div class="pillar p2">
+        <div class="n" style="color:var(--indigo)">14:30 Wrap-up</div>
+        <h3>Show &amp; tell</h3>
+        <p>Each group shares in 2 minutes: what you built, what surprised you, what you'd do next. Generate slides with one prompt (see build-session page).</p>
+        <div class="eg">→ build-session.html · step 5</div>
       </div>
-    </div>
-
-    <div class="callout" style="margin-top:var(--s4);">
-      <b>Stuck at any point?</b> Open ChatGPT, paste the AI tutor prompt from Jonas's session (slide 11 of the ChatGPT deck), answer the 5 profile questions — and let it guide you through Claude Code step by step.
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     17 · PATH A: FIRST PROJECT
+     12 · START YOUR FIRST PROJECT
 ═══════════════════════════════════════════ -->
-<section class="slide" id="s17">
+<section class="slide" id="s12">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">17 / 19 · Wei Ouyang</div>
+  <div class="page">12 / 13 · Wei Ouyang</div>
   <div class="inner">
-    <div class="kicker">Path A · Getting Started</div>
-    <h2>Create, instruct, build.</h2>
+    <div class="kicker">Hands-On · Getting Started</div>
+    <h2>Start your first Claude Code project.</h2>
     <div class="rule"></div>
 
     <div class="scenario">
-      <div class="q">By the end of this path you will have: a project folder, a working CLAUDE.md, and one real file — a webpage or a figure — that you created by describing what you wanted.</div>
-      <div class="steps four">
+      <div class="q">Five steps. By step 4 you'll have a working agent session with a real task running.</div>
+      <div class="steps five">
         <div class="step">
           <div class="sn">Step 1</div>
-          <h4>Create a project folder</h4>
-          <p><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);">mkdir my-project &amp;&amp; cd my-project</code> — open a terminal here. This is Claude's world.</p>
+          <h4>Create a folder</h4>
+          <p><code>mkdir my-project</code><br/><code>cd my-project</code><br/><br/>Put any data files you want to use inside it. No data? Claude generates synthetic examples.</p>
         </div>
         <div class="step">
           <div class="sn">Step 2</div>
-          <h4>Write CLAUDE.md</h4>
-          <p>Type <code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);">claude</code> to start a session → type <code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);">/init</code> → edit the generated file to add 3 facts about your research group or project.</p>
+          <h4>Optional: git init</h4>
+          <p><code>git init</code><br/><br/>Highly recommended — lets you undo Claude's changes with <code>git restore</code> if something goes wrong. Or ask Claude to do it for you.</p>
         </div>
         <div class="step">
           <div class="sn">Step 3</div>
-          <h4>First task</h4>
-          <p><code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--indigo);">claude "Build a one-page website for my research group at KTH Applied Physics. Ask me for the content."</code> → answer the questions → open index.html in a browser.</p>
+          <h4>Start Claude Code</h4>
+          <p><code>claude</code><br/><br/>Claude reads the folder immediately. Then type <code>/init</code> to generate a CLAUDE.md from your project structure.</p>
         </div>
         <div class="step">
           <div class="sn">Step 4</div>
-          <h4>Iterate</h4>
-          <p>Say "make the title larger" · "add a dark background" · "add a publications list" — watch Claude edit the actual file on your disk after each instruction.</p>
+          <h4>Describe your project in CLAUDE.md</h4>
+          <p>Edit the generated file. Add 3–5 lines: who you are, what this project does, any conventions. Example:<br/><br/><em>"I'm a researcher at KTH LAMP studying ultrafast spectroscopy. Goal: analyze pump-probe data in CSV format."</em></p>
+        </div>
+        <div class="step">
+          <div class="sn">Step 5</div>
+          <h4>Type what you want</h4>
+          <p>Tell Claude what to build in plain language. Pick from slide 13 or bring your own task.<br/><br/><em>"Read the CSV files in ./data/ and plot the spectra. Save figures to ./figures/."</em></p>
         </div>
       </div>
     </div>
 
     <div class="callout green" style="margin-top:var(--s3);">
-      <b>Swap the website for a Python data analysis script</b> if you have a CSV file nearby. Navigate to a data folder, type <code style="font-family:'JetBrains Mono',monospace;color:var(--indigo);font-size:13px;">claude</code>, and ask it to read your file and plot something. The pattern is identical — the only difference is the output format.
+      <b>If you get stuck:</b> paste the error message directly into Claude Code. Don't copy-paste it yourself — just say "read the error and fix it." That's the agent loop.
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     18 · PATH B: RESEARCH TASK
+     13 · USE CASE IDEAS GRID
 ═══════════════════════════════════════════ -->
-<section class="slide" id="s18">
+<section class="slide" id="s13">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">18 / 19 · Wei Ouyang</div>
+  <div class="page">13 / 13 · Wei Ouyang</div>
   <div class="inner">
-    <div class="kicker">Path B · Research Task</div>
-    <h2>A real output from your own work.</h2>
+    <div class="kicker">Hands-On · Choose Your Task</div>
+    <h2>Pick one. Build it. Show it at 14:30.</h2>
     <div class="rule"></div>
+    <p style="margin-bottom:var(--s3);color:var(--fg-3);font-size:14px;">No data? Tell Claude to generate a synthetic example. These tasks are designed to complete in 10–15 minutes.</p>
 
-    <div class="pillars three">
-      <div class="pillar p2">
-        <div class="n">Literature synthesis</div>
-        <h3>From PDFs to structured summary</h3>
-        <p>"Read the PDFs in ./papers/. Extract key findings and experimental methods. Write structured_summary.md with a comparison table."</p>
-        <p style="font-size:12px;color:var(--fg-3);"><strong>Setup:</strong> create a folder, drag in 3–5 PDFs from your reading pile. Takes 2 minutes to set up, 8 minutes to run.</p>
-        <div class="eg">Flag any contradictions between papers. Add a column for "open questions".</div>
+    <div class="idea-grid">
+      <div class="idea">
+        <div class="tag t1">LAMP · BON — Spectroscopy / Imaging</div>
+        <h3>Data analysis + figures</h3>
+        <p>Give Claude a CSV or image stack. Ask it to analyze, fit, segment, and export plots. Works for pump-probe spectra, X-ray images, microscopy stacks, or any time-series.</p>
       </div>
-      <div class="pillar p4">
-        <div class="n">Data analysis</div>
-        <h3>Your data, working code</h3>
-        <p>"Read [your data file]. Describe its structure. Write a Python script that [your analysis]. Run it. If it errors, fix it. Save the figure as output.png."</p>
-        <p style="font-size:12px;color:var(--fg-3);"><strong>Setup:</strong> navigate to a folder with a CSV, TIF stack, or PDB file. Claude will describe the data before writing any code.</p>
-        <div class="eg">Works for pump-probe CSV, fluorescence image stacks, crystallography data.</div>
+      <div class="idea">
+        <div class="tag t2">All divisions — Literature</div>
+        <h3>Literature survey</h3>
+        <p>Drop 3–5 PDFs into a folder. Ask Claude to extract key findings, build a comparison table, and flag contradictions. Output: structured markdown you can paste into your paper.</p>
       </div>
-      <div class="pillar p5">
-        <div class="n">Writing task</div>
-        <h3>Rewrite any paragraph</h3>
-        <p>"Read my_draft.txt. Identify the weakest argument. Rewrite that paragraph for a Nature Methods audience. Suggest 3 supporting citations I should look up."</p>
-        <p style="font-size:12px;color:var(--fg-3);"><strong>Setup:</strong> paste 2–3 paragraphs of your draft into a plain text file. Name it my_draft.txt.</p>
-        <div class="eg">Works for grant writing, methods sections, discussion paragraphs, cover letters.</div>
+      <div class="idea">
+        <div class="tag t3">All divisions — Web</div>
+        <h3>Build a webpage</h3>
+        <p>Describe your research group or project in one sentence. Claude builds a single-page HTML site — lab overview, team, publications placeholder. Opens in your browser immediately.</p>
       </div>
-    </div>
-
-    <div class="callout amber" style="margin-top:var(--s3);">
-      <b>Bring your own data or your own draft.</b> This is the most valuable 45 minutes if you arrive with a real problem — not a demo problem. The output you produce here is something you can actually use next week.
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     19 · PATH C: ADVANCED + WRAP-UP
-═══════════════════════════════════════════ -->
-<section class="slide" id="s19">
-  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">19 / 19 · Wei Ouyang</div>
-  <div class="inner">
-    <div class="kicker">Path C · Advanced</div>
-    <h2>Push a boundary.</h2>
-    <div class="rule"></div>
-
-    <div class="two-sys">
-      <div class="sys sky-b">
-        <div class="stag">Advanced Tasks</div>
-        <h3>Choose one to explore</h3>
-        <ul>
-          <li><strong>Browser automation:</strong> "Use the built-in browser tool to navigate a journal website, find the latest 5 papers matching a keyword, and save their titles + DOIs to papers.csv."</li>
-          <li><strong>Remote server:</strong> SSH into your KTH compute cluster, submit a SLURM job, monitor the output file, and download the result when it finishes.</li>
-          <li><strong>Custom CLAUDE.md:</strong> Write a detailed CLAUDE.md for a real project — include data format, pipeline conventions, safety rails, and naming rules. Test it across two separate Claude sessions.</li>
-          <li><strong>Ralph Loop sketch:</strong> Design a loop that monitors your experiment data folder and appends each new result to a running summary report.</li>
-        </ul>
+      <div class="idea">
+        <div class="tag t4">All divisions — Presentation</div>
+        <h3>Create a slide deck</h3>
+        <p>Describe what you want to present. Claude builds a scroll-snap HTML presentation — dark theme, clean typography — you can open fullscreen and show today at the wrap-up.</p>
       </div>
-      <div class="sys indigo-b">
-        <div class="stag">Wrap-Up at 16:45</div>
-        <h3>Share with the group</h3>
-        <ul>
-          <li>One unexpected thing Claude did that you didn't anticipate</li>
-          <li>One use case you will try in your own research next week — name it specifically</li>
-          <li>One thing that didn't work, or where Claude fell short</li>
-          <li>Open questions for the group</li>
-        </ul>
+      <div class="idea">
+        <div class="tag t5">Professors — Teaching</div>
+        <h3>Design teaching material</h3>
+        <p>Name your course and topic. Claude drafts AI-resistant assignments (lab-based, oral defence, experimental reasoning), lecture exercises, or a problem set with solutions.</p>
+      </div>
+      <div class="idea">
+        <div class="tag t6">All divisions — Writing</div>
+        <h3>Improve a text</h3>
+        <p>Paste an abstract, grant paragraph, or methods section into a .txt file. Ask Claude to rewrite it for a specific audience, flag weak arguments, or suggest citations to add.</p>
       </div>
     </div>
 
-    <div class="callout green" style="margin-top:var(--s4);">
-      <b>The best outcome of today is not a perfect project — it's one concrete AI workflow you'll repeat next Tuesday.</b> Even a half-finished analysis pipeline is more valuable than a finished demo you'll never use again.
+    <div style="margin-top:var(--s3);display:flex;gap:var(--s4);flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-3);">
+      <a href="https://kth-sci.github.io/applied-physics-ai" target="_blank" style="color:var(--sky);border-bottom:none;">kth-sci.github.io/applied-physics-ai</a>
+      <a href="https://kth-sci.github.io/applied-physics-ai/gallery.html" target="_blank" style="color:var(--sky);border-bottom:none;">gallery — submit your use case</a>
+      <a href="https://code.claude.com/docs" target="_blank" style="color:var(--sky);border-bottom:none;">code.claude.com/docs</a>
     </div>
-
-    <p style="font-size:13px;color:var(--fg-3);margin-top:var(--s3);font-family:'JetBrains Mono',monospace;">
-      Resources: <a href="https://claude.ai/code" target="_blank" style="color:var(--indigo);border-bottom:none;">claude.ai/code</a> ·
-      <a href="https://github.com/modelcontextprotocol/servers" target="_blank" style="color:var(--indigo);border-bottom:none;">github.com/modelcontextprotocol/servers</a> ·
-      <a href="https://kth-sci.github.io/applied-physics-ai" target="_blank" style="color:var(--indigo);border-bottom:none;">kth-sci.github.io/applied-physics-ai</a>
-    </p>
   </div>
 </section>
 
 <script>
-  const np = document.getElementById('np');
-  const slides = document.querySelectorAll('.slide');
+const np = document.getElementById('np');
+const slides = document.querySelectorAll('.slide');
 
-  // Jump to hash on load (instant — no animation flash)
-  function goToHash() {
-    const id = location.hash.slice(1);
-    if (id) {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'instant' });
+function goToHash(){
+  const id = location.hash.slice(1);
+  if(id){ const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:'instant'}); }
+}
+goToHash();
+window.addEventListener('hashchange', goToHash);
+
+let updating = false;
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.intersectionRatio > 0.5){
+      const idx = Array.from(slides).indexOf(e.target);
+      np.style.width = ((idx+1)/slides.length*100)+'%';
+      updating = true;
+      history.replaceState(null,'','#'+e.target.id);
+      updating = false;
     }
-  }
-  goToHash();
-  window.addEventListener('hashchange', goToHash);
-
-  // Update hash + progress bar as slides come into view
-  let updating = false;
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.intersectionRatio > 0.5) {
-        const idx = Array.from(slides).indexOf(e.target);
-        np.style.width = ((idx + 1) / slides.length * 100) + '%';
-        // Update URL hash without triggering hashchange scroll
-        updating = true;
-        history.replaceState(null, '', '#' + e.target.id);
-        updating = false;
-      }
-    });
-  }, { threshold: 0.5 });
-  slides.forEach(s => io.observe(s));
+  });
+},{threshold:0.5});
+slides.forEach(s => io.observe(s));
 </script>
 </body>
 </html>
