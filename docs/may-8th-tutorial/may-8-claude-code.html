@@ -206,7 +206,7 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
 ═══════════════════════════════════════════ -->
 <section class="slide title-slide" id="s1">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">01 / 13 · Wei Ouyang</div>
+  <div class="page">01 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div>
       <div class="kicker">Claude Code Essentials · 14:00 – 14:15</div>
@@ -247,43 +247,39 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s2">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">02 / 13 · Wei Ouyang</div>
-  <div class="inner" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:center;">
+  <div class="page">02 / 14 · Wei Ouyang</div>
+  <div class="inner" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);align-items:start;">
     <div>
       <div class="kicker">Foundation</div>
       <h2>What is an AI agent?</h2>
       <div class="rule"></div>
-      <p class="lead" style="margin-bottom:var(--s4);">A language model that doesn't just answer — it <strong>decides what to do and does it.</strong></p>
+      <p class="lead" style="margin-bottom:var(--s3);font-size:18px;">A language model that doesn't just answer — it <strong>decides what to do and does it.</strong></p>
 
       <div class="lab-bullets">
-        <div class="lab-card green">
-          <h4>Perceive — reads the world</h4>
-          <p>Files, code, data, PDFs, terminal output, web pages — the agent observes its environment before acting.</p>
+        <div class="lab-card green" style="padding:10px var(--s3);">
+          <h4>Perceive</h4>
+          <p>Reads files, code, data, PDFs, terminal output, web pages.</p>
         </div>
-        <div class="lab-card sky">
-          <h4>Plan — breaks goals into steps</h4>
-          <p>Given a high-level goal, it decides which tools to use, in what order, and checks the result before continuing.</p>
+        <div class="lab-card sky" style="padding:10px var(--s3);">
+          <h4>Plan</h4>
+          <p>Decides which tools to use, in what order, before acting.</p>
         </div>
-        <div class="lab-card amber">
-          <h4>Act — uses tools</h4>
-          <p>Writes files, runs code, calls APIs, controls instruments. Output lives on disk — not in a chat window.</p>
+        <div class="lab-card amber" style="padding:10px var(--s3);">
+          <h4>Act</h4>
+          <p>Writes files, runs code, calls APIs. Output lives on disk.</p>
         </div>
-        <div class="lab-card">
-          <h4>Remember — persists knowledge</h4>
-          <p>Context window for this session, CLAUDE.md for every session. Memory you design and control.</p>
+        <div class="lab-card" style="padding:10px var(--s3);">
+          <h4>Remember</h4>
+          <p>Context window this session · CLAUDE.md every session.</p>
         </div>
-        <div class="lab-card red">
-          <h4>Iterate — loops until done</h4>
-          <p>Observe → Plan → Act → Observe → … Reads errors, fixes them, re-runs. You intervene when it asks.</p>
+        <div class="lab-card red" style="padding:10px var(--s3);">
+          <h4>Iterate</h4>
+          <p>Observe → Plan → Act → Observe → … until done.</p>
         </div>
-      </div>
-
-      <div class="callout violet" style="margin-top:var(--s4);font-size:13px;">
-        <b>Harness engineering:</b> structuring the context, memory, and tools that shape agent behavior. Beyond prompting — you design the environment the agent operates in.
       </div>
     </div>
 
-    <!-- Animated SVG -->
+    <!-- Animated SVG + harness engineering -->
     <div style="display:flex;flex-direction:column;align-items:center;gap:var(--s3);">
       <svg viewBox="0 0 400 270" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;">
 
@@ -333,8 +329,11 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
       </svg>
 
       <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-3);text-align:center;line-height:1.8;">
-        <span style="color:var(--red);">Chatbot:</span> text in, text out.<br/>
+        <span style="color:var(--red);">Chatbot:</span> text in, text out.&nbsp;&nbsp;
         <span style="color:var(--indigo);font-weight:700;">Agent:</span> goal in, result on disk.
+      </div>
+      <div class="callout violet" style="font-size:13px;width:100%;">
+        <b>Harness engineering:</b> structuring the context, memory, and tools that shape agent behavior. Beyond prompting — you design the environment the agent operates in.
       </div>
     </div>
   </div>
@@ -345,7 +344,7 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s3">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">03 / 13 · Wei Ouyang</div>
+  <div class="page">03 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Recap</div>
     <h2>You already know the key idea.</h2>
@@ -387,7 +386,7 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s4">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">04 / 13 · Wei Ouyang</div>
+  <div class="page">04 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Foundation</div>
     <h2>Start with a folder, not a chat window.</h2>
@@ -424,7 +423,7 @@ h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s5">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">05 / 13 · Wei Ouyang</div>
+  <div class="page">05 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Standing Instructions</div>
     <h2>One file. Every session.</h2>
@@ -474,7 +473,7 @@ Python environment: conda env 'spectro'
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s6">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">06 / 13 · Wei Ouyang</div>
+  <div class="page">06 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">The Key Mindset Shift</div>
     <h2>The question is not: what prompt should I write?<br/>The question is: what should Claude know?</h2>
@@ -516,7 +515,7 @@ Python environment: conda env 'spectro'
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s7">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">07 / 13 · Wei Ouyang</div>
+  <div class="page">07 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">The Commands You Need</div>
     <h2>Daily usage in ten commands.</h2>
@@ -586,7 +585,7 @@ Python environment: conda env 'spectro'
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s8">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">08 / 13 · Wei Ouyang</div>
+  <div class="page">08 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Extending Claude Code · Part 1</div>
     <h2>MCP: connect Claude to any external app.</h2>
@@ -634,7 +633,7 @@ Python environment: conda env 'spectro'
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s9">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">09 / 13 · Wei Ouyang</div>
+  <div class="page">09 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Extending Claude Code · Part 2</div>
     <h2>Skills: domain knowledge that costs ~100 tokens.</h2>
@@ -687,7 +686,7 @@ Figures → ./figures/ at 300 dpi PNG.
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s10">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">10 / 13 · Wei Ouyang</div>
+  <div class="page">10 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">The Recommended Stack</div>
     <h2>For most research tasks:<br/>Skills + CLAUDE.md + CLI tools.</h2>
@@ -733,7 +732,7 @@ Figures → ./figures/ at 300 dpi PNG.
 ═══════════════════════════════════════════ -->
 <section class="slide divider" id="s11">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">11 / 13 · Wei Ouyang</div>
+  <div class="page">11 / 14 · Wei Ouyang</div>
   <div class="inner" style="max-width:900px;">
     <div class="kicker" style="color:var(--sky)">Hands-On Session · 14:15 – 14:30</div>
     <h1 style="font-size:52px;margin-bottom:var(--s3);">Your turn.<br/>Build something.</h1>
@@ -770,7 +769,7 @@ Figures → ./figures/ at 300 dpi PNG.
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s12">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">12 / 13 · Wei Ouyang</div>
+  <div class="page">12 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Hands-On · Getting Started</div>
     <h2>Start your first Claude Code project.</h2>
@@ -818,10 +817,10 @@ Figures → ./figures/ at 300 dpi PNG.
 ═══════════════════════════════════════════ -->
 <section class="slide" id="s13">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
-  <div class="page">13 / 13 · Wei Ouyang</div>
+  <div class="page">13 / 14 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Hands-On · Choose Your Task</div>
-    <h2>Pick one. Build it. Show it at 14:30.</h2>
+    <h2>Pick one. Build it.</h2>
     <div class="rule"></div>
     <p style="margin-bottom:var(--s3);color:var(--fg-3);font-size:14px;">No data? Tell Claude to generate a synthetic example. These tasks are designed to complete in 10–15 minutes.</p>
 
@@ -866,6 +865,57 @@ Figures → ./figures/ at 300 dpi PNG.
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════
+     14 · PRACTICAL TIPS
+═══════════════════════════════════════════ -->
+<section class="slide" id="s14">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">14 / 14 · Wei Ouyang</div>
+  <div class="inner">
+    <div class="kicker">Before You Start</div>
+    <h2>Five tips that make the difference.</h2>
+    <div class="rule"></div>
+
+    <div class="pillars two" style="margin-bottom:var(--s3);">
+      <div class="pillar p5">
+        <div class="n">① Start with git</div>
+        <h3>Always have an undo</h3>
+        <p>Run <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">git init</code> before your first Claude session. If Claude does something unexpected, <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">git restore .</code> brings everything back. This removes the fear of letting it run.</p>
+      </div>
+      <div class="pillar p4">
+        <div class="n">② Think like a manager</div>
+        <h3>Describe outcomes, not steps</h3>
+        <p>Don't say "write a for loop that reads each file." Say "read all CSV files in ./data/ and plot the spectra on one figure." Claude decides how — your job is to review the result and apply domain judgment.</p>
+      </div>
+    </div>
+
+    <div class="pillars three">
+      <div class="pillar p2">
+        <div class="n">③ Your physics is the correction signal</div>
+        <h3>Explain why it's wrong</h3>
+        <p>When output is incorrect, don't just say "that's wrong." Say <em>"In ARPES data, the background is never negative — this fit is unphysical. Try a different baseline model."</em> Domain knowledge is the most valuable thing you bring.</p>
+      </div>
+      <div class="pillar p3">
+        <div class="n">④ Context beats prompt</div>
+        <h3>Load the right files first</h3>
+        <p>Before typing your task, put the relevant files in the folder and reference them by name. A precise task with the right data in context beats a clever prompt with nothing to work from.</p>
+      </div>
+      <div class="pillar p1">
+        <div class="n">⑤ Iterate, don't restart</div>
+        <h3>Small follow-ups compound</h3>
+        <p>When the first version is close, refine it: <em>"Make axis labels larger and add units."</em> <em>"Add a legend."</em> Each iteration builds on what works. Only use <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">/clear</code> when switching to a completely unrelated task.</p>
+      </div>
+    </div>
+
+    <div class="callout green" style="margin-top:var(--s3);font-size:13px;">
+      <b>The goal of today:</b> one concrete AI workflow you'll repeat next Tuesday. A half-finished analysis pipeline you understand beats a polished demo you never use again.
+      <span style="display:block;margin-top:var(--s2);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-3);">
+        🤖 These slides were generated and built with Claude Code · APHYS AI Initiative · KTH Applied Physics · May 8, 2026
+      </span>
+    </div>
+  </div>
+</section>
+
 <script>
 const np = document.getElementById('np');
 const slides = document.querySelectorAll('.slide');
@@ -891,5 +941,6 @@ const io = new IntersectionObserver(entries => {
 },{threshold:0.5});
 slides.forEach(s => io.observe(s));
 </script>
+<div style="position:fixed;bottom:0;left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(100,116,139,0.45);padding:5px;pointer-events:none;z-index:99;letter-spacing:0.04em;">&#x1F916; Generated and built with Claude Code &middot; APHYS AI Initiative &middot; KTH Applied Physics</div>
 </body>
 </html>
