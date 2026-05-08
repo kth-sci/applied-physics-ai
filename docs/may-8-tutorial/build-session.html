@@ -1,423 +1,379 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Build something with Claude Code · APHYS AI Tutorial · May 8 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-:root{
-  --bg:#ffffff; --bg-2:#f7f8fa; --bg-3:#eef0f4;
-  --fg:#0a0a0a; --fg-2:#2d2d2d; --fg-3:#6b7280;
-  --line:#e5e7eb; --line-2:#d1d5db;
-  --coral:#e5195a; --blue:#2563eb; --green:#059669; --amber:#d97706;
-  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--bg);scroll-behavior:smooth}
-body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.6}
-
-/* ── Layout ────────────────────────────────────────────── */
-.page{max-width:860px;margin:0 auto;padding:0 var(--s4) 80px}
-
-/* ── Hero ──────────────────────────────────────────────── */
-.hero{background:var(--fg);color:#fff;padding:56px var(--s4) 48px;margin-bottom:var(--s5)}
-.hero-inner{max-width:860px;margin:0 auto}
-.hero .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.5);margin-bottom:var(--s2);display:block}
-.hero h1{font-size:42px;font-weight:900;letter-spacing:-0.03em;line-height:1;margin-bottom:var(--s2)}
-.hero h1 em{font-style:normal;color:var(--coral)}
-.hero p{font-size:17px;color:rgba(255,255,255,.7);max-width:640px;line-height:1.6}
-.hero .meta{display:flex;gap:var(--s3);margin-top:var(--s3);flex-wrap:wrap}
-.badge{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);padding:4px 12px;border-radius:2px}
-
-/* ── Step ──────────────────────────────────────────────── */
-.step{margin-bottom:var(--s5)}
-.step-header{display:flex;align-items:flex-start;gap:var(--s3);margin-bottom:var(--s3)}
-.step-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);background:rgba(229,25,90,.07);border:1px solid rgba(229,25,90,.2);padding:4px 10px;border-radius:2px;white-space:nowrap;margin-top:4px;flex-shrink:0}
-.step-title{font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1.1}
-.step p{font-size:15px;color:var(--fg-2);line-height:1.65;margin-bottom:var(--s2)}
-.step p b{color:var(--fg)}
-
-/* ── Code block ────────────────────────────────────────── */
-.code-block{position:relative;background:var(--fg);border-radius:6px;margin:var(--s3) 0}
-.code-block .cb-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:12px 16px 0;display:flex;justify-content:space-between;align-items:center}
-.code-block .cb-label span{color:var(--coral);font-weight:700}
-.code-block pre{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;color:rgba(255,255,255,.88);padding:10px 16px 16px;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
-.copy-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);padding:4px 10px;border-radius:2px;cursor:pointer;transition:.15s}
-.copy-btn:hover{background:rgba(255,255,255,.15);color:#fff}
-.copy-btn.copied{color:var(--green);border-color:var(--green)}
-
-/* ── Inline code ───────────────────────────────────────── */
-code{font-family:'JetBrains Mono',monospace;font-size:.88em;background:var(--bg-3);border:1px solid var(--line);padding:1px 5px;border-radius:2px;color:var(--coral)}
-
-/* ── Info / tip box ────────────────────────────────────── */
-.tip{border-left:3px solid var(--blue);background:rgba(37,99,235,.05);padding:var(--s2) var(--s3);font-size:14px;color:var(--fg-2);line-height:1.6;margin:var(--s3) 0}
-.tip b{color:var(--blue)}
-.tip.green{border-left-color:var(--green);background:rgba(5,150,105,.05)}
-.tip.green b{color:var(--green)}
-.tip.amber{border-left-color:var(--amber);background:rgba(217,119,6,.05)}
-.tip.amber b{color:var(--amber)}
-
-/* ── Divider ───────────────────────────────────────────── */
-.rule{height:1px;background:var(--line);margin:var(--s5) 0}
-
-/* ── Idea grid ─────────────────────────────────────────── */
-.idea-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:var(--s3) 0}
-.idea{background:var(--bg);padding:var(--s3) var(--s4)}
-.idea .tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
-.idea .tag.a{color:var(--coral)}
-.idea .tag.b{color:var(--blue)}
-.idea .tag.c{color:var(--green)}
-.idea .tag.d{color:var(--amber)}
-.idea .tag.e{color:#7c3aed}
-.idea h3{font-size:15px;font-weight:700;margin-bottom:4px;letter-spacing:-0.01em}
-.idea p{font-size:13px;color:var(--fg-3);line-height:1.5;max-width:none}
-
-/* ── File tree ─────────────────────────────────────────── */
-.tree{font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--bg-2);border:1px solid var(--line);padding:var(--s3);line-height:2;margin:var(--s3) 0;color:var(--fg-2)}
-.tree .dir{color:var(--blue);font-weight:600}
-.tree .file{color:var(--fg-3)}
-.tree .new{color:var(--coral);font-weight:600}
-
-/* ── Steps nav ─────────────────────────────────────────── */
-.steps-nav{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:var(--s5)}
-.steps-nav a{flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--fg-3);background:var(--bg);padding:12px 4px;transition:.15s}
-.steps-nav a:hover{background:var(--bg-2);color:var(--coral)}
-.steps-nav .num{display:block;font-size:14px;font-weight:700;color:var(--coral);margin-bottom:2px}
-
-/* ── Share section ─────────────────────────────────────── */
-.share-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:var(--s3) 0}
-.share-cell{background:var(--bg);padding:var(--s3) var(--s4)}
-.share-cell .l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
-.share-cell h4{font-size:15px;font-weight:700;margin-bottom:4px}
-.share-cell p{font-size:13px;color:var(--fg-3);line-height:1.5;max-width:none}
-
-@media(max-width:640px){
-  .hero h1{font-size:28px}
-  .idea-grid,.share-row{grid-template-columns:1fr}
-  .steps-nav{flex-wrap:wrap}
-  .steps-nav a{min-width:33%}
-}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Something · APHYS AI Tutorial · May 8 2026</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 </head>
-<body>
+<body class="font-sans text-slate-800 bg-white antialiased">
 
-<!-- ── Hero ─────────────────────────────────────────────── -->
-<div class="hero">
-  <div class="hero-inner">
-    <span class="kicker">APHYS AI Tutorial · May 8 2026 · 16:00–16:45</span>
-    <h1>Build something with<br/><em>Claude Code.</em></h1>
-    <p>45 minutes to go from idea to working prototype. Use what you learned today — brainstorm with ChatGPT, then build with Claude Code.</p>
-    <div class="meta">
-      <span class="badge">45 min</span>
-      <span class="badge">Groups of 2–4</span>
-      <span class="badge">Bring your own data or question</span>
-      <span class="badge">aphys-ai.kth.se</span>
+<!-- Navigation -->
+<nav class="bg-slate-900 sticky top-0 z-50 shadow-lg">
+  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <a href="../index.html" class="flex items-center gap-2.5 text-white font-bold text-sm">
+      <svg width="32" height="32" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/><circle cx="32" cy="16" r="4" fill="#818cf8"/><circle cx="18" cy="40" r="4" fill="#818cf8"/><circle cx="46" cy="40" r="4" fill="#818cf8"/><line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/><line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/><circle cx="32" cy="32" r="7" fill="#6366f1"/><text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text></svg>
+      AI @ Applied Physics
+    </a>
+    <button id="nav-toggle" class="md:hidden text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <ul id="nav-menu" class="hidden md:flex items-center gap-0 text-sm">
+      <li><a href="../index.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Home</a></li>
+      <li><a href="../getting-started.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Get Started</a></li>
+      <li><a href="../chatgpt-quickstart.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">ChatGPT</a></li>
+      <li><a href="../ai-agents.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">AI Agents</a></li>
+      <li><a href="../gallery.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Gallery</a></li>
+      <li><a href="../events.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Events</a></li>
+      <li><a href="../community.html" class="block px-3 py-4 text-slate-300 hover:text-white border-b-2 border-transparent hover:border-accent/50 transition">Community</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="bg-gradient-to-br from-slate-900 via-slate-800 to-kth-dark text-white py-14 px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="inline-flex items-center gap-2 bg-fire/20 text-fire-light text-xs font-semibold px-3 py-1 rounded-full mb-5 border border-fire/30">
+      <span class="w-1.5 h-1.5 bg-fire-light rounded-full animate-pulse"></span>
+      APHYS AI Tutorial · May 8, 2026 · 16:00–16:45
+    </div>
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">Build something with Claude Code.</h1>
+    <p class="text-slate-300 text-lg max-w-2xl leading-relaxed mb-6">45 minutes to go from idea to working prototype. Brainstorm with ChatGPT, brief your agent with a CLAUDE.md, then build.</p>
+    <div class="flex flex-wrap gap-3">
+      <span class="bg-white/10 border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">Groups of 2–4</span>
+      <span class="bg-white/10 border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">Bring your own data or question</span>
+      <span class="bg-white/10 border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">45 min</span>
     </div>
   </div>
+</header>
+
+<div class="max-w-5xl mx-auto px-4 py-12">
+
+  <!-- Step nav -->
+  <section class="mb-12 reveal-on-scroll">
+    <div class="grid grid-cols-5 gap-3">
+      <a href="#step1" class="bg-white border border-slate-200 rounded-xl p-4 text-center shadow-sm hover:shadow-md hover:border-accent/40 transition group">
+        <div class="text-2xl font-black text-accent mb-1">1</div>
+        <div class="text-xs font-semibold text-slate-700 group-hover:text-accent transition">Brainstorm</div>
+        <div class="text-xs text-slate-400 mt-0.5 hidden sm:block">with ChatGPT</div>
+      </a>
+      <a href="#step2" class="bg-white border border-slate-200 rounded-xl p-4 text-center shadow-sm hover:shadow-md hover:border-accent/40 transition group">
+        <div class="text-2xl font-black text-accent mb-1">2</div>
+        <div class="text-xs font-semibold text-slate-700 group-hover:text-accent transition">Set up</div>
+        <div class="text-xs text-slate-400 mt-0.5 hidden sm:block">project folder</div>
+      </a>
+      <a href="#step3" class="bg-white border border-slate-200 rounded-xl p-4 text-center shadow-sm hover:shadow-md hover:border-accent/40 transition group">
+        <div class="text-2xl font-black text-accent mb-1">3</div>
+        <div class="text-xs font-semibold text-slate-700 group-hover:text-accent transition">Write</div>
+        <div class="text-xs text-slate-400 mt-0.5 hidden sm:block">CLAUDE.md</div>
+      </a>
+      <a href="#step4" class="bg-white border border-slate-200 rounded-xl p-4 text-center shadow-sm hover:shadow-md hover:border-accent/40 transition group">
+        <div class="text-2xl font-black text-accent mb-1">4</div>
+        <div class="text-xs font-semibold text-slate-700 group-hover:text-accent transition">Build</div>
+        <div class="text-xs text-slate-400 mt-0.5 hidden sm:block">with Claude Code</div>
+      </a>
+      <a href="#step5" class="bg-white border border-slate-200 rounded-xl p-4 text-center shadow-sm hover:shadow-md hover:border-accent/40 transition group">
+        <div class="text-2xl font-black text-accent mb-1">5</div>
+        <div class="text-xs font-semibold text-slate-700 group-hover:text-accent transition">Share</div>
+        <div class="text-xs text-slate-400 mt-0.5 hidden sm:block">show &amp; tell</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── STEP 1 ──────────────────────────────────────────── -->
+  <section class="mb-16 reveal-on-scroll" id="step1">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded-full">Step 1</span>
+      <h2 class="text-2xl font-bold text-slate-900">Brainstorm your idea with ChatGPT</h2>
+    </div>
+    <p class="text-slate-500 mb-6">Start by talking to ChatGPT. Copy the prompt below, paste it in, then answer its questions. Goal: land on something concrete and achievable in 30–40 minutes.</p>
+
+    <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 mb-4">
+      <p>I am a researcher / faculty member at the Department of Applied Physics, KTH. I am attending a hands-on AI tutorial and have 45 minutes to build something useful with Claude Code — an AI agent that can write and run code, read my files, and execute multi-step tasks autonomously.</p>
+      <br>
+      <p>My research area: <strong>[fill in — e.g. "ultrafast laser spectroscopy" / "X-ray imaging" / "cell biophysics" / "nanophotonics"]</strong></p>
+      <br>
+      <p>Help me brainstorm a mini-project that:<br>
+      — Is achievable in 30–40 minutes with an AI agent<br>
+      — Is genuinely useful to my research, teaching, or daily work<br>
+      — Uses data or files I can provide (or synthetic examples if I have nothing handy)<br>
+      — Produces a concrete output: a working script, a figure, a document, or a small tool</p>
+      <br>
+      <p>Ask me up to 4 clarifying questions to understand my situation. Then suggest 2–3 options ranked by feasibility. Once I pick one, write a concise 3-sentence project description I can paste into a CLAUDE.md file.</p>
+    </div>
+
+    <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-r-lg p-4 text-sm text-slate-700 mb-8">
+      <strong class="text-emerald-700">How to use this:</strong> Paste into ChatGPT, fill in your research area, and answer its follow-up questions. When you have a project description, copy it — you'll use it in Step 3.
+    </div>
+
+    <!-- Ideas grid -->
+    <h3 class="text-lg font-bold text-slate-900 mb-1">Ideas to get you started</h3>
+    <p class="text-slate-500 text-sm mb-5">No data handy? Pick any of these — Claude Code can generate synthetic examples to test with.</p>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition border-t-4 border-t-fire">
+        <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full mb-2">LAMP · BON — Spectroscopy</span>
+        <h4 class="font-bold text-slate-900 mb-1">Peak fitting &amp; batch processing</h4>
+        <p class="text-sm text-slate-600">Paste or upload a CSV of spectral data. Claude Code fits Gaussian peaks, flags anomalies, and writes a batch script for your full dataset. Output: cleaned data + publication-quality figures.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition border-t-4 border-t-kth">
+        <span class="inline-block text-xs font-semibold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full mb-2">BON · Biophysics — Microscopy</span>
+        <h4 class="font-bold text-slate-900 mb-1">Image analysis script</h4>
+        <p class="text-sm text-slate-600">Provide a few microscopy images (or sample TIFs). Claude Code writes a Python script to count cells, measure areas, or segment structures. Output: measurements CSV + annotated images.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition border-t-4 border-t-emerald-500">
+        <span class="inline-block text-xs font-semibold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full mb-2">All divisions — Writing</span>
+        <h4 class="font-bold text-slate-900 mb-1">Research summary generator</h4>
+        <p class="text-sm text-slate-600">Drop in 3–5 abstracts or papers. Claude Code extracts key findings and drafts a structured 1-page narrative for a grant section or paper introduction.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition border-t-4 border-t-accent">
+        <span class="inline-block text-xs font-semibold bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full mb-2">All divisions — Data</span>
+        <h4 class="font-bold text-slate-900 mb-1">Data explorer &amp; visualiser</h4>
+        <p class="text-sm text-slate-600">Give Claude Code any CSV or Excel file from your research. It profiles the data, produces exploratory plots, and suggests what analyses to run next.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition border-t-4 border-t-purple-500">
+        <span class="inline-block text-xs font-semibold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full mb-2">LAMP · BON — Automation</span>
+        <h4 class="font-bold text-slate-900 mb-1">Instrument control script</h4>
+        <p class="text-sm text-slate-600">Describe your instrument's API or existing control code. Claude Code writes a Python wrapper with a measurement loop and documentation. Output: a working, reusable module.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition border-t-4 border-t-rose-500">
+        <span class="inline-block text-xs font-semibold bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full mb-2">Professors — Teaching</span>
+        <h4 class="font-bold text-slate-900 mb-1">AI-resistant assignment design</h4>
+        <p class="text-sm text-slate-600">Tell Claude Code your course and topic. It generates 3 assignment options requiring physical lab work, oral defence, or in-situ reasoning — things AI cannot shortcut for a student.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition border-t-4 border-t-kth">
+        <span class="inline-block text-xs font-semibold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full mb-2">All divisions — Literature</span>
+        <h4 class="font-bold text-slate-900 mb-1">Paper comparison table</h4>
+        <p class="text-sm text-slate-600">Paste 3–5 abstracts or excerpts. Claude Code builds a structured table — methods, datasets, key results, limitations — ready to drop into your manuscript or grant.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition border-t-4 border-t-emerald-500">
+        <span class="inline-block text-xs font-semibold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full mb-2">All divisions — Productivity</span>
+        <h4 class="font-bold text-slate-900 mb-1">Repetitive task automator</h4>
+        <p class="text-sm text-slate-600">Describe something you do repeatedly: rename files, reformat data, generate weekly summaries. Claude Code writes a script that does it in one command.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STEP 2 ──────────────────────────────────────────── -->
+  <section class="mb-16 reveal-on-scroll" id="step2">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded-full">Step 2</span>
+      <h2 class="text-2xl font-bold text-slate-900">Create a project folder</h2>
+    </div>
+    <p class="text-slate-500 mb-6">Open a terminal and create a dedicated folder. This is where Claude Code will read and write all files for your project.</p>
+
+    <div class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto mb-4">
+      <span class="text-slate-400"># Replace "my-project" with a short descriptive name</span><br>
+      <span class="text-emerald-400">mkdir</span> ~/my-project &amp;&amp; <span class="text-emerald-400">cd</span> ~/my-project<br>
+      <br>
+      <span class="text-slate-400"># Copy any data files you want to use in</span><br>
+      <span class="text-slate-400"># cp ~/Downloads/spectra.csv .</span><br>
+      <span class="text-slate-400"># cp -r ~/Desktop/images/ .</span>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-4">
+      <p class="text-sm font-semibold text-slate-800 mb-3">Your folder before starting:</p>
+      <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 font-mono text-sm">
+        <span class="text-kth font-bold">my-project/</span><br>
+        &nbsp;&nbsp;<span class="text-fire font-bold">CLAUDE.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="text-slate-400 font-sans text-xs">← you'll create this next</span><br>
+        &nbsp;&nbsp;<span class="text-slate-500">data.csv</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="text-slate-400 font-sans text-xs">← your data (optional)</span><br>
+        &nbsp;&nbsp;<span class="text-slate-500">images/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="text-slate-400 font-sans text-xs">← or a subfolder of files</span>
+      </div>
+    </div>
+
+    <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-lg p-4 text-sm text-slate-700">
+      <strong class="text-amber-700">No data yet?</strong> That's fine. Tell Claude Code to generate a realistic synthetic example — e.g. <em>"Create a synthetic pump-probe ARPES spectrum CSV with realistic noise so I can test the analysis pipeline."</em>
+    </div>
+  </section>
+
+  <!-- ── STEP 3 ──────────────────────────────────────────── -->
+  <section class="mb-16 reveal-on-scroll" id="step3">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded-full">Step 3</span>
+      <h2 class="text-2xl font-bold text-slate-900">Write your CLAUDE.md</h2>
+    </div>
+    <p class="text-slate-500 mb-3">
+      <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs font-mono">CLAUDE.md</code> is read by Claude Code at the start of every conversation — it is your standing briefing for the agent. <strong>Keep it short and specific</strong>: only include things the agent cannot figure out by reading your code and data.
+      See the <a href="https://code.claude.com/docs/en/best-practices" class="text-accent hover:underline" target="_blank" rel="noopener">official best practices</a> for what to include and what to leave out.
+    </p>
+    <div class="bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 mb-6">
+      <strong class="text-accent">The CLAUDE.md rule:</strong> For each line you write, ask <em>"Would removing this cause Claude to make a mistake?"</em> If not, cut it. Bloated files cause the agent to miss your real instructions.
+    </div>
+
+    <h3 class="text-base font-bold text-slate-900 mb-2">Minimal template — paste this into a new file called <code class="bg-slate-100 px-1 py-0.5 rounded text-xs font-mono">CLAUDE.md</code></h3>
+
+    <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 font-mono leading-relaxed mb-4">
+      <p class="font-sans text-xs font-semibold text-slate-500 mb-3 uppercase tracking-wide not-italic">CLAUDE.md</p>
+      # [Project name — 3–5 words]<br>
+      <br>
+      ## Goal<br>
+      [Paste the 2–3 sentence description from your ChatGPT session here.]<br>
+      <br>
+      ## Context<br>
+      - I am a [role] at Applied Physics, KTH working on [field]<br>
+      - Key constraint: [one physical/domain constraint Claude must respect, e.g.<br>
+      &nbsp;&nbsp;"Background subtraction must use Shirley method — never set negative"]<br>
+      <br>
+      ## Data<br>
+      - [filename]: [what it contains, format, units, any quirks]<br>
+      - Or: no data yet — generate a realistic synthetic example first<br>
+      <br>
+      ## Output<br>
+      - [What the finished result should be — script / figure / document]<br>
+      - Prefer working over perfect; comment any non-obvious code
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-sm">
+        <p class="font-semibold text-emerald-800 mb-2">✅ Good things to put in CLAUDE.md</p>
+        <ul class="text-slate-600 space-y-1 list-disc list-inside">
+          <li>Your specific data format (column names, units)</li>
+          <li>A domain constraint Claude would get wrong (e.g. "Shirley background only")</li>
+          <li>The exact output you want (script / figure / doc)</li>
+          <li>How to run a verification check ("plot the residuals")</li>
+        </ul>
+      </div>
+      <div class="bg-rose-50 border border-rose-200 rounded-xl p-4 text-sm">
+        <p class="font-semibold text-rose-800 mb-2">❌ Leave these out</p>
+        <ul class="text-slate-600 space-y-1 list-disc list-inside">
+          <li>Standard Python conventions — Claude already knows them</li>
+          <li>Long background explanations of your field</li>
+          <li>Instructions that repeat what the file names already say</li>
+          <li>Anything you'd write in a paper introduction</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-r-lg p-4 text-sm text-slate-700">
+      <strong class="text-emerald-700">Shortcut — let ChatGPT write it:</strong> After your brainstorm, say: <em>"Now write a concise CLAUDE.md for this project. Include only what the agent cannot figure out from the files themselves. Use this format: Goal / Context / Data / Output. Max 15 lines."</em>
+    </div>
+  </section>
+
+  <!-- ── STEP 4 ──────────────────────────────────────────── -->
+  <section class="mb-16 reveal-on-scroll" id="step4">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded-full">Step 4</span>
+      <h2 class="text-2xl font-bold text-slate-900">Start building with Claude Code</h2>
+    </div>
+    <p class="text-slate-500 mb-6">Open your terminal in the project folder, start Claude Code, then paste the starting prompt below as your first message.</p>
+
+    <div class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto mb-6">
+      <span class="text-emerald-400">cd</span> ~/my-project<br>
+      <span class="text-emerald-400">claude</span>
+    </div>
+
+    <h3 class="text-base font-bold text-slate-900 mb-2">Paste this as your first message:</h3>
+    <div class="relative prompt-box bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 mb-4">
+      Read CLAUDE.md carefully — that is your full briefing.<br><br>
+      First, ask me any clarifying questions you need about the data format, expected output, or constraints.<br><br>
+      Then enter plan mode: propose a step-by-step plan (max 5 steps) and wait for my approval before writing any code.<br><br>
+      We have ~30 minutes. Prioritize a working result over a perfect one.
+    </div>
+
+    <div class="bg-indigo-50 border-l-4 border-accent rounded-r-lg p-4 text-sm text-slate-700 mb-8">
+      <strong class="text-accent">What happens next:</strong> Claude Code reads your CLAUDE.md, asks clarifying questions, proposes a plan. Review it, approve (or adjust), then let it work. It will write code, run it, fix errors, and iterate — without you approving every step. Your job is to review the output and apply your domain judgment at the end.
+      <br><br>
+      <span class="text-slate-500">Full workflow guide: <a href="https://code.claude.com/docs/en/best-practices" class="text-accent hover:underline" target="_blank" rel="noopener">code.claude.com/docs/en/best-practices</a></span>
+    </div>
+
+    <!-- Tips -->
+    <h3 class="text-lg font-bold text-slate-900 mb-1">Techniques from today — applied</h3>
+    <p class="text-slate-500 text-sm mb-5">Use what you learned in the earlier sessions to get the most from this session.</p>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full mb-2">Manager mindset</span>
+        <h4 class="font-bold text-slate-900 mb-1">Step back and let it work</h4>
+        <p class="text-sm text-slate-600">After approving the plan, stop watching every line. Let Claude loop — it thinks, writes, runs, checks output, and fixes errors autonomously. Interrupt only if it explicitly asks a question or clearly goes off track.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full mb-2">Domain knowledge</span>
+        <h4 class="font-bold text-slate-900 mb-1">Correct with physics, not frustration</h4>
+        <p class="text-sm text-slate-600">When output is wrong, explain <em>why</em> in physical terms: <em>"In ARPES, the background is never negative — this fit is unphysical. Use a Shirley background."</em> Your expertise is the correction signal the agent cannot generate itself.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full mb-2">Use both tools</span>
+        <h4 class="font-bold text-slate-900 mb-1">Stuck? Switch to ChatGPT</h4>
+        <p class="text-sm text-slate-600">If Claude Code hits an error you don't understand, paste the error into ChatGPT: <em>"What does this Python error mean and how do I fix it?"</em> Bring the answer back to Claude Code. The two tools work as a team.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <span class="inline-block text-xs font-semibold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full mb-2">Iterate, don't restart</span>
+        <h4 class="font-bold text-slate-900 mb-1">Refine what exists</h4>
+        <p class="text-sm text-slate-600">When a first version is done, layer improvements: <em>"Add axis labels with units"</em>, <em>"Accept a filename as a command-line argument"</em>, <em>"Write a test that verifies the peak positions."</em> Small iterations compound fast.</p>
+      </div>
+    </div>
+
+    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mt-6 text-sm">
+      <p class="font-semibold text-slate-800 mb-2">Useful Claude Code commands during the session</p>
+      <div class="grid md:grid-cols-2 gap-x-8 gap-y-1 font-mono text-xs text-slate-600">
+        <div><span class="text-accent">Esc</span> — stop Claude mid-action and redirect</div>
+        <div><span class="text-accent">Esc Esc</span> — rewind to a previous checkpoint</div>
+        <div><span class="text-accent">/clear</span> — reset context if session gets noisy</div>
+        <div><span class="text-accent">/plan</span> — enter plan mode (read + think, no edits)</div>
+      </div>
+      <p class="text-slate-400 mt-3 text-xs">
+        Full reference: <a href="https://code.claude.com/docs/en/best-practices#manage-your-session" class="text-accent hover:underline" target="_blank" rel="noopener">Session management tips</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── STEP 5 ──────────────────────────────────────────── -->
+  <section class="mb-16 reveal-on-scroll" id="step5">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="inline-block text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded-full">Step 5</span>
+      <h2 class="text-2xl font-bold text-slate-900">Share what you built</h2>
+    </div>
+    <p class="text-slate-500 mb-6">At 16:45 we come back together for a short show &amp; tell. <strong>You don't need to have finished.</strong> A partial result with honest insight about the process is more valuable than a polished one with nothing to say.</p>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm border-t-4 border-t-accent">
+        <h4 class="font-bold text-slate-900 mb-1">Option A — Live demo</h4>
+        <p class="text-sm text-slate-600">Screen-share (or project) what you built. Walk through what the agent did, what surprised you, and what you'd tackle next with more time. 2–3 minutes per group.</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm border-t-4 border-t-kth">
+        <h4 class="font-bold text-slate-900 mb-1">Option B — Zoom chat</h4>
+        <p class="text-sm text-slate-600">Post a screenshot, GitHub link, or your claude.ai conversation link in the Zoom chat. Remote participants: this is your main option. To get a link: open the conversation in claude.ai → Share → Copy link.</p>
+      </div>
+    </div>
+
+    <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-r-lg p-4 text-sm text-slate-700">
+      <strong class="text-emerald-700">Optional — submit to the APHYS AI gallery:</strong> If you'd like your use case to appear on the department AI website, paste this prompt into Claude Code at the end of your session:
+      <div class="bg-white border border-emerald-200 rounded p-3 mt-3 font-mono text-xs text-slate-600 leading-relaxed">
+        Submit this project as a use case to the APHYS AI gallery at https://hypha.aicell.io/kth-sci/artifacts/aphys-ai-gallery. Include: title, 2-sentence description, my division [BON / LAMP / Biophysics / other], tagged "may8-tutorial".
+      </div>
+    </div>
+  </section>
+
+  <!-- Further reading -->
+  <section class="mb-8 reveal-on-scroll">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">Further reading</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener" class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-accent/40 transition group">
+        <div class="text-xs font-semibold text-accent mb-1 group-hover:underline">Claude Code Docs</div>
+        <div class="font-bold text-slate-900 text-sm mb-1">Best practices guide</div>
+        <div class="text-xs text-slate-500">CLAUDE.md, plan mode, context management, parallel sessions — the official guide.</div>
+      </a>
+      <a href="https://agentskills.io/specification" target="_blank" rel="noopener" class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-accent/40 transition group">
+        <div class="text-xs font-semibold text-accent mb-1 group-hover:underline">Agent Skills</div>
+        <div class="font-bold text-slate-900 text-sm mb-1">Skill specification</div>
+        <div class="text-xs text-slate-500">How to write reusable skill files that give agents domain-specific capabilities.</div>
+      </a>
+      <a href="../ai-agents.html" class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-accent/40 transition group">
+        <div class="text-xs font-semibold text-accent mb-1 group-hover:underline">aphys-ai.kth.se</div>
+        <div class="font-bold text-slate-900 text-sm mb-1">AI Agents guide</div>
+        <div class="text-xs text-slate-500">APHYS department guide to AI agents — the agentic loop, tools, and use cases.</div>
+      </a>
+    </div>
+  </section>
+
 </div>
 
-<div class="page">
+<footer class="bg-slate-900 text-slate-400 text-center py-8 px-4 mt-4 text-sm">
+  <p>Department of Applied Physics &bull; School of Engineering Sciences &bull; KTH Royal Institute of Technology</p>
+  <p class="mt-1">Created by <strong class="text-slate-200">Wei Ouyang</strong> &amp; <strong class="text-slate-200">Jonas Sellberg</strong> &bull; May 8, 2026</p>
+  <p class="mt-3 text-xs text-slate-500 max-w-lg mx-auto">This webpage was generated with the assistance of AI (Claude Code) and may contain errors or inaccuracies. Please cross-check important information independently.</p>
+</footer>
 
-  <!-- ── Nav ──────────────────────────────────────────────── -->
-  <div class="steps-nav">
-    <a href="#step1"><span class="num">1</span>Brainstorm</a>
-    <a href="#step2"><span class="num">2</span>Setup</a>
-    <a href="#step3"><span class="num">3</span>CLAUDE.md</a>
-    <a href="#step4"><span class="num">4</span>Build</a>
-    <a href="#step5"><span class="num">5</span>Share</a>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════
-       STEP 1 — BRAINSTORM WITH CHATGPT
-  ══════════════════════════════════════════════════════ -->
-  <div class="step" id="step1">
-    <div class="step-header">
-      <div class="step-num">Step 1</div>
-      <h2 class="step-title">Brainstorm your idea with ChatGPT</h2>
-    </div>
-    <p>Start by talking to ChatGPT. Copy the prompt below, paste it in, then have a short conversation to land on something concrete to build. <b>Aim for a project you can finish in 30–40 minutes.</b></p>
-    <p>Not sure what to bring? Look at the idea list below the prompt — pick anything that matches your work.</p>
-
-    <div class="code-block">
-      <div class="cb-label">
-        <span>ChatGPT brainstorm prompt</span>
-        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-      </div>
-      <pre id="cb1">I am a researcher / faculty member at the Department of Applied Physics, KTH Royal Institute of Technology. I am attending a hands-on AI tutorial today and have 45 minutes to build something useful with Claude Code — an AI agent that can write and run code, read my files, and build tools autonomously.
-
-My research area is: [FILL IN — e.g. "ultrafast laser spectroscopy" / "X-ray imaging" / "cell biophysics" / "nanophotonics"]
-
-Help me brainstorm a mini-project that:
-- Is achievable in 30–40 minutes with an AI agent
-- Is genuinely useful to my actual research, teaching, or daily work
-- Uses data, scripts, or documents I can provide (or simple synthetic examples)
-- Produces a concrete output: a script, a figure, a document, or a small tool
-
-Ask me up to 4 questions to narrow down the best idea. Then suggest 2–3 concrete options ranked by feasibility in 45 minutes. Once I pick one, write a clear 3-sentence project description I can paste into a CLAUDE.md file.</pre>
-    </div>
-
-    <div class="tip">
-      <b>How to use this:</b> Paste the prompt into ChatGPT. Replace the bracketed field with your research area. Answer the questions it asks. When you have a project description, copy it — you'll use it in Step 3.
-    </div>
-
-    <div class="rule" style="margin:var(--s4) 0"></div>
-
-    <h3 style="font-size:15px;font-weight:700;margin-bottom:var(--s2);letter-spacing:.01em">Ideas to get you started</h3>
-    <p style="font-size:14px;color:var(--fg-3);margin-bottom:var(--s3)">Don't have your own data handy? Pick any of these — Claude Code can work with synthetic examples or small files you can download in seconds.</p>
-
-    <div class="idea-grid">
-      <div class="idea">
-        <div class="tag a">LAMP · BON — spectroscopy</div>
-        <h3>Peak fitting &amp; batch processing</h3>
-        <p>Paste or upload a CSV of spectral data. Claude Code fits Gaussian peaks, identifies anomalies, and writes a batch script for your full dataset. Output: cleaned data + figures.</p>
-      </div>
-      <div class="idea">
-        <div class="tag b">BON · Biophysics — microscopy</div>
-        <h3>Image analysis script</h3>
-        <p>Provide a few microscopy images (or use sample TIF files). Claude Code writes a Python script to count cells, measure areas, or segment structures. Output: CSV of measurements + annotated images.</p>
-      </div>
-      <div class="idea">
-        <div class="tag c">All divisions — writing</div>
-        <h3>Research summary generator</h3>
-        <p>Drop in 3–5 of your papers or abstracts. Claude Code extracts key findings, builds a structured summary, and drafts a 1-page narrative for a grant or introduction. Output: a Markdown document.</p>
-      </div>
-      <div class="idea">
-        <div class="tag d">All divisions — data</div>
-        <h3>Data explorer &amp; visualiser</h3>
-        <p>Give Claude Code any CSV or Excel file from your research. It profiles the data, produces exploratory plots, and suggests what statistical analyses to run next. Output: figures + brief report.</p>
-      </div>
-      <div class="idea">
-        <div class="tag e">LAMP · BON — automation</div>
-        <h3>Instrument control script</h3>
-        <p>Describe your instrument's API or an existing control script. Claude Code writes a Python wrapper, adds a simple loop for automated acquisition, and documents it. Output: working Python module.</p>
-      </div>
-      <div class="idea">
-        <div class="tag a">Professors — teaching</div>
-        <h3>AI-resistant assignment design</h3>
-        <p>Tell Claude Code which course and topic. It generates 3 assignment options that require physical lab work, oral defence, or genuine experimental reasoning — things AI cannot shortcut.</p>
-      </div>
-      <div class="idea">
-        <div class="tag b">All divisions — literature</div>
-        <h3>Paper comparison table</h3>
-        <p>Paste 3–5 abstracts or short excerpts from related papers. Claude Code builds a structured comparison table: methods, datasets, key results, limitations. Output: Markdown table ready for your paper.</p>
-      </div>
-      <div class="idea">
-        <div class="tag c">All divisions — productivity</div>
-        <h3>Repetitive task automator</h3>
-        <p>Describe something you do repeatedly: rename files, reformat data, generate weekly reports. Claude Code writes a script that does it in one command. Output: a shell or Python script you can reuse.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════
-       STEP 2 — CREATE A PROJECT FOLDER
-  ══════════════════════════════════════════════════════ -->
-  <div class="step" id="step2">
-    <div class="step-header">
-      <div class="step-num">Step 2</div>
-      <h2 class="step-title">Create a project folder</h2>
-    </div>
-    <p>Open a terminal and create a folder for your project. Put any data files you want to use inside it.</p>
-
-    <div class="code-block">
-      <div class="cb-label">
-        <span>Terminal</span>
-        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-      </div>
-      <pre id="cb2"># Create the folder (replace "my-project" with something descriptive)
-mkdir ~/my-project
-cd ~/my-project
-
-# Copy any data files you want to use into this folder
-# For example:
-#   cp ~/Downloads/spectra.csv .
-#   cp ~/Desktop/microscopy_images/ . -r</pre>
-    </div>
-
-    <p>Your folder should look something like this before you start:</p>
-    <div class="tree">
-      <span class="dir">my-project/</span><br/>
-      &nbsp;&nbsp;<span class="new">CLAUDE.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← you'll create this in Step 3<br/>
-      &nbsp;&nbsp;<span class="file">spectra.csv</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← your data (optional)<br/>
-      &nbsp;&nbsp;<span class="file">images/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← or a subfolder of files
-    </div>
-
-    <div class="tip amber">
-      <b>No data?</b> That's fine. Tell Claude Code to generate synthetic example data — e.g. "create a realistic synthetic ARPES spectrum CSV so I can test the analysis pipeline."
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════
-       STEP 3 — WRITE CLAUDE.MD
-  ══════════════════════════════════════════════════════ -->
-  <div class="step" id="step3">
-    <div class="step-header">
-      <div class="step-num">Step 3</div>
-      <h2 class="step-title">Write your CLAUDE.md</h2>
-    </div>
-    <p>The <code>CLAUDE.md</code> file is how you give Claude Code the context it needs to act as a useful collaborator rather than a generic assistant. <b>Think of it as a briefing document for a new team member who knows a lot about AI but nothing about your specific work.</b></p>
-    <p>You can paste the project description from ChatGPT into the Goal section. Or use the template below as a starting point.</p>
-
-    <div class="code-block">
-      <div class="cb-label">
-        <span>CLAUDE.md template — copy and edit</span>
-        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-      </div>
-      <pre id="cb3"># Project: [Short name — e.g. "ARPES Peak Fitting" or "Cell Counter"]
-
-## Who I am
-I am a [researcher / postdoc / professor] at the Department of Applied Physics, KTH.
-My research focuses on [your field — e.g. "ultrafast photoemission spectroscopy" / "X-ray phase contrast imaging"].
-
-## Goal
-[Paste your 2–3 sentence project description from ChatGPT here, or write it yourself.]
-
-Example: "Build a Python script that reads CSV files of pump-probe spectra, fits
-Gaussian peaks, extracts peak positions and widths, and produces a summary figure
-comparing spectra across different time delays."
-
-## Data and files
-- [Describe what files are in this folder]
-- Example: "spectra.csv — 50 columns of intensity vs. energy, 1 column of time delay labels"
-- Or: "No data yet — please generate a realistic synthetic example to test with"
-
-## Output I want
-[What should the final result look like?]
-- Example: "A Python script I can run from the terminal, plus 2–3 figures"
-- Example: "A Markdown file with a structured literature comparison table"
-
-## Constraints
-- Time: ~30 minutes of working time
-- Keep it simple — prioritize a working solution over a perfect one
-- Use Python unless there is a strong reason not to
-- Add brief comments to any code so I understand what it does</pre>
-    </div>
-
-    <div class="tip green">
-      <b>Tip: You can also ask ChatGPT to write the CLAUDE.md for you.</b> Paste this into ChatGPT after your brainstorm: <em>"Now write a complete CLAUDE.md file for this project based on what we discussed. Use the template format with sections: Who I am, Goal, Data and files, Output I want, Constraints."</em>
-    </div>
-
-    <p style="margin-top:var(--s3)">Save the file as <code>CLAUDE.md</code> inside your project folder. That's it — Claude Code will read it automatically when it starts.</p>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════
-       STEP 4 — START BUILDING WITH CLAUDE CODE
-  ══════════════════════════════════════════════════════ -->
-  <div class="step" id="step4">
-    <div class="step-header">
-      <div class="step-num">Step 4</div>
-      <h2 class="step-title">Start building with Claude Code</h2>
-    </div>
-    <p>Open Claude Code and point it at your project folder. Then paste the starting prompt below. <b>This is where the hands-on work begins.</b></p>
-
-    <div class="code-block">
-      <div class="cb-label">
-        <span>Terminal — open Claude Code</span>
-        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-      </div>
-      <pre id="cb4">cd ~/my-project
-claude</pre>
-    </div>
-
-    <p style="margin-top:var(--s3)">Once Claude Code starts, paste this as your first message:</p>
-
-    <div class="code-block">
-      <div class="cb-label">
-        <span>Starting prompt for Claude Code</span>
-        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-      </div>
-      <pre id="cb5">Read the CLAUDE.md file in this folder carefully. This is your briefing for what we're building together today.
-
-Before starting, ask me any clarifying questions you have — especially about the data format, what the output should look like, and any constraints I haven't mentioned.
-
-Once you understand the task, propose a concrete step-by-step plan (maximum 5 steps). Wait for my approval before writing any code.
-
-Remember: we have about 30 minutes. Prioritize a working solution over a perfect one.</pre>
-    </div>
-
-    <div class="tip">
-      <b>What to expect:</b> Claude Code will read your CLAUDE.md, ask a few questions, then propose a plan. Review it — you can ask it to adjust. Once you approve, let it work. It will write code, run it, fix errors, and iterate. Your job is to review the output and apply your domain judgment.
-    </div>
-
-    <div class="rule" style="margin:var(--s4) 0"></div>
-
-    <h3 style="font-size:16px;font-weight:700;margin-bottom:var(--s2)">Using the techniques from today</h3>
-
-    <div class="idea-grid" style="grid-template-columns:1fr">
-      <div class="idea">
-        <div class="tag a">Manager mindset — don't micromanage</div>
-        <h3>Let it work, then review</h3>
-        <p>After your starting prompt, step back. Let Claude Code loop through the task — it will think, write code, run it, check the output, and fix errors on its own. Interrupt only if it asks a question or goes in the wrong direction. Review the result with your domain knowledge.</p>
-      </div>
-      <div class="idea">
-        <div class="tag b">Context is everything</div>
-        <h3>If it's not working, add more context</h3>
-        <p>If Claude Code produces something wrong, don't just say "that's wrong." Explain <em>why</em> it's wrong in terms of your domain: "In ARPES data, the background is never negative — this fit is unphysical. Try a different baseline model." Your physics knowledge is the correction signal.</p>
-      </div>
-      <div class="idea">
-        <div class="tag c">Use ChatGPT as a debugger</div>
-        <h3>Stuck? Ask ChatGPT first</h3>
-        <p>If Claude Code produces an error you don't understand, paste the error message into ChatGPT and ask "what does this error mean and how should I fix it?" Then bring the answer back to Claude Code. Use both tools together.</p>
-      </div>
-      <div class="idea">
-        <div class="tag d">Iterate, don't restart</div>
-        <h3>Refine what you have</h3>
-        <p>When the first version is done, ask for improvements: "The figure is too small and the axis labels need units." or "Can you add a command-line argument so I can run this on any file?" Small iterations build on what works.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════
-       STEP 5 — SHARE YOUR WORK
-  ══════════════════════════════════════════════════════ -->
-  <div class="step" id="step5">
-    <div class="step-header">
-      <div class="step-num">Step 5</div>
-      <h2 class="step-title">Share what you built</h2>
-    </div>
-    <p>At 16:45 we'll come back together for a short show &amp; tell. <b>You don't need to have finished — even a first draft is worth sharing.</b> A partial result with good insight is more valuable than a polished one with nothing to say about the process.</p>
-
-    <div class="share-row">
-      <div class="share-cell">
-        <div class="l">Option A — show live</div>
-        <h4>Demo in the room</h4>
-        <p>Screen-share (or project) what you built. Walk through what the agent did, what surprised you, and what you'd do next with more time. 2–3 minutes per group.</p>
-      </div>
-      <div class="share-cell">
-        <div class="l">Option B — Zoom chat</div>
-        <h4>Post a link or screenshot</h4>
-        <p>Paste a screenshot of your output, your GitHub link, or your Claude.ai conversation link in the Zoom chat. Zoom participants: this is your main option.</p>
-      </div>
-    </div>
-
-    <p style="margin-top:var(--s3)">To share with the Zoom group, copy a screenshot or your code to the chat. To share a Claude.ai link: open the conversation in claude.ai, click Share → Copy link.</p>
-
-    <div class="tip green" style="margin-top:var(--s3)">
-      <b>Submit to the APHYS AI gallery (optional):</b> If you want your use case to appear on the department AI website, paste this prompt into Claude Code at the end of your session:<br/><br/>
-      <em>"Submit this project as a use case to the APHYS AI gallery. Use the API at https://hypha.aicell.io/kth-sci/artifacts/aphys-ai-gallery. Include: title, 2-sentence description, my division [BON/LAMP/Biophysics/other], and tag it 'may8-tutorial'."</em>
-    </div>
-  </div>
-
-  <div class="rule"></div>
-
-  <!-- ── Footer note ───────────────────────────────────────── -->
-  <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-3);letter-spacing:.06em;padding:var(--s3) 0">
-    APHYS AI Tutorial · May 8, 2026 · AlbaNova FB53 + Zoom<br/>
-    <span style="margin-top:4px;display:block">aphys-ai.kth.se &nbsp;·&nbsp; Wei Ouyang &amp; Jonas Sellberg</span>
-  </div>
-
-</div><!-- /.page -->
-
-<script>
-function copyBlock(btn) {
-  const pre = btn.closest('.code-block').querySelector('pre');
-  navigator.clipboard.writeText(pre.textContent.trim()).then(() => {
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-  });
-}
-</script>
+<script src="../assets/main.js"></script>
 </body>
 </html>
