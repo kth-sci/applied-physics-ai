@@ -409,31 +409,37 @@ Python environment: conda env 'spectro'
     <h2>The question is not: what prompt should I write?<br/>The question is: what should Claude know?</h2>
     <div class="rule"></div>
 
-    <p class="lead" style="margin-bottom:var(--s4);">Context engineering — deliberately shaping what's in the context window — is the core skill of working with AI agents.</p>
+    <p class="lead" style="margin-bottom:var(--s3);">Context engineering — deliberately shaping what's in the context window — is the core skill of working with AI agents. <strong>The context window is your most important resource to manage.</strong></p>
 
-    <div class="pillars three">
+    <div class="pillars four">
       <div class="pillar p1">
-        <div class="n">Context Window</div>
-        <h3>What Claude sees right now</h3>
-        <p>Everything Claude knows at this moment: your files, CLAUDE.md, conversation history, tool outputs. It does <strong>not</strong> know what you haven't shown it. A blank context produces generic output — even from the most capable model.</p>
-        <div class="eg">Your 10 years of domain expertise is invisible unless you put it in the context.</div>
+        <div class="n">The Constraint</div>
+        <h3>Context fills up fast</h3>
+        <p>Every file read, every command output, every message enters the window. A single debugging session can consume tens of thousands of tokens. <strong>LLM performance degrades as context fills</strong> — Claude starts forgetting earlier instructions.</p>
+        <div class="eg">A 10-file codebase exploration + 20 messages = context half gone before you start the real task.</div>
       </div>
       <div class="pillar p2">
         <div class="n">Three Levers</div>
-        <h3>How to shape the context</h3>
-        <p><strong>CLAUDE.md</strong> — persistent across all sessions, set once; <strong>files you reference</strong> — open or mention specific files in your task; <strong>how you phrase the task</strong> — specificity matters even when context is rich.</p>
-        <div class="eg">Each lever compounds. All three together = expert-level output.</div>
+        <h3>Shape what Claude knows</h3>
+        <p><strong>CLAUDE.md</strong> — always loaded, every session; <strong>Files you reference</strong> — read only when you mention them; <strong>Skills</strong> — description pre-loaded (~100 tokens), body loaded on demand. Use each at the right granularity.</p>
+        <div class="eg">CLAUDE.md for universal rules · Skills for domain workflows · @file for one-off context.</div>
       </div>
       <div class="pillar p5">
         <div class="n">Rich Context → Rich Output</div>
         <h3>The compounding effect</h3>
-        <p>A vague prompt with no file context produces textbook-generic text. A precise task with well-structured project files and a good CLAUDE.md produces working, domain-specific code and analysis.</p>
-        <div class="eg">"Analyse my data" → generic script. "Read pump_probe.csv, fit 550 nm, plot fit vs data" → working figure.</div>
+        <p>A vague prompt + blank context = generic output. Precise task + well-structured project + tight CLAUDE.md = working, domain-specific results.</p>
+        <div class="eg">"Analyse my data" → generic. "Read pump_probe.csv, fit 550 nm with biexponential, plot fit vs data" → working figure.</div>
+      </div>
+      <div class="pillar p3">
+        <div class="n">Context Management</div>
+        <h3>Keep it clean</h3>
+        <p><code style="font-family:'JetBrains Mono',monospace;font-size:11px;">/clear</code> — reset between unrelated tasks. <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">/btw</code> — side question that <em>never enters history</em>. Subagents — investigate in a separate context window, report back summaries without cluttering yours.</p>
+        <div class="eg">If you've corrected Claude twice on the same issue: /clear and start fresh with a better prompt.</div>
       </div>
     </div>
 
     <div class="callout amber" style="margin-top:var(--s3);">
-      <b>CLAUDE.md is the most powerful single action you can take before starting a task.</b> Write it once; benefit every session. It is the equivalent of briefing a skilled postdoc before handing them a project.
+      <b>CLAUDE.md is loaded every session — keep it ruthlessly short.</b> If it's too long, Claude ignores half of it. For each line, ask: "Would removing this cause Claude to make mistakes?" If not, cut it. Use Skills for domain knowledge that only applies sometimes.
     </div>
   </div>
 </section>
@@ -504,39 +510,71 @@ Python environment: conda env 'spectro'
   <div class="page">07 / 19 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">The Commands You Need</div>
-    <h2>Six commands cover 90% of usage.</h2>
+    <h2>Nine commands + one principle cover daily usage.</h2>
     <div class="rule"></div>
 
-    <div class="cmd-list">
-      <div class="cmd-row">
-        <div class="cmd">claude</div>
-        <div class="desc">Start an interactive session in the current directory — Claude reads the directory and CLAUDE.md immediately</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s3) var(--s4);margin-top:var(--s3);">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--indigo);text-transform:uppercase;margin-bottom:var(--s2);">Start & Run</div>
+        <div class="cmd-list">
+          <div class="cmd-row">
+            <div class="cmd">claude</div>
+            <div class="desc">Start an interactive session — reads directory + CLAUDE.md immediately</div>
+          </div>
+          <div class="cmd-row">
+            <div class="cmd">claude -p "task"</div>
+            <div class="desc">One-shot non-interactive run — pipe into scripts, CI, or batch automation</div>
+          </div>
+          <div class="cmd-row">
+            <div class="cmd">--permission-mode auto</div>
+            <div class="desc">Classifier approves routine actions silently; only blocks scope escalation — reduces click-through fatigue</div>
+          </div>
+        </div>
       </div>
-      <div class="cmd-row">
-        <div class="cmd">claude "do this task"</div>
-        <div class="desc">One-shot: run a single task non-interactively and exit — useful for scripting and automation</div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--green);text-transform:uppercase;margin-bottom:var(--s2);">Build Context</div>
+        <div class="cmd-list">
+          <div class="cmd-row">
+            <div class="cmd">/init</div>
+            <div class="desc">Generate CLAUDE.md from current project — run once per project, then edit</div>
+          </div>
+          <div class="cmd-row">
+            <div class="cmd">#add a convention</div>
+            <div class="desc">Append a line to CLAUDE.md without executing — build it incrementally as you work</div>
+          </div>
+        </div>
       </div>
-      <div class="cmd-row">
-        <div class="cmd">/init</div>
-        <div class="desc">Generate a CLAUDE.md from your current project — Claude reads all files and writes standing instructions; run once per project</div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--amber);text-transform:uppercase;margin-bottom:var(--s2);">Manage Context</div>
+        <div class="cmd-list">
+          <div class="cmd-row">
+            <div class="cmd">/clear</div>
+            <div class="desc">Reset context entirely — use between unrelated tasks; prevents noise degrading quality</div>
+          </div>
+          <div class="cmd-row">
+            <div class="cmd">/btw [question]</div>
+            <div class="desc">Side question in a dismissible overlay — <strong>never enters conversation history</strong>; check a fact without spending tokens</div>
+          </div>
+        </div>
       </div>
-      <div class="cmd-row">
-        <div class="cmd">#add a convention</div>
-        <div class="desc">Inside a session: append a line to CLAUDE.md without executing a task — builds your instruction file incrementally as you work</div>
-      </div>
-      <div class="cmd-row">
-        <div class="cmd">Esc</div>
-        <div class="desc">Interrupt the current action mid-run — stops Claude without undoing any changes already made</div>
-      </div>
-      <div class="cmd-row">
-        <div class="cmd">Esc + Esc</div>
-        <div class="desc">Undo the last file change — restores the previous state of any file Claude just wrote or modified</div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--red);text-transform:uppercase;margin-bottom:var(--s2);">Control & Undo</div>
+        <div class="cmd-list">
+          <div class="cmd-row">
+            <div class="cmd">Esc</div>
+            <div class="desc">Interrupt current action — stops Claude mid-run, preserves context</div>
+          </div>
+          <div class="cmd-row">
+            <div class="cmd">Esc + Esc · /rewind</div>
+            <div class="desc">Restore previous file state or rewind conversation to any checkpoint</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <p style="font-size:13px;color:var(--fg-3);margin-top:var(--s3);font-family:'JetBrains Mono',monospace;">
-      Full reference: <code style="color:var(--indigo);">claude --help</code> · or press <code style="color:var(--indigo);">/</code> inside a session to see all slash commands
-    </p>
+    <div class="callout" style="margin-top:var(--s3);font-size:13px;">
+      <b>CLI tools are the most context-efficient way to interact with external services.</b> Install <code style="font-family:'JetBrains Mono',monospace;">gh</code> for GitHub, <code style="font-family:'JetBrains Mono',monospace;">aws</code>, <code style="font-family:'JetBrains Mono',monospace;">gcloud</code> — Claude uses them natively. New tool? Tell Claude: <em>"Use foo-cli --help to learn it, then use it to do X."</em>
+    </div>
   </div>
 </section>
 
@@ -548,33 +586,49 @@ Python environment: conda env 'spectro'
   <div class="page">08 / 19 · Wei Ouyang</div>
   <div class="inner">
     <div class="kicker">Extending Claude Code</div>
-    <h2>Skills add new capabilities to your agent.</h2>
+    <h2>Skills: domain knowledge that costs ~100 tokens to load.</h2>
     <div class="rule"></div>
-    <p class="lead" style="margin-bottom:var(--s3);">A skill is a markdown file with instructions and tool definitions. Claude reads it like an expert briefing. Install once; Claude uses it whenever relevant.</p>
 
-    <div class="pillars three">
-      <div class="pillar p2">
-        <div class="n">Built-In Skills</div>
-        <h3>Available by default</h3>
-        <p>Web search, code execution, image analysis, and file management are built in. These activate automatically when you ask for something that requires them — no setup needed.</p>
-        <div class="eg">Ask Claude to "search for the scipy docs on curve fitting" and it will.</div>
-      </div>
-      <div class="pillar p4">
-        <div class="n">Community Skills</div>
-        <h3>Install from registries</h3>
-        <p>Install from skill registries shared by the community. Examples: data analysis templates, academic paper summarizers, lab instrument control scripts, visualization helpers.</p>
-        <div class="eg">svamp skills marketplace · github skill repositories</div>
-      </div>
-      <div class="pillar p5">
-        <div class="n">Your Own Skills</div>
-        <h3>Write once, use forever</h3>
-        <p>Write a markdown file describing your lab's workflow — data format, analysis pipeline, naming conventions, instrument specifics. Every session starts with that context loaded automatically.</p>
-        <div class="eg">A LAMP spectroscopy skill knows: TA data format, decay fitting routines, figure conventions.</div>
-      </div>
-    </div>
+    <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:var(--s4);align-items:start;margin-top:var(--s3);">
 
-    <div class="callout amber" style="margin-top:var(--s3);">
-      <b>This tutorial runs on Svamp + Hypha skills.</b> Jonas's session already showed one in practice — the Blender MCP skill. Skills are a lightweight alternative to MCP for extending your workflows without per-application setup.
+      <div style="display:flex;flex-direction:column;gap:var(--s3);">
+        <div class="lab-card">
+          <h4>How Skills work — progressive disclosure</h4>
+          <p>At startup: only <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">name</code> + <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">description</code> pre-loaded (~100 tokens for all installed skills). When triggered: full <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">SKILL.md</code> body loaded (keep under 500 lines). Reference files (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;">references/</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">scripts/</code>): loaded only when needed. Zero cost until relevant.</p>
+        </div>
+        <div class="lab-card sky">
+          <h4>CLAUDE.md vs Skills — when to use which</h4>
+          <p><strong>CLAUDE.md</strong> — loaded every session, always burns tokens. Use only for rules that apply to <em>every single task</em>. Keep ruthlessly short (10–20 lines max).<br/><strong>Skills</strong> — triggered on demand. Use for domain workflows, dataset schemas, instrument conventions, analysis pipelines. No cost until you need them.</p>
+        </div>
+        <div class="lab-card green">
+          <h4>Install from registries or write your own</h4>
+          <p><code style="font-family:'JetBrains Mono',monospace;font-size:12px;">svamp skills install &lt;name&gt;</code> · <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">agentskills.io</code> · or write a <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">SKILL.md</code> in <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">.claude/skills/&lt;name&gt;/</code>. This tutorial runs on Svamp + Hypha skills. Jonas's demo used the Blender MCP skill.</p>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--indigo);text-transform:uppercase;margin-bottom:var(--s2);">Minimal SKILL.md for your lab</div>
+        <div class="prompt-box" style="font-size:12px;">---
+name: spectroscopy-analysis
+description: Analyze pump-probe TA data: plot
+  transient absorption maps, fit decay curves,
+  export publication figures. Use when working
+  with time-resolved spectroscopy or delta_OD.
+---
+## Data format
+CSV — columns: time_ps, wavelength_nm, delta_OD
+Raw data in ./raw_data/ — never modify.
+Figures → ./figures/ at 300 dpi PNG.
+
+## Workflow
+1. Read CSV, describe structure and range
+2. Plot TA map (wavelength vs time, diverging cmap)
+3. Fit decay at requested λ with biexponential
+4. Report τ₁, τ₂, amplitudes, R²
+5. Save figure as fig_&lt;wavelength&gt;nm_decay.png</div>
+        <p style="font-size:12px;color:var(--fg-3);margin-top:var(--s2);">The <b>description</b> must say <em>what it does</em> AND <em>when to use it</em> — Claude picks from 100+ skills using just this field.</p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -793,37 +847,48 @@ Python environment: conda env 'spectro'
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
   <div class="page">13 / 19 · Wei Ouyang</div>
   <div class="inner">
-    <div class="kicker">Briefly</div>
-    <h2>MCP: powerful, but not today's focus.</h2>
+    <div class="kicker">Token Cost · Architecture · Best Practice</div>
+    <h2>MCP: powerful, but token-expensive. Here's why.</h2>
     <div class="rule"></div>
-    <p class="lead" style="margin-bottom:var(--s4);">The Model Context Protocol connects Claude Code to external applications — databases, browsers, CAD tools, lab instruments. Jonas showed Blender. It's real and impressive.</p>
 
-    <div class="two-sys">
-      <div class="sys green-b">
-        <div class="stag">What It Enables</div>
-        <h3>External application control</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s3);margin-top:var(--s3);">
+
+      <div class="sys red-b" style="border-width:2px;">
+        <div class="stag" style="color:var(--red);">Why MCP costs tokens</div>
         <ul>
-          <li>Blender — generate and modify 3D scenes via natural language, as Jonas demonstrated</li>
-          <li>Browser automation — navigate websites, extract data, fill forms (Playwright MCP)</li>
-          <li>Databases — read and write SQL tables, query schemas, export results</li>
-          <li>Instrument APIs — control lab hardware that exposes a REST or socket interface</li>
+          <li>Connecting an MCP server loads <strong>all its tool definitions</strong> into context — even tools you never use that session</li>
+          <li>Requires a running server process + config file per application</li>
+          <li>Each tool call can round-trip through the server, adding latency and output tokens</li>
+          <li>Complex setup: install addon → start server → add to Claude config → test connection</li>
         </ul>
       </div>
-      <div class="sys amber-b">
-        <div class="stag">Honest Caveat</div>
-        <h3>Setup cost is real</h3>
+
+      <div class="sys green-b" style="border-width:2px;">
+        <div class="stag" style="color:var(--green);">Better default: Skills + CLI tools</div>
         <ul>
-          <li>MCP requires per-application installation and configuration</li>
-          <li>It is not plug-and-play — each server has its own setup procedure</li>
-          <li>For new users, the highest ROI today is CLAUDE.md, context engineering, and direct file workflows</li>
-          <li>Come back to MCP once the basics are fluent — the foundation pays off first</li>
+          <li><strong>Skills</strong> — only ~100 tokens at startup; body loaded on demand; stateless markdown files, zero server overhead</li>
+          <li><strong>CLI tools</strong> (<code style="font-family:'JetBrains Mono',monospace;font-size:11px;">gh</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">aws</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:11px;">gcloud</code>) — Claude uses them natively; already authenticated; no extra process needed</li>
+          <li>New CLI? Tell Claude: <em>"Use foo --help to learn it, then do X."</em></li>
+          <li>For most workflows: write a Skill + a CLI tool beats an MCP server</li>
         </ul>
       </div>
+
+      <div class="sys sky-b" style="border-width:2px;">
+        <div class="stag" style="color:var(--sky);">When MCP is still right</div>
+        <ul>
+          <li><strong>Real-time app control</strong> — Blender, Figma, live databases: you need two-way state sync that a CLI can't give you</li>
+          <li><strong>No CLI exists</strong> for the service and the REST API is complex enough that an MCP wrapper is cleaner</li>
+          <li><strong>Browser automation</strong> — Playwright MCP is the best interface for this use case</li>
+          <li>Rule of thumb: if a CLI exists for it, use the CLI. If you need live bidirectional control, use MCP.</li>
+        </ul>
+      </div>
+
     </div>
 
-    <p style="margin-top:var(--s3);font-size:13px;color:var(--fg-3);">
-      Browse the MCP server registry: <a href="https://github.com/modelcontextprotocol/servers" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--sky);">github.com/modelcontextprotocol/servers</a>
-    </p>
+    <div class="callout" style="margin-top:var(--s3);font-size:13px;">
+      Token cost comparison: <strong>MCP server connected</strong> = all tool schemas loaded into context permanently. <strong>Skill triggered</strong> = ~100 tokens description + body on demand. <strong>CLI call</strong> = only the output of the command. Prefer Skills + CLI tools as your default extension pattern.
+      <span style="display:inline-block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sky);">registry: github.com/modelcontextprotocol/servers · agentskills.io</span>
+    </div>
   </div>
 </section>
 
@@ -917,6 +982,12 @@ Python environment: conda env 'spectro'
         <h4>Path C · Advanced</h4>
         <p>Browser automation, remote server SSH, custom MCP, or Ralph Loop sketch. For Christian, Qichen, Renan, Björn-Christian.</p>
       </div>
+    </div>
+
+    <div style="margin-top:var(--s3);display:flex;gap:var(--s4);flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-3);">
+      <a href="https://code.claude.com/docs/en/best-practices" target="_blank" style="color:var(--sky);border-bottom:none;">code.claude.com/docs/en/best-practices</a>
+      <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices" target="_blank" style="color:var(--sky);border-bottom:none;">platform.claude.com — agent skills best practices</a>
+      <a href="https://agentskills.io/specification" target="_blank" style="color:var(--sky);border-bottom:none;">agentskills.io/specification</a>
     </div>
   </div>
 </section>
