@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presenter Cover Slides · May 8 Tutorial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="theme-anthropic.css" />
+    <style>
+      .cover-name {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: var(--anthro-fg);
+        margin: 0.2em 0 0.1em;
+        letter-spacing: -0.02em;
+      }
+      .cover-role {
+        font-size: 0.55em;
+        color: var(--anthro-fg-muted);
+        font-weight: 400;
+        margin-bottom: 0.8em;
+      }
+      .cover-title {
+        font-size: 0.7em;
+        font-weight: 600;
+        color: var(--anthro-accent);
+        background: rgba(196,104,73,0.09);
+        border: 1px solid rgba(196,104,73,0.25);
+        border-radius: 10px;
+        padding: 0.5em 1em;
+        display: inline-block;
+        margin: 0.3em 0 0.8em;
+        max-width: 80%;
+      }
+      .cover-badge {
+        font-size: 0.38em;
+        color: var(--anthro-fg-light);
+        background: var(--anthro-bg-surface);
+        border: 1px solid var(--anthro-border);
+        border-radius: 999px;
+        padding: 0.25em 0.75em;
+        margin: 0.15em;
+        display: inline-block;
+      }
+      .cover-slot {
+        font-size: 0.38em;
+        color: var(--anthro-fg-light);
+        margin-top: 1em;
+      }
+      .placeholder-box {
+        border: 2px dashed var(--anthro-border);
+        border-radius: 12px;
+        padding: 0.6em 1.2em;
+        color: var(--anthro-fg-light);
+        font-size: 0.42em;
+        margin-top: 0.5em;
+        font-style: italic;
+      }
+      /* Avatar initials circle */
+      .avatar {
+        width: 90px; height: 90px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 2rem; font-weight: 700;
+        margin: 0 auto 0.4em;
+        color: #fff;
+      }
+      .av-ohm    { background: linear-gradient(135deg, #4a7fa5, #2d5a7e); }
+      .av-xu     { background: linear-gradient(135deg, #7B9E87, #4d7a5a); }
+      .av-maciel { background: linear-gradient(135deg, #C46849, #9c4a30); }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- ── INTRO SLIDE ─────────────────────── -->
+        <section class="center-title">
+          <h2>Advanced User Showcases</h2>
+          <p class="subtitle">Colleagues share how they use AI agents in their research</p>
+          <br/>
+          <p class="muted">15:30–16:00 · May 8, 2026</p>
+          <p style="font-size:0.45em; color:var(--anthro-fg-light); margin-top:0.5em;">
+            ~10 minutes each · Questions welcome after each presentation
+          </p>
+        </section>
+
+        <!-- ── CHRISTIAN OHM ───────────────────── -->
+        <section class="center-title">
+          <div class="avatar av-ohm">CO</div>
+          <div class="cover-name">Christian Ohm</div>
+          <div class="cover-role">
+            Senior Lecturer · Experimental Particle Physics<br/>
+            Division of Particle and Astroparticle Physics · KTH
+          </div>
+
+          <!-- Title placeholder — fill in when confirmed -->
+          <div class="cover-title" id="ohm-title">
+            ⏳ Presentation title — pending confirmation
+          </div>
+
+          <div>
+            <span class="cover-badge">ATLAS / CERN</span>
+            <span class="cover-badge">Dark matter detection</span>
+            <span class="cover-badge">Local LLMs</span>
+            <span class="cover-badge">AI-assisted web development</span>
+          </div>
+          <div class="placeholder-box">
+            Replace this slide's title and badges once Christian confirms his topic.<br/>
+            Expected: local/open-source LLM setup, or AI-assisted research tooling.
+          </div>
+          <div class="cover-slot">Slot: 15:30 — ~10 min · Questions welcome</div>
+        </section>
+
+        <!-- ── QICHEN XU ───────────────────────── -->
+        <section class="center-title">
+          <div class="avatar av-xu">QX</div>
+          <div class="cover-name">Qichen Xu</div>
+          <div class="cover-role">
+            Researcher · Applied Physics<br/>
+            KTH Royal Institute of Technology
+          </div>
+
+          <div class="cover-title" id="xu-title">
+            ⏳ Presentation title — pending confirmation
+          </div>
+
+          <div>
+            <span class="cover-badge">Advanced AI user</span>
+            <span class="cover-badge">Applied Physics</span>
+          </div>
+          <div class="placeholder-box">
+            Replace this slide's title and badges once Qichen confirms his topic.
+          </div>
+          <div class="cover-slot">Slot: ~15:40 · ~10 min · Questions welcome</div>
+        </section>
+
+        <!-- ── RENAN MACIEL ────────────────────── -->
+        <section class="center-title">
+          <div class="avatar av-maciel">RM</div>
+          <div class="cover-name">Renan Maciel</div>
+          <div class="cover-role">
+            Researcher · Condensed Matter Physics<br/>
+            Topological Materials &amp; Spintronics · KTH
+          </div>
+
+          <div class="cover-title" id="maciel-title">
+            ⏳ Presentation title — pending confirmation
+          </div>
+
+          <div>
+            <span class="cover-badge">Condensed matter</span>
+            <span class="cover-badge">Topological insulators</span>
+            <span class="cover-badge">Skyrmions</span>
+            <span class="cover-badge">Advanced AI user</span>
+          </div>
+          <div class="placeholder-box">
+            Replace this slide's title and badges once Renan confirms his topic.
+          </div>
+          <div class="cover-slot">Slot: ~15:50 — ~10 min · Questions welcome</div>
+        </section>
+
+        <!-- ── THANK YOU / TRANSITION ─────────── -->
+        <section class="center-title">
+          <h2>Thank you!</h2>
+          <p class="subtitle">Group work begins at 16:00</p>
+          <br/>
+          <div style="font-size:0.5em; text-align:left; max-width:70%; margin:0.5em auto; color:var(--anthro-fg-muted);">
+            <p style="margin-bottom:0.5em;">☕ Coffee refill available</p>
+            <p style="margin-bottom:0.5em;">💻 Open your laptop and go to <strong>aphys-ai.kth.se/may8-tutorial</strong></p>
+            <p>👥 Find a group (3–4 people), pick a project idea using the brainstorming prompt, and start building</p>
+          </div>
+          <p class="muted" style="margin-top:0.8em;">16:30 — groups present their results</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        transition: "fade",
+        slideNumber: false,
+        progress: false,
+        margin: 0.06,
+        width: 1280,
+        height: 720,
+      });
+    </script>
+  </body>
+</html>

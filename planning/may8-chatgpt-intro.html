@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatGPT Intro · May 8 Tutorial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="theme-anthropic.css" />
+    <style>
+      .prompt-anatomy {
+        font-size: 0.48em;
+        font-family: var(--anthro-mono);
+        background: var(--anthro-fg);
+        color: #e0e0e0;
+        border-radius: 10px;
+        padding: 0.8em 1em;
+        text-align: left;
+        line-height: 1.7;
+        margin: 0.4em 0;
+      }
+      .pa-task    { color: #C46849; }
+      .pa-context { color: #7ec8a0; }
+      .pa-format  { color: #7aadd6; }
+      .pa-label   { font-size: 0.75em; opacity: 0.6; margin-left: 0.5em; }
+
+      .before-after {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5em;
+        font-size: 0.46em;
+        text-align: left;
+      }
+      .ba-col h4 { font-size: 1em; margin-bottom: 0.3em; }
+      .ba-col .bad  { color: #b04040; background: rgba(176,64,64,0.07); border: 1px solid rgba(176,64,64,0.2); border-radius: 8px; padding: 0.5em 0.7em; margin-bottom: 0.3em; }
+      .ba-col .good { color: var(--anthro-green); background: rgba(45,122,79,0.07); border: 1px solid rgba(45,122,79,0.2); border-radius: 8px; padding: 0.5em 0.7em; margin-bottom: 0.3em; }
+
+      .exercise-box {
+        background: rgba(196,104,73,0.07);
+        border: 2px solid var(--anthro-accent);
+        border-radius: 12px;
+        padding: 0.7em 1em;
+        text-align: left;
+        font-size: 0.48em;
+      }
+      .exercise-box h3 { color: var(--anthro-accent); font-size: 1.1em; margin-bottom: 0.3em; }
+      .prompt-box {
+        background: var(--anthro-fg);
+        color: #e0e0e0;
+        border-radius: 8px;
+        padding: 0.6em 0.8em;
+        font-family: var(--anthro-mono);
+        font-size: 0.95em;
+        line-height: 1.6;
+        margin: 0.3em 0;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- Slide 1: Title -->
+        <section class="center-title">
+          <h2 style="font-size:1.6em;">ChatGPT</h2>
+          <p class="subtitle">From search engine replacement to thinking partner</p>
+          <br />
+          <p class="muted">APHYS AI Tutorial · May 8, 2026 · 13:15 — Jonas Sellberg</p>
+        </section>
+
+        <!-- Slide 2: What ChatGPT actually is -->
+        <section>
+          <h2>What it is — and what it isn't</h2>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5em; font-size:0.5em; text-align:left; margin-bottom:0.45em;">
+            <div class="tool-card" style="padding:0.6em 0.8em;">
+              <p style="color:#b04040; font-weight:600; margin-bottom:0.2em;">Not a search engine</p>
+              <ul style="margin-left:0;">
+                <li>Doesn't look up facts in real-time (mostly)</li>
+                <li>Can hallucinate — confidently wrong</li>
+                <li>Not authoritative on recent events</li>
+              </ul>
+            </div>
+            <div class="tool-card" style="padding:0.6em 0.8em; border-color:var(--anthro-green);">
+              <p style="color:var(--anthro-green); font-weight:600; margin-bottom:0.2em;">A very capable thinking partner</p>
+              <ul style="margin-left:0;">
+                <li>Synthesises and explains anything you give it</li>
+                <li>Drafts, rewrites, critiques your writing</li>
+                <li>Argues both sides, plays devil's advocate</li>
+                <li>Generates code, figures, structures on demand</li>
+              </ul>
+            </div>
+          </div>
+          <div class="tip">
+            <p>The best mental model: <strong>a brilliant but forgetful colleague</strong> who knows a lot, can reason fast, but you should always double-check their references.</p>
+          </div>
+        </section>
+
+        <!-- Slide 3: The anatomy of a good prompt -->
+        <section>
+          <h2>The anatomy of a good prompt</h2>
+          <p style="font-size:0.55em; margin-bottom:0.4em;">Three elements make the difference between a generic answer and a useful one.</p>
+          <div class="prompt-anatomy">
+<span class="pa-task">Summarise the key findings from these three abstracts</span><span class="pa-label">← TASK: what you want done</span>
+<span style="color:#666;">and identify one unresolved question they all share.</span>
+
+<span class="pa-context">Context: I am a researcher in ultrafast X-ray spectroscopy
+preparing a grant proposal for VR. The audience is a
+review panel with broad physics background.</span><span class="pa-label">← CONTEXT: who you are, who will read it</span>
+
+<span class="pa-format">Format your answer as:
+- Three bullet points (one finding per paper)
+- One paragraph on the shared gap
+- Max 200 words total</span><span class="pa-label">← FORMAT: shape of the output</span>
+          </div>
+          <div class="tip" style="margin-top:0.3em;">
+            <p>You rarely write the perfect prompt on the first try. <strong>The skill is iteration</strong> — ask, read, refine.</p>
+          </div>
+        </section>
+
+        <!-- Slide 4: Before / after -->
+        <section>
+          <h2>Prompt quality — before and after</h2>
+          <div class="before-after">
+            <div class="ba-col">
+              <h4 style="color:#b04040;">Weak prompts</h4>
+              <div class="bad">"Summarise this paper"</div>
+              <div class="bad">"Write a grant introduction"</div>
+              <div class="bad">"Explain machine learning"</div>
+              <div class="bad">"Is my analysis correct?"</div>
+            </div>
+            <div class="ba-col">
+              <h4 style="color:var(--anthro-green);">Strong prompts</h4>
+              <div class="good">"Summarise this paper for a PhD student in optics. Focus on experimental methods. 150 words."</div>
+              <div class="good">"Write a 200-word VR grant intro for a study on ultrafast dynamics. Emphasise societal impact."</div>
+              <div class="good">"Explain supervised learning using an analogy from X-ray diffraction."</div>
+              <div class="good">"Here is my fitting approach [paste]. What assumptions could break it? List 3."</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 5: 5 use cases for researchers -->
+        <section>
+          <h2>Five things to try this week</h2>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.35em; font-size:0.47em; text-align:left;">
+            <div class="tool-card" style="padding:0.55em 0.8em;">
+              <p style="color:var(--anthro-fg); font-weight:600; margin-bottom:0.1em;">1. Literature synthesis</p>
+              <p>Paste 3–5 abstracts → ask for themes, gaps, and one open question. Saves 30 min of reading.</p>
+            </div>
+            <div class="tool-card" style="padding:0.55em 0.8em;">
+              <p style="color:var(--anthro-fg); font-weight:600; margin-bottom:0.1em;">2. Writing feedback</p>
+              <p>Paste your draft → ask "what's unclear, what's missing, what should I cut?" Brutal but fair.</p>
+            </div>
+            <div class="tool-card" style="padding:0.55em 0.8em;">
+              <p style="color:var(--anthro-fg); font-weight:600; margin-bottom:0.1em;">3. Grant impact paragraph</p>
+              <p>Describe your research in 3 sentences → ask it to write a 200-word impact statement for a funding panel.</p>
+            </div>
+            <div class="tool-card" style="padding:0.55em 0.8em;">
+              <p style="color:var(--anthro-fg); font-weight:600; margin-bottom:0.1em;">4. Peer review draft</p>
+              <p>Paste a paper → ask "what are the 3 strongest weaknesses in the methodology?" Good first pass.</p>
+            </div>
+            <div class="tool-card" style="padding:0.55em 0.8em; grid-column: 1 / -1;">
+              <p style="color:var(--anthro-fg); font-weight:600; margin-bottom:0.1em;">5. Explain your research</p>
+              <p>Ask it: "I work on [topic]. Explain what I do to a smart 16-year-old, then to a science journalist, then to a VR grant panel." Three very different answers — all useful.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 6: Critical awareness -->
+        <section>
+          <h2>What to watch out for</h2>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4em; font-size:0.49em; text-align:left; margin-bottom:0.4em;">
+            <div class="tool-card" style="padding:0.6em 0.8em; border-color:#b04040;">
+              <p style="color:#b04040; font-weight:600; margin-bottom:0.1em;">Hallucination</p>
+              <p>It will invent plausible-sounding citations, statistics, and facts. <strong>Always verify specific claims.</strong></p>
+            </div>
+            <div class="tool-card" style="padding:0.6em 0.8em; border-color:#b04040;">
+              <p style="color:#b04040; font-weight:600; margin-bottom:0.1em;">Sycophancy</p>
+              <p>It tends to agree with you. Push back: "What's wrong with this?" or "Argue against my approach."</p>
+            </div>
+            <div class="tool-card" style="padding:0.6em 0.8em; border-color:#b04040;">
+              <p style="color:#b04040; font-weight:600; margin-bottom:0.1em;">Generic output</p>
+              <p>Vague prompts produce vague text. The more context you give, the more specific and useful the result.</p>
+            </div>
+            <div class="tool-card" style="padding:0.6em 0.8em; border-color:#b04040;">
+              <p style="color:#b04040; font-weight:600; margin-bottom:0.1em;">Confidentiality</p>
+              <p>Don't paste unpublished data, sensitive student info, or confidential grant content unless you've checked KTH's data policy.</p>
+            </div>
+          </div>
+          <div class="tip">
+            <p><strong>Your domain expertise is the quality filter.</strong> AI is fast and fluent — you provide the scientific judgment.</p>
+          </div>
+        </section>
+
+        <!-- Slide 7: Hands-on exercise -->
+        <section>
+          <h2>Your turn — 15 min hands-on</h2>
+          <div class="exercise-box">
+            <h3>Exercise: Literature Synthesis</h3>
+            <p style="color:var(--anthro-fg-muted); margin-bottom:0.4em;">Open <strong>chat.openai.com</strong> (or claude.ai) and paste this prompt — then replace the placeholders with your own abstracts:</p>
+            <div class="prompt-box">Here are 3 abstracts from my research field:
+
+[ABSTRACT 1 — paste here, or use one from the handout]
+
+[ABSTRACT 2 — paste here]
+
+[ABSTRACT 3 — paste here]
+
+Please:
+1. Identify the main shared theme across these papers (2 sentences)
+2. Point out one contradiction or unresolved tension between them
+3. Suggest one research question none of them has answered yet
+4. Draft a 100-word introduction paragraph for a study that addresses that gap
+
+Keep the language appropriate for a specialist reader in my field.</div>
+            <p style="color:var(--anthro-fg-muted); margin-top:0.4em;"><strong>Then iterate:</strong> ask it to change the tone, make it shorter, push back on its gap suggestion, or ask "what are you most uncertain about in this answer?"</p>
+          </div>
+          <p style="font-size:0.42em; color:var(--anthro-fg-light); margin-top:0.3em;">
+            No abstracts handy? Use the three provided on the handout / tutorial page. Work in groups of 2–4.
+          </p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        transition: "slide",
+        slideNumber: "c/t",
+        progress: true,
+        margin: 0.04,
+        width: 1280,
+        height: 720,
+      });
+    </script>
+  </body>
+</html>

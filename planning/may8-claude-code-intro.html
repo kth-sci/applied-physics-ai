@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claude Code — 15-min Intro · May 8 Tutorial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="theme-anthropic.css" />
+    <style>
+      .loop-diagram {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        margin: 0.5em auto;
+        font-size: 0.5em;
+      }
+      .loop-node {
+        background: var(--anthro-card-bg);
+        border: 1px solid var(--anthro-border);
+        border-radius: 10px;
+        padding: 0.5em 0.8em;
+        text-align: center;
+        min-width: 5em;
+      }
+      .loop-node .icon { font-size: 1.4em; display: block; margin-bottom: 0.15em; }
+      .loop-node .label { color: var(--anthro-fg); font-weight: 600; }
+      .loop-node .sub { color: var(--anthro-fg-light); font-size: 0.85em; }
+      .loop-arrow {
+        color: var(--anthro-accent);
+        font-size: 1.5em;
+        padding: 0 0.2em;
+        flex-shrink: 0;
+      }
+      .loop-back {
+        display: block;
+        text-align: center;
+        color: var(--anthro-accent);
+        font-size: 0.48em;
+        margin-top: 0.3em;
+        letter-spacing: 0.05em;
+      }
+      .physics-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.35em;
+        font-size: 0.48em;
+        text-align: left;
+      }
+      .physics-card {
+        background: var(--anthro-card-bg);
+        border: 1px solid var(--anthro-border);
+        border-radius: 8px;
+        padding: 0.5em 0.7em;
+      }
+      .physics-card .title { font-weight: 600; color: var(--anthro-fg); margin-bottom: 0.1em; }
+      .physics-card .prompt { color: var(--anthro-accent); font-family: monospace; font-size: 0.9em; margin-bottom: 0.1em; }
+      .physics-card .detail { color: var(--anthro-fg-light); }
+      .step-block {
+        background: var(--anthro-card-bg);
+        border: 1px solid var(--anthro-border);
+        border-radius: 8px;
+        padding: 0.4em 0.7em;
+        margin-bottom: 0.25em;
+        font-size: 0.48em;
+        text-align: left;
+      }
+      .step-label { color: var(--anthro-fg-light); margin-bottom: 0.05em; }
+      .step-block pre { margin: 0; }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- Slide 1: Title -->
+        <section class="center-title">
+          <div class="logo">
+            <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="120" height="120" rx="26" fill="#1a1a1a"/>
+              <path d="M28 72L48 56L28 40" stroke="#C46849" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="56" y1="72" x2="80" y2="72" stroke="#C46849" stroke-width="6" stroke-linecap="round"/>
+              <g transform="translate(88, 34)">
+                <path d="M0 -10 L2.5 -2.5 L10 0 L2.5 2.5 L0 10 L-2.5 2.5 L-10 0 L-2.5 -2.5 Z" fill="#C46849"/>
+              </g>
+              <g transform="translate(96, 50)">
+                <path d="M0 -5 L1.2 -1.2 L5 0 L1.2 1.2 L0 5 L-1.2 1.2 L-5 0 L-1.2 -1.2 Z" fill="#C46849" opacity="0.5"/>
+              </g>
+            </svg>
+          </div>
+          <h1>Claude Code</h1>
+          <p class="subtitle">AI that works <em>inside</em> your project</p>
+          <br />
+          <p class="muted">APHYS AI Tutorial · May 8, 2026 · Module 2</p>
+        </section>
+
+        <!-- Slide 2: Not a chatbot -->
+        <section>
+          <h2>This is not a chatbot</h2>
+          <p style="font-size: 0.58em; margin-bottom: 0.6em;">
+            Claude.ai answers questions. Claude Code <span class="highlight">does work</span> — it reads your files, runs code, checks results, and iterates until the task is done.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; font-size: 0.5em; text-align: left; margin-bottom: 0.5em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.2em;">Claude.ai (chat)</p>
+              <ul style="margin-left: 0;">
+                <li>You paste text</li>
+                <li>It replies with text</li>
+                <li>You copy-paste the result</li>
+                <li>Starts fresh every time</li>
+              </ul>
+            </div>
+            <div class="tool-card" style="border-color: var(--anthro-accent);">
+              <p style="color: var(--anthro-accent); margin-bottom: 0.2em;">Claude Code (agent)</p>
+              <ul style="margin-left: 0;">
+                <li>Reads your actual files</li>
+                <li>Runs Python, shell, git</li>
+                <li>Writes results directly to disk</li>
+                <li>Remembers your project context</li>
+              </ul>
+            </div>
+          </div>
+          <div class="tip">
+            <p>Think of it as a capable lab assistant who has <strong>read every file in your project</strong> and can type in your terminal.</p>
+          </div>
+        </section>
+
+        <!-- Slide 3: The Agentic Loop -->
+        <section>
+          <h2>The Agentic Loop</h2>
+          <p style="font-size: 0.58em; margin-bottom: 0.6em;">
+            Claude works in a continuous loop — not a single reply.
+            You can <span class="highlight">interrupt and steer</span> at any point.
+          </p>
+          <div class="loop-diagram">
+            <div class="loop-node">
+              <span class="icon">🔍</span>
+              <span class="label">Gather</span>
+              <span class="sub">Read files,<br>search code</span>
+            </div>
+            <div class="loop-arrow">→</div>
+            <div class="loop-node">
+              <span class="icon">⚙️</span>
+              <span class="label">Act</span>
+              <span class="sub">Edit, run,<br>write output</span>
+            </div>
+            <div class="loop-arrow">→</div>
+            <div class="loop-node">
+              <span class="icon">✅</span>
+              <span class="label">Verify</span>
+              <span class="sub">Check result,<br>run tests</span>
+            </div>
+            <div class="loop-arrow">→</div>
+            <div class="loop-node" style="border-color: var(--anthro-accent);">
+              <span class="icon">💬</span>
+              <span class="label">Report</span>
+              <span class="sub">Done or<br>ask you</span>
+            </div>
+          </div>
+          <span class="loop-back">↺ &nbsp; repeats until task is complete</span>
+          <div class="tip" style="margin-top: 0.5em;">
+            <p>Press <code>Esc</code> to interrupt anytime. Press <code>Esc Esc</code> to rewind file changes.</p>
+          </div>
+        </section>
+
+        <!-- Slide 4: What it can see -->
+        <section>
+          <h2>What Claude Code can see</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Start it in your project folder — it reads the whole tree and knows your context.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.35em; font-size: 0.48em; text-align: left; margin-bottom: 0.4em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Your files</p>
+              <p>Python scripts, Jupyter notebooks, CSV data, figures, LaTeX drafts — everything in the folder</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Your terminal</p>
+              <p>Runs <code>python</code>, <code>conda</code>, <code>git</code>, <code>pip</code> — any command you can type</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">The web</p>
+              <p>Can search for documentation, fetch papers, look up API references on demand</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.35em; font-size: 0.48em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">CLAUDE.md</p>
+              <p>A file <em>you</em> write — project context, conventions, what not to do. Loaded every session.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Auto memory</p>
+              <p>Notes Claude writes to itself as you work — your preferences, discovered patterns.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 5: Physics use cases -->
+        <section>
+          <h2>What physicists use it for</h2>
+          <div class="physics-grid" style="margin-bottom: 0.4em;">
+            <div class="physics-card">
+              <div class="title">Data analysis</div>
+              <div class="prompt">"Load spectra/*.csv, find peaks above noise, fit Voigt profiles, export a summary table"</div>
+              <div class="detail">Runs in your Python environment, saves figures to disk</div>
+            </div>
+            <div class="physics-card">
+              <div class="title">Script debugging</div>
+              <div class="prompt">"My fitting script crashes on line 47 — find the bug and fix it"</div>
+              <div class="detail">Reads your actual script, runs it, iterates on the fix</div>
+            </div>
+            <div class="physics-card">
+              <div class="title">Paper & grant writing</div>
+              <div class="prompt">"Rewrite this methods section to be clearer, keep technical accuracy"</div>
+              <div class="detail">Works with your LaTeX or Word-exported text</div>
+            </div>
+            <div class="physics-card">
+              <div class="title">Figures & reports</div>
+              <div class="prompt">"Generate a publication-quality plot from data.csv — PRL style, 8.6 cm wide"</div>
+              <div class="detail">Produces PNG/PDF ready to drop into your manuscript</div>
+            </div>
+            <div class="physics-card">
+              <div class="title">MATLAB → Python</div>
+              <div class="prompt">"Convert analysis.m to Python, keep the same variable names, test it runs"</div>
+              <div class="detail">Translates the full file and verifies the output matches</div>
+            </div>
+            <div class="physics-card">
+              <div class="title">Literature review</div>
+              <div class="prompt">"Summarise these 10 abstracts — find gaps and suggest one open question"</div>
+              <div class="detail">Works in Claude.ai too — no install needed for this one</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 6: Getting Started -->
+        <section>
+          <h2 style="margin-top: 0.3em">Getting Started</h2>
+          <div style="font-size: 0.48em; text-align: left;">
+            <div class="step-block">
+              <p class="step-label">1. Install (one command)</p>
+              <pre style="margin: 0;"><code># macOS / Linux
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Windows (PowerShell)
+irm https://claude.ai/install.ps1 | iex</code></pre>
+            </div>
+            <div class="step-block">
+              <p class="step-label">2. Start in your project folder</p>
+              <pre style="margin: 0;"><code>cd ~/my-experiment
+claude</code></pre>
+            </div>
+            <div class="step-block">
+              <p class="step-label">3. Log in with your Claude account (first time only)</p>
+              <pre style="margin: 0;"><code># If you have a KTH Claude Team seat — just log in and it works
+# If not, request one at: aphys-ai.kth.se → "Claude Team Seat"</code></pre>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.4em;">
+            <p>Also available as a <strong>Desktop App</strong> (no terminal needed) and inside <strong>VS Code</strong> or <strong>JetBrains</strong> IDEs.</p>
+          </div>
+        </section>
+
+        <!-- Slide 7: Safety & control -->
+        <section>
+          <h2>You are always in control</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Claude asks before making changes. You decide how much autonomy it has.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.35em; font-size: 0.48em; text-align: left; margin-bottom: 0.45em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Default</p>
+              <p>Asks permission before every file edit and command. Good for learning.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-accent); font-weight: 600;">Auto-accept</p>
+              <p>Edits files freely, still asks for shell commands. Good when you trust the task.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-green); font-weight: 600;">Plan mode</p>
+              <p>Read-only — analyses everything, changes nothing. Great for exploration.</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.35em; font-size: 0.48em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Rewind any change</p>
+              <p>Every file edit is snapshotted. Press <code>Esc Esc</code> to roll back. Or just ask: <em>"undo the last change"</em>.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Switch modes</p>
+              <p>Press <code>Shift+Tab</code> to cycle between Default → Auto-accept → Plan mode at any time.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 8: Demo / hands-on -->
+        <section>
+          <h2>Workflow: Analyse your data</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.35em;">
+            A real example — three prompts to go from raw spectra to a report.
+          </p>
+          <div style="font-size: 0.48em; text-align: left;">
+            <div class="step-block">
+              <p class="step-label">1. Navigate and start</p>
+              <pre style="margin: 0;"><code>cd ~/experiments/raman-2026-05
+claude</code></pre>
+            </div>
+            <div class="step-block">
+              <p class="step-label">2. Describe the task in plain language</p>
+              <pre style="margin: 0;"><code>I have 48 Raman spectra in spectra/*.csv (columns: wavenumber, intensity).
+Load them all, subtract a polynomial baseline, find peaks above 3-sigma noise,
+and fit each peak with a Lorentzian. Save a summary table as peaks.csv
+and a figure per sample in figures/.</code></pre>
+            </div>
+            <div class="step-block">
+              <p class="step-label">3. Steer as it works</p>
+              <pre style="margin: 0;"><code>The fits in the 1200–1400 cm⁻¹ region look off — try a tighter fit window
+</code></pre>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.3em;">
+            <p>You don't need to write perfect prompts. Describe your goal, watch it work, correct course naturally.</p>
+          </div>
+        </section>
+
+        <!-- Slide 9: Hands-on exercise -->
+        <section>
+          <h2>Your turn — 15 min hands-on</h2>
+          <p style="font-size:0.52em; margin-bottom:0.35em;">Open Claude Code in your terminal (or claude.ai in your browser). Pick the track that fits where you are.</p>
+          <div style="display:grid; grid-template-columns:1fr; gap:0.3em; font-size:0.46em; text-align:left;">
+            <div class="tool-card" style="padding:0.55em 0.85em; border-color:var(--anthro-border);">
+              <p style="font-weight:600; margin-bottom:0.15em;"><span class="highlight">Track A — Browser only</span> &nbsp;(no install needed)</p>
+              <p style="margin-bottom:0.15em;">Open <strong>claude.ai</strong>, start a new conversation, and type:</p>
+              <pre style="margin:0;"><code>I have a folder of CSV files from my lab. Each file has columns:
+time (s), signal (a.u.). Describe step by step how you would help me
+load them, subtract background, and plot all curves overlaid.
+Don't write code yet — just explain your approach.</code></pre>
+              <p style="margin-top:0.2em;">Then ask it to write the code, and keep iterating.</p>
+            </div>
+            <div class="tool-card" style="padding:0.55em 0.85em; border-color:var(--anthro-accent);">
+              <p style="font-weight:600; margin-bottom:0.15em;"><span class="highlight">Track B — Claude Code in terminal</span> &nbsp;(recommended)</p>
+              <p style="margin-bottom:0.15em;">Navigate to any folder with data or code on your laptop, then type:</p>
+              <pre style="margin:0;"><code>cd ~/your-project-folder
+claude
+&gt; Give me an overview of what's in this folder.
+  Then suggest 3 things you could help me do with these files.</code></pre>
+              <p style="margin-top:0.2em;">Follow one suggestion and see how far it gets in 10 minutes.</p>
+            </div>
+            <div class="tool-card" style="padding:0.55em 0.85em; border-color:var(--anthro-green);">
+              <p style="font-weight:600; margin-bottom:0.15em;"><span class="highlight">Track C — Advanced</span> &nbsp;(if you're already comfortable)</p>
+              <pre style="margin:0;"><code>&gt; I want to automate [describe a repetitive task in your lab workflow].
+  Help me design a script that handles this end-to-end.
+  Start by asking me questions to understand the task fully.</code></pre>
+            </div>
+          </div>
+          <p style="font-size:0.4em; color:var(--anthro-fg-light); margin-top:0.3em;">
+            Stuck? Use ChatGPT to debug: paste your error and ask "what does this mean and how do I fix it?" · Helpers circulating · Remote: type in Zoom chat
+          </p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        transition: "slide",
+        slideNumber: "c/t",
+        progress: true,
+        margin: 0.04,
+        width: 1280,
+        height: 720,
+      });
+    </script>
+  </body>
+</html>

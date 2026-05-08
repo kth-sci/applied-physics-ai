@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AI Agents for Research · Wei Ouyang · May 8, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0a0a0a; --bg-2:#111; --bg-3:#181818;
+  --fg:#fafafa; --fg-2:#e0e0e0; --fg-3:#9a9a9a;
+  --line:#262626; --line-2:#333;
+  --coral:#f43f5e; --cyan:#7dd3fc; --green:#a7f3d0; --amber:#fbbf24;
+  --fs-display:140px; --fs-h1:40px; --fs-h2:34px; --fs-lead:22px; --fs-body:17px;
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
+  --pad-x:96px; --pad-y:72px; --inner:1280px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth;background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased;font-size:var(--fs-body);line-height:1.55}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.coral{color:var(--coral)} .cyan{color:var(--cyan)} .green{color:var(--green)} .amber{color:var(--amber)}
+a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(125,211,252,0.3)}
+a:hover{border-bottom-color:var(--cyan)}
+
+.slide{width:100%;min-height:100vh;background:var(--bg);color:var(--fg);
+  padding:var(--pad-y) var(--pad-x);scroll-snap-align:start;position:relative;
+  display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.slide > .inner{max-width:var(--inner);margin:0 auto;width:100%}
+.slide .brand{position:absolute;top:var(--s5);left:var(--pad-x);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--fg-3);letter-spacing:.04em}
+.slide .brand b{color:var(--fg);font-weight:700}
+.slide .page{position:absolute;top:var(--s5);right:var(--pad-x);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--fg-3);letter-spacing:.18em}
+.slide .foot{position:absolute;bottom:var(--s5);left:var(--pad-x);right:var(--pad-x);display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-3);letter-spacing:.14em;text-transform:uppercase}
+
+.kicker{font-family:'JetBrains Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:.2em;color:var(--coral);margin-bottom:var(--s3);display:inline-block;white-space:nowrap}
+h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
+.slide h1{font-size:var(--fs-h1);line-height:.98;margin-bottom:var(--s3)}
+.slide h2{font-size:var(--fs-h2);line-height:1.1;font-weight:700;margin-bottom:var(--s2)}
+.slide h3{font-size:20px;font-weight:700;line-height:1.15;margin-bottom:var(--s1);color:var(--fg)}
+.slide p{font-size:var(--fs-body);line-height:1.6;color:var(--fg-2);max-width:1000px}
+.slide p.lead{font-size:var(--fs-lead);line-height:1.5;color:var(--fg);max-width:1100px;font-weight:400}
+.rule{height:2px;width:56px;background:var(--coral);margin:var(--s2) 0 var(--s4)}
+.callout{border-left:3px solid var(--coral);padding:var(--s3) var(--s4);background:var(--bg-2);font-size:16px;line-height:1.6;color:var(--fg-2);max-width:1150px}
+.callout b{color:var(--fg)}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s4)}
+.pillars.four{grid-template-columns:repeat(4,1fr)}
+.pillars.two{grid-template-columns:repeat(2,1fr)}
+.pillar{background:var(--bg);padding:var(--s4);display:flex;flex-direction:column;min-height:220px}
+.pillar .n{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;font-weight:700;margin-bottom:var(--s2)}
+.pillar.one .n{color:var(--cyan)} .pillar.two .n{color:var(--coral)} .pillar.three .n{color:var(--green)} .pillar.four .n{color:var(--amber)}
+.pillar h3{font-size:22px;margin-bottom:var(--s2);line-height:1.15}
+.pillar p{font-size:14px;line-height:1.55;color:var(--fg-2);margin-bottom:var(--s3);flex:1}
+.pillar .status{margin-top:auto;padding-top:var(--s3);border-top:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-3);letter-spacing:.06em;text-transform:uppercase}
+
+/* two-system split */
+.two-systems{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s4)}
+.sys{border:2px solid var(--line);padding:var(--s4);position:relative}
+.sys.one{border-color:var(--amber)} .sys.two{border-color:var(--coral)}
+.sys .tag{position:absolute;top:-14px;left:var(--s3);background:var(--bg);padding:0 var(--s2);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;font-weight:700}
+.sys.one .tag{color:var(--amber)} .sys.two .tag{color:var(--coral)}
+.sys h3{font-size:26px;margin-bottom:var(--s2);line-height:1.1}
+.sys .sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-3);letter-spacing:.08em;margin-bottom:var(--s3)}
+.sys ul{list-style:none;padding:0}
+.sys li{padding:7px 0 7px 22px;position:relative;font-size:14px;line-height:1.5;color:var(--fg-2)}
+.sys li:before{content:"\2192";position:absolute;left:0;top:7px;font-family:'JetBrains Mono',monospace;font-size:12px}
+.sys.one li:before{color:var(--amber)} .sys.two li:before{color:var(--coral)}
+
+/* scenario steps */
+.scenario{border:1px solid var(--line);padding:var(--s4);background:var(--bg-2);margin-top:var(--s3)}
+.scenario .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.scenario .step{background:var(--bg-2);padding:var(--s3);display:flex;flex-direction:column}
+.scenario .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--coral);letter-spacing:.14em;font-weight:700}
+.scenario h4{font-size:16px;font-weight:700;margin:6px 0 6px;line-height:1.25;color:var(--fg)}
+.scenario p{font-size:13px;line-height:1.5;color:var(--fg-2);max-width:none}
+
+/* fact-row */
+.fact-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s4)}
+.fact-row.four{grid-template-columns:repeat(4,1fr)}
+.fact{background:var(--bg);padding:var(--s3) var(--s4)}
+.fact .l{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--coral);text-transform:uppercase;margin-bottom:6px}
+.fact .v{font-size:28px;font-weight:800;color:var(--fg);line-height:1.15;letter-spacing:-0.02em}
+.fact .s{font-size:13px;color:var(--fg-2);margin-top:4px;line-height:1.5}
+
+/* lab cards */
+.lab-bullets{display:flex;flex-direction:column;gap:var(--s2)}
+.lab-card{border-left:2px solid var(--coral);padding:var(--s2) var(--s3);background:var(--bg-2)}
+.lab-card.cyan{border-left-color:var(--cyan)}
+.lab-card.green{border-left-color:var(--green)}
+.lab-card.amber{border-left-color:var(--amber)}
+.lab-card h4{font-size:15px;font-weight:700;margin-bottom:4px;color:var(--fg)}
+.lab-card p{font-size:13px;line-height:1.5;color:var(--fg-2);max-width:none}
+
+/* quote */
+.quote-block{border-left:4px solid var(--coral);padding:var(--s4);background:var(--bg-2);margin-top:var(--s3);max-width:none}
+.quote-block .q{font-size:18px;line-height:1.5;color:var(--fg);font-weight:500;letter-spacing:-0.01em;font-style:italic}
+.quote-block .q::before{content:"\201C";color:var(--coral);font-size:42px;line-height:0;position:relative;top:10px;margin-right:4px}
+.quote-block .q::after{content:"\201D";color:var(--coral)}
+.quote-block .a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-3);letter-spacing:.1em;margin-top:var(--s3);text-transform:uppercase;display:block}
+.quote-block .a b{color:var(--coral);font-weight:700}
+
+/* infra stack */
+.infra{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s3)}
+.infra .lyr{background:var(--bg);padding:var(--s3) var(--s4);display:grid;grid-template-columns:160px 1fr 260px;gap:var(--s3);align-items:center}
+.infra .lyr .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--coral);letter-spacing:.14em;font-weight:700;text-transform:uppercase}
+.infra .lyr h4{font-size:18px;font-weight:700;margin:0;color:var(--fg);line-height:1.2}
+.infra .lyr p{font-size:13px;color:var(--fg-2);max-width:none;line-height:1.5;margin-top:4px}
+.infra .lyr .where{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-3);letter-spacing:.04em;text-align:right}
+.infra .lyr.cyan .n{color:var(--cyan)} .infra .lyr.cyan h4{color:var(--cyan)}
+.infra .lyr.green .n{color:var(--green)} .infra .lyr.green h4{color:var(--green)}
+.infra .lyr.amber .n{color:var(--amber)} .infra .lyr.amber h4{color:var(--amber)}
+
+/* path cards */
+.path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s4)}
+.path{border:1px solid var(--line);padding:var(--s4);background:var(--bg-2)}
+.path .t{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--coral);font-weight:700;margin-bottom:var(--s2)}
+.path h3{font-size:20px;font-weight:700;margin-bottom:var(--s1);line-height:1.2}
+.path p{font-size:13px;line-height:1.6;color:var(--fg-2);max-width:none}
+
+/* link cards */
+.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s3)}
+.link-card{border:1px solid var(--line);padding:var(--s3) var(--s4);background:var(--bg-2);display:flex;flex-direction:column;gap:6px}
+.link-card .l{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--coral);text-transform:uppercase}
+.link-card h4{font-size:17px;font-weight:700;color:var(--fg);line-height:1.25}
+.link-card .url{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);word-break:break-all;line-height:1.5}
+
+/* demo button */
+.demo-btn{display:inline-flex;align-items:center;gap:var(--s2);background:var(--coral);color:#fff;text-decoration:none;border:none;border-bottom:none;padding:14px var(--s4);font-size:15px;font-weight:700;letter-spacing:-.01em;cursor:pointer;margin-top:var(--s4);transition:opacity .15s}
+.demo-btn:hover{opacity:.85;color:#fff;border-bottom:none}
+.demo-btn.cyan{background:var(--cyan);color:#0a0a0a}
+.demo-btn.green{background:var(--green);color:#0a0a0a}
+.demo-btn.amber{background:var(--amber);color:#0a0a0a}
+
+/* nav */
+.nav-progress{position:fixed;top:0;left:0;height:2px;background:var(--coral);z-index:98;transition:width .15s ease}
+
+@media(max-width:1180px){
+  :root{--pad-x:36px;--pad-y:48px;--fs-h1:32px;--fs-h2:26px;--fs-lead:18px;--fs-body:15px}
+  .pillars,.pillars.four,.pillars.two,.two-systems,.fact-row,.fact-row.four,.path-grid,.link-grid{grid-template-columns:1fr}
+  .infra .lyr{grid-template-columns:1fr}
+  .scenario .steps{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="nav-progress" id="np"></div>
+
+<!-- ══════════════════════════════════════════
+     01 · TITLE
+══════════════════════════════════════════ -->
+<section class="slide" id="s1">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">01 / 10 · Wei Ouyang</div>
+  <div class="inner" style="display:grid;grid-template-columns:1.3fr 1fr;gap:var(--s6);align-items:center;">
+    <div>
+      <div class="kicker">Research Showcase · Live Demos</div>
+      <h1 style="font-size:52px;line-height:.95;">AI agents doing<br/>real science.</h1>
+      <div class="rule"></div>
+      <p class="lead">Five live demos — data analysis, lab automation, autonomous discovery, virtual experiments, and model training — all running on agents right now.</p>
+      <p style="margin-top:var(--s3);font-size:14px;color:var(--fg-3);">Wei Ouyang · Associate Professor, Applied Physics · KTH</p>
+    </div>
+    <div class="lab-bullets">
+      <div class="lab-card">
+        <h4>Demo 1 — Automated data analysis</h4>
+        <p>A 30-year unsolved problem, cracked in a weekend with an AI agent</p>
+      </div>
+      <div class="lab-card cyan">
+        <h4>Demo 2 — AI-controlled lab</h4>
+        <p>One agent orchestrates 4 microscopes, a robot arm, and a liquid handler</p>
+      </div>
+      <div class="lab-card green">
+        <h4>Demo 3 — Autonomous discovery</h4>
+        <p>Agent finds a novel gene–morphology link and writes up the paper itself</p>
+      </div>
+      <div class="lab-card amber">
+        <h4>Demo 4 — Virtual cell lab</h4>
+        <p>Ground-truth sandbox where agents learn to design experiments in silico</p>
+      </div>
+      <div class="lab-card">
+        <h4>Demo 5 — Model training</h4>
+        <p>Agent-orchestrated diffusion model generating spatiotemporal cell videos</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     02 · THE SHIFT
+══════════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">02 / 10</div>
+  <div class="inner">
+    <div class="kicker">The Big Picture</div>
+    <h2>AI agents are not faster autocomplete.</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:var(--s4);">Kahneman's two systems of thinking. Both matter for science. Most people are still using System 1.</p>
+
+    <div class="two-systems">
+      <div class="sys one">
+        <span class="tag">System 1 · Fast &amp; Intuitive</span>
+        <h3>Pattern matching</h3>
+        <div class="sub">FOUNDATION MODELS · GPT · CLAUDE · GEMINI</div>
+        <ul>
+          <li>Generate text, code, images fluently</li>
+          <li>Summarise, translate, reformulate</li>
+          <li>Black-box intuition — no explicit reasoning</li>
+          <li>Confident even when wrong on novel cases</li>
+        </ul>
+      </div>
+      <div class="sys two">
+        <span class="tag">System 2 · Slow &amp; Deliberate</span>
+        <h3>Reasoning agents</h3>
+        <div class="sub">AI AGENTS · PLAN · ACT · VALIDATE · ITERATE</div>
+        <ul>
+          <li>Hypothesis generation at scale</li>
+          <li>Data analysis: design → code → validate → iterate</li>
+          <li>Instrument control: plans the experiment, then runs it</li>
+          <li>Software cost → effectively zero</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:var(--s4);">
+      <b>The shift:</b> from a tool you prompt to a collaborator that acts. The demos today are System 2 already working in a real research lab.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     03 · DEMO 1 — DATA ANALYSIS
+══════════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">03 / 10 · Demo 1</div>
+  <div class="inner" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s6);align-items:center;">
+    <div>
+      <div class="kicker">Demo 01 · Automated Data Analysis</div>
+      <h2>A 30-year problem.<br/>One weekend.</h2>
+      <div class="rule"></div>
+      <p class="lead">A senior researcher used a Svamp agent over a weekend and made more progress than in decades of intermittent work.</p>
+
+      <div class="quote-block">
+        <p class="q">I even revisited a problem about capillary blood flow in kidneys that I have been working on and off for the past 30 years — and I think I have solved it now!!!!</p>
+        <span class="a"><b>Hjalmar Brismar</b> · unsolicited email after a weekend of agent use</span>
+      </div>
+    </div>
+    <div>
+      <div class="fact-row" style="margin-bottom:var(--s4);">
+        <div class="fact">
+          <div class="l">Problem age</div>
+          <div class="v">30 yrs</div>
+          <div class="s">Capillary blood pressure in kidney glomerulus</div>
+        </div>
+        <div class="fact">
+          <div class="l">Time to solve</div>
+          <div class="v">1 wknd</div>
+          <div class="s">Spare-time use — no special setup required</div>
+        </div>
+        <div class="fact">
+          <div class="l">Human in loop</div>
+          <div class="v">0</div>
+          <div class="s">Code → run → validate → iterate, autonomously</div>
+        </div>
+      </div>
+
+      <div class="lab-bullets">
+        <div class="lab-card green">
+          <h4>What the agent did</h4>
+          <p>Designed the analysis approach, wrote Python, ran calculations, plotted results, iterated on failures — all from a plain-language research description</p>
+        </div>
+        <div class="lab-card cyan">
+          <h4>The tool: Svamp + Claude Code</h4>
+          <p>The same platform you used this morning — a persistent agent session with file access, code execution, and data access</p>
+        </div>
+        <div class="lab-card amber">
+          <h4>What it means for you</h4>
+          <p>Bring your stuck problem. Describe it in plain language. The bottleneck shifts from computation to imagination.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     04 · DEMO 2 — AUTOMATED LAB
+══════════════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">04 / 10 · Demo 2</div>
+  <div class="inner">
+    <div class="kicker">Demo 02 · AI-Controlled Laboratory</div>
+    <h2>One agent. Four microscopes.<br/>A robot arm. A liquid handler.</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:var(--s4);">The REEF imaging farm — 4 Squid microscopes, a Dorna robotic arm on a 3.6 m rail, a Hamilton VANTAGE liquid handler, and a Cytomat incubator — all orchestrated end-to-end by a single AI agent.</p>
+
+    <div class="pillars">
+      <div class="pillar one">
+        <div class="n">01 · Before</div>
+        <h3>Hardware bugs for months</h3>
+        <p>Two long-standing bugs — robotic-arm crashes, Hamilton pipetting errors — sat unresolved across multiple engineering iterations.</p>
+        <div class="status">Timeline: months → unresolved</div>
+      </div>
+      <div class="pillar two">
+        <div class="n">02 · After</div>
+        <h3>Both fixed in two weekends</h3>
+        <p>Once the agent had root access end-to-end — every device exposed as a REST service — it diagnosed and fixed both bugs autonomously.</p>
+        <div class="status">Timeline: 2 weekends · same agent</div>
+      </div>
+      <div class="pillar three">
+        <div class="n">03 · Now</div>
+        <h3>Agent runs real experiments</h3>
+        <p>The same agent that fixed the hardware now uses it to execute biology experiments — planning, plate handling, imaging, and reporting.</p>
+        <div class="status">Story 05 → dose-response · full weekend</div>
+      </div>
+    </div>
+
+    <a class="demo-btn cyan" href="https://dashboard-dev-70498b75.svc.hypha.aicell.io/" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Live REEF Lab Dashboard →
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     05 · DEMO 3 — AUTONOMOUS DISCOVERY
+══════════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">05 / 10 · Demo 3</div>
+  <div class="inner" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s6);align-items:start;">
+    <div>
+      <div class="kicker">Demo 03 · Autonomous Scientific Discovery</div>
+      <h2>"Go and do science"<br/>— and it did.</h2>
+      <div class="rule"></div>
+      <p class="lead">The 24Agents system was given a free-exploration goal. With no prompted target, it generated a novel scientific hypothesis — and wrote up the paper.</p>
+
+      <div class="scenario" style="margin-top:var(--s4);">
+        <div class="steps">
+          <div class="step">
+            <div class="n">01 · EXPLORE</div>
+            <h4>Free-form goal</h4>
+            <p>Maps gene → morphology across 1,304 drug perturbations with no target specified</p>
+          </div>
+          <div class="step">
+            <div class="n">02 · PREDICT</div>
+            <h4>NXF1 → ER remodeling</h4>
+            <p>Surfaces NXF1 (mRNA export factor) as driver of ER remodeling</p>
+          </div>
+          <div class="step">
+            <div class="n">03 · CROSS-CHECK</div>
+            <h4>PERISCOPE CRISPR</h4>
+            <p>2.81× enrichment, p&nbsp;=&nbsp;1.72&nbsp;×&nbsp;10⁻⁷ — different cell line, different lab</p>
+          </div>
+          <div class="step">
+            <div class="n">04 · WRITE UP</div>
+            <h4>Paper by the agent</h4>
+            <p>Methods, figures, and discussion — generated end to end, unsupervised</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="callout" style="margin-bottom:var(--s4);">
+        <b>No prompted target.</b> The agent picked the direction, ran the analysis, validated across databases, and asked for wet-lab follow-up itself.
+      </div>
+
+      <a class="demo-btn green" href="https://static-paper-preview-ea09fbcf.svc.hypha.aicell.io/preview_v42.html" target="_blank" style="margin-top:0;margin-bottom:var(--s3);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Paper written by the agent →
+      </a>
+
+      <div class="lab-card cyan" style="margin-top:var(--s3);">
+        <h4>Why this is different from "ChatGPT writes a paper"</h4>
+        <p>The agent designed the analysis, wrote the code, ran it against real datasets, validated statistically, then wrote up the findings — end to end, unsupervised, with results that held up against an independent lab's CRISPR screen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     06 · DEMO 4 — VIRTUAL CELL LAB
+══════════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">06 / 10 · Demo 4</div>
+  <div class="inner">
+    <div class="kicker">Demo 04 · Virtual Cell Lab</div>
+    <h2>A sandbox where agents<br/>learn to do science.</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:var(--s4);">A virtual E. coli cell built on the mechanistic whole-cell model from the Covert Lab (Stanford). Agents perturb genes, observe simulated growth, plan the next experiment — and can be graded against the model's ground truth.</p>
+
+    <div class="pillars two" style="margin-bottom:var(--s4);">
+      <div class="pillar one">
+        <div class="n">Why it matters</div>
+        <h3>Ground-truth sandbox</h3>
+        <p>In the wet lab we cannot tell whether the agent's hypothesis is right in real time. In the virtual cell we can. This is where we prove the autonomous-discovery loop — before scaling to a virtual human cell and to physical instruments.</p>
+        <div class="status">Methodology proven here → scales to wet lab</div>
+      </div>
+      <div class="pillar three">
+        <div class="n">How it works</div>
+        <h3>Agent-driven in-silico experiments</h3>
+        <p>The agent perturbs genes via a clean API, reads out simulated phenotypes (growth rate, metabolic flux, morphology), proposes the next perturbation, and iterates — the same loop as the physical REEF lab.</p>
+        <div class="status">Built with Covert Lab · Stanford · mechanistic WCM</div>
+      </div>
+    </div>
+
+    <a class="demo-btn green" href="https://hypha.aicell.io/ws-user-github%7C478667/artifacts/ecoli-lab/files/index.html" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Interactive Virtual E. coli Lab →
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     07 · DEMO 5 — MODEL TRAINING
+══════════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">07 / 10 · Demo 5</div>
+  <div class="inner">
+    <div class="kicker">Demo 05 · Agent-Orchestrated Model Training</div>
+    <h2>A diffusion model that generates<br/>cell videos — trained by an agent.</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:var(--s4);">CogVideoX fine-tuned on 16,536 live-cell imaging clips across 8 datasets. Stage planning, data prep, validation sweeps, and figure generation — all driven by Svamp agents.</p>
+
+    <div class="fact-row four" style="margin-bottom:var(--s4);">
+      <div class="fact">
+        <div class="l">Base model</div>
+        <div class="v">5B</div>
+        <div class="s">CogVideoX-1.5-5B parameters</div>
+      </div>
+      <div class="fact">
+        <div class="l">LoRA size</div>
+        <div class="v">132M</div>
+        <div class="s">Rank-128 · 2.6% of base model trainable</div>
+      </div>
+      <div class="fact">
+        <div class="l">Training clips</div>
+        <div class="v">16.5K</div>
+        <div class="s">IDR0013, MitoCheck, Allen EMT, CTMC, MCA…</div>
+      </div>
+      <div class="fact">
+        <div class="l">Conditioning</div>
+        <div class="v">4</div>
+        <div class="s">Cell type · modality · perturbation · first frame</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-bottom:var(--s3);">
+      <b>What it produces:</b> synthetic spatiotemporal videos of human cells under drug perturbation — a black-box simulator for phenotypic screening. Training pipeline supervised end-to-end by the same Svamp agent stack used for lab control and discovery.
+    </div>
+
+    <a class="demo-btn" href="https://cogvideo-dashboard-5a80a3fe.svc.hypha.aicell.io/" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Live Training Dashboard →
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     08 · THE PLATFORM
+══════════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">08 / 10</div>
+  <div class="inner">
+    <div class="kicker">The Platform</div>
+    <h2>One agent stack behind<br/>all five demos.</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:var(--s4);">Every demo today — data analysis, lab control, discovery, virtual experiments, model training — runs on the same platform: <strong>Svamp</strong> on <strong>Hypha</strong>.</p>
+
+    <div class="infra">
+      <div class="lyr cyan">
+        <div class="n">Agent runtime</div>
+        <div>
+          <h4>Svamp — persistent Claude Code sessions</h4>
+          <p>File access, code execution, process management, public service exposure. What you used this morning.</p>
+        </div>
+        <div class="where">svamp · agent sessions</div>
+      </div>
+      <div class="lyr" style="border-top:1px solid var(--line);">
+        <div class="n">Data &amp; compute</div>
+        <div>
+          <h4>Hypha — artifact storage, GPU, Kubernetes</h4>
+          <p>Versioned storage, RPC services, Berzelius GPU (NSC), KTH Kubernetes — all accessible by agents through one API.</p>
+        </div>
+        <div class="where">hypha.aicell.io</div>
+      </div>
+      <div class="lyr green" style="border-top:1px solid var(--line);">
+        <div class="n">Physical lab</div>
+        <div>
+          <h4>Instruments as REST services</h4>
+          <p>Every device (microscope, robot, liquid handler) exposed as a FastAPI service. Agents call hardware the same way they call data APIs.</p>
+        </div>
+        <div class="where">REEF · Gamma 5</div>
+      </div>
+      <div class="lyr amber" style="border-top:1px solid var(--line);">
+        <div class="n">Virtual lab</div>
+        <div>
+          <h4>Virtual instruments — same API surface</h4>
+          <p>E. coli virtual cell, cell-diffusion model — agents can't tell the difference between real and virtual instruments.</p>
+        </div>
+        <div class="where">ecoli-lab · cogvideo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     09 · WHAT THIS MEANS FOR APHYS
+══════════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">09 / 10</div>
+  <div class="inner">
+    <div class="kicker">For Applied Physics</div>
+    <h2>The same loop works<br/>for your research.</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:var(--s4);">The examples today are from cell biology. The agent stack is domain-agnostic. Bring your data, your instruments, your stuck problems.</p>
+
+    <div class="path-grid">
+      <div class="path">
+        <div class="t">BON · Biophysics</div>
+        <h3>Image analysis agents</h3>
+        <p>X-ray / optical image analysis pipelines run autonomously — the agent writes the segmentation code, validates it, iterates, and produces the figure.</p>
+      </div>
+      <div class="path">
+        <div class="t">LAMP</div>
+        <h3>Spectroscopy &amp; time-resolved data</h3>
+        <p>Ultrafast spectroscopy, pump-probe data, optical communication experiments — agents design the fit, run it, compare models, produce plots.</p>
+      </div>
+      <div class="path">
+        <div class="t">Quantum &amp; Nano</div>
+        <h3>Simulation &amp; literature mining</h3>
+        <p>Agent-driven literature review, simulation parameter sweeps, nonlinear optics modelling — the bottleneck is no longer code, it's knowing what to ask.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:var(--s4);">
+      <b>The question to ask yourself:</b> "What analysis or experiment have I been putting off because it would take too long to implement?" That's the first thing to hand to an agent.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     10 · NEXT STEPS
+══════════════════════════════════════════ -->
+<section class="slide" id="s10">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">10 / 10</div>
+  <div class="inner" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s6);align-items:center;">
+    <div>
+      <div class="kicker">Start Today</div>
+      <h2>Your first agent<br/>session is free.</h2>
+      <div class="rule"></div>
+      <p class="lead">You have a Claude Team seat. You used Claude Code this morning. The same tool runs everything you saw today.</p>
+
+      <div class="callout" style="margin-top:var(--s4);">
+        <b>The technology already works.</b> What's missing is alignment — knowing that agents aren't just for writing emails. They are a different kind of research infrastructure.
+      </div>
+    </div>
+
+    <div>
+      <div class="link-grid">
+        <div class="link-card">
+          <div class="l">Resource hub</div>
+          <h4>APHYS AI website</h4>
+          <a class="url" href="https://kth-sci.github.io/applied-physics-ai" target="_blank">kth-sci.github.io/applied-physics-ai</a>
+        </div>
+        <div class="link-card">
+          <div class="l">Demo 2</div>
+          <h4>REEF Lab dashboard</h4>
+          <a class="url" href="https://dashboard-dev-70498b75.svc.hypha.aicell.io/" target="_blank">dashboard-dev-70498b75.svc.hypha.aicell.io</a>
+        </div>
+        <div class="link-card">
+          <div class="l">Demo 3</div>
+          <h4>Agent-written paper</h4>
+          <a class="url" href="https://static-paper-preview-ea09fbcf.svc.hypha.aicell.io/preview_v42.html" target="_blank">static-paper-preview-…/preview_v42.html</a>
+        </div>
+        <div class="link-card">
+          <div class="l">Demo 4</div>
+          <h4>Virtual E. coli lab</h4>
+          <a class="url" href="https://hypha.aicell.io/ws-user-github%7C478667/artifacts/ecoli-lab/files/index.html" target="_blank">hypha.aicell.io/…/ecoli-lab</a>
+        </div>
+        <div class="link-card">
+          <div class="l">Demo 5</div>
+          <h4>CogVideo training dashboard</h4>
+          <a class="url" href="https://cogvideo-dashboard-5a80a3fe.svc.hypha.aicell.io/" target="_blank">cogvideo-dashboard-….svc.hypha.aicell.io</a>
+        </div>
+        <div class="link-card">
+          <div class="l">Platform</div>
+          <h4>Hypha · Svamp</h4>
+          <a class="url" href="https://hypha.aicell.io" target="_blank">hypha.aicell.io</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const np = document.getElementById('np');
+function upd(){
+  const s = document.documentElement;
+  const p = s.scrollTop / (s.scrollHeight - s.clientHeight);
+  np.style.width = (p * 100) + '%';
+}
+document.addEventListener('scroll', upd, {passive:true});
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+    e.preventDefault();
+    const slides = document.querySelectorAll('.slide');
+    const curr = Math.round(window.scrollY / window.innerHeight);
+    if(curr < slides.length - 1) slides[curr + 1].scrollIntoView({behavior:'smooth'});
+  }
+  if(e.key === 'ArrowUp' || e.key === 'PageUp') {
+    e.preventDefault();
+    const slides = document.querySelectorAll('.slide');
+    const curr = Math.round(window.scrollY / window.innerHeight);
+    if(curr > 0) slides[curr - 1].scrollIntoView({behavior:'smooth'});
+  }
+});
+</script>
+</body>
+</html>

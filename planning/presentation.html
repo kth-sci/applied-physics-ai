@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claude Code Tutorial</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css"
+    />
+    <link rel="stylesheet" href="theme-anthropic.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- Slide 1: Title -->
+        <section class="center-title">
+          <div class="logo">
+            <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="120" height="120" rx="26" fill="#1a1a1a"/>
+              <path d="M28 72L48 56L28 40" stroke="#C46849" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="56" y1="72" x2="80" y2="72" stroke="#C46849" stroke-width="6" stroke-linecap="round"/>
+              <g transform="translate(88, 34)">
+                <path d="M0 -10 L2.5 -2.5 L10 0 L2.5 2.5 L0 10 L-2.5 2.5 L-10 0 L-2.5 -2.5 Z" fill="#C46849"/>
+              </g>
+              <g transform="translate(96, 50)">
+                <path d="M0 -5 L1.2 -1.2 L5 0 L1.2 1.2 L0 5 L-1.2 1.2 L-5 0 L-1.2 -1.2 Z" fill="#C46849" opacity="0.5"/>
+              </g>
+            </svg>
+          </div>
+          <h1>Claude Code</h1>
+          <p class="subtitle">
+            An agentic coding tool that lives in your terminal, IDE, and browser
+          </p>
+          <br />
+          <p class="muted">code.claude.com</p>
+        </section>
+
+        <!-- Slide: Getting Started -->
+        <section>
+          <h2 style="margin-top: 0.3em">Getting Started</h2>
+          <div style="font-size: 0.48em; text-align: left;">
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">1. Install</p>
+              <pre style="margin: 0;"><code># macOS / Linux / WSL
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Windows PowerShell
+irm https://claude.ai/install.ps1 | iex
+
+# Or via Homebrew / WinGet
+brew install --cask claude-code
+winget install Anthropic.ClaudeCode</code></pre>
+            </div>
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">2. Start in any project</p>
+              <pre style="margin: 0;"><code>cd your-project
+claude</code></pre>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">3. Log in on first use — that's it!</p>
+              <pre style="margin: 0;"><code>claude --version   # check your version
+claude --help      # see all flags</code></pre>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.4em;">
+            <p>Requires a <a href="https://claude.com/pricing">Claude subscription</a> or <a href="https://console.anthropic.com/">Anthropic Console</a> account.</p>
+          </div>
+        </section>
+
+        <!-- Slide 2: The Agentic Loop -->
+        <section>
+          <h2>The Agentic Loop</h2>
+          <p style="font-size: 0.6em; margin-bottom: 0.6em;">
+            Claude works in a continuous loop: <span class="highlight">gather context</span>,
+            <span class="highlight">take action</span>,
+            <span class="highlight">verify results</span> — repeating until done.
+          </p>
+          <div style="margin: 0.5em auto; max-width: 90%;">
+            <img src="assets/agentic-loop.svg" alt="The agentic loop" style="width: 100%; border-radius: 10px; border: 1px solid var(--anthro-border);" />
+          </div>
+          <p style="font-size: 0.5em; color: var(--anthro-fg-light); margin-top: 0.3em;">
+            You can interrupt and steer at any point in the loop.
+          </p>
+        </section>
+
+        <!-- Slide 3: Tools Under the Hood -->
+        <section>
+          <h2>Tools Under the Hood</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.52em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.15em;">
+                File Operations
+              </p>
+              <p><code>Read</code> <code>Edit</code> <code>Write</code> <code>Glob</code></p>
+              <p>Read, create, rename, and edit files</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.15em;">
+                Search
+              </p>
+              <p><code>Grep</code> <code>Glob</code> <code>Agent</code></p>
+              <p>Find files by pattern, search with regex</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.15em;">
+                Execution
+              </p>
+              <p><code>Bash</code></p>
+              <p>Run shell commands, tests, git, builds</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.15em;">
+                Web
+              </p>
+              <p><code>WebSearch</code> <code>WebFetch</code></p>
+              <p>Search the web, fetch documentation</p>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.5em;">
+            <p>Claude <strong>chooses</strong> which tools to use based on your prompt — you describe the goal, it figures out the steps.</p>
+          </div>
+        </section>
+
+        <!-- Slide 5: What Claude Can Access -->
+        <section>
+          <h2>What Claude Can Access</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.35em; font-size: 0.48em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.1em;">
+                Your Project
+              </p>
+              <p>Files in your directory and subdirectories, plus files elsewhere with your permission.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.1em;">
+                Your Terminal
+              </p>
+              <p>Build tools, git, package managers, system utilities, scripts — if you can run it, Claude can too.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.1em;">
+                Git State
+              </p>
+              <p>Current branch, uncommitted changes, and recent commit history.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.1em;">
+                CLAUDE.md
+              </p>
+              <p>Project-specific instructions, conventions, and context loaded every session.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.1em;">
+                Auto Memory
+              </p>
+              <p>Learnings Claude saves automatically — project patterns, preferences. First 200 lines of <code>MEMORY.md</code> loaded each session.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.1em;">
+                Extensions
+              </p>
+              <p>MCP servers, custom skills, subagents, and Chrome integration.</p>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.4em;">
+            <p>Claude sees your <strong>whole project</strong>, not just the current file — it can search, read, edit, test, and commit across your entire codebase.</p>
+          </div>
+        </section>
+
+        <!-- Slide 6: Environments & Interfaces -->
+        <section>
+          <h2>Environments &amp; Interfaces</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.5em;">
+            The agentic loop is the same everywhere. What changes is <span class="highlight">where code runs</span> and <span class="highlight">how you interact</span>.
+          </p>
+          <h3 style="font-size: 0.65em; margin-bottom: 0.3em;">Execution Environments</h3>
+          <table style="font-size: 0.5em; width: 100%; margin-bottom: 0.6em;">
+            <thead>
+              <tr>
+                <th>Environment</th>
+                <th>Where code runs</th>
+                <th>Use case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="highlight">Local</span></td>
+                <td>Your machine</td>
+                <td>Default — full access to files, tools, environment</td>
+              </tr>
+              <tr>
+                <td><span class="highlight">Cloud</span></td>
+                <td>Anthropic-managed VMs</td>
+                <td>Offload tasks, work on repos you don't have locally</td>
+              </tr>
+              <tr>
+                <td><span class="highlight">Remote Control</span></td>
+                <td>Your machine, via browser</td>
+                <td>Web UI while keeping everything local</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 style="font-size: 0.65em; margin-bottom: 0.3em;">Interfaces</h3>
+          <div style="margin-top: 0.2em;">
+            <span class="pill accent">Terminal</span>
+            <span class="pill">Desktop App</span>
+            <span class="pill">VS Code</span>
+            <span class="pill">JetBrains</span>
+            <span class="pill">claude.ai/code</span>
+            <span class="pill">Remote Control</span>
+            <span class="pill">Slack</span>
+            <span class="pill">CI/CD</span>
+          </div>
+          <p style="font-size: 0.45em; color: var(--anthro-fg-light); margin-top: 0.4em;">
+            Same agentic loop, same tools — different surface.
+          </p>
+        </section>
+
+        <!-- Slide 7: Sessions -->
+        <section>
+          <h2>Sessions</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.48em; text-align: left;">
+            <div>
+              <ul style="margin-left: 0;">
+                <li>Every message, tool use, and result is <span class="highlight">saved locally</span></li>
+                <li>File snapshots taken before edits — <span class="highlight">rewind anytime</span> with <code>Esc Esc</code></li>
+                <li>Each session starts with a <strong>fresh context window</strong> — no prior conversation history</li>
+                <li>Persistent knowledge via <code>CLAUDE.md</code> and auto memory</li>
+              </ul>
+              <div style="margin-top: 0.3em;">
+                <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.15em;">Resume or fork:</p>
+                <pre><code>claude --continue      # pick up where you left off
+claude --resume        # choose from recent sessions
+claude --resume abc123 \
+  --fork-session       # branch off into new session</code></pre>
+              </div>
+            </div>
+            <div>
+              <img src="assets/session-continuity.svg" alt="Session continuity" style="width: 100%; border-radius: 10px; border: 1px solid var(--anthro-border);" />
+              <div class="tip" style="margin-top: 0.35em;">
+                <p>Sessions are tied to your <strong>working directory</strong>. Run parallel sessions using <code>git worktrees</code> for separate branches.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 8: The Context Window -->
+        <section>
+          <h2 style="margin-top: 0.3em">The Context Window</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Holds your conversation history, file contents, command outputs, <code>CLAUDE.md</code>, skills, and system instructions. As you work, it fills up.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.48em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">When context fills up</p>
+              <ul style="margin-left: 0;">
+                <li>Older tool outputs cleared first</li>
+                <li>Conversation summarised if needed</li>
+                <li>Your requests &amp; key code preserved</li>
+                <li>Early detailed instructions may be lost</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Manage context</p>
+              <ul style="margin-left: 0;">
+                <li><span class="highlight">Skills</span> load on demand, not at startup</li>
+                <li><span class="highlight">Subagents</span> get their own fresh context</li>
+                <li>MCP servers add tool defs to every request — check costs with <code>/mcp</code></li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top: 0.5em; text-align: left; font-size: 0.5em;">
+            <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.2em;">Useful commands:</p>
+            <pre><code>/context                          # see what's using space
+/compact focus on the API changes  # compact with a focus
+CLAUDE.md → "Compact Instructions" # control what's preserved</code></pre>
+          </div>
+          <div class="tip" style="margin-top: 0.4em;">
+            <p>Put persistent rules in <code>CLAUDE.md</code> — don't rely on conversation history surviving compaction.</p>
+          </div>
+        </section>
+
+        <!-- Slide: Permissions & Safety -->
+        <section>
+          <h2>Permissions &amp; Safety</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Claude asks before acting. You control how much autonomy it has with <code>Shift+Tab</code>.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.35em; font-size: 0.48em; text-align: left; margin-bottom: 0.4em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Default</p>
+              <p>Asks before edits and commands</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-accent); font-weight: 600;">Auto-accept</p>
+              <p>Edits files freely, still asks for commands</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-green); font-weight: 600;">Plan Mode</p>
+              <p>Read-only — analyses but won't change anything</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.35em; font-size: 0.48em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Checkpoints</p>
+              <ul style="margin-left: 0;">
+                <li>Every file edit is snapshotted</li>
+                <li>Press <code>Esc Esc</code> to rewind</li>
+                <li>Or ask Claude to undo</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Allow-list commands</p>
+              <ul style="margin-left: 0;">
+                <li>Trust commands like <code>npm test</code></li>
+                <li>Configure in <code>.claude/settings.json</code></li>
+                <li>Scoped from org-wide to personal</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide: Workflow — Understand New Codebases -->
+        <section>
+          <h2>Workflow: Explore a Codebase</h2>
+          <div style="font-size: 0.48em; text-align: left;">
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">1. Navigate and start</p>
+              <pre style="margin: 0;"><code>cd /path/to/project
+claude</code></pre>
+            </div>
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">2. Get a high-level overview</p>
+              <pre style="margin: 0;"><code>give me an overview of this codebase</code></pre>
+            </div>
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">3. Dive deeper</p>
+              <pre style="margin: 0;"><code>explain the main architecture patterns used here
+what are the key data models?
+how is authentication handled?</code></pre>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.4em;">
+            <p>Start broad, then narrow down. Ask about coding conventions, project-specific terms, and how components connect.</p>
+          </div>
+        </section>
+
+        <!-- Slide: Workflow — Debugging Code -->
+        <section>
+          <h2>Workflow: Debugging Code</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Paste an error, describe a symptom, or just say what's wrong — Claude investigates and fixes it.
+          </p>
+          <div style="font-size: 0.48em; text-align: left;">
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">1. Share the problem</p>
+              <pre style="margin: 0;"><code>I'm seeing a TypeError when I run npm test</code></pre>
+            </div>
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">2. Let Claude investigate</p>
+              <pre style="margin: 0;"><code>suggest a few ways to fix the @ts-ignore in user.ts</code></pre>
+            </div>
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">3. Apply and verify</p>
+              <pre style="margin: 0;"><code>apply the null check fix, then run the tests again</code></pre>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.4em;">
+            <p>Give Claude the command to reproduce the issue — a stack trace is worth a thousand words.</p>
+          </div>
+        </section>
+
+        <!-- Slide: Workflow — Unix Piping & Scripting -->
+        <section>
+          <h2>Workflow: Unix Piping &amp; Scripting</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Claude Code follows the Unix philosophy — pipe data in, get structured output back, chain with other tools.
+          </p>
+          <div style="font-size: 0.48em; text-align: left;">
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">Pipe errors for diagnosis</p>
+              <pre style="margin: 0;"><code>cat build-error.txt | claude -p 'explain the root cause' > diagnosis.txt</code></pre>
+            </div>
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">Use as a linter in package.json</p>
+              <pre style="margin: 0;"><code>"lint:claude": "claude -p 'look at changes vs main, report typos
+  with filename:line and description'"</code></pre>
+            </div>
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">Bulk review changed files</p>
+              <pre style="margin: 0;"><code>git diff main --name-only | claude -p 'review for security issues'</code></pre>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">Structured output formats</p>
+              <pre style="margin: 0;"><code>claude -p 'analyze code' --output-format json    # full JSON
+claude -p 'analyze code' --output-format text    # plain text
+claude -p 'analyze code' --output-format stream-json  # streaming</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide: Workflow — Plan Mode -->
+        <section>
+          <h2>Workflow: Plan Mode</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Starting from scratch or tackling a large codebase? Plan first, build second.
+            Claude analyses with <span class="highlight">read-only</span> tools before writing any code.
+          </p>
+          <div style="font-size: 0.48em; text-align: left;">
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">Enter Plan Mode</p>
+              <pre style="margin: 0;"><code>Shift+Tab  Shift+Tab          # toggle in-session
+claude --permission-mode plan  # start in plan mode</code></pre>
+            </div>
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">Ask Claude to plan</p>
+              <pre style="margin: 0;"><code>I need to refactor our auth system to use OAuth2.
+Create a detailed migration plan.</code></pre>
+            </div>
+            <div class="tool-card" style="margin-bottom: 0.3em;">
+              <p style="color: var(--anthro-fg-light); margin-bottom: 0.1em;">Refine, then execute</p>
+              <pre style="margin: 0;"><code>What about backward compatibility?
+How should we handle the database migration?</code></pre>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.4em;">
+            <p>Press <code>Ctrl+G</code> to open the plan in your editor. Review and edit before Claude proceeds.</p>
+          </div>
+        </section>
+
+        <!-- Slide: Other Common Use Cases -->
+        <section>
+          <h2>Other Common Use Cases</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.35em; font-size: 0.48em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Write &amp; run tests</p>
+              <p><code>add tests for the auth module, run them, fix any failures</code></p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Refactor code</p>
+              <p><code>refactor utils.js to use ES2024 features, keep the same behaviour</code></p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Create PRs &amp; commits</p>
+              <p><code>commit my changes with a descriptive message</code></p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Generate documentation</p>
+              <p><code>add JSDoc comments to the undocumented functions in auth.js</code></p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Work with images</p>
+              <p>Drag &amp; drop screenshots, mockups, or diagrams — Claude analyses them</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Reference files with @</p>
+              <p><code>explain the logic in @src/utils/auth.js</code></p>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.4em;">
+            <p>Claude is conversational — start with what you want, then refine. You don't need perfect prompts.</p>
+          </div>
+        </section>
+
+        <!-- Slide: Models -->
+        <section>
+          <h2>Models</h2>
+          <table style="font-size: 0.55em; width: 100%;">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Best for</th>
+                <th>ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="highlight">Opus 4.6</span></td>
+                <td>Complex reasoning, architecture decisions</td>
+                <td><code>claude-opus-4-6</code></td>
+              </tr>
+              <tr>
+                <td><span class="highlight">Sonnet 4.6</span></td>
+                <td>Everyday coding tasks (default)</td>
+                <td><code>claude-sonnet-4-6</code></td>
+              </tr>
+              <tr>
+                <td><span class="highlight">Haiku 4.5</span></td>
+                <td>Fast, lightweight tasks</td>
+                <td><code>claude-haiku-4-5</code></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 0.8em; text-align: left; font-size: 0.55em;">
+            <p style="margin-bottom: 0.3em; color: var(--anthro-fg);">Switching models:</p>
+            <pre><code>/model                         # interactive picker mid-session
+claude --model claude-opus-4-6  # set at launch</code></pre>
+          </div>
+        </section>
+
+        <!-- Slide: Same Prompt, Different Models -->
+        <section>
+          <h2>Same Prompt, Three Models</h2>
+          <p style="font-size: 0.45em; margin-bottom: 0.3em; color: var(--anthro-fg-muted);">
+            Prompt: <code>"write a simple python script that draws to the terminal through print commands an animated ascii art of someone flipping a table"</code>
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4em; text-align: center;">
+            <div>
+              <p style="font-size: 0.55em; font-weight: 600; color: var(--anthro-fg); margin-bottom: 0.2em;">Haiku 4.5</p>
+              <img src="example_codes/throw_haiku/table_flip.gif" alt="Haiku table flip" style="width: 100%; border-radius: 8px; border: 1px solid var(--anthro-border);" />
+            </div>
+            <div>
+              <p style="font-size: 0.55em; font-weight: 600; color: var(--anthro-fg); margin-bottom: 0.2em;">Sonnet 4.6</p>
+              <img src="example_codes/throw_sonnet/flip_table.gif" alt="Sonnet table flip" style="width: 100%; border-radius: 8px; border: 1px solid var(--anthro-border);" />
+            </div>
+            <div>
+              <p style="font-size: 0.55em; font-weight: 600; color: var(--anthro-fg); margin-bottom: 0.2em;">Opus 4.6</p>
+              <img src="example_codes/throw_opus/table_flip.gif" alt="Opus table flip" style="width: 100%; border-radius: 8px; border: 1px solid var(--anthro-border);" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide: CLAUDE.md — Persistent Instructions -->
+        <section>
+          <h2>CLAUDE.md</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            A markdown file Claude reads at the start of <span class="highlight">every session</span>. You write it, Claude follows it.
+          </p>
+          <table style="font-size: 0.48em; width: 100%; margin-bottom: 0.5em;">
+            <thead>
+              <tr>
+                <th>Scope</th>
+                <th>Location</th>
+                <th>Shared with</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="highlight">Project</span></td>
+                <td><code>./CLAUDE.md</code> or <code>./.claude/CLAUDE.md</code></td>
+                <td>Team (via version control)</td>
+              </tr>
+              <tr>
+                <td><span class="highlight">User</span></td>
+                <td><code>~/.claude/CLAUDE.md</code></td>
+                <td>Just you (all projects)</td>
+              </tr>
+              <tr>
+                <td><span class="highlight">Organisation</span></td>
+                <td><code>/etc/claude-code/CLAUDE.md</code></td>
+                <td>All users on machine</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size: 0.48em; margin-bottom: 0.2em;">
+            Add build commands, coding standards, architecture decisions, naming conventions, and common workflows.
+          </p>
+          <div class="tip" style="margin-top: 0.3em;">
+            <p>Run <code>/init</code> to generate a starting CLAUDE.md automatically — Claude analyses your codebase and creates one for you.</p>
+          </div>
+        </section>
+
+        <!-- Slide: Writing Effective CLAUDE.md + Rules -->
+        <section>
+          <h2>Writing Effective Instructions</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.48em; text-align: left; margin-bottom: 0.4em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Be specific</p>
+              <p><code>"Use 2-space indentation"</code></p>
+              <p style="color: var(--anthro-fg-light);">not "Format code properly"</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Keep it concise</p>
+              <p>Target <span class="highlight">&lt; 200 lines</span> per file</p>
+              <p style="color: var(--anthro-fg-light);">Split large files with imports or rules</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Use structure</p>
+              <p>Markdown headers &amp; bullets</p>
+              <p style="color: var(--anthro-fg-light);">Organised sections &gt; dense paragraphs</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Import files</p>
+              <p><code>@README</code> <code>@docs/guide.md</code></p>
+              <p style="color: var(--anthro-fg-light);">Pull in context with @ syntax</p>
+            </div>
+          </div>
+          <p style="font-size: 0.48em; color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.15em;">
+            Organise with <code>.claude/rules/</code>
+          </p>
+          <pre style="font-size: 0.44em;"><code>your-project/
+├── .claude/
+│   ├── CLAUDE.md            # Main project instructions
+│   └── rules/
+│       ├── code-style.md    # Code style guidelines
+│       ├── testing.md       # Testing conventions
+│       └── security.md      # Security requirements</code></pre>
+        </section>
+
+        <!-- Slide: Auto Memory -->
+        <section>
+          <h2>Auto Memory</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Claude writes notes for itself as you work — build commands, debugging insights, your preferences.
+            <span class="highlight">No effort from you.</span>
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.48em; text-align: left; margin-bottom: 0.4em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">How it works</p>
+              <ul style="margin-left: 0;">
+                <li>First 200 lines of <code>MEMORY.md</code> loaded each session</li>
+                <li>Detailed notes split into topic files</li>
+                <li>Read on demand, not all at startup</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Where it lives</p>
+              <pre style="margin: 0;"><code>~/.claude/projects/&lt;project&gt;/memory/
+├── MEMORY.md
+├── debugging.md
+├── api-conventions.md
+└── ...</code></pre>
+            </div>
+          </div>
+          <div style="font-size: 0.48em; text-align: left;">
+            <p style="color: var(--anthro-fg); font-weight: 600; margin-bottom: 0.15em;">Useful commands:</p>
+            <pre><code>/memory                          # browse & edit memory files
+"remember that API tests need Redis" # Claude saves to auto memory
+"always use pnpm, not npm"          # Claude remembers for next time</code></pre>
+          </div>
+        </section>
+
+        <!-- Slide: Extending Claude Code — Overview -->
+        <section>
+          <h2>Extending Claude Code</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            The built-in tools cover most tasks. These extensions let you go further.
+          </p>
+          <table style="font-size: 0.46em; width: 100%;">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>What it does</th>
+                <th>When to use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="highlight">MCP</span></td>
+                <td>Connect to external services</td>
+                <td>Database queries, Slack, browser control</td>
+              </tr>
+              <tr>
+                <td><span class="highlight">Skills</span></td>
+                <td>Reusable knowledge &amp; workflows</td>
+                <td>Deploy checklists, API docs, <code>/review-pr</code></td>
+              </tr>
+              <tr>
+                <td><span class="highlight">Subagents</span></td>
+                <td>Isolated workers with own context</td>
+                <td>Parallel tasks, heavy research, specialised workers</td>
+              </tr>
+              <tr>
+                <td><span class="highlight">Hooks</span></td>
+                <td>Deterministic scripts on events</td>
+                <td>Auto-lint after edits, notify on completion</td>
+              </tr>
+              <tr>
+                <td><span class="highlight">Plugins</span></td>
+                <td>Bundle &amp; share feature sets</td>
+                <td>Distribute skills + hooks + MCP across repos</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Slide: MCP -->
+        <section>
+          <h2>MCP — Model Context Protocol</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            An open standard for connecting Claude to <span class="highlight">external services and data sources</span>.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.48em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">What MCP provides</p>
+              <ul style="margin-left: 0;">
+                <li>Tools Claude can call (query DB, post to Slack)</li>
+                <li>Resources you reference with <code>@server:resource</code></li>
+                <li>Tool definitions loaded at session start</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Example servers</p>
+              <ul style="margin-left: 0;">
+                <li>Database — query &amp; update your data</li>
+                <li>Slack — read channels, post messages</li>
+                <li>Google Drive — read design docs</li>
+                <li>Browser — control via Puppeteer</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top: 0.4em; font-size: 0.48em; text-align: left;">
+            <pre><code>/mcp                           # check connected servers & token costs
+claude mcp add my-server -- npx my-mcp-server  # add a server</code></pre>
+          </div>
+        </section>
+
+        <!-- Slide: Skills -->
+        <section>
+          <h2>Skills</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Markdown files containing knowledge, workflows, or instructions. Load <span class="highlight">on demand</span>, not every session.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.48em; text-align: left; margin-bottom: 0.4em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Reference skills</p>
+              <p>Knowledge Claude draws on when relevant</p>
+              <p style="color: var(--anthro-fg-light);">API style guide, data model docs</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Action skills</p>
+              <p>Workflows you invoke with <code>/name</code></p>
+              <p style="color: var(--anthro-fg-light);"><code>/deploy</code> <code>/review-pr</code> <code>/release</code></p>
+            </div>
+          </div>
+          <div style="font-size: 0.48em; text-align: left;">
+            <pre><code># Skills live in .claude/skills/ or ~/.claude/skills/
+.claude/skills/
+├── deploy.md        # /deploy — your deployment checklist
+├── api-guide.md     # loaded automatically when relevant
+└── review.md        # /review — code review workflow</code></pre>
+          </div>
+        </section>
+
+        <!-- Slide: Skill Example -->
+        <section>
+          <h2>Skill Example</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            A skill is just a markdown file with optional frontmatter. Invoke with <code>/deploy</code>.
+          </p>
+          <div style="font-size: 0.48em; text-align: left;">
+            <p style="color: var(--anthro-fg-light); margin-bottom: 0.15em;"><code>.claude/skills/deploy.md</code></p>
+            <pre><code>---
+name: deploy
+description: Deploy the application to production
+disable-model-invocation: true
+---
+
+# Deployment Checklist
+
+1. Run the full test suite: `npm test`
+2. Check for uncommitted changes: `git status`
+3. Build the production bundle: `npm run build`
+4. Verify the build output in `dist/`
+5. Tag the release: `git tag -a v$(node -p "require('./package.json').version")`
+6. Push the tag: `git push --tags`
+7. Deploy: `npm run deploy:prod`
+
+## Rollback
+
+If something goes wrong:
+- Revert to previous tag: `git checkout &lt;previous-tag&gt;`
+- Redeploy: `npm run deploy:prod`</code></pre>
+          </div>
+        </section>
+
+        <!-- Slide: Subagents -->
+        <section>
+          <h2>Subagents</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Isolated workers with their <span class="highlight">own fresh context</span>. They do the work, return a summary — your main session stays clean.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.48em; text-align: left; margin-bottom: 0.4em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Why use them</p>
+              <ul style="margin-left: 0;">
+                <li>Context isolation — doesn't bloat your session</li>
+                <li>Parallel tasks across files or features</li>
+                <li>Specialised roles (reviewer, debugger)</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">How to use</p>
+              <ul style="margin-left: 0;">
+                <li>Claude spawns them automatically when needed</li>
+                <li>Or request: <code>use a subagent to review auth</code></li>
+                <li>Define custom agents in <code>.claude/agents/</code></li>
+              </ul>
+            </div>
+          </div>
+          <div style="font-size: 0.48em; text-align: left;">
+            <pre><code>/agents                              # view & create custom subagents
+"in a subagent, research how auth works" # ad-hoc, no setup needed</code></pre>
+          </div>
+        </section>
+
+        <!-- Slide: Subagent Example -->
+        <section>
+          <h2 style="margin-top: 0.3em">Subagent Example</h2>
+          <p style="font-size: 0.5em; margin-bottom: 0.4em;">
+            Define reusable agents as markdown files. Claude delegates to them automatically when the task matches.
+          </p>
+          <div style="font-size: 0.48em; text-align: left;">
+            <p style="color: var(--anthro-fg-light); margin-bottom: 0.15em;"><code>.claude/agents/reviewer.md</code></p>
+            <pre><code>---
+name: reviewer
+description: Reviews code for security and performance issues
+model: claude-sonnet-4-6
+tools:
+  - Read
+  - Glob
+  - Grep
+skills:
+  - security-guidelines
+isolation: worktree
+---
+
+You are a code reviewer. Focus on:
+- Security vulnerabilities (injection, auth bypass)
+- Performance bottlenecks
+- Error handling gaps
+
+Return a summary of findings with file:line references.</code></pre>
+          </div>
+          <div class="tip" style="margin-top: 0.3em;">
+            <p>Use <code>/agents</code> to browse and create agents interactively, or just drop a <code>.md</code> file in <code>.claude/agents/</code>.</p>
+          </div>
+        </section>
+
+        <!-- Slide: Hooks -->
+        <section>
+          <h2>Hooks</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Shell commands that run <span class="highlight">automatically</span> before or after Claude Code actions. No LLM involved — deterministic scripts.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.48em; text-align: left; margin-bottom: 0.4em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Hook events</p>
+              <ul style="margin-left: 0;">
+                <li><code>PostToolUse</code> — after file edits, bash runs</li>
+                <li><code>Notification</code> — when Claude needs attention</li>
+                <li><code>SessionStart</code> / <code>SessionStop</code></li>
+                <li><code>PrePromptSubmit</code> — before your prompt sends</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Example uses</p>
+              <ul style="margin-left: 0;">
+                <li>Auto-format after every file edit</li>
+                <li>Run lint before commits</li>
+                <li>Desktop notification when idle</li>
+                <li>Log tool usage for auditing</li>
+              </ul>
+            </div>
+          </div>
+          <div style="font-size: 0.48em; text-align: left;">
+            <pre><code>/hooks                         # configure hooks interactively</code></pre>
+          </div>
+        </section>
+
+        <!-- Slide: Plugins -->
+        <section>
+          <h2>Plugins</h2>
+          <p style="font-size: 0.55em; margin-bottom: 0.4em;">
+            Bundle skills, hooks, subagents, and MCP servers into a <span class="highlight">single installable unit</span>. Share across repos or distribute via marketplaces.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.48em; text-align: left; margin-bottom: 0.4em;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">What a plugin contains</p>
+              <ul style="margin-left: 0;">
+                <li>Skills (namespaced: <code>/my-plugin:review</code>)</li>
+                <li>Hooks for automation</li>
+                <li>Custom subagent definitions</li>
+                <li>MCP server configs</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">When to use</p>
+              <ul style="margin-left: 0;">
+                <li>Same setup needed across multiple repos</li>
+                <li>Sharing workflows with your team</li>
+                <li>Publishing to a marketplace</li>
+                <li>Multiple plugins coexist via namespacing</li>
+              </ul>
+            </div>
+          </div>
+          <div class="tip" style="margin-top: 0.3em;">
+            <p>Start with individual skills and hooks. Package into a plugin when you want to reuse or distribute.</p>
+          </div>
+        </section>
+
+        <!-- Slide: Best Practices -->
+        <section>
+          <h2>Best Practices</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.35em; font-size: 0.48em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Give Claude a way to verify</p>
+              <p>Include tests, screenshots, or expected output so Claude can check its own work.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Be specific upfront</p>
+              <p>Reference files, mention constraints, point to patterns. Fewer corrections needed.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Clear between tasks</p>
+              <p>Run <code>/clear</code> between unrelated tasks. Stale context degrades performance.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Delegate research to subagents</p>
+              <p>Keep your main context clean — subagents explore and return summaries.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Course-correct early</p>
+              <p>Press <code>Esc</code> as soon as Claude goes off track. After two failed corrections, <code>/clear</code> and start fresh.</p>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Avoid common pitfalls</p>
+              <p>Don't mix unrelated tasks. Don't over-specify CLAUDE.md. Don't ship without verification.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide: Keyboard Shortcuts & Cheat Sheet -->
+        <section>
+          <h2 style="margin-top: 0.3em">Cheat Sheet</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; font-size: 0.46em; text-align: left;">
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Slash commands</p>
+              <ul style="margin-left: 0;">
+                <li><code>/init</code> — generate a CLAUDE.md</li>
+                <li><code>/model</code> — switch model</li>
+                <li><code>/context</code> — see context usage</li>
+                <li><code>/compact</code> — compress context</li>
+                <li><code>/memory</code> — browse memory files</li>
+                <li><code>/hooks</code> — configure hooks</li>
+                <li><code>/agents</code> — manage subagents</li>
+                <li><code>/mcp</code> — check MCP servers</li>
+                <li><code>/resume</code> — switch sessions</li>
+                <li><code>/rename</code> — name current session</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <p style="color: var(--anthro-fg); font-weight: 600;">Keyboard shortcuts</p>
+              <ul style="margin-left: 0;">
+                <li><code>Shift+Tab</code> — cycle permission modes</li>
+                <li><code>Esc Esc</code> — rewind to checkpoint</li>
+                <li><code>Ctrl+G</code> — open plan in editor</li>
+                <li><code>Ctrl+O</code> — toggle verbose mode</li>
+                <li><code>Alt+T</code> — toggle thinking</li>
+                <li><code>Ctrl+C</code> — interrupt Claude</li>
+              </ul>
+              <p style="color: var(--anthro-fg); font-weight: 600; margin-top: 0.3em;">CLI flags</p>
+              <ul style="margin-left: 0;">
+                <li><code>--continue</code> — resume last session</li>
+                <li><code>--resume</code> — pick a session</li>
+                <li><code>--model</code> — set model</li>
+                <li><code>--worktree</code> — isolated worktree</li>
+                <li><code>-p "prompt"</code> — headless mode</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide: Resources & Next Steps -->
+        <section class="center-title">
+          <h2>Resources &amp; Next Steps</h2>
+          <div style="font-size: 0.55em; text-align: left; max-width: 80%; margin: 0 auto;">
+            <ul>
+              <li><span class="highlight">Docs</span> — <code>code.claude.com/docs</code></li>
+              <li><span class="highlight">Quickstart</span> — <code>code.claude.com/docs/en/quickstart</code></li>
+              <li><span class="highlight">Best practices</span> — <code>code.claude.com/docs/en/best-practices</code></li>
+              <li><span class="highlight">Common workflows</span> — <code>code.claude.com/docs/en/common-workflows</code></li>
+              <li><span class="highlight">GitHub</span> — <code>github.com/anthropics/claude-code</code></li>
+              <li><span class="highlight">Product page</span> — <code>code.claude.com</code></li>
+            </ul>
+          </div>
+          <br />
+          <p class="muted">Built with reveal.js — this presentation was made entirely by Claude Code</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        transition: "slide",
+        slideNumber: true,
+        progress: true,
+        margin: 0.04,
+      });
+    </script>
+  </body>
+</html>

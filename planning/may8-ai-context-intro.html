@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI & the Labor Market — Context Intro · May 8 Tutorial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="theme-anthropic.css" />
+    <style>
+      /* ── Stat callout ──────────────────────── */
+      .stat-row {
+        display: flex;
+        gap: 0.5em;
+        justify-content: center;
+        margin: 0.5em 0;
+      }
+      .stat-box {
+        flex: 1;
+        background: var(--anthro-bg-surface);
+        border: 1px solid var(--anthro-border);
+        border-radius: 12px;
+        padding: 0.6em 0.7em;
+        text-align: center;
+      }
+      .stat-box .num {
+        font-size: 1.6em;
+        font-weight: 700;
+        color: var(--anthro-accent);
+        line-height: 1;
+        display: block;
+      }
+      .stat-box .label {
+        font-size: 0.38em;
+        color: var(--anthro-fg-light);
+        margin-top: 0.25em;
+        display: block;
+        line-height: 1.3;
+      }
+
+      /* ── Bar chart ─────────────────────────── */
+      .bar-chart { font-size: 0.44em; text-align: left; }
+      .bar-row { display: flex; align-items: center; margin-bottom: 0.35em; gap: 0.5em; }
+      .bar-occ { width: 13em; flex-shrink: 0; color: var(--anthro-fg-muted); }
+      .bar-track { flex: 1; height: 1.3em; background: var(--anthro-bg-raised); border-radius: 4px; overflow: hidden; }
+      .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 0.4em; font-weight: 600; font-size: 0.9em; color: #fff; }
+      .bar-fill.high   { background: var(--anthro-accent); }
+      .bar-fill.mid    { background: #7B9E87; }
+      .bar-fill.none   { background: var(--anthro-bg-raised); color: var(--anthro-fg-light); }
+      .bar-zero        { padding-left: 0.4em; color: var(--anthro-fg-light); font-size: 0.9em; }
+
+      /* ── Gap diagram ───────────────────────── */
+      .gap-row { display: flex; align-items: stretch; gap: 1.2em; font-size: 0.48em; }
+      .gap-col { flex: 1; }
+      .gap-col h4 { font-size: 1em; color: var(--anthro-fg); margin-bottom: 0.3em; }
+      .gap-bar-wrap { background: var(--anthro-bg-raised); border-radius: 8px; overflow: hidden; height: 6em; position: relative; }
+      .gap-bar-fill { width: 100%; border-radius: 8px 8px 0 0; position: absolute; bottom: 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 0.3em; font-weight: 700; color: #fff; font-size: 1.1em; }
+      .gap-bar-fill.theory { background: var(--anthro-fg-light); height: 94%; }
+      .gap-bar-fill.actual { background: var(--anthro-accent); height: 33%; }
+      .gap-label { font-size: 0.85em; color: var(--anthro-fg-light); margin-top: 0.3em; text-align: center; }
+
+      /* ── Timeline ──────────────────────────── */
+      .timeline { font-size: 0.46em; display: flex; flex-direction: column; gap: 0.3em; }
+      .tl-item { display: flex; gap: 0.8em; align-items: flex-start; }
+      .tl-date { width: 5em; flex-shrink: 0; color: var(--anthro-accent); font-weight: 600; text-align: right; padding-top: 0.1em; }
+      .tl-dot  { width: 0.7em; height: 0.7em; background: var(--anthro-accent); border-radius: 50%; flex-shrink: 0; margin-top: 0.25em; }
+      .tl-text { color: var(--anthro-fg-muted); }
+
+      /* ── Source tag ─────────────────────────── */
+      .source-tag {
+        font-size: 0.32em;
+        color: var(--anthro-fg-light);
+        position: absolute;
+        bottom: 0.6em;
+        right: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- Slide 1: Title -->
+        <section class="center-title">
+          <h2 style="font-size:1.6em;">AI & the Labor Market</h2>
+          <p class="subtitle">What the evidence actually says — and why today matters</p>
+          <br />
+          <p class="muted">APHYS AI Tutorial · May 8, 2026 · Opening — 15 min</p>
+          <p class="muted" style="margin-top:0.3em;">Based on: Anthropic research, <em>Labor Market Impacts</em> (2025)</p>
+        </section>
+
+        <!-- Slide 1b: Who is in this room -->
+        <section>
+          <h2>Who is here today</h2>
+          <p style="font-size:0.52em; margin-bottom:0.45em;">
+            32 people registered across the department — a snapshot of where APHYS is with AI right now.
+          </p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6em; font-size:0.46em; text-align:left; margin-bottom:0.4em;">
+            <!-- Experience chart -->
+            <div>
+              <p style="font-weight:600; color:var(--anthro-fg); margin-bottom:0.4em;">AI experience level</p>
+              <div style="display:flex; flex-direction:column; gap:0.3em;">
+                <div style="display:flex; align-items:center; gap:0.5em;">
+                  <span style="width:7em; color:var(--anthro-fg-muted);">Regular</span>
+                  <div style="flex:1; background:var(--anthro-bg-raised); border-radius:4px; height:1.4em; overflow:hidden;">
+                    <div style="width:50%; height:100%; background:var(--anthro-accent); border-radius:4px; display:flex; align-items:center; padding-left:0.4em; color:#fff; font-weight:600;">50% · 16</div>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.5em;">
+                  <span style="width:7em; color:var(--anthro-fg-muted);">Beginner</span>
+                  <div style="flex:1; background:var(--anthro-bg-raised); border-radius:4px; height:1.4em; overflow:hidden;">
+                    <div style="width:37%; height:100%; background:#7B9E87; border-radius:4px; display:flex; align-items:center; padding-left:0.4em; color:#fff; font-weight:600;">37% · 12</div>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.5em;">
+                  <span style="width:7em; color:var(--anthro-fg-muted);">Advanced</span>
+                  <div style="flex:1; background:var(--anthro-bg-raised); border-radius:4px; height:1.4em; overflow:hidden;">
+                    <div style="width:9%; height:100%; background:var(--anthro-fg-light); border-radius:4px;"></div>
+                    <span style="margin-left:0.4em; color:var(--anthro-fg-muted);">9% · 3</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Attendance + research -->
+            <div>
+              <p style="font-weight:600; color:var(--anthro-fg); margin-bottom:0.4em;">Attendance &amp; backgrounds</p>
+              <div class="tool-card" style="padding:0.45em 0.7em; margin-bottom:0.3em;">
+                <span style="color:var(--anthro-accent); font-weight:600;">26 onsite</span> at AlbaNova FB53 &nbsp;·&nbsp; <span style="color:var(--anthro-fg-muted);">6 on Zoom</span>
+              </div>
+              <div class="tool-card" style="padding:0.45em 0.7em; margin-bottom:0.3em;">
+                Research areas: X-ray imaging · laser physics · biophysics · ultrafast spectroscopy · nanomaterials · condensed matter · acoustofluidics · visual optics · particle physics
+              </div>
+              <div class="tool-card" style="padding:0.45em 0.7em;">
+                Professors, lecturers, researchers, postdocs — all career stages
+              </div>
+            </div>
+          </div>
+          <div class="tip">
+            <p>This diversity is an asset — different research areas will discover different use cases today. <strong>Learn from the table next to you, not just from the front.</strong></p>
+          </div>
+        </section>
+
+        <!-- Slide 2: We are measuring it now -->
+        <section>
+          <h2>For the first time, we can measure it</h2>
+          <p style="font-size:0.55em; margin-bottom:0.5em;">
+            Most AI-and-jobs predictions rely on <span class="highlight">hypothetical capability</span>.
+            Anthropic's 2025 study measured <span class="highlight">actual usage</span> — what people really use Claude for at work, task by task.
+          </p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5em; font-size:0.48em; text-align:left; margin-bottom:0.45em;">
+            <div class="tool-card" style="padding:0.6em 0.8em;">
+              <p style="color:var(--anthro-fg); font-weight:600; margin-bottom:0.2em;">Old approach — theoretical exposure</p>
+              <p>"Could AI do this task in principle?" → assign a score per occupation</p>
+              <p style="color:var(--anthro-fg-light);">Result: almost every office job looks 90%+ exposed</p>
+            </div>
+            <div class="tool-card" style="padding:0.6em 0.8em; border-color:var(--anthro-accent);">
+              <p style="color:var(--anthro-accent); font-weight:600; margin-bottom:0.2em;">New approach — observed exposure</p>
+              <p>Match millions of real Claude conversations to BLS occupation task lists</p>
+              <p style="color:var(--anthro-fg-light);">Result: actual adoption is far lower — and very uneven</p>
+            </div>
+          </div>
+          <div class="tip">
+            <p>Automation is weighted more than augmentation — a task where AI fully replaces human effort counts more than one where it just assists.</p>
+          </div>
+          <span class="source-tag">Anthropic · Labor Market Impacts · 2025</span>
+        </section>
+
+        <!-- Slide 3: The gap -->
+        <section>
+          <h2>Theory vs. reality: a massive gap</h2>
+          <p style="font-size:0.55em; margin-bottom:0.5em;">
+            For Computer &amp; Math occupations — the most AI-capable category —
+            theory predicts <span class="highlight">94% coverage</span>.
+            Observed real-world usage: <span class="highlight">33%</span>.
+          </p>
+          <div class="gap-row" style="margin-bottom:0.45em;">
+            <div class="gap-col">
+              <h4>Theoretical capability</h4>
+              <div class="gap-bar-wrap">
+                <div class="gap-bar-fill theory">94%</div>
+              </div>
+              <p class="gap-label">"Could AI do this?"</p>
+            </div>
+            <div class="gap-col">
+              <h4>Observed actual usage</h4>
+              <div class="gap-bar-wrap">
+                <div class="gap-bar-fill actual">33%</div>
+              </div>
+              <p class="gap-label">What people actually use it for</p>
+            </div>
+          </div>
+          <div class="tip">
+            <p>
+              The gap exists because of legal constraints, software integration lag, organisational inertia, and simple lack of awareness.
+              <strong>This gap is an opportunity for early movers.</strong>
+            </p>
+          </div>
+          <span class="source-tag">Anthropic · Labor Market Impacts · 2025</span>
+        </section>
+
+        <!-- Slide 4: Which occupations are exposed -->
+        <section>
+          <h2>Who is actually affected — and who isn't</h2>
+          <p style="font-size:0.52em; margin-bottom:0.4em;">AI usage exposure across selected occupations (observed, not theoretical)</p>
+          <div class="bar-chart">
+            <div class="bar-row">
+              <span class="bar-occ">Computer Programmers</span>
+              <div class="bar-track"><div class="bar-fill high" style="width:75%;">75%</div></div>
+            </div>
+            <div class="bar-row">
+              <span class="bar-occ">Customer Service Reps</span>
+              <div class="bar-track"><div class="bar-fill high" style="width:67%;">67%</div></div>
+            </div>
+            <div class="bar-row">
+              <span class="bar-occ">Data Entry Keyers</span>
+              <div class="bar-track"><div class="bar-fill high" style="width:67%;">67%</div></div>
+            </div>
+            <div class="bar-row">
+              <span class="bar-occ">Finance &amp; Professional services</span>
+              <div class="bar-track"><div class="bar-fill mid" style="width:45%;">45%</div></div>
+            </div>
+            <div class="bar-row">
+              <span class="bar-occ">Researchers / Academics<br><span style="color:var(--anthro-accent);font-size:0.9em;">(writing, analysis, coding tasks)</span></span>
+              <div class="bar-track"><div class="bar-fill mid" style="width:38%;">est. 30–50%</div></div>
+            </div>
+            <div class="bar-row">
+              <span class="bar-occ">Cooks, Mechanics, Bartenders</span>
+              <div class="bar-track"><div class="bar-zero">0% — physical/in-person tasks</div></div>
+            </div>
+          </div>
+          <p style="font-size:0.4em; color:var(--anthro-fg-light); margin-top:0.3em;">~30% of all workers have zero observed AI exposure — roles requiring physical presence or in-person judgment.</p>
+          <span class="source-tag">Anthropic · Labor Market Impacts · 2025</span>
+        </section>
+
+        <!-- Slide 5: Labor market signals so far -->
+        <section>
+          <h2>What has actually happened in the labor market?</h2>
+          <p style="font-size:0.55em; margin-bottom:0.4em;">The data since ChatGPT launched in late 2022:</p>
+          <div class="stat-row" style="margin-bottom:0.45em;">
+            <div class="stat-box">
+              <span class="num">0</span>
+              <span class="label">Statistically significant<br>unemployment increase<br>for exposed workers</span>
+            </div>
+            <div class="stat-box" style="border-color:var(--anthro-accent);">
+              <span class="num">−14%</span>
+              <span class="label">Hiring of workers aged 22–25<br>into high-exposure roles<br>since ChatGPT launch</span>
+            </div>
+            <div class="stat-box">
+              <span class="num">−0.6pp</span>
+              <span class="label">Lower employment growth<br>per 10-point increase<br>in AI exposure (BLS projections)</span>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4em; font-size:0.46em; text-align:left;">
+            <div class="tool-card" style="padding:0.5em 0.7em;">
+              <p style="color:var(--anthro-green); font-weight:600; margin-bottom:0.1em;">Reassuring</p>
+              <p>No mass displacement of existing workers. Those already in exposed jobs are largely holding their positions.</p>
+            </div>
+            <div class="tool-card" style="padding:0.5em 0.7em; border-color:var(--anthro-accent);">
+              <p style="color:var(--anthro-accent); font-weight:600; margin-bottom:0.1em;">Worth watching</p>
+              <p>Entry into exposed careers is slowing. Young people may face a harder path into roles AI is beginning to cover.</p>
+            </div>
+          </div>
+          <span class="source-tag">Anthropic · Labor Market Impacts · 2025</span>
+        </section>
+
+        <!-- Slide 6: Who are the exposed workers? -->
+        <section>
+          <h2>The profile of exposed workers</h2>
+          <p style="font-size:0.55em; margin-bottom:0.45em;">
+            High-exposure workers are not the ones we might expect to be most vulnerable.
+          </p>
+          <div class="stat-row" style="margin-bottom:0.4em;">
+            <div class="stat-box">
+              <span class="num">+47%</span>
+              <span class="label">Higher average earnings<br>vs. unexposed workers</span>
+            </div>
+            <div class="stat-box" style="border-color:var(--anthro-accent);">
+              <span class="num">4.5×</span>
+              <span class="label">More likely to hold<br>graduate degrees</span>
+            </div>
+            <div class="stat-box">
+              <span class="num">+16pp</span>
+              <span class="label">More likely to be women<br>vs. unexposed occupations</span>
+            </div>
+          </div>
+          <p style="font-size:0.5em; margin-bottom:0.35em; text-align:left;">
+            <strong style="color:var(--anthro-fg);">The implication for this room:</strong>
+            Applied physicists — writing grants, analysing data, teaching, reviewing literature —
+            are firmly in the high-exposure category. Not because AI replaces physical experiments,
+            but because the <span class="highlight">cognitive and communication tasks</span> surrounding them are highly automatable.
+          </p>
+          <div class="tip">
+            <p>This is not a crisis — it's a capability shift. The question is whether you use it or let others use it first.</p>
+          </div>
+          <span class="source-tag">Anthropic · Labor Market Impacts · 2025</span>
+        </section>
+
+        <!-- Slide 7: The student / PhD concern -->
+        <section>
+          <h2>The concern closest to home</h2>
+          <p style="font-size:0.55em; margin-bottom:0.4em;">
+            The sharpest early signal in the data is not about professors — it's about the next generation.
+          </p>
+          <blockquote style="font-size:0.55em; margin-bottom:0.4em;">
+            "Hiring of workers aged 22–25 into high-exposure occupations has slowed by about half a percentage point per month since ChatGPT's launch — roughly a 14% decline."
+            <br/><span style="color:var(--anthro-fg-light); font-size:0.85em;">— Anthropic Labor Market Impacts, 2025</span>
+          </blockquote>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4em; font-size:0.47em; text-align:left; margin-bottom:0.35em;">
+            <div class="tool-card" style="padding:0.5em 0.7em;">
+              <p style="color:var(--anthro-fg); font-weight:600; margin-bottom:0.1em;">For your PhD students</p>
+              <p>They're graduating into a world where entry-level analytical and coding tasks are increasingly automated. The path their supervisors took may not be open in the same form.</p>
+            </div>
+            <div class="tool-card" style="padding:0.5em 0.7em;">
+              <p style="color:var(--anthro-fg); font-weight:600; margin-bottom:0.1em;">For you as supervisors</p>
+              <p>What skills should a 2026 PhD develop that AI cannot? Critical judgment, experimental design, physical intuition, collaboration, scientific taste.</p>
+            </div>
+          </div>
+          <div class="tip">
+            <p>We'll come back to this in the teaching module — redesigning training and assessment for the AI era.</p>
+          </div>
+          <span class="source-tag">Anthropic · Labor Market Impacts · 2025</span>
+        </section>
+
+        <!-- Slide 8: Where we are on the timeline -->
+        <section>
+          <h2>We are early — the gap is still open</h2>
+          <p style="font-size:0.55em; margin-bottom:0.4em;">
+            94% theoretical capability. 33% actual observed adoption. <span class="highlight">That gap closes over time.</span>
+          </p>
+          <div class="timeline" style="margin-bottom:0.4em;">
+            <div class="tl-item">
+              <span class="tl-date">Nov 2022</span>
+              <div class="tl-dot"></div>
+              <span class="tl-text">ChatGPT launches — public inflection point. Hiring into exposed roles begins slowing.</span>
+            </div>
+            <div class="tl-item">
+              <span class="tl-date">2023–24</span>
+              <div class="tl-dot"></div>
+              <span class="tl-text">Claude, GPT-4, Gemini — frontier capability expands. Early adopters build significant advantages.</span>
+            </div>
+            <div class="tl-item">
+              <span class="tl-date">2025</span>
+              <div class="tl-dot"></div>
+              <span class="tl-text">Anthropic study: adoption still only 33% of theoretical potential. Most organisations have barely started.</span>
+            </div>
+            <div class="tl-item" style="opacity:0.6;">
+              <span class="tl-date">2026–?</span>
+              <div class="tl-dot" style="background:var(--anthro-fg-light);"></div>
+              <span class="tl-text">Legal, software, and organisational barriers erode. Coverage grows. Today's gap narrows.</span>
+            </div>
+          </div>
+          <div class="tip">
+            <p><strong>Today's tutorial is a concrete step into the 67% gap</strong> — tasks your research group could already be doing with AI, but probably isn't yet.</p>
+          </div>
+          <span class="source-tag">Anthropic · Labor Market Impacts · 2025</span>
+        </section>
+
+        <!-- Slide 9: Ethics — responsible use -->
+        <section>
+          <h2>But what does responsible use look like?</h2>
+          <p style="font-size:0.52em; margin-bottom:0.4em;">
+            Karl de Fine Licht (Chalmers, Ethics &amp; Technology) identifies that AI is entering <span class="highlight">every phase of research</span> — and the effects on quality are real.
+          </p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.45em; font-size:0.46em; text-align:left; margin-bottom:0.4em;">
+            <div>
+              <p style="font-weight:600; color:var(--anthro-fg); margin-bottom:0.3em;">GenAI is used across the full research cycle</p>
+              <div class="tool-card" style="padding:0.45em 0.7em; margin-bottom:0.25em;">
+                <span style="color:var(--anthro-accent);">①</span> Idea generation &nbsp;
+                <span style="color:var(--anthro-accent);">②</span> Research design
+              </div>
+              <div class="tool-card" style="padding:0.45em 0.7em; margin-bottom:0.25em;">
+                <span style="color:var(--anthro-accent);">③</span> Data collection &nbsp;
+                <span style="color:var(--anthro-accent);">④</span> Analysis
+              </div>
+              <div class="tool-card" style="padding:0.45em 0.7em;">
+                <span style="color:var(--anthro-accent);">⑤</span> Writing
+              </div>
+              <p style="margin-top:0.5em; color:var(--anthro-fg-light);">Observed effect when AI is used: <strong style="color:#b04040;">lower quality · less original · less time invested</strong></p>
+            </div>
+            <div>
+              <p style="font-weight:600; color:var(--anthro-fg); margin-bottom:0.3em;">Four values that define research</p>
+              <div class="tool-card" style="padding:0.45em 0.7em; margin-bottom:0.25em;">
+                <span style="color:var(--anthro-accent); font-weight:600;">Downstream</span> — Societal benefit ("curing cancer")
+              </div>
+              <div class="tool-card" style="padding:0.45em 0.7em; margin-bottom:0.25em;">
+                <span style="color:var(--anthro-accent); font-weight:600;">Epistemic</span> — New knowledge, robust findings
+              </div>
+              <div class="tool-card" style="padding:0.45em 0.7em; margin-bottom:0.25em;">
+                <span style="color:var(--anthro-accent); font-weight:600;">Practice</span> — Curiosity, judgment, critical discussion
+              </div>
+              <div class="tool-card" style="padding:0.45em 0.7em;">
+                <span style="color:var(--anthro-accent); font-weight:600;">Civic-pedagogical</span> — Better teachers, public engagers
+              </div>
+            </div>
+          </div>
+          <div class="tip">
+            <p>The answer is not "prohibit" or "allow freely." It is: <strong>allow some use · hold ourselves accountable · revise institutional norms · hold others accountable.</strong></p>
+          </div>
+          <span class="source-tag">de Fine Licht · Chalmers · "Responsible Research in the Age of GenAI" · 2026</span>
+        </section>
+
+        <!-- Slide 10: What this means for today -->
+        <section class="center-title">
+          <h2>What this means for today</h2>
+          <div style="font-size:0.5em; text-align:left; max-width:90%; margin:0.5em auto 0;">
+            <div class="tool-card" style="padding:0.55em 0.8em; margin-bottom:0.3em;">
+              <span class="highlight">The disruption is structural</span> — labor market signals are already visible, especially for the next generation entering research careers.
+            </div>
+            <div class="tool-card" style="padding:0.55em 0.8em; margin-bottom:0.3em;">
+              <span class="highlight">The risks are real</span> — AI use correlates with lower quality, less originality, less time invested. Your domain expertise is the safeguard, not the model.
+            </div>
+            <div class="tool-card" style="padding:0.55em 0.8em; margin-bottom:0.3em;">
+              <span class="highlight">The window is open</span> — 94% theoretical capability, 33% actual adoption. Early, critical adopters gain durable advantages.
+            </div>
+            <div class="tool-card" style="padding:0.55em 0.8em;">
+              <span class="highlight">The goal today</span> — not to hand over your research to AI, but to understand what it can and cannot do, and to start building your own informed practice.
+            </div>
+          </div>
+          <p class="muted" style="margin-top:0.5em;">Next → hands-on with ChatGPT and Claude Code · aphys-ai.kth.se</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        transition: "slide",
+        slideNumber: "c/t",
+        progress: true,
+        margin: 0.04,
+        width: 1280,
+        height: 720,
+      });
+    </script>
+  </body>
+</html>

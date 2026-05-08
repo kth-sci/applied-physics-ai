@@ -1,0 +1,304 @@
+/* ============================================
+   Anthropic / Claude Code — reveal.js theme
+   Light cream theme matching code.claude.com
+   ============================================ */
+
+/* --- Fonts --------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  /* Brand palette — light / cream */
+  --anthro-bg:          #FAF9F4;
+  --anthro-bg-surface:  #F0EDE5;
+  --anthro-bg-raised:   #E8E4DA;
+  --anthro-accent:      #C46849;
+  --anthro-accent-hover:#d97757;
+  --anthro-fg:          #1a1a1a;
+  --anthro-fg-muted:    #5c5c5c;
+  --anthro-fg-light:    #8a8a8a;
+  --anthro-border:      #DDD8CE;
+  --anthro-selection:   rgba(196, 104, 73, 0.2);
+  --anthro-green:       #2D7A4F;
+  --anthro-code-bg:     #F0EDE5;
+
+  /* Typography */
+  --anthro-font:        "Inter", system-ui, -apple-system, sans-serif;
+  --anthro-mono:        "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* --- Base ---------------------------------- */
+.reveal-viewport {
+  background: var(--anthro-bg);
+}
+
+.reveal {
+  font-family: var(--anthro-font);
+  font-size: 38px;
+  font-weight: 400;
+  color: var(--anthro-fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--anthro-selection);
+  color: var(--anthro-fg);
+}
+
+/* --- Headings ------------------------------ */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-family: var(--anthro-font);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--anthro-fg);
+  margin-bottom: 0.6em;
+}
+
+.reveal h1 { font-size: 2.2em; font-weight: 700; }
+.reveal h2 { font-size: 1.5em; }
+.reveal h3 { font-size: 1.15em; color: var(--anthro-fg-muted); }
+
+/* --- Accent underline for h2 --------------- */
+.reveal h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--anthro-accent);
+  border-radius: 2px;
+  margin-top: 0.35em;
+}
+
+.reveal section.center-title h1::after,
+.reveal section.center-title h2::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* No underline on title slide h1 */
+.reveal section.center-title h1::after {
+  display: none;
+}
+
+/* --- Body text ----------------------------- */
+.reveal p {
+  line-height: 1.6;
+  color: var(--anthro-fg-muted);
+  margin-bottom: 0.8em;
+}
+
+.reveal .subtitle {
+  font-size: 0.55em;
+  font-weight: 300;
+  color: var(--anthro-fg-muted);
+  margin-top: 0.6em;
+  letter-spacing: 0.01em;
+}
+
+/* --- Lists --------------------------------- */
+.reveal ul,
+.reveal ol {
+  text-align: left;
+  margin-left: 0.4em;
+}
+
+.reveal li {
+  line-height: 1.5;
+  margin-bottom: 0.45em;
+  color: var(--anthro-fg-muted);
+}
+
+.reveal li::marker {
+  color: var(--anthro-accent);
+}
+
+/* --- Highlight class ----------------------- */
+.reveal .highlight {
+  color: var(--anthro-accent);
+  font-weight: 600;
+}
+
+/* --- Inline code --------------------------- */
+.reveal code {
+  font-family: var(--anthro-mono);
+  font-size: 0.8em;
+  background: var(--anthro-code-bg);
+  border: 1px solid var(--anthro-border);
+  padding: 0.12em 0.45em;
+  border-radius: 6px;
+  color: var(--anthro-accent);
+}
+
+/* --- Code blocks --------------------------- */
+.reveal pre {
+  width: 100%;
+  margin: 0.8em 0;
+  box-shadow: none;
+}
+
+.reveal pre code {
+  display: block;
+  background: var(--anthro-fg);
+  border: 1px solid var(--anthro-border);
+  border-radius: 10px;
+  padding: 0.8em 1em;
+  font-size: 0.55em;
+  line-height: 1.55;
+  color: #e0e0e0;
+  max-height: 480px;
+  overflow: auto;
+}
+
+/* --- Links --------------------------------- */
+.reveal a {
+  color: var(--anthro-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.reveal a:hover {
+  color: var(--anthro-accent-hover);
+  text-decoration: underline;
+}
+
+/* --- Blockquotes / callouts ---------------- */
+.reveal blockquote {
+  background: var(--anthro-bg-surface);
+  border-left: 4px solid var(--anthro-accent);
+  border-radius: 0 10px 10px 0;
+  padding: 0.6em 1em;
+  margin: 0.8em 0;
+  font-style: normal;
+  width: 90%;
+  box-shadow: none;
+}
+
+.reveal blockquote p {
+  color: var(--anthro-fg-muted);
+  font-size: 0.85em;
+}
+
+/* --- Tables -------------------------------- */
+.reveal table {
+  border-collapse: collapse;
+  margin: 0.8em auto;
+}
+
+.reveal table th {
+  font-weight: 600;
+  color: var(--anthro-fg);
+  border-bottom: 2px solid var(--anthro-accent);
+  padding: 0.4em 0.8em;
+}
+
+.reveal table td {
+  color: var(--anthro-fg-muted);
+  border-bottom: 1px solid var(--anthro-border);
+  padding: 0.4em 0.8em;
+}
+
+/* --- Pill / badge helper ------------------- */
+.reveal .pill {
+  display: inline-block;
+  background: var(--anthro-bg-surface);
+  border: 1px solid var(--anthro-border);
+  border-radius: 999px;
+  padding: 0.15em 0.65em;
+  font-size: 0.55em;
+  color: var(--anthro-fg-muted);
+  margin: 0.15em;
+}
+
+.reveal .pill.accent {
+  border-color: var(--anthro-accent);
+  color: var(--anthro-accent);
+}
+
+/* --- Divider line helper ------------------- */
+.reveal hr {
+  border: none;
+  height: 1px;
+  background: var(--anthro-border);
+  margin: 1em 0;
+}
+
+/* --- Slide number -------------------------- */
+.reveal .slide-number {
+  font-family: var(--anthro-mono);
+  font-size: 14px;
+  color: var(--anthro-fg-light);
+  background: transparent;
+}
+
+/* --- Progress bar -------------------------- */
+.reveal .progress {
+  height: 3px;
+  color: var(--anthro-accent);
+}
+
+.reveal .progress span {
+  background: var(--anthro-accent);
+  transition: width 0.8s cubic-bezier(0.26, 0.86, 0.44, 0.985);
+}
+
+/* --- Controls ------------------------------ */
+.reveal .controls button {
+  color: var(--anthro-accent);
+}
+
+/* --- Logo on title slide ------------------- */
+.reveal .logo {
+  margin-bottom: 0.6em;
+}
+
+.reveal .logo svg {
+  width: 80px;
+  height: 80px;
+}
+
+/* --- Utility: muted text ------------------- */
+.reveal .muted {
+  color: var(--anthro-fg-light);
+  font-size: 0.5em;
+}
+
+/* --- Tip/callout box (green, like docs) ---- */
+.reveal .tip {
+  background: rgba(45, 122, 79, 0.08);
+  border-left: 4px solid var(--anthro-green);
+  border-radius: 0 10px 10px 0;
+  padding: 0.5em 0.8em;
+  margin: 0.8em 0;
+  text-align: left;
+}
+
+.reveal .tip p {
+  color: var(--anthro-fg-muted);
+  font-size: 0.65em;
+  margin: 0;
+}
+
+/* --- Tool cards (grid) --------------------- */
+.reveal .tool-card {
+  background: var(--anthro-bg-surface);
+  border: 1px solid var(--anthro-border);
+  border-radius: 10px;
+  padding: 0.1em 0.6em;
+}
+
+.reveal .tool-card p {
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+
+.reveal .tool-card code {
+  font-size: 0.8em;
+  padding: 0.08em 0.35em;
+}

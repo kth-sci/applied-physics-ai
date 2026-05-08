@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>May 8 Tutorial — Slide Decks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, sans-serif; background: #FAF9F4; color: #1a1a1a; min-height: 100vh; }
+
+    header {
+      background: #1a1a1a;
+      padding: 1.2rem 2rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    header .logo-mark {
+      width: 36px; height: 36px; background: #C46849;
+      border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; color: #fff; font-weight: 700; font-size: 1rem;
+      flex-shrink: 0;
+    }
+    header h1 { color: #fff; font-size: 1rem; font-weight: 600; }
+    header span { color: rgba(255,255,255,0.45); font-size: 0.85rem; }
+
+    main { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+    h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .subtitle { color: #888; font-size: 0.9rem; margin-bottom: 2rem; }
+
+    .schedule-bar {
+      background: #fff;
+      border: 1px solid #e8e4da;
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+      font-size: 0.82rem;
+      color: #555;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.5rem 1.5rem;
+    }
+    .schedule-bar .slot { display: flex; gap: 0.5rem; align-items: baseline; }
+    .schedule-bar .t { color: #C46849; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .schedule-bar .break-slot { color: #aaa; font-style: italic; }
+
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #C46849;
+      margin: 2rem 0 0.8rem;
+    }
+
+    .deck-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 600px) { .deck-grid { grid-template-columns: 1fr; } }
+
+    .deck-card {
+      background: #fff;
+      border: 1px solid #e8e4da;
+      border-radius: 14px;
+      padding: 1.3rem 1.4rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .deck-card:hover {
+      border-color: #C46849;
+      box-shadow: 0 4px 16px rgba(196,104,73,0.12);
+    }
+    .deck-card .time-badge {
+      font-size: 0.72rem; font-weight: 700; color: #C46849;
+      background: rgba(196,104,73,0.1); border-radius: 999px;
+      padding: 0.2em 0.7em; display: inline-block; width: fit-content;
+    }
+    .deck-card h3 { font-size: 1rem; font-weight: 600; color: #1a1a1a; }
+    .deck-card .owner { font-size: 0.8rem; color: #888; }
+    .deck-card .desc { font-size: 0.82rem; color: #666; line-height: 1.5; }
+    .deck-card .slides-count {
+      font-size: 0.75rem; color: #aaa;
+      margin-top: auto; padding-top: 0.4rem;
+    }
+    .deck-card .arrow {
+      position: absolute; right: 1.2rem; top: 50%;
+      transform: translateY(-50%);
+      color: #ddd; font-size: 1.2rem;
+      transition: color 0.15s, right 0.15s;
+    }
+    .deck-card:hover .arrow { color: #C46849; right: 1rem; }
+
+    .cover-card { border-color: #7B9E87; }
+    .cover-card:hover { border-color: #4d7a5a; box-shadow: 0 4px 16px rgba(123,158,135,0.15); }
+    .cover-card .time-badge { color: #4d7a5a; background: rgba(123,158,135,0.12); }
+    .cover-card .arrow { }
+
+    .ref-card { border-style: dashed; border-color: #ddd; }
+    .ref-card .time-badge { color: #aaa; background: #f5f5f5; }
+
+    .tutorial-link {
+      display: flex; align-items: center; gap: 1rem;
+      background: #1a1a1a; color: #fff;
+      border-radius: 12px; padding: 1rem 1.4rem;
+      text-decoration: none; margin-top: 2rem;
+      transition: background 0.15s;
+    }
+    .tutorial-link:hover { background: #2d1a12; }
+    .tutorial-link .icon { font-size: 1.4rem; }
+    .tutorial-link .text h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.1rem; }
+    .tutorial-link .text p { font-size: 0.8rem; color: rgba(255,255,255,0.55); }
+    .tutorial-link .ext { margin-left: auto; color: rgba(255,255,255,0.4); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">A</div>
+  <div>
+    <h1>APHYS AI Tutorial — May 8, 2026</h1>
+    <span>FB53 · AlbaNova · 13:00–17:00 · Hybrid</span>
+  </div>
+</header>
+
+<main>
+  <h2>Slide Decks</h2>
+  <p class="subtitle">Click any deck to open it in presentation mode. Use arrow keys or Space to navigate.</p>
+
+  <!-- Mini schedule -->
+  <div class="schedule-bar">
+    <div class="slot"><span class="t">13:00</span><span>Arrival</span></div>
+    <div class="slot"><span class="t">13:15</span><span>Context intro</span></div>
+    <div class="slot"><span class="t">13:30</span><span>ChatGPT intro</span></div>
+    <div class="slot"><span class="t">13:45</span><span>ChatGPT hands-on</span></div>
+    <div class="slot"><span class="t">14:00</span><span>Claude Code intro</span></div>
+    <div class="slot"><span class="t">14:15</span><span>Claude Code hands-on</span></div>
+    <div class="slot break-slot"><span class="t">14:30</span><span>☕ Coffee break</span></div>
+    <div class="slot"><span class="t">15:00</span><span>Jonas showcase</span></div>
+    <div class="slot"><span class="t">15:15</span><span>Wei showcase</span></div>
+    <div class="slot"><span class="t">15:30</span><span>Advanced showcases</span></div>
+    <div class="slot"><span class="t">16:00</span><span>Group work</span></div>
+    <div class="slot"><span class="t">16:45</span><span>Wrap-up</span></div>
+  </div>
+
+  <!-- First half decks -->
+  <div class="section-label">First half — 13:15 to 14:30</div>
+  <div class="deck-grid">
+
+    <a class="deck-card" href="may8-ai-context-intro.html" target="_blank">
+      <span class="time-badge">13:15 · 15 min</span>
+      <h3>AI Context &amp; Labor Market</h3>
+      <span class="owner">Wei + Jonas</span>
+      <p class="desc">Why this matters: labor market evidence, participant profiles, ethics of responsible AI use in research.</p>
+      <span class="slides-count">10 slides · ~15 min</span>
+      <span class="arrow">›</span>
+    </a>
+
+    <a class="deck-card" href="may8-chatgpt-intro.html" target="_blank">
+      <span class="time-badge">13:30 · 15 min</span>
+      <h3>ChatGPT Intro</h3>
+      <span class="owner">Jonas Sellberg</span>
+      <p class="desc">Prompting fundamentals, before/after examples, 5 research use cases, critical awareness, hands-on exercise.</p>
+      <span class="slides-count">7 slides · ~15 min</span>
+      <span class="arrow">›</span>
+    </a>
+
+    <a class="deck-card" href="may8-claude-code-intro.html" target="_blank">
+      <span class="time-badge">14:00 · 15 min</span>
+      <h3>Claude Code Intro</h3>
+      <span class="owner">Wei Ouyang</span>
+      <p class="desc">What an AI agent is, the agentic loop, physics use cases, getting started, safety &amp; control, hands-on exercise.</p>
+      <span class="slides-count">9 slides · ~15 min</span>
+      <span class="arrow">›</span>
+    </a>
+
+  </div>
+
+  <!-- Second half decks -->
+  <div class="section-label">Second half — 15:00 to 17:00</div>
+  <div class="deck-grid">
+
+    <a class="deck-card" href="may8-presenter-covers.html" target="_blank">
+      <span class="time-badge cover-card" style="color:#4d7a5a;background:rgba(123,158,135,0.12);">15:30 · 30 min</span>
+      <h3>Advanced User Showcases</h3>
+      <span class="owner">Ohm · Xu · Maciel</span>
+      <p class="desc">Intro slide + cover cards for each presenter. Update titles once confirmed.</p>
+      <span class="slides-count">5 slides · transition deck</span>
+      <span class="arrow">›</span>
+    </a>
+
+  </div>
+
+  <!-- Placeholder cards for showcase decks -->
+  <div class="deck-grid" style="margin-top:1rem;">
+
+    <div class="deck-card ref-card" style="cursor:default;">
+      <span class="time-badge">15:00 · 15 min</span>
+      <h3 style="color:#aaa;">Jonas Showcase</h3>
+      <span class="owner" style="color:#ccc;">Jonas Sellberg</span>
+      <p class="desc" style="color:#bbb;">Building this event with AI — slides to be added.</p>
+      <span class="slides-count">Pending</span>
+    </div>
+
+    <div class="deck-card ref-card" style="cursor:default;">
+      <span class="time-badge">15:15 · 15 min</span>
+      <h3 style="color:#aaa;">Wei Showcase</h3>
+      <span class="owner" style="color:#ccc;">Wei Ouyang</span>
+      <p class="desc" style="color:#bbb;">AI agents in the lab — slides to be added.</p>
+      <span class="slides-count">Pending</span>
+    </div>
+
+  </div>
+
+  <!-- Reference -->
+  <div class="section-label">Reference</div>
+  <div class="deck-grid">
+    <a class="deck-card ref-card" href="presentation.html" target="_blank">
+      <span class="time-badge">Source material</span>
+      <h3>Original Claude Code Presentation</h3>
+      <span class="owner">Stuart McAlpin · Oscar Klein Center · Stockholm</span>
+      <p class="desc">Full-length reference deck pulled from Indico. Used as source for the Claude Code intro.</p>
+      <span class="slides-count">25 slides · ~45 min</span>
+      <span class="arrow">›</span>
+    </a>
+  </div>
+
+  <!-- Tutorial page link -->
+  <a class="tutorial-link" href="https://static-aphys-docs-10c60344.svc.hypha.aicell.io/may8-tutorial.html" target="_blank">
+    <span class="icon">📋</span>
+    <div class="text">
+      <h3>Tutorial Webpage</h3>
+      <p>Full programme, setup instructions, exercise prompts, Zoom link</p>
+    </div>
+    <span class="ext">↗</span>
+  </a>
+
+</main>
+</body>
+</html>

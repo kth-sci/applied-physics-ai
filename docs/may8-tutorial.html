@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>May 8 Tutorial — APHYS AI Initiative</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="assets/styles.css" rel="stylesheet" />
+  <style>
+    /* ── Page-specific overrides ──────────────── */
+    .tutorial-hero {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d1a12 100%);
+      color: #fff;
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+    }
+    .tutorial-hero h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .tutorial-hero .meta { color: rgba(255,255,255,0.65); font-size: 1rem; margin-bottom: 1.5rem; }
+    .tutorial-hero .badge {
+      display: inline-block;
+      background: rgba(196,104,73,0.9);
+      color: #fff;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Section layout ───────────────────────── */
+    .page-content { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .section-block { margin-bottom: 3rem; }
+    .section-block h2 {
+      font-size: 1.4rem; font-weight: 700;
+      color: #1a1a1a; margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid #C46849;
+      display: inline-block;
+    }
+
+    /* ── Schedule table ───────────────────────── */
+    .schedule { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .schedule th { text-align: left; padding: 0.6rem 0.8rem; background: #f5f3ef; color: #1a1a1a; font-weight: 600; border-bottom: 2px solid #C46849; }
+    .schedule td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #e8e4da; vertical-align: top; color: #444; }
+    .schedule tr.break td { background: #faf9f4; color: #888; font-style: italic; }
+    .schedule .time { white-space: nowrap; font-weight: 600; color: #C46849; font-variant-numeric: tabular-nums; }
+    .schedule .owner { color: #888; font-size: 0.82rem; }
+
+    /* ── Step boxes ───────────────────────────── */
+    .step-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    .step-card {
+      background: #faf9f4;
+      border: 1px solid #e8e4da;
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+    }
+    .step-card .step-num {
+      display: inline-block;
+      background: #C46849;
+      color: #fff;
+      width: 1.7rem; height: 1.7rem;
+      border-radius: 50%;
+      text-align: center; line-height: 1.7rem;
+      font-weight: 700; font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+    .step-card h3 { font-size: 1rem; font-weight: 600; color: #1a1a1a; margin-bottom: 0.4rem; }
+    .step-card p, .step-card li { font-size: 0.9rem; color: #555; line-height: 1.6; }
+    .step-card code {
+      background: #f0ede5; border: 1px solid #ddd8ce;
+      padding: 0.15em 0.45em; border-radius: 5px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.82em;
+      color: #C46849;
+    }
+    .step-card pre {
+      background: #1a1a1a; color: #e0e0e0;
+      border-radius: 8px; padding: 0.8rem 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem; line-height: 1.6;
+      overflow-x: auto; margin-top: 0.5rem;
+    }
+
+    /* ── Prompt boxes ─────────────────────────── */
+    .prompt-block {
+      background: #1a1a1a;
+      color: #e0e0e0;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      margin: 0.8rem 0;
+      position: relative;
+    }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.7rem;
+      background: rgba(196,104,73,0.8); color: #fff;
+      border: none; border-radius: 5px;
+      padding: 0.2rem 0.6rem; font-size: 0.75rem;
+      cursor: pointer; font-family: inherit;
+    }
+    .copy-btn:hover { background: #C46849; }
+
+    /* ── Track cards ──────────────────────────── */
+    .track-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    @media (max-width: 700px) { .track-grid { grid-template-columns: 1fr; } }
+    .track-card {
+      border-radius: 12px; padding: 1.1rem 1.2rem;
+      border: 2px solid #e8e4da;
+    }
+    .track-card.a { border-color: #7B9E87; }
+    .track-card.b { border-color: #C46849; }
+    .track-card.c { border-color: #4a7fa5; }
+    .track-card .track-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .track-card.a .track-label { color: #7B9E87; }
+    .track-card.b .track-label { color: #C46849; }
+    .track-card.c .track-label { color: #4a7fa5; }
+    .track-card h3 { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; margin-bottom: 0.4rem; }
+    .track-card p, .track-card li { font-size: 0.85rem; color: #555; line-height: 1.5; }
+
+    /* ── Tip box ──────────────────────────────── */
+    .tip-box {
+      background: rgba(45,122,79,0.07);
+      border-left: 4px solid #2D7A4F;
+      border-radius: 0 10px 10px 0;
+      padding: 0.8rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.9rem; color: #444;
+    }
+    .warn-box {
+      background: rgba(196,104,73,0.07);
+      border-left: 4px solid #C46849;
+      border-radius: 0 10px 10px 0;
+      padding: 0.8rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.9rem; color: #444;
+    }
+
+    /* ── Zoom info ────────────────────────────── */
+    .zoom-box {
+      background: #f0f4f8; border: 1px solid #c5d5e5;
+      border-radius: 10px; padding: 1rem 1.3rem;
+      font-size: 0.9rem; color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV (minimal) -->
+  <nav style="background:#1a1a1a; padding:0.8rem 1.5rem; display:flex; align-items:center; gap:1rem;">
+    <a href="index.html" style="color:#C46849; font-weight:700; text-decoration:none; font-size:0.95rem;">← APHYS AI</a>
+    <span style="color:#666; font-size:0.85rem;">/ May 8 Tutorial</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="tutorial-hero">
+    <div class="badge">Thursday, May 8 · 13:00–17:00</div>
+    <h1>AI Agent Tutorial</h1>
+    <p class="meta">FB53 · AlbaNova University Center · Hybrid (Zoom available)</p>
+    <p style="color:rgba(255,255,255,0.75); max-width:560px; margin:0 auto; font-size:0.95rem;">
+      This page has everything you need for the tutorial — setup instructions, exercise prompts, and follow-up resources. Bookmark it and use it during the session.
+    </p>
+  </div>
+
+  <div class="page-content">
+
+    <!-- ── BEFORE YOU ARRIVE ──────────────────── -->
+    <div class="section-block">
+      <h2>Before you arrive — setup</h2>
+      <p style="color:#555; margin-bottom:1.2rem; font-size:0.9rem;">
+        Please complete these two steps before Thursday. It only takes 10–15 minutes. If you get stuck, arrive a few minutes early — helpers will be there.
+      </p>
+      <div class="step-grid">
+
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Create a ChatGPT account (free)</h3>
+          <p>Go to <a href="https://chat.openai.com" target="_blank">chat.openai.com</a> and sign up with your email. The free tier is enough for today's exercises.</p>
+          <p style="margin-top:0.5rem; color:#888; font-size:0.85rem;">Already have one? You're set.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Install Claude Code</h3>
+          <p>You have been granted a KTH Applied Physics <strong>Claude Team seat</strong>. Install Claude Code with one command:</p>
+          <pre><code># macOS / Linux / WSL
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Windows (PowerShell)
+irm https://claude.ai/install.ps1 | iex</code></pre>
+          <p style="margin-top:0.6rem;">Then start it and log in with your <strong>KTH email</strong> (the one you registered with):</p>
+          <pre><code>claude
+# Follow the login prompt — it opens a browser tab</code></pre>
+          <div class="tip-box" style="margin-top:0.8rem;">
+            <strong>Don't have a Claude seat yet?</strong> <a href="index.html#claude-request">Request one here</a> — approval usually happens within 24 hours.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="warn-box" style="margin-top:1rem;">
+        <strong>No laptop?</strong> Borrow one from a colleague, or you can follow along and do all exercises on <a href="https://claude.ai" target="_blank">claude.ai</a> in your browser — no installation needed.
+      </div>
+    </div>
+
+    <!-- ── PROGRAMME ──────────────────────────── -->
+    <div class="section-block">
+      <h2>Programme</h2>
+      <table class="schedule">
+        <thead>
+          <tr><th>Time</th><th>Session</th><th>Format</th></tr>
+        </thead>
+        <tbody>
+          <tr class="break">
+            <td class="time">13:00</td>
+            <td>Arrival &amp; setup</td>
+            <td>Informal</td>
+          </tr>
+          <tr>
+            <td class="time">13:15</td>
+            <td><strong>Tutorial intro + AI context</strong> — labor market research, participant profiles, why this matters now <span class="owner">&nbsp;· Wei &amp; Jonas</span></td>
+            <td>Slides + discussion (15 min)</td>
+          </tr>
+          <tr>
+            <td class="time">13:30</td>
+            <td><strong>ChatGPT intro</strong> — prompting fundamentals, 5 research use cases <span class="owner">&nbsp;· Jonas</span></td>
+            <td>Slides (15 min)</td>
+          </tr>
+          <tr>
+            <td class="time">13:45</td>
+            <td><strong>ChatGPT hands-on</strong> — literature synthesis exercise in groups</td>
+            <td>Group work (15 min)</td>
+          </tr>
+          <tr>
+            <td class="time">14:00</td>
+            <td><strong>Claude Code intro</strong> — what an AI agent is, how it works <span class="owner">&nbsp;· Wei</span></td>
+            <td>Slides (15 min)</td>
+          </tr>
+          <tr>
+            <td class="time">14:15</td>
+            <td><strong>Claude Code hands-on</strong> — explore a project folder or analyse data in groups</td>
+            <td>Group work (15 min)</td>
+          </tr>
+          <tr class="break">
+            <td class="time">14:30</td>
+            <td>☕ Coffee break — pastries, discussion</td>
+            <td>30 min</td>
+          </tr>
+          <tr>
+            <td class="time">15:00</td>
+            <td><strong>Showcase: building this event with AI</strong> — webpage, repo, and a first-time AI journey <span class="owner">&nbsp;· Jonas</span></td>
+            <td>Live demo (15 min)</td>
+          </tr>
+          <tr>
+            <td class="time">15:15</td>
+            <td><strong>Showcase: AI agents in the lab</strong> — managing research workflows and instruments <span class="owner">&nbsp;· Wei</span></td>
+            <td>Live demo (15 min)</td>
+          </tr>
+          <tr>
+            <td class="time">15:30</td>
+            <td><strong>Advanced user showcases</strong> — Christian Ohm, Qichen Xu, Renan Maciel share their projects (~10 min each)</td>
+            <td>Demos + Q&amp;A (30 min)</td>
+          </tr>
+          <tr>
+            <td class="time">16:00</td>
+            <td><strong>Group work</strong> — AI-generated mini-project task (see prompts below). Coffee refill available throughout.</td>
+            <td>Group work (45 min)</td>
+          </tr>
+          <tr>
+            <td class="time">16:45</td>
+            <td><strong>Group presentations + wrap-up</strong> — brief results from each group, closing words <span class="owner">&nbsp;· Jonas &amp; Wei</span></td>
+            <td>15 min</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── EXERCISE 1: CHATGPT ────────────────── -->
+    <div class="section-block">
+      <h2>Exercise 1 — ChatGPT hands-on (13:45, 15 min)</h2>
+      <p style="color:#555; font-size:0.9rem; margin-bottom:1rem;">
+        Open <a href="https://chat.openai.com" target="_blank">chat.openai.com</a> in your browser. Work in groups of 2–4. Paste the prompt below and replace the placeholders with your own abstracts — or use the three provided at the bottom of this section.
+      </p>
+
+      <div class="prompt-block" id="p-chatgpt">Here are 3 abstracts from my research field:
+
+[ABSTRACT 1 — paste here, or use one from the samples below]
+
+[ABSTRACT 2 — paste here]
+
+[ABSTRACT 3 — paste here]
+
+Please:
+1. Identify the main shared theme across these papers (2 sentences)
+2. Point out one contradiction or unresolved tension between them
+3. Suggest one research question none of them has answered yet
+4. Draft a 100-word introduction paragraph for a study that
+   addresses that gap — for a specialist reader in my field
+<button class="copy-btn" onclick="copyPrompt('p-chatgpt')">Copy</button></div>
+
+      <p style="font-size:0.88rem; color:#555; margin-bottom:0.6rem;"><strong>Then iterate — try one of these follow-ups:</strong></p>
+      <ul style="font-size:0.88rem; color:#555; line-height:1.8; padding-left:1.2rem;">
+        <li>"Make the gap paragraph more urgent — emphasise why the question matters now."</li>
+        <li>"What are you most uncertain about in your answer? Where might you be wrong?"</li>
+        <li>"Argue against the research question you just suggested."</li>
+        <li>"Rewrite the paragraph for a VR grant panel — non-specialist audience."</li>
+      </ul>
+
+      <details style="margin-top:1rem;">
+        <summary style="cursor:pointer; font-weight:600; color:#C46849; font-size:0.9rem;">Sample abstracts (Applied Physics) — click to expand</summary>
+        <div style="margin-top:0.8rem; font-size:0.85rem; color:#555; line-height:1.7; border-left:3px solid #e8e4da; padding-left:1rem;">
+          <p><strong>Abstract 1 — Ultrafast X-ray spectroscopy:</strong><br/>
+          We report time-resolved X-ray absorption spectroscopy measurements of charge-transfer dynamics in a cobalt-based molecular catalyst at a free-electron laser. Using a 50-fs X-ray pulse, we resolve a metal-to-ligand charge transfer state that persists for 3.2 ps before relaxing to the ground state. Our findings suggest that the lifetime of this state is strongly dependent on solvent polarity, with implications for the design of more efficient artificial photosynthesis systems.</p>
+          <p><strong>Abstract 2 — Ultrafast optical spectroscopy:</strong><br/>
+          Using transient absorption spectroscopy with 10-fs time resolution, we track excited-state dynamics in a series of ruthenium photosensitisers. We observe a branching between intersystem crossing and internal conversion channels that depends sensitively on the ligand field strength. Contrary to earlier reports, our data indicate that triplet state formation occurs on a sub-100-fs timescale, faster than vibrational cooling. These results challenge existing mechanistic models and have direct implications for solar energy conversion materials.</p>
+          <p><strong>Abstract 3 — Computational chemistry:</strong><br/>
+          We present density functional theory calculations of excited-state potential energy surfaces for a family of transition metal complexes used as photocatalysts. Our calculations reveal a previously unreported conical intersection between the singlet and triplet manifolds at a metal–ligand bond elongation of 0.15 Å. This intersection provides a barrierless pathway for ultrafast intersystem crossing, consistent with recent experimental observations. We propose that tuning the ligand field to shift this intersection can rationally optimise charge-transfer yields.</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── EXERCISE 2: CLAUDE CODE ────────────── -->
+    <div class="section-block">
+      <h2>Exercise 2 — Claude Code hands-on (14:15, 15 min)</h2>
+      <p style="color:#555; font-size:0.9rem; margin-bottom:1rem;">
+        Open your terminal and navigate to a folder with data, code, or any project files. Then start Claude Code. If you have no project handy, use the desktop — Claude can work with anything.
+      </p>
+      <div class="track-grid">
+        <div class="track-card a">
+          <div class="track-label">Track A — Browser only</div>
+          <h3>claude.ai code artifacts</h3>
+          <p>Open <a href="https://claude.ai" target="_blank">claude.ai</a>, start a new chat, and type:</p>
+          <pre style="background:#1a1a1a; color:#e0e0e0; padding:0.6rem; border-radius:6px; font-size:0.8rem; margin-top:0.4rem;">I have time-series data in a CSV with
+columns: time_s, intensity. Write Python
+code that loads it, plots it, and fits
+an exponential decay.</pre>
+        </div>
+        <div class="track-card b">
+          <div class="track-label">Track B — Terminal (recommended)</div>
+          <h3>Claude Code in your project</h3>
+          <pre style="background:#1a1a1a; color:#e0e0e0; padding:0.6rem; border-radius:6px; font-size:0.8rem; margin-top:0.4rem;">cd ~/your-folder
+claude
+> Give me an overview of this folder.
+  Suggest 3 things you could help me
+  do with these files.</pre>
+        </div>
+        <div class="track-card c">
+          <div class="track-label">Track C — Advanced</div>
+          <h3>Automate a real task</h3>
+          <pre style="background:#1a1a1a; color:#e0e0e0; padding:0.6rem; border-radius:6px; font-size:0.8rem; margin-top:0.4rem;">I want to automate [describe a
+repetitive task in your workflow].
+Help me design a script for this.
+Start by asking me questions.</pre>
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top:1rem;">
+        <strong>Tip:</strong> If Claude Code gives an error or does something unexpected, paste the error message into ChatGPT and ask "what does this mean and how do I fix it?" That's the workflow — use them together.
+      </div>
+    </div>
+
+    <!-- ── ADVANCED HANDS-ON ───────────────────── -->
+    <div class="section-block">
+      <h2>Advanced hands-on — mini-project (15:45, 45 min)</h2>
+      <p style="color:#555; font-size:0.9rem; margin-bottom:1rem;">
+        Work in groups. Use the brainstorming prompt below to define a small project you can actually build in 30 minutes. Aim small — something that works beats something ambitious that doesn't.
+      </p>
+      <h3 style="font-size:1rem; font-weight:600; color:#1a1a1a; margin-bottom:0.5rem;">Step 1 — Brainstorm with AI</h3>
+      <p style="font-size:0.88rem; color:#555; margin-bottom:0.5rem;">Paste this into ChatGPT or Claude Code:</p>
+      <div class="prompt-block" id="p-brainstorm">I am attending an AI tutorial at KTH Applied Physics.
+I have 30 minutes to build a small project with AI tools.
+
+My research/teaching area: [describe in 1–2 sentences]
+Tools available: ChatGPT, Claude Code, Python
+Data I have with me (if any): [describe or say "none"]
+
+Please ask me 3 questions to help me find a good mini-project
+that is: realistic in 30 min, useful for my actual work,
+and lets me practice what I've learned today.
+
+After I answer, suggest 3 concrete project options with
+a specific first step for each.
+<button class="copy-btn" onclick="copyPrompt('p-brainstorm')">Copy</button></div>
+
+      <h3 style="font-size:1rem; font-weight:600; color:#1a1a1a; margin:1.2rem 0 0.5rem;">Step 2 — Build it</h3>
+      <p style="font-size:0.88rem; color:#555;">Work with Claude Code or ChatGPT to build the project. When you get stuck, describe the problem in plain language — don't try to write the solution yourself first.</p>
+
+      <h3 style="font-size:1rem; font-weight:600; color:#1a1a1a; margin:1.2rem 0 0.5rem;">Step 3 — Prepare to share (optional)</h3>
+      <p style="font-size:0.88rem; color:#555; margin-bottom:0.5rem;">If you'd like to present at the wrap-up, ask Claude Code to create a 2-slide summary:</p>
+      <div class="prompt-block" id="p-share">Create a 2-slide summary of what I just built:
+Slide 1: What it does and why it's useful for my work
+Slide 2: What worked, what surprised me, and what I'd do next
+
+Make it as a simple HTML file I can open in my browser.
+<button class="copy-btn" onclick="copyPrompt('p-share')">Copy</button></div>
+
+      <h3 style="font-size:1rem; font-weight:600; color:#1a1a1a; margin:1.2rem 0 0.5rem;">Step 4 — Submit to the gallery (optional)</h3>
+      <p style="font-size:0.88rem; color:#555; margin-bottom:0.5rem;">If you built something useful, share it with the department. Run this in Claude Code:</p>
+      <div class="prompt-block" id="p-gallery">Submit my project to the APHYS AI use-case gallery.
+Gallery API: https://hypha.aicell.io/kth-sci/artifacts/aphys-ai-gallery
+Tags to include: ["may8-tutorial", "research"] (or teaching/productivity)
+
+My project:
+Name: [short title]
+Description: [2–3 sentences what it does and who it helps]
+Tool: Claude Code (or ChatGPT)
+Difficulty: Beginner / Intermediate / Advanced
+Time saved estimate: [e.g. "~1 hour per analysis"]
+<button class="copy-btn" onclick="copyPrompt('p-gallery')">Copy</button></div>
+    </div>
+
+    <!-- ── ZOOM INFO ──────────────────────────── -->
+    <div class="section-block">
+      <h2>For remote participants (Zoom)</h2>
+      <div class="zoom-box">
+        <p style="margin-bottom:0.7rem;">
+          <strong>Zoom link:</strong>
+          <a href="https://kth-se.zoom.us/j/68849683451" target="_blank" style="color:#C46849; font-weight:600;">
+            https://kth-se.zoom.us/j/68849683451
+          </a>
+        </p>
+        <p style="margin-bottom:0.5rem;">All exercises work identically whether you're onsite or on Zoom. During hands-on sessions, work on your own laptop — the exercises are designed for individual or pair work.</p>
+        <p>To share your work at the wrap-up: use Zoom screen share, or post a link in the Zoom chat.</p>
+      </div>
+    </div>
+
+    <!-- ── RESOURCES ──────────────────────────── -->
+    <div class="section-block">
+      <h2>Resources</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; font-size:0.88rem;">
+        <a href="getting-started.html" style="display:block; background:#faf9f4; border:1px solid #e8e4da; border-radius:10px; padding:0.9rem 1.1rem; text-decoration:none; color:#1a1a1a;">
+          <div style="font-weight:600; margin-bottom:0.2rem; color:#C46849;">Getting Started Guide →</div>
+          <div style="color:#666;">Step-by-step intro to Claude and ChatGPT</div>
+        </a>
+        <a href="gallery.html" style="display:block; background:#faf9f4; border:1px solid #e8e4da; border-radius:10px; padding:0.9rem 1.1rem; text-decoration:none; color:#1a1a1a;">
+          <div style="font-weight:600; margin-bottom:0.2rem; color:#C46849;">Use-Case Gallery →</div>
+          <div style="color:#666;">Physics research examples from the community</div>
+        </a>
+        <a href="https://code.claude.com/docs" target="_blank" style="display:block; background:#faf9f4; border:1px solid #e8e4da; border-radius:10px; padding:0.9rem 1.1rem; text-decoration:none; color:#1a1a1a;">
+          <div style="font-weight:600; margin-bottom:0.2rem; color:#C46849;">Claude Code Docs ↗</div>
+          <div style="color:#666;">Official documentation and quick-start</div>
+        </a>
+        <a href="events.html" style="display:block; background:#faf9f4; border:1px solid #e8e4da; border-radius:10px; padding:0.9rem 1.1rem; text-decoration:none; color:#1a1a1a;">
+          <div style="font-weight:600; margin-bottom:0.2rem; color:#C46849;">Upcoming Events →</div>
+          <div style="color:#666;">May 26 hackathon and October workshop</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <p style="font-size:0.78rem; color:#aaa; border-top:1px solid #e8e4da; padding-top:1.5rem; margin-top:1rem;">
+      This page is part of the APHYS AI Initiative at KTH Applied Physics. Content is AI-assisted and may contain errors — use critical judgment. Questions? Contact <a href="mailto:wei.ouyang@scilifelab.se" style="color:#C46849;">wei.ouyang@scilifelab.se</a>.
+    </p>
+
+  </div>
+
+  <script>
+    function copyPrompt(id) {
+      const el = document.getElementById(id);
+      // Get text content without the button text
+      const btn = el.querySelector('.copy-btn');
+      const btnText = btn ? btn.textContent : '';
+      let text = el.textContent.replace(btnText, '').trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const b = el.querySelector('.copy-btn');
+        if (b) { b.textContent = 'Copied!'; setTimeout(() => b.textContent = 'Copy', 1500); }
+      });
+    }
+  </script>
+</body>
+</html>
