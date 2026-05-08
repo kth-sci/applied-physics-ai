@@ -405,27 +405,40 @@ code{font-family:'JetBrains Mono',monospace;font-size:0.82em;background:var(--bg
 <section class="slide divider" id="s6">
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
   <div class="page">06 / 10</div>
-  <div class="inner" style="max-width:900px;">
+  <div class="inner" style="max-width:1100px;">
     <div class="kicker" style="color:var(--sky);">Beyond the Web</div>
-    <h1 style="font-size:46px;margin-bottom:var(--s3);">Claude Code<br/>controls <em style="font-style:normal;color:var(--indigo);">Blender.</em></h1>
+    <h1 style="font-size:46px;margin-bottom:var(--s2);">Claude Code<br/>controls <em style="font-style:normal;color:var(--indigo);">Blender.</em></h1>
     <div class="rule" style="background:var(--sky)"></div>
-    <p class="lead" style="margin-bottom:var(--s4);">
-      MCP — the Model Context Protocol — lets Claude Code connect to any application that exposes a server.
-      Blender has one. You describe a 3D scene in natural language; Claude Code builds it.
+    <p class="lead" style="margin-bottom:var(--s3);">
+      24 hours ago, I had never used Blender.
+      Blender is a free, open-source 3D creation suite covering modelling, animation, rendering, and simulation — used everywhere from scientific visualisation to film VFX.
     </p>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s3);">
-      <div class="lab-card">
-        <h4>What MCP is</h4>
-        <p>An open protocol (Anthropic, 2024) for connecting AI agents to external tools — databases, browsers, CAD software, instruments.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);align-items:start;">
+
+      <div style="display:flex;flex-direction:column;gap:var(--s3);">
+        <div class="lab-card">
+          <h4>What MCP is</h4>
+          <p>An open protocol (Anthropic, 2024) for connecting AI agents to external tools — databases, browsers, CAD software, instruments.</p>
+        </div>
+        <div class="lab-card sky">
+          <h4>Blender MCP server</h4>
+          <p>An addon for Blender that exposes its Python API as an MCP server. Claude Code connects to it and issues commands directly.</p>
+        </div>
+        <div class="lab-card green">
+          <h4>What becomes possible</h4>
+          <p>Scientific visualisations, molecular animations, instrument schematics, publication figures — described in words, built in Blender.</p>
+        </div>
       </div>
-      <div class="lab-card sky">
-        <h4>Blender MCP server</h4>
-        <p>An addon for Blender that exposes its Python API as an MCP server. Claude Code connects to it and issues commands directly.</p>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--s2);">
+        <img src="rotation_loop.gif" alt="Blue PLA object rotating in Blender"
+             style="width:100%;max-width:420px;border-radius:8px;border:1px solid var(--line-2);display:block;"/>
+        <div class="eg" style="width:100%;max-width:420px;font-size:13px;">
+          "Center it, make it into blue PLA plastic, render a looping gif where the object rotates around the z-axis in low resolution"
+        </div>
       </div>
-      <div class="lab-card green">
-        <h4>What becomes possible</h4>
-        <p>Scientific visualisations, molecular animations, instrument schematics, publication figures — described in words, built in Blender.</p>
-      </div>
+
     </div>
   </div>
 </section>
