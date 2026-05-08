@@ -378,24 +378,52 @@ Remember: we have about 30 minutes. Prioritize a working solution over a perfect
     </div>
     <p>At 16:45 we'll come back together for a short show &amp; tell. <b>You don't need to have finished — even a first draft is worth sharing.</b> A partial result with good insight is more valuable than a polished one with nothing to say about the process.</p>
 
+    <h3 style="font-size:16px;font-weight:700;margin:var(--s4) 0 var(--s2)">Generate your presentation slides</h3>
+    <p>Each group gets ~2 minutes. Ask Claude Code to make you a simple 2-slide HTML deck — it takes under a minute and gives you something clean to project. Paste this prompt when your project is done (or mostly done):</p>
+
+    <div class="code-block">
+      <div class="cb-label">
+        <span>Prompt — generate presentation slides</span>
+        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+      </div>
+      <pre id="cb-slides">Create a single-file HTML slide deck I can open in a browser and present in 2 minutes. Make it 2 slides with scroll-snap (each slide fills the full viewport). Dark background, large readable text, Inter font.
+
+Slide 1 — What I built
+- Title: [project name]
+- What it does: 1–2 sentences
+- Key output or result (describe it, or embed a figure if one exists in this folder)
+
+Slide 2 — What I learned
+- What surprised me or worked unexpectedly well
+- One thing I'd do next with more time
+
+Keep the design clean and minimal — readable from across a room. Save it as presentation.html in this folder.</pre>
+    </div>
+
+    <div class="tip">
+      <b>Then open it:</b> Claude Code will save <code>presentation.html</code> in your project folder. Open it in your browser, go fullscreen (F11), and you're ready to present.
+    </div>
+
+    <div class="rule" style="margin:var(--s4) 0"></div>
+
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:var(--s2)">Show &amp; tell format</h3>
+
     <div class="share-row">
       <div class="share-cell">
         <div class="l">Option A — show live</div>
         <h4>Demo in the room</h4>
-        <p>Screen-share (or project) what you built. Walk through what the agent did, what surprised you, and what you'd do next with more time. 2–3 minutes per group.</p>
+        <p>Open your <code>presentation.html</code> (or show the actual output). Walk through what the agent did, what surprised you, and what you'd do next. 2 minutes per group.</p>
       </div>
       <div class="share-cell">
-        <div class="l">Option B — Zoom chat</div>
-        <h4>Post a link or screenshot</h4>
-        <p>Paste a screenshot of your output, your GitHub link, or your Claude.ai conversation link in the Zoom chat. Zoom participants: this is your main option.</p>
+        <div class="l">Option B — Zoom</div>
+        <h4>Screen share or chat</h4>
+        <p>Screen-share your slides or output directly. Or paste a screenshot in the Zoom chat if you'd rather not present live.</p>
       </div>
     </div>
 
-    <p style="margin-top:var(--s3)">To share with the Zoom group, copy a screenshot or your code to the chat. To share a Claude.ai link: open the conversation in claude.ai, click Share → Copy link.</p>
-
-    <div class="tip green" style="margin-top:var(--s3)">
-      <b>Submit to the APHYS AI gallery (optional):</b> If you want your use case to appear on the department AI website, paste this prompt into Claude Code at the end of your session:<br/><br/>
-      <em>"Submit this project as a use case to the APHYS AI gallery. Use the API at https://hypha.aicell.io/kth-sci/artifacts/aphys-ai-gallery. Include: title, 2-sentence description, my division [BON/LAMP/Biophysics/other], and tag it 'may8-tutorial'."</em>
+    <div class="tip green" style="margin-top:var(--s4)">
+      <b>Add your project to the APHYS AI gallery (optional):</b> If you want your use case to appear on the department AI website, visit the gallery and submit it there — takes 2 minutes.<br/><br/>
+      <a href="https://kth-sci.github.io/applied-physics-ai/gallery.html" target="_blank" style="color:var(--green);font-weight:700;">→ kth-sci.github.io/applied-physics-ai/gallery.html</a>
     </div>
   </div>
 
