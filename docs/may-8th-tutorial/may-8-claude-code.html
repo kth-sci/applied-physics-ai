@@ -738,27 +738,21 @@ Figures → ./figures/ at 300 dpi PNG.
     <h1 style="font-size:52px;margin-bottom:var(--s3);">Your turn.<br/>Build something.</h1>
     <div class="rule" style="background:var(--sky)"></div>
     <p class="lead" style="margin-bottom:var(--s4);">
-      15 minutes. One task from your own research, teaching, or workflow. The next two slides are your guide.
+      15 minutes. Work on your own laptop. Pick one task from your research or teaching — slide 12 shows the steps live, slide 13 has use case ideas.
     </p>
 
-    <div class="pillars three">
+    <div class="pillars two">
       <div class="pillar p4">
-        <div class="n" style="color:var(--sky)">Slide 12</div>
-        <h3>Start your first project</h3>
-        <p>Step-by-step: folder → CLAUDE.md → first task. Covers beginners and anyone who hasn't set up a project folder yet.</p>
+        <div class="n" style="color:var(--sky)">Slide 12 · Live demo</div>
+        <h3>Follow along: first project</h3>
+        <p>Wei will demo the setup live — folder, Claude Code, CLAUDE.md, first task. Follow on your own laptop at the same time.</p>
         <div class="eg">→ go to slide 12</div>
       </div>
       <div class="pillar p5">
-        <div class="n" style="color:var(--green)">Slide 13</div>
-        <h3>Use case ideas</h3>
-        <p>Six lightweight tasks tailored to the Applied Physics divisions in this room. Pick one that fits your work.</p>
+        <div class="n" style="color:var(--green)">Slide 13 · Your choice</div>
+        <h3>Pick a use case &amp; build</h3>
+        <p>Six lightweight tasks tailored to Applied Physics. Once you've followed the setup demo, pick one and run with it on your own project or data.</p>
         <div class="eg">→ go to slide 13</div>
-      </div>
-      <div class="pillar p2">
-        <div class="n" style="color:var(--indigo)">14:30 Wrap-up</div>
-        <h3>Show &amp; tell</h3>
-        <p>Each group shares in 2 minutes: what you built, what surprised you, what you'd do next. Generate slides with one prompt (see build-session page).</p>
-        <div class="eg">→ build-session.html · step 5</div>
       </div>
     </div>
   </div>
@@ -771,43 +765,38 @@ Figures → ./figures/ at 300 dpi PNG.
   <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
   <div class="page">12 / 14 · Wei Ouyang</div>
   <div class="inner">
-    <div class="kicker">Hands-On · Getting Started</div>
+    <div class="kicker">Hands-On · Live Demo — Follow Along</div>
     <h2>Start your first Claude Code project.</h2>
     <div class="rule"></div>
 
     <div class="scenario">
-      <div class="q">Five steps. By step 4 you'll have a working agent session with a real task running.</div>
-      <div class="steps five">
+      <div class="q">Wei will do this live — follow on your own laptop at the same time.</div>
+      <div class="steps four">
         <div class="step">
           <div class="sn">Step 1</div>
           <h4>Create a folder</h4>
-          <p><code>mkdir my-project</code><br/><code>cd my-project</code><br/><br/>Put any data files you want to use inside it. No data? Claude generates synthetic examples.</p>
+          <p><code>mkdir my-project</code><br/><code>cd my-project</code><br/><br/>Put any data files you want to use inside it. No data? Claude can generate synthetic examples.</p>
         </div>
         <div class="step">
           <div class="sn">Step 2</div>
-          <h4>Optional: git init</h4>
-          <p><code>git init</code><br/><br/>Highly recommended — lets you undo Claude's changes with <code>git restore</code> if something goes wrong. Or ask Claude to do it for you.</p>
+          <h4>Start Claude Code</h4>
+          <p><code>claude</code><br/><br/>Claude reads the folder immediately.</p>
         </div>
         <div class="step">
           <div class="sn">Step 3</div>
-          <h4>Start Claude Code</h4>
-          <p><code>claude</code><br/><br/>Claude reads the folder immediately. Then type <code>/init</code> to generate a CLAUDE.md from your project structure.</p>
+          <h4>Run /init — and optionally git</h4>
+          <p>Type <code>/init</code> — Claude generates a CLAUDE.md from your project structure.<br/><br/><em>Optional:</em> also tell Claude <em>"set up a git repo for this project"</em> — gives you a full undo history.</p>
         </div>
         <div class="step">
           <div class="sn">Step 4</div>
-          <h4>Describe your project in CLAUDE.md</h4>
-          <p>Edit the generated file. Add 3–5 lines: who you are, what this project does, any conventions. Example:<br/><br/><em>"I'm a researcher at KTH LAMP studying ultrafast spectroscopy. Goal: analyze pump-probe data in CSV format."</em></p>
-        </div>
-        <div class="step">
-          <div class="sn">Step 5</div>
-          <h4>Type what you want</h4>
-          <p>Tell Claude what to build in plain language. Pick from slide 13 or bring your own task.<br/><br/><em>"Read the CSV files in ./data/ and plot the spectra. Save figures to ./figures/."</em></p>
+          <h4>Type what you want to build</h4>
+          <p>Tell Claude your task in plain language. Use slide 13 for ideas, or bring your own.<br/><br/><em>"Read the CSV files in ./data/ and plot the spectra. Save figures to ./figures/."</em></p>
         </div>
       </div>
     </div>
 
     <div class="callout green" style="margin-top:var(--s3);">
-      <b>If you get stuck:</b> paste the error message directly into Claude Code. Don't copy-paste it yourself — just say "read the error and fix it." That's the agent loop.
+      <b>If you get stuck:</b> just say "read the error and fix it" — don't copy-paste anything yourself. That's the agent loop.
     </div>
   </div>
 </section>
