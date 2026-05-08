@@ -119,6 +119,14 @@ code{font-family:'JetBrains Mono',monospace;font-size:.88em;background:var(--bg-
 
 <div class="page">
 
+  <!-- ── Interface note ─────────────────────────────────────── -->
+  <div class="tip amber" style="margin-bottom:var(--s4);">
+    <b>Two ways to run Claude Code — both work equally well today.</b><br/><br/>
+    <b>CLI (terminal):</b> type <code>claude</code> in a terminal pointed at your project folder — the approach shown in the code blocks below.<br/>
+    <b>Claude Desktop — Code tab:</b> open the Claude Desktop app, click the <em>Code</em> tab (top of the window), then click <em>Open folder…</em> and select your project folder. Paste prompts into the chat box. Everything else is identical — same CLAUDE.md, same tools, same commands.<br/><br/>
+    Not sure which you have? If you installed the Desktop app from <a href="https://claude.ai/download" target="_blank">claude.ai/download</a>, use the Code tab. If you ran the install script in a terminal, use the CLI.
+  </div>
+
   <!-- ── Nav ──────────────────────────────────────────────── -->
   <div class="steps-nav">
     <a href="#step1"><span class="num">1</span>Brainstorm</a>
@@ -223,21 +231,28 @@ Ask me up to 4 questions to narrow down the best idea. Then suggest 2–3 concre
       <div class="step-num">Step 2</div>
       <h2 class="step-title">Create a project folder</h2>
     </div>
-    <p>Open a terminal and create a folder for your project. Put any data files you want to use inside it.</p>
+    <p>Create a folder for your project and put any data files you want to use inside it.</p>
 
-    <div class="code-block">
-      <div class="cb-label">
-        <span>Terminal</span>
-        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-      </div>
-      <pre id="cb2"># Create the folder (replace "my-project" with something descriptive)
-mkdir ~/my-project
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:var(--s3) 0">
+      <div style="background:var(--bg);padding:var(--s3) var(--s4);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:var(--s2);">CLI (terminal)</div>
+        <div class="code-block" style="margin:0">
+          <div class="cb-label"><span>Terminal</span><button class="copy-btn" onclick="copyBlock(this)">Copy</button></div>
+          <pre id="cb2">mkdir ~/my-project
 cd ~/my-project
-
-# Copy any data files you want to use into this folder
-# For example:
-#   cp ~/Downloads/spectra.csv .
-#   cp ~/Desktop/microscopy_images/ . -r</pre>
+# copy data files in, e.g.:
+# cp ~/Downloads/spectra.csv .</pre>
+        </div>
+      </div>
+      <div style="background:var(--bg);padding:var(--s3) var(--s4);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:var(--s2);">Claude Desktop — Code tab</div>
+        <ol style="font-size:14px;color:var(--fg-2);line-height:1.8;padding-left:1.2rem;">
+          <li>Create a folder anywhere using Finder or Explorer</li>
+          <li>Copy your data files into it</li>
+          <li>In Claude Desktop → <em>Code</em> tab → <em>Open folder…</em> → select the folder</li>
+          <li>You're ready — skip the <code>cd</code> and <code>claude</code> commands below</li>
+        </ol>
+      </div>
     </div>
 
     <p>Your folder should look something like this before you start:</p>
@@ -316,13 +331,23 @@ comparing spectra across different time delays."
     </div>
     <p>Open Claude Code and point it at your project folder. Then paste the starting prompt below. <b>This is where the hands-on work begins.</b></p>
 
-    <div class="code-block">
-      <div class="cb-label">
-        <span>Terminal — open Claude Code</span>
-        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-      </div>
-      <pre id="cb4">cd ~/my-project
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:var(--s3) 0">
+      <div style="background:var(--bg);padding:var(--s3) var(--s4);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:var(--s2);">CLI (terminal)</div>
+        <div class="code-block" style="margin:0">
+          <div class="cb-label"><span>Terminal</span><button class="copy-btn" onclick="copyBlock(this)">Copy</button></div>
+          <pre id="cb4">cd ~/my-project
 claude</pre>
+        </div>
+      </div>
+      <div style="background:var(--bg);padding:var(--s3) var(--s4);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:var(--s2);">Claude Desktop — Code tab</div>
+        <ol style="font-size:14px;color:var(--fg-2);line-height:1.9;padding-left:1.2rem;">
+          <li>The folder you opened in Step 2 is already loaded</li>
+          <li>Paste the starting prompt directly into the chat box</li>
+          <li>Claude Desktop reads your <code>CLAUDE.md</code> automatically</li>
+        </ol>
+      </div>
     </div>
 
     <p style="margin-top:var(--s3)">Once Claude Code starts, paste this as your first message:</p>
@@ -406,7 +431,7 @@ Keep the design clean and minimal — readable from across a room. Save it as pr
     </div>
 
     <div class="tip">
-      <b>Then open it:</b> Claude Code will save <code>presentation.html</code> in your project folder. Open it in your browser, go fullscreen (F11), and you're ready to present.
+      <b>Then open it:</b> Claude Code saves <code>presentation.html</code> in your project folder. Open it in your browser (double-click the file, or <code>open presentation.html</code> in the terminal), go fullscreen (F11 / Cmd+Shift+F), and you're ready to present. Desktop users: find the file in Finder/Explorer and double-click it.
     </div>
 
     <div class="rule" style="margin:var(--s4) 0"></div>
