@@ -1,558 +1,720 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ChatGPT Essentials — May 8 Tutorial</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg:      #0f1117;
-      --bg2:     #1a1d27;
-      --bg3:     #22263a;
-      --border:  rgba(255,255,255,0.1);
-      --accent:  #818cf8;   /* indigo */
-      --accent2: #34d399;   /* emerald */
-      --accent3: #f59e0b;   /* amber */
-      --accent4: #f87171;   /* red */
-      --fg:      #f1f5f9;
-      --muted:   #94a3b8;
-      --light:   #64748b;
-      --mono:    'JetBrains Mono', monospace;
-    }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ChatGPT Essentials · May 8 Tutorial · APHYS AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:     #ffffff;
+  --bg-2:   #f8fafc;
+  --bg-3:   #f1f5f9;
+  --fg:     #0f172a;
+  --fg-2:   #334155;
+  --fg-3:   #64748b;
+  --line:   #e2e8f0;
+  --line-2: #cbd5e1;
 
-    .reveal-viewport { background: var(--bg); }
-    .reveal {
-      font-family: 'Inter', sans-serif;
-      font-size: 34px;
-      color: var(--fg);
-      -webkit-font-smoothing: antialiased;
-    }
-    .reveal h1, .reveal h2, .reveal h3 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      text-transform: none;
-      letter-spacing: -0.025em;
-      color: var(--fg);
-      line-height: 1.15;
-    }
-    .reveal h1 { font-size: 2.2em; }
-    .reveal h2 { font-size: 1.35em; margin-bottom: 0.55em; }
-    .reveal h2::after {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 3px;
-      background: var(--accent);
-      border-radius: 2px;
-      margin-top: 0.3em;
-    }
-    .reveal .center h2::after { margin: 0.3em auto 0; }
-    .reveal p { color: var(--muted); line-height: 1.6; margin-bottom: 0.5em; }
-    .reveal ul, .reveal ol { text-align: left; }
-    .reveal li { color: var(--muted); line-height: 1.5; margin-bottom: 0.3em; }
-    .reveal li::marker { color: var(--accent); }
-    .reveal a { color: var(--accent); }
-    .reveal code {
-      font-family: var(--mono);
-      font-size: 0.78em;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      padding: 0.1em 0.4em;
-      border-radius: 5px;
-      color: var(--accent3);
-    }
-    .reveal pre { box-shadow: none; width: 100%; margin: 0.5em 0; }
-    .reveal pre code {
-      display: block;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.8em 1em;
-      font-size: 0.48em;
-      line-height: 1.65;
-      color: #cbd5e1;
-      max-height: 380px;
-      overflow: auto;
-    }
-    .reveal .slide-number { font-family: var(--mono); font-size: 12px; color: var(--light); background: transparent; }
-    .reveal .progress span { background: var(--accent); }
+  /* APHYS brand */
+  --indigo:   #6366f1;
+  --indigo-d: #4f46e5;
+  --indigo-l: #818cf8;
+  --sky:      #2563eb;
+  --green:    #10b981;
+  --amber:    #f59e0b;
+  --red:      #ef4444;
+  --slate:    #475569;
 
-    /* ── Utilities ─────────────────────────────────────── */
-    .hl  { color: var(--accent);  font-weight: 600; }
-    .hlg { color: var(--accent2); font-weight: 600; }
-    .hla { color: var(--accent3); font-weight: 600; }
-    .hlr { color: var(--accent4); font-weight: 600; }
-    .muted { color: var(--light) !important; font-size: 0.45em; }
+  --fs-h1:   42px;
+  --fs-h2:   32px;
+  --fs-lead: 20px;
+  --fs-body: 16px;
+  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px;
+  --pad-x:88px;--pad-y:64px;--inner:1280px;
+}
 
-    /* ── Cards ─────────────────────────────────────────── */
-    .card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.5em 0.75em;
-    }
-    .card-accent  { border-color: rgba(129,140,248,0.4); background: rgba(129,140,248,0.06); }
-    .card-green   { border-color: rgba(52,211,153,0.35); background: rgba(52,211,153,0.05); }
-    .card-amber   { border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.05); }
-    .card-red     { border-color: rgba(248,113,113,0.35); background: rgba(248,113,113,0.05); }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth;background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;
+  font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased;
+  font-size:var(--fs-body);line-height:1.55}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+a{color:var(--indigo);text-decoration:none;border-bottom:1px solid rgba(99,102,241,0.3)}
+a:hover{border-bottom-color:var(--indigo)}
 
-    /* ── Tip / warn ────────────────────────────────────── */
-    .tip {
-      background: rgba(52,211,153,0.07);
-      border-left: 3px solid var(--accent2);
-      border-radius: 0 8px 8px 0;
-      padding: 0.4em 0.75em;
-      margin: 0.4em 0;
-      text-align: left;
-    }
-    .tip p { color: #a7f3d0; font-size: 0.56em; margin: 0; }
-    .warn {
-      background: rgba(248,113,113,0.07);
-      border-left: 3px solid var(--accent4);
-      border-radius: 0 8px 8px 0;
-      padding: 0.4em 0.75em;
-      margin: 0.4em 0;
-      text-align: left;
-    }
-    .warn p { color: #fca5a5; font-size: 0.56em; margin: 0; }
+/* ── SLIDE BASE ────────────────────────────────── */
+.slide{
+  width:100%;min-height:100vh;background:var(--bg);color:var(--fg);
+  padding:var(--pad-y) var(--pad-x);
+  scroll-snap-align:start;position:relative;
+  display:flex;flex-direction:column;justify-content:center;overflow:hidden
+}
+.slide>.inner{max-width:var(--inner);margin:0 auto;width:100%}
 
-    /* ── Part divider ──────────────────────────────────── */
-    .part-badge {
-      display: inline-block;
-      font-size: 0.38em;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.3em 0.9em;
-      border-radius: 999px;
-      margin-bottom: 0.5em;
-    }
-    .part1 { background: rgba(129,140,248,0.15); color: var(--accent); border: 1px solid rgba(129,140,248,0.3); }
-    .part2 { background: rgba(52,211,153,0.15);  color: var(--accent2); border: 1px solid rgba(52,211,153,0.3); }
+/* Brand + page labels */
+.slide .brand{position:absolute;top:var(--s4);left:var(--pad-x);
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-3);letter-spacing:.04em}
+.slide .brand b{color:var(--fg);font-weight:700}
+.slide .page{position:absolute;top:var(--s4);right:var(--pad-x);
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-3);letter-spacing:.18em}
 
-    /* ── Prompt anatomy ────────────────────────────────── */
-    .anatomy {
-      font-family: var(--mono);
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.75em 1em;
-      font-size: 0.44em;
-      line-height: 1.85;
-      text-align: left;
-    }
-    .role-c    { color: #fcd34d; }
-    .task-c    { color: #f87171; }
-    .context-c { color: #86efac; }
-    .format-c  { color: #93c5fd; }
-    .cot-c     { color: #c4b5fd; }
-    .ann { color: var(--light); font-size: 0.82em; margin-left: 0.5em; }
+/* ── TYPOGRAPHY ───────────────────────────────── */
+.kicker{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;
+  letter-spacing:.22em;color:var(--indigo);margin-bottom:var(--s3);display:inline-block}
+.rule{height:2px;width:52px;background:var(--indigo);margin:var(--s2) 0 var(--s4)}
+h1,h2,h3{font-weight:800;letter-spacing:-0.03em;line-height:1}
+.slide h1{font-size:var(--fs-h1);line-height:.98;margin-bottom:var(--s3)}
+.slide h2{font-size:var(--fs-h2);line-height:1.1;font-weight:700;margin-bottom:var(--s2)}
+.slide h3{font-size:18px;font-weight:700;line-height:1.2;margin-bottom:var(--s1);color:var(--fg)}
+.slide p{font-size:var(--fs-body);line-height:1.6;color:var(--fg-2);max-width:1000px}
+.slide p.lead{font-size:var(--fs-lead);line-height:1.5;color:var(--fg);max-width:1100px;font-weight:400}
 
-    /* ── Pattern strip ─────────────────────────────────── */
-    .pattern-strip {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0.4em;
-      font-size: 0.4em;
-    }
-    .pcard {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.6em 0.4em;
-      text-align: center;
-    }
-    .pcard .pnum { font-size: 1.6em; font-weight: 800; display: block; }
-    .pcard .plabel { font-weight: 700; color: var(--fg); display: block; margin: 0.1em 0; font-size: 1em; }
-    .pcard .psub { color: var(--muted); font-size: 0.9em; line-height: 1.3; }
+/* ── CALLOUT / QUOTE ──────────────────────────── */
+.callout{border-left:3px solid var(--indigo);padding:var(--s3) var(--s4);
+  background:var(--bg-2);font-size:15px;line-height:1.65;color:var(--fg-2);max-width:none}
+.callout b{color:var(--fg)}
+.callout.green{border-left-color:var(--green);background:rgba(16,185,129,0.04)}
+.callout.red{border-left-color:var(--red);background:rgba(239,68,68,0.04)}
+.callout.amber{border-left-color:var(--amber);background:rgba(245,158,11,0.04)}
 
-    /* ── Reasoning grid ────────────────────────────────── */
-    .reason-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.4em;
-      font-size: 0.44em;
-      text-align: left;
-    }
+/* ── TITLE SLIDE ─────────────────────────────── */
+.title-slide{background:var(--bg)}
+.title-slide .inner{display:grid;grid-template-columns:1.2fr 1fr;gap:var(--s5);align-items:center}
+.title-slide .logo{font-size:54px;line-height:.95;font-weight:900;letter-spacing:-0.04em;color:var(--fg)}
+.title-slide .logo span{color:var(--indigo)}
+.title-slide .tag{font-size:22px;font-weight:500;margin-top:var(--s3);letter-spacing:-0.01em;
+  line-height:1.3;color:var(--fg-2)}
+.title-slide .tag em{font-style:normal;color:var(--indigo);font-weight:600}
+.title-slide .bar{height:3px;background:var(--indigo);width:80px;margin:var(--s4) 0 var(--s3)}
+.title-slide .desc{font-size:16px;line-height:1.6;color:var(--fg-3);font-weight:400}
+.title-side{background:var(--bg-2);border:1px solid var(--line);padding:var(--s4);
+  display:flex;flex-direction:column;gap:var(--s3)}
+.title-side .stat{border-left:2px solid var(--indigo);padding-left:var(--s2)}
+.title-side .stat .l{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;
+  letter-spacing:.16em;color:var(--indigo);margin-bottom:4px}
+.title-side .stat .v{font-size:26px;font-weight:800;color:var(--fg);letter-spacing:-0.03em}
+.title-side .stat .s{font-size:13px;color:var(--fg-3);margin-top:2px}
 
-    /* ── Before/after ──────────────────────────────────── */
-    .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; font-size: 0.44em; }
-    .ba-col h4 { font-weight: 700; font-size: 1em; margin-bottom: 0.35em; }
-    .ba-item { border-radius: 7px; padding: 0.45em 0.65em; margin-bottom: 0.25em; font-size: 0.95em; }
-    .ba-bad  { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.2); color: #fca5a5; }
-    .ba-good { background: rgba(52,211,153,0.08);  border: 1px solid rgba(52,211,153,0.2);  color: #a7f3d0; }
+/* ── PILLARS GRID ────────────────────────────── */
+.pillars{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s4)}
+.pillars.five{grid-template-columns:repeat(5,1fr)}
+.pillars.four{grid-template-columns:repeat(4,1fr)}
+.pillars.three{grid-template-columns:repeat(3,1fr)}
+.pillars.two{grid-template-columns:repeat(2,1fr)}
+.pillar{background:var(--bg);padding:var(--s4);display:flex;flex-direction:column;min-height:220px}
+.pillar .n{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;
+  font-weight:700;margin-bottom:var(--s2);text-transform:uppercase}
+.pillar h3{font-size:20px;margin-bottom:var(--s2);line-height:1.2}
+.pillar p{font-size:13px;line-height:1.6;color:var(--fg-2);margin-bottom:var(--s2);flex:1}
+.pillar .eg{font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.5;
+  color:var(--fg-3);border-top:1px solid var(--line);padding-top:var(--s2);margin-top:auto}
+.pillar.p1 .n{color:var(--red)}
+.pillar.p2 .n{color:var(--indigo)}
+.pillar.p3 .n{color:var(--amber)}
+.pillar.p4 .n{color:var(--sky)}
+.pillar.p5 .n{color:var(--green)}
 
-    /* ── Divider slide ─────────────────────────────────── */
-    .divider-slide { background: linear-gradient(135deg, #1a1d27, #0f1117); }
+/* ── SCENARIO / STEPS ────────────────────────── */
+.scenario{border:1px solid var(--line);padding:var(--s4);background:var(--bg-2);margin-top:var(--s3)}
+.scenario .q{font-size:18px;font-weight:600;color:var(--fg);line-height:1.45;
+  letter-spacing:-0.01em;margin-bottom:var(--s3)}
+.scenario .q em{font-style:normal;color:var(--indigo);font-weight:700}
+.scenario .steps{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.scenario .steps.four{grid-template-columns:repeat(4,1fr)}
+.scenario .steps.three{grid-template-columns:repeat(3,1fr)}
+.scenario .step{background:var(--bg);padding:var(--s3);display:flex;flex-direction:column}
+.scenario .step .sn{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--indigo);
+  letter-spacing:.16em;font-weight:700;text-transform:uppercase}
+.scenario .step h4{font-size:15px;font-weight:700;margin:6px 0 4px;line-height:1.25;color:var(--fg)}
+.scenario .step p{font-size:13px;line-height:1.5;color:var(--fg-2);max-width:none}
 
-    /* ── Tutor prompt box ──────────────────────────────── */
-    .tutor-prompt {
-      font-family: var(--mono);
-      background: var(--bg3);
-      border: 1px solid rgba(129,140,248,0.35);
-      border-radius: 10px;
-      padding: 0.75em 1em;
-      font-size: 0.42em;
-      line-height: 1.7;
-      color: #cbd5e1;
-      white-space: pre-wrap;
-      text-align: left;
-    }
+/* ── FACT ROW ─────────────────────────────────── */
+.fact-row{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s4)}
+.fact-row.three{grid-template-columns:repeat(3,1fr)}
+.fact-row.four{grid-template-columns:repeat(4,1fr)}
+.fact{background:var(--bg);padding:var(--s3) var(--s4)}
+.fact .l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
+  color:var(--indigo);text-transform:uppercase;margin-bottom:6px}
+.fact .v{font-size:22px;font-weight:800;color:var(--fg);line-height:1.15;letter-spacing:-0.02em}
+.fact .s{font-size:13px;color:var(--fg-3);margin-top:4px;line-height:1.5}
 
-    /* ── Resource links ────────────────────────────────── */
-    .resource-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.35em;
-      font-size: 0.42em;
-    }
-    .res-item {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.45em 0.7em;
-      text-decoration: none;
-      color: var(--fg);
-      display: block;
-    }
-    .res-item .res-title { font-weight: 600; color: var(--accent); font-size: 0.95em; }
-    .res-item .res-src   { color: var(--light); font-size: 0.85em; }
-  </style>
+/* ── TWO-SYSTEMS ─────────────────────────────── */
+.two-sys{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s4)}
+.sys{border:2px solid var(--line);padding:var(--s4);position:relative}
+.sys.green-b{border-color:var(--green)}
+.sys.red-b{border-color:var(--red)}
+.sys .stag{position:absolute;top:-13px;left:var(--s3);background:var(--bg);
+  padding:0 var(--s2);font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.18em;font-weight:700;text-transform:uppercase}
+.sys.green-b .stag{color:var(--green)}
+.sys.red-b .stag{color:var(--red)}
+.sys h3{font-size:22px;margin-bottom:var(--s2);line-height:1.1;color:var(--fg)}
+.sys ul{list-style:none;padding:0}
+.sys li{padding:6px 0 6px 20px;position:relative;font-size:14px;line-height:1.5;color:var(--fg-2)}
+.sys li::before{content:"→";position:absolute;left:0;top:6px;
+  font-family:'JetBrains Mono',monospace;font-size:11px}
+.sys.green-b li::before{color:var(--green)}
+.sys.red-b li::before{color:var(--red)}
+
+/* ── LAB CARDS (left-border) ─────────────────── */
+.lab-bullets{display:flex;flex-direction:column;gap:var(--s2)}
+.lab-card{border-left:2px solid var(--indigo);padding:var(--s2) var(--s3);background:var(--bg-2)}
+.lab-card.sky{border-left-color:var(--sky)}
+.lab-card.green{border-left-color:var(--green)}
+.lab-card.amber{border-left-color:var(--amber)}
+.lab-card.red{border-left-color:var(--red)}
+.lab-card h4{font-size:14px;font-weight:700;margin-bottom:3px;color:var(--fg)}
+.lab-card p{font-size:13px;line-height:1.55;color:var(--fg-2);max-width:none}
+
+/* ── LINK GRID ───────────────────────────────── */
+.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s3)}
+.link-card{border:1px solid var(--line);padding:var(--s3) var(--s4);
+  background:var(--bg-2);display:flex;flex-direction:column;gap:5px;
+  text-decoration:none;border-bottom:none;transition:border-color .15s}
+.link-card:hover{border-color:var(--indigo)}
+.link-card .lkick{font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.16em;color:var(--indigo);text-transform:uppercase}
+.link-card h4{font-size:15px;font-weight:700;color:var(--fg);line-height:1.3}
+.link-card .url{font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--sky);word-break:break-all;line-height:1.5}
+
+/* ── ANATOMY BOX ─────────────────────────────── */
+.anatomy{font-family:'JetBrains Mono',monospace;background:var(--bg-3);
+  border:1px solid var(--line);border-radius:4px;padding:var(--s3) var(--s4);
+  font-size:13px;line-height:1.9;color:var(--fg-2)}
+.a-role{color:#7c3aed}
+.a-task{color:#dc2626}
+.a-ctx{color:#059669}
+.a-fmt{color:#2563eb}
+.a-ann{color:var(--fg-3);font-size:.82em;margin-left:.5em}
+
+/* ── PROMPT BOX ──────────────────────────────── */
+.prompt-box{font-family:'JetBrains Mono',monospace;background:var(--bg-3);
+  border:1px solid rgba(99,102,241,.3);border-radius:4px;
+  padding:var(--s3) var(--s4);font-size:12.5px;line-height:1.75;
+  color:var(--fg-2);white-space:pre-wrap}
+
+/* ── DIVIDER SLIDE ───────────────────────────── */
+.divider{background:linear-gradient(135deg,var(--bg-2) 0%,var(--bg) 100%);
+  border-top:3px solid var(--indigo)}
+
+/* ── NAV PROGRESS ────────────────────────────── */
+.nav-progress{position:fixed;top:0;left:0;height:2px;background:var(--indigo);
+  z-index:98;transition:width .15s ease}
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media(max-width:1100px){
+  :root{--pad-x:36px;--pad-y:44px;--fs-h1:30px;--fs-h2:24px;--fs-lead:17px;--fs-body:14px}
+  .pillars.five,.pillars.four,.pillars.three{grid-template-columns:1fr 1fr}
+  .two-sys,.fact-row.four,.fact-row.three,.link-grid{grid-template-columns:1fr}
+  .title-slide .inner{grid-template-columns:1fr}
+  .title-side{display:none}
+  .scenario .steps.four{grid-template-columns:1fr 1fr}
+}
+</style>
 </head>
 <body>
-<div class="reveal">
-<div class="slides">
 
-<!-- ══════════════════════════════════════════════════════
-     TITLE
-══════════════════════════════════════════════════════ -->
-<section class="center">
-  <div class="part-badge part1">Part 1 of 2 — Advanced Prompting</div>
-  <h1 style="font-size:1.8em; margin-bottom:0.15em;">ChatGPT Essentials</h1>
-  <p style="font-size:0.55em; color:var(--muted); margin-bottom:1em;">From casual use to deliberate craft — for applied physicists</p>
-  <div style="display:flex; gap:0.5em; justify-content:center; flex-wrap:wrap; font-size:0.38em; color:var(--light);">
-    <span>APHYS AI Tutorial · May 8, 2026</span>
-    <span>·</span>
-    <span>13:30 – 14:15</span>
-    <span>·</span>
-    <span>Jonas Sellberg</span>
-  </div>
-</section>
+<div class="nav-progress" id="np"></div>
 
-<!-- ══════════════════════════════════════════════════════
-     AUDIENCE ACKNOWLEDGEMENT
-══════════════════════════════════════════════════════ -->
-<section>
-  <h2>You already know the basics — let's skip them</h2>
-  <p style="font-size:0.52em; margin-bottom:0.5em;">
-    42% of you use AI tools regularly. This session focuses on what separates
-    <span class="hl">deliberate, high-quality use</span> from casual back-and-forth.
-  </p>
-  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.4em; font-size:0.45em; text-align:left; margin-bottom:0.4em;">
-    <div class="card">
-      <p style="color:var(--accent); font-weight:600; margin-bottom:0.15em;">Who's in the room</p>
-      <p style="margin:0;">Professors, postdocs, PhD students — BON, LAMP, Biophysics, Particle Physics</p>
+<!-- ═══════════════════════════════════════════
+     01 · TITLE
+═══════════════════════════════════════════ -->
+<section class="slide title-slide" id="s1">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">01 / 11 · Jonas Sellberg</div>
+  <div class="inner">
+    <div class="title-text">
+      <div class="kicker">ChatGPT Essentials · 13:30 – 14:15</div>
+      <div class="logo">From casual use<br/>to <span>deliberate craft.</span></div>
+      <div class="bar"></div>
+      <p class="tag">Advanced prompting for researchers — then <em>using ChatGPT as your AI tutor</em> to get ready for the agent session.</p>
+      <p style="margin-top:var(--s3);font-size:15px;color:var(--fg-3);">
+        Two parts: advanced prompting techniques · then a personalised tutor prompt that
+        walks you through installing Claude Code and doing your first agent task.
+      </p>
     </div>
-    <div class="card">
-      <p style="color:var(--accent2); font-weight:600; margin-bottom:0.15em;">What you care about</p>
-      <p style="margin:0;">Spectroscopy analysis, X-ray imaging, microscopy, grant writing, supervising in the AI era</p>
-    </div>
-    <div class="card">
-      <p style="color:var(--accent3); font-weight:600; margin-bottom:0.15em;">What we'll cover</p>
-      <p style="margin:0;">5 advanced patterns · reasoning techniques · physics-specific workflows · AI as personal tutor</p>
-    </div>
-  </div>
-  <div class="tip">
-    <p>Your physical intuition and domain expertise are your biggest advantages. AI amplifies what you already know — it doesn't replace it.</p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════
-     FIVE PATTERNS
-══════════════════════════════════════════════════════ -->
-<section>
-  <h2>Five patterns that separate good from great</h2>
-  <div class="pattern-strip" style="margin-bottom:0.5em;">
-    <div class="pcard" style="border-color:rgba(248,113,113,0.35);">
-      <span class="pnum" style="color:var(--accent4);">①</span>
-      <span class="plabel">Task</span>
-      <span class="psub">Precise verb + scope. Not "help me" — "write / extract / compare / critique"</span>
-    </div>
-    <div class="pcard" style="border-color:rgba(129,140,248,0.35);">
-      <span class="pnum" style="color:var(--accent);">②</span>
-      <span class="plabel">Context</span>
-      <span class="psub">Who you are, what it's for, who will read it. Without this, output is generic</span>
-    </div>
-    <div class="pcard" style="border-color:rgba(245,158,11,0.35);">
-      <span class="pnum" style="color:var(--accent3);">③</span>
-      <span class="plabel">Role</span>
-      <span class="psub">Assign a stance: "as a critical reviewer", "as a science journalist", "as a VR panel member"</span>
-    </div>
-    <div class="pcard" style="border-color:rgba(93,163,248,0.35);">
-      <span class="pnum" style="color:#60a5fa;">④</span>
-      <span class="plabel">Format</span>
-      <span class="psub">Table / numbered list / 200-word paragraph / Python code. The model follows formatting instructions exactly</span>
-    </div>
-    <div class="pcard" style="border-color:rgba(52,211,153,0.35);">
-      <span class="pnum" style="color:var(--accent2);">⑤</span>
-      <span class="plabel">Iterate</span>
-      <span class="psub">The first response is a draft. "Make this shorter / more critical / less jargon-heavy" unlocks quality</span>
-    </div>
-  </div>
-  <div class="tip">
-    <p>Stack them: <span style="color:var(--fg);">Role + Task + Context + Format</span> in one prompt, then ⑤ iterate. This is the structure that scales from a quick note to a grant proposal.</p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════
-     PROMPT ANATOMY — PHYSICS EXAMPLE
-══════════════════════════════════════════════════════ -->
-<section>
-  <h2>All five — applied to spectroscopy</h2>
-  <div class="anatomy">
-<span class="role-c">Act as a critical peer reviewer with expertise in ultrafast spectroscopy.</span><span class="ann">← role</span>
-
-<span class="task-c">Read the methods section below and identify the three weakest points
-in the experimental design. Be direct — do not soften your critique.</span><span class="ann">← task</span>
-
-<span class="context-c">I am a postdoc at KTH LAMP preparing a manuscript for Physical Review Letters.
-The reviewers will know time-resolved X-ray spectroscopy but not our specific
-pump-probe setup. This section needs to withstand peer review.</span><span class="ann">← context</span>
-
-<span class="format-c">Format: numbered list, one sentence per weakness, then one concrete fix.
-Max 250 words. End with the single change that would most strengthen the paper.</span><span class="ann">← format</span>
-
-[paste your methods section]</div>
-  <p style="font-size:0.44em; color:var(--muted); margin-top:0.4em; text-align:left;">
-    After it replies → <span class="hl">iterate ⑤</span>:
-    <em>"Which of the three is most likely to trigger a desk rejection?"</em> /
-    <em>"Rewrite the methods section incorporating your fixes."</em>
-  </p>
-</section>
-
-<!-- ══════════════════════════════════════════════════════
-     REASONING PATTERNS
-══════════════════════════════════════════════════════ -->
-<section>
-  <h2>Reasoning patterns for complex problems</h2>
-  <div class="reason-grid" style="margin-bottom:0.4em;">
-    <div class="card card-accent">
-      <p style="color:var(--accent); font-weight:600; font-size:0.9em; margin-bottom:0.1em;">Chain of Thought</p>
-      <p style="font-size:0.85em; margin:0; color:var(--muted);">Ask for step-by-step reasoning. Surfaces where the logic breaks down — essential for checking physics arguments.</p>
-      <p style="font-size:0.78em; margin-top:0.3em; color:var(--light); font-style:italic;">"Think through this step by step before giving your answer."</p>
-    </div>
-    <div class="card card-green">
-      <p style="color:var(--accent2); font-weight:600; font-size:0.9em; margin-bottom:0.1em;">Self-Consistency</p>
-      <p style="font-size:0.85em; margin:0; color:var(--muted);">Generate multiple approaches, compare them, pick the strongest. Good for experimental design where several methods exist.</p>
-      <p style="font-size:0.78em; margin-top:0.3em; color:var(--light); font-style:italic;">"Give me three different ways to approach this. Then tell me which you'd choose and why."</p>
-    </div>
-    <div class="card card-amber">
-      <p style="color:var(--accent3); font-weight:600; font-size:0.9em; margin-bottom:0.1em;">Self-Reflection</p>
-      <p style="font-size:0.85em; margin:0; color:var(--muted);">After a response, ask it to evaluate its own answer. Catches hallucinations before they reach you.</p>
-      <p style="font-size:0.78em; margin-top:0.3em; color:var(--light); font-style:italic;">"What are the three most likely errors or gaps in your answer above?"</p>
-    </div>
-  </div>
-  <div style="font-size:0.44em; text-align:left; display:grid; grid-template-columns:1fr 1fr; gap:0.4em;">
-    <div class="card">
-      <p style="font-weight:600; color:var(--fg); margin-bottom:0.1em;">Quote-first pattern</p>
-      <p style="margin:0; color:var(--muted);">For multi-document tasks (e.g. 5 papers): "Extract the relevant quotes first, then synthesise." Prevents the model from ignoring sources it can't easily recall.</p>
-    </div>
-    <div class="card">
-      <p style="font-weight:600; color:var(--fg); margin-bottom:0.1em;">Meta-prompting</p>
-      <p style="margin:0; color:var(--muted);">Ask it to improve your own prompt: "Make this prompt more specific and effective." Teaches you better framing while improving the task.</p>
+    <div class="title-side">
+      <div class="stat">
+        <div class="l">In the room</div>
+        <div class="v">43</div>
+        <div class="s">faculty, postdocs, PhD students across BON, LAMP, Biophysics</div>
+      </div>
+      <div class="stat" style="border-color:var(--green)">
+        <div class="l" style="color:var(--green)">AI experience</div>
+        <div class="v">42%</div>
+        <div class="s">already use AI tools regularly — we skip the basics</div>
+      </div>
+      <div class="stat" style="border-color:var(--amber)">
+        <div class="l" style="color:var(--amber)">Goal by 14:15</div>
+        <div class="v" style="font-size:18px;letter-spacing:-0.01em;"><code style="font-family:JetBrains Mono;font-weight:700;">claude --version</code></div>
+        <div class="s">working in your terminal, ready for Wei's demo</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════
-     RESEARCH WORKFLOWS
-══════════════════════════════════════════════════════ -->
-<section>
-  <h2>Before / after — physics research tasks</h2>
-  <div class="ba">
-    <div class="ba-col">
-      <h4 style="color:var(--accent4);">❌ Too vague</h4>
-      <div class="ba-item ba-bad">"Summarise this paper"</div>
-      <div class="ba-item ba-bad">"Help me write a grant"</div>
-      <div class="ba-item ba-bad">"What is wrong with my fit?"</div>
-      <div class="ba-item ba-bad">"Explain spintronics to a student"</div>
-      <div class="ba-item ba-bad">"Write exam questions"</div>
+<!-- ═══════════════════════════════════════════
+     02 · AUDIENCE + FRAMING
+═══════════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">02 / 11</div>
+  <div class="inner">
+    <div class="kicker">Part 1 — Advanced Prompting</div>
+    <h2>You already know the basics — so let's go deeper</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:var(--s4);">
+      42% of you are regular users. We skip "what is ChatGPT" and go straight to
+      the techniques that separate mediocre output from genuinely useful output.
+    </p>
+
+    <div class="fact-row four">
+      <div class="fact">
+        <div class="l">Biggest group</div>
+        <div class="v">BON + LAMP</div>
+        <div class="s">X-ray imaging, ultrafast spectroscopy, laser physics, spintronics</div>
+      </div>
+      <div class="fact">
+        <div class="l" style="color:var(--green)">Career mix</div>
+        <div class="v" style="color:var(--green)">All stages</div>
+        <div class="s">Professors, Associate Profs, Postdocs, PhD students, Research Engineers</div>
+      </div>
+      <div class="fact">
+        <div class="l" style="color:var(--amber)">Key tension #1</div>
+        <div class="v" style="font-size:16px;color:var(--amber);">Teaching in the AI era</div>
+        <div class="s">Professors: how to supervise, assess, maintain epistemic value</div>
+      </div>
+      <div class="fact">
+        <div class="l" style="color:var(--sky)">Key tension #2</div>
+        <div class="v" style="font-size:16px;color:var(--sky);">Career in the AI era</div>
+        <div class="s">PhDs/postdocs: what skills still matter, what is being automated</div>
+      </div>
     </div>
-    <div class="ba-col">
-      <h4 style="color:var(--accent2);">✓ Specific and elevated</h4>
-      <div class="ba-item ba-good">"Summarise for an ultrafast spectroscopist. Focus on time-resolution claims. Flag any unsupported ones. 150 words."</div>
-      <div class="ba-item ba-good">"Write a 200-word VR impact paragraph for time-resolved X-ray absorption. Non-specialist panel. Emphasise medical imaging potential."</div>
-      <div class="ba-item ba-good">"Here is my Python fitting code [paste]. List 3 assumptions that break if noise is non-Gaussian."</div>
-      <div class="ba-item ba-good">"Explain spin-orbit coupling using an analogy a 3rd-year engineer would recognise. Then give one surprising real-world application."</div>
-      <div class="ba-item ba-good">"Generate 5 exam questions on Fermi's golden rule for 4th-year physics. Mix calculation and conceptual. Include model answers."</div>
+
+    <div class="callout green" style="margin-top:var(--s4);">
+      <b>Your physics training is your advantage.</b> Domain expertise is what AI amplifies.
+      The researchers who get the most out of these tools are the ones who ask the most precise questions —
+      and recognise a wrong answer immediately. That's you.
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════
-     CRITICAL AWARENESS
-══════════════════════════════════════════════════════ -->
-<section>
-  <h2>When it fails — your job as the physicist</h2>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4em; font-size:0.46em; margin-bottom:0.4em;">
-    <div class="card card-red">
-      <p style="color:var(--accent4); font-weight:600; margin-bottom:0.1em;">Hallucination</p>
-      <p style="margin:0; color:var(--muted);">Invents citations, spectra, equations, author names — with full confidence. <strong style="color:var(--fg);">Never cite a paper you haven't verified yourself.</strong></p>
+<!-- ═══════════════════════════════════════════
+     03 · FIVE PATTERNS
+═══════════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">03 / 11</div>
+  <div class="inner">
+    <div class="kicker">Prompting Fundamentals</div>
+    <h2>Five patterns that separate good from great</h2>
+    <div class="rule"></div>
+
+    <div class="pillars five">
+      <div class="pillar p1">
+        <div class="n">① Task</div>
+        <h3>Precise verb + scope</h3>
+        <p>Not "help me" — use <strong>write / extract / compare / critique / rewrite</strong>. The verb defines what you get.</p>
+        <div class="eg">"Identify the three weakest claims in this methods section."</div>
+      </div>
+      <div class="pillar p2">
+        <div class="n">② Context</div>
+        <h3>Who you are + why</h3>
+        <p>Without context the output is <strong>textbook generic</strong>. Tell it your field, audience, purpose, constraints.</p>
+        <div class="eg">"I'm a postdoc at KTH LAMP submitting to PRL. Reviewers know ultrafast spectroscopy."</div>
+      </div>
+      <div class="pillar p3">
+        <div class="n">③ Role</div>
+        <h3>Assign a stance</h3>
+        <p>Forces a specific perspective. <strong>"As a critical peer reviewer"</strong> gives very different output than no role.</p>
+        <div class="eg">"Act as a VR grant panel member who has 90 seconds to decide."</div>
+      </div>
+      <div class="pillar p4">
+        <div class="n">④ Format</div>
+        <h3>Shape the output</h3>
+        <p>Table, numbered list, 200-word paragraph, Python code. <strong>The model follows formatting instructions precisely.</strong></p>
+        <div class="eg">"Numbered list, one sentence per point, max 5 items, end with a single verdict."</div>
+      </div>
+      <div class="pillar p5">
+        <div class="n">⑤ Iterate</div>
+        <h3>The first reply is a draft</h3>
+        <p>The real skill is the follow-up. <strong>"Make this more critical / shorter / remove jargon"</strong> unlocks quality.</p>
+        <div class="eg">"Which of the three is most likely to trigger desk rejection? Rewrite that section."</div>
+      </div>
     </div>
-    <div class="card card-red">
-      <p style="color:var(--accent4); font-weight:600; margin-bottom:0.1em;">Sycophancy</p>
-      <p style="margin:0; color:var(--muted);">Agrees with whatever framing you give. Always ask: <em>"What is wrong with this argument?"</em> or <em>"Steel-man the opposing view."</em></p>
+
+    <div class="callout" style="margin-top:var(--s3);">
+      <b>Stack them:</b> Role + Task + Context + Format in one prompt, then iterate with ⑤.
+      This structure scales from a quick note to a grant proposal with no change in method.
     </div>
-    <div class="card card-red">
-      <p style="color:var(--accent4); font-weight:600; margin-bottom:0.1em;">Plausible but wrong physics</p>
-      <p style="margin:0; color:var(--muted);">Output can look correct to a non-expert and still be dimensionally inconsistent or physically unreasonable. Your intuition is the filter.</p>
-    </div>
-    <div class="card card-red">
-      <p style="color:var(--accent4); font-weight:600; margin-bottom:0.1em;">Data confidentiality</p>
-      <p style="margin:0; color:var(--muted);">Don't paste unpublished data, student IDs, or grant content. Use the KTH Claude Team (logged, auditable) for sensitive work.</p>
-    </div>
-  </div>
-  <div class="warn">
-    <p>Force a quality check: <strong style="color:var(--fg);">"What are the three most likely errors in your answer above?"</strong> This single follow-up prevents 80% of confidently-wrong outputs from reaching your work.</p>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════
-     PART 2 DIVIDER
-══════════════════════════════════════════════════════ -->
-<section class="center divider-slide">
-  <div class="part-badge part2">Part 2 — ChatGPT as Your AI Tutor</div>
-  <h2 style="font-size:1.5em; margin-top:0.3em;">Now: learn about AI agents<br/>through ChatGPT itself</h2>
-  <p style="font-size:0.52em; margin-top:0.5em;">The next 20 minutes will use ChatGPT to guide you through<br/>what an AI agent is — and get Claude Code installed on your laptop.</p>
-</section>
+<!-- ═══════════════════════════════════════════
+     04 · PROMPT ANATOMY
+═══════════════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">04 / 11</div>
+  <div class="inner">
+    <div class="kicker">Applied Example — Spectroscopy</div>
+    <h2>All five patterns in one physics prompt</h2>
+    <div class="rule"></div>
 
-<!-- ══════════════════════════════════════════════════════
-     WHY USE CHATGPT AS TUTOR
-══════════════════════════════════════════════════════ -->
-<section>
-  <h2>Why ChatGPT is the best tutor for this</h2>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.45em; font-size:0.47em; text-align:left; margin-bottom:0.45em;">
-    <div class="card card-accent">
-      <p style="color:var(--accent); font-weight:600; margin-bottom:0.1em;">Adapts to you personally</p>
-      <p style="margin:0; color:var(--muted);">Knows your OS, your research area, your experience level. A spectroscopist gets different examples than a biophysicist.</p>
-    </div>
-    <div class="card card-green">
-      <p style="color:var(--accent2); font-weight:600; margin-bottom:0.1em;">Diagnoses your install errors</p>
-      <p style="margin:0; color:var(--muted);">Paste the exact error message. It knows the difference between a PATH issue on macOS and a PowerShell execution policy block on Windows.</p>
-    </div>
-    <div class="card card-amber">
-      <p style="color:var(--accent3); font-weight:600; margin-bottom:0.1em;">Bridges chat → agents</p>
-      <p style="margin:0; color:var(--muted);">Explains the agentic loop using a physics analogy tailored to your field. Makes the abstract concrete before Wei's demo.</p>
-    </div>
-    <div class="card">
-      <p style="color:var(--fg); font-weight:600; margin-bottom:0.1em;">Shows you pattern ⑤ in action</p>
-      <p style="margin:0; color:var(--muted);">The whole session is a live demonstration of iterative prompting. You are practising the technique while learning the content.</p>
+    <div class="anatomy">
+<span class="a-role">Act as a critical peer reviewer with expertise in ultrafast X-ray spectroscopy.</span><span class="a-ann">← ③ role</span>
+
+<span class="a-task">Read the methods section below and identify the three weakest points
+in the experimental design. Be direct — do not soften your critique.</span><span class="a-ann">← ① task</span>
+
+<span class="a-ctx">I am a postdoc at KTH LAMP preparing a manuscript for Physical Review Letters.
+Reviewers will know pump-probe techniques but not our specific FEL setup.
+This section needs to survive peer review.</span><span class="a-ann">← ② context</span>
+
+<span class="a-fmt">Format: numbered list, one sentence per weakness, then one concrete fix per point.
+Max 250 words. Close with the single change that would most strengthen the paper.</span><span class="a-ann">← ④ format</span>
+
+[paste your methods section here]</div>
+
+    <div style="margin-top:var(--s3);display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s3);">
+      <div class="lab-card sky">
+        <h4>Iterate ⑤ — sharpen</h4>
+        <p>"Which of the three is most likely to trigger desk rejection?"</p>
+      </div>
+      <div class="lab-card green">
+        <h4>Iterate ⑤ — rewrite</h4>
+        <p>"Now rewrite the methods section incorporating all three fixes."</p>
+      </div>
+      <div class="lab-card amber">
+        <h4>Iterate ⑤ — self-check</h4>
+        <p>"What are the three most likely errors in your critique above?"</p>
+      </div>
     </div>
   </div>
-  <div class="tip">
-    <p>This is not a gimmick. <strong style="color:var(--fg);">Using AI to learn about AI</strong> is exactly the mindset shift we want you to leave with today.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     05 · REASONING PATTERNS
+═══════════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">05 / 11</div>
+  <div class="inner">
+    <div class="kicker">Advanced Techniques</div>
+    <h2>Reasoning patterns for complex research problems</h2>
+    <div class="rule"></div>
+
+    <div class="pillars three" style="margin-top:var(--s3);">
+      <div class="pillar p2">
+        <div class="n">Chain of Thought</div>
+        <h3>Expose the reasoning</h3>
+        <p>Ask for step-by-step reasoning before the answer. Surfaces where logic breaks down — essential for checking physical arguments.</p>
+        <div class="eg">"Think through this step by step before giving your answer."</div>
+      </div>
+      <div class="pillar p5">
+        <div class="n">Self-Consistency</div>
+        <h3>Multiple paths, one verdict</h3>
+        <p>Generate several approaches, compare them, select the strongest. Powerful for experimental design with multiple viable methods.</p>
+        <div class="eg">"Give me three different ways to approach this experiment. Then tell me which you'd choose and why."</div>
+      </div>
+      <div class="pillar p3">
+        <div class="n">Self-Reflection</div>
+        <h3>Force a quality check</h3>
+        <p>After any response, ask it to evaluate its own output. Catches hallucinations and overconfident statements before they reach your work.</p>
+        <div class="eg">"What are the three most likely errors or gaps in your answer above?"</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s3);">
+      <div class="lab-card">
+        <h4>Quote-first (for literature tasks)</h4>
+        <p>For multi-paper synthesis: "Extract the relevant quotes first, then synthesise." Prevents the model from confabulating what papers say.</p>
+      </div>
+      <div class="lab-card sky">
+        <h4>Meta-prompting</h4>
+        <p>"Improve this prompt to make it more specific and effective." Teaches you better framing while optimising the task at hand.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════
-     THE AI TUTOR PROMPT
-══════════════════════════════════════════════════════ -->
-<section>
-  <h2>Your personalised guide — paste this now</h2>
-  <p style="font-size:0.48em; margin-bottom:0.3em;">Open <strong>chat.openai.com</strong> · start a new conversation · paste the prompt below.</p>
-  <div class="tutor-prompt">You are an interactive AI tutor for researchers at KTH Applied Physics.
+<!-- ═══════════════════════════════════════════
+     06 · BEFORE / AFTER
+═══════════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">06 / 11</div>
+  <div class="inner">
+    <div class="kicker">Physics Examples</div>
+    <h2>Weak vs strong — tasks from your actual work</h2>
+    <div class="rule"></div>
+
+    <div class="two-sys">
+      <div class="sys red-b">
+        <div class="stag">Too vague</div>
+        <h3 style="color:var(--red);">❌ Generic output guaranteed</h3>
+        <ul>
+          <li>"Summarise this paper"</li>
+          <li>"Help me write a grant"</li>
+          <li>"What is wrong with my fit?"</li>
+          <li>"Explain spintronics to a student"</li>
+          <li>"Write exam questions on quantum mechanics"</li>
+          <li>"Review my abstract"</li>
+        </ul>
+      </div>
+      <div class="sys green-b">
+        <div class="stag">Specific + elevated</div>
+        <h3 style="color:var(--green);">✓ Specialist-level output</h3>
+        <ul>
+          <li>"Summarise for a time-resolved spectroscopist. Focus on time-resolution claims. Flag any unsupported ones. 150 words."</li>
+          <li>"200-word VR impact paragraph for X-ray absorption spectroscopy, non-specialist panel, stress medical imaging applications."</li>
+          <li>"Here is my Python fitting code [paste]. List 3 assumptions that break if noise is non-Gaussian."</li>
+          <li>"Explain spin-orbit coupling using an analogy a 3rd-year engineer would recognise. Add one surprising real-world application."</li>
+          <li>"5 exam questions on Fermi's golden rule, 4th-year physics, mix calculation and conceptual, include model answers."</li>
+          <li>"Act as a PRL associate editor. Identify the one sentence most likely to trigger a request for major revision."</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     07 · CRITICAL AWARENESS
+═══════════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">07 / 11</div>
+  <div class="inner">
+    <div class="kicker">Critical Use</div>
+    <h2>When it fails — and your job as the physicist</h2>
+    <div class="rule"></div>
+
+    <div class="pillars four">
+      <div class="pillar" style="min-height:180px;">
+        <div class="n" style="color:var(--red);">Hallucination</div>
+        <h3>Confident and wrong</h3>
+        <p>Invents citations, spectra, equations, author names with full confidence. Never cite a paper you haven't verified yourself.</p>
+        <div class="eg">Always ask: "Can you give me the DOI for that citation?" — if it can't, the paper likely doesn't exist.</div>
+      </div>
+      <div class="pillar" style="min-height:180px;">
+        <div class="n" style="color:var(--amber);">Sycophancy</div>
+        <h3>It agrees with you</h3>
+        <p>Will validate whatever framing you provide. Deliberately ask: <em>"What is wrong with this argument?"</em></p>
+        <div class="eg">"Steel-man the opposing view." / "What would a hostile reviewer say?"</div>
+      </div>
+      <div class="pillar" style="min-height:180px;">
+        <div class="n" style="color:var(--sky);">Plausible physics</div>
+        <h3>Looks right, isn't</h3>
+        <p>Output can be dimensionally inconsistent or physically unreasonable while appearing well-written. Your intuition is the filter.</p>
+        <div class="eg">Always sanity-check units, order-of-magnitude estimates, and physical limits.</div>
+      </div>
+      <div class="pillar" style="min-height:180px;">
+        <div class="n" style="color:var(--green);">Confidentiality</div>
+        <h3>What not to paste</h3>
+        <p>Unpublished data, student personal info, grant text. Use the KTH Claude Team account — it's auditable and GDPR-compliant.</p>
+        <div class="eg">Describe the data structure without pasting raw values when in doubt.</div>
+      </div>
+    </div>
+
+    <div class="callout red" style="margin-top:var(--s3);">
+      <b>One follow-up that prevents 80% of failures:</b>
+      "What are the three most likely errors or gaps in your answer above?" — ask this after every substantive response.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     08 · PART 2 DIVIDER
+═══════════════════════════════════════════ -->
+<section class="slide divider" id="s8">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">08 / 11</div>
+  <div class="inner" style="max-width:800px;">
+    <div class="kicker" style="color:var(--green)">Part 2 — ChatGPT as Your AI Tutor</div>
+    <h1 style="font-size:48px;margin-bottom:var(--s3);">Now learn about<br/>AI agents <em style="font-style:normal;color:var(--indigo);">through</em> ChatGPT.</h1>
+    <div class="rule" style="background:var(--green)"></div>
+    <p class="lead">
+      The next 20 minutes: use ChatGPT to understand what an AI agent is,
+      then get Claude Code installed on your laptop — so you're ready for Wei's session at 14:15.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     09 · WHY CHATGPT AS TUTOR
+═══════════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">09 / 11</div>
+  <div class="inner">
+    <div class="kicker" style="color:var(--green)">Part 2 — AI Tutor</div>
+    <h2>Why ChatGPT is the best guide for this</h2>
+    <div class="rule" style="background:var(--green)"></div>
+
+    <div class="pillars four">
+      <div class="pillar">
+        <div class="n" style="color:var(--indigo);">Adapts to you</div>
+        <h3>Personal, not generic</h3>
+        <p>Knows your OS, your research area, your experience level. A LAMP spectroscopist gets different examples than a BON microscopist.</p>
+      </div>
+      <div class="pillar">
+        <div class="n" style="color:var(--sky);">Diagnoses errors</div>
+        <h3>Live install support</h3>
+        <p>Paste the exact error message. It knows the difference between a PATH issue on macOS and a PowerShell execution policy on Windows.</p>
+      </div>
+      <div class="pillar">
+        <div class="n" style="color:var(--green);">Bridges chat → agents</div>
+        <h3>Physics analogy for agents</h3>
+        <p>Explains the agentic loop using an analogy from <em>your</em> research field. Makes the abstract concrete before the live demo.</p>
+      </div>
+      <div class="pillar">
+        <div class="n" style="color:var(--amber);">Shows ⑤ in action</div>
+        <h3>You practise while learning</h3>
+        <p>The whole session is a live demonstration of iterative prompting. You are doing the technique while learning the content.</p>
+      </div>
+    </div>
+
+    <div class="callout green" style="margin-top:var(--s3);">
+      <b>This is not a gimmick.</b> Using AI to learn about AI is exactly the mindset shift
+      we want you to leave with today — start with a question, iterate, go deeper.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     10 · THE AI TUTOR PROMPT
+═══════════════════════════════════════════ -->
+<section class="slide" id="s10">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">10 / 11</div>
+  <div class="inner">
+    <div class="kicker" style="color:var(--green)">Your Personalised Guide</div>
+    <h2>Paste this into a fresh ChatGPT conversation — now</h2>
+    <div class="rule" style="background:var(--green)"></div>
+
+    <div class="prompt-box">You are an interactive AI tutor for researchers at KTH Applied Physics.
 Walk me through five topics ONE AT A TIME, adapted to my background.
 
-First, ask me these four questions, one per turn:
+First, ask me these four questions, one per turn — wait for my answer each time:
   Q1. My name and division/group at KTH?
-  Q2. My OS? (macOS / Windows / Linux)
-  Q3. My AI experience? (none / tried-once / regular / advanced)
+  Q2. My OS?  (macOS / Windows / Linux)
+  Q3. My AI experience?  (none / tried-once / regular / advanced)
   Q4. The most repetitive task in my research or teaching
       I wish a computer could handle?
 
 Then cover in order — one topic at a time, adapted to my answers:
   1. Prompting essentials — one good vs bad example from MY research field
-  2. Critical evaluation — how to catch hallucinations and overconfident errors
+  2. Critical evaluation — how to spot hallucinations and overconfident errors
   3. What is an AI agent — explain using a physics analogy from my field
-  4. Install Claude Code — exact command for MY OS; wait for me to confirm
+  4. Install Claude Code — give the exact command for MY OS; wait for me to confirm
   5. My first agent task — help me do something related to my Q4 answer
 
-Rules: one topic at a time · adapt every example to my field · if I get
-stuck on install, ask me to paste the exact error and diagnose it.
+Rules:
+  · One topic at a time — do not skip ahead
+  · Adapt every example to my research field and career stage
+  · If I get stuck on install, ask me to paste the exact error and diagnose it
+  · Advanced users (experience = advanced): skip to Topic 4 or 5 if they prefer
+
 Begin with Q1.</div>
-  <p class="muted" style="margin-top:0.3em;">Full prompt also at <strong style="color:var(--light);">aphys-ai.kth.se/may-8-tutorial.html</strong></p>
+
+    <p style="font-size:13px;color:var(--fg-3);margin-top:var(--s2);">
+      Full prompt also at
+      <a href="https://kth-sci.github.io/applied-physics-ai/may-8-tutorial.html" style="border-bottom:none;color:var(--indigo);">aphys-ai.kth.se/may-8-tutorial.html</a>
+      · Works in ChatGPT free tier and Claude
+    </p>
+  </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════
-     GO SLIDE
-══════════════════════════════════════════════════════ -->
-<section class="center">
-  <h2>Open ChatGPT &mdash; paste &mdash; go</h2>
-  <div style="font-size:0.5em; text-align:left; max-width:75%; margin:0.6em auto 0; display:flex; flex-direction:column; gap:0.4em;">
-    <div class="card card-accent" style="padding:0.6em 0.9em;">
-      <p style="margin:0; font-weight:600; color:var(--accent);">→ chat.openai.com &nbsp;·&nbsp; New conversation &nbsp;·&nbsp; Paste prompt</p>
-    </div>
-    <div class="card" style="padding:0.6em 0.9em;">
-      <p style="margin:0; color:var(--muted);">Work individually or in pairs. The tutor adapts to each of you separately. Advanced users: skip to Topic 4 or 5.</p>
-    </div>
-    <div class="card card-green" style="padding:0.6em 0.9em;">
-      <p style="margin:0; color:var(--accent2); font-weight:600;">Goal by 14:15 → <code style="color:var(--accent3); background:var(--bg3);">claude --version</code> working in your terminal</p>
+<!-- ═══════════════════════════════════════════
+     11 · GO + RESOURCES
+═══════════════════════════════════════════ -->
+<section class="slide" id="s11">
+  <div class="brand"><b>APHYS AI Tutorial</b> · May 8, 2026</div>
+  <div class="page">11 / 11</div>
+  <div class="inner">
+    <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:var(--s6);align-items:start;">
+
+      <div>
+        <div class="kicker">Go</div>
+        <h2>Open · Paste · Begin</h2>
+        <div class="rule"></div>
+        <div class="lab-bullets">
+          <div class="lab-card">
+            <h4>→ chat.openai.com</h4>
+            <p>New conversation · paste the prompt · answer Q1–Q4</p>
+          </div>
+          <div class="lab-card sky">
+            <h4>Work individually or in pairs</h4>
+            <p>The tutor adapts separately to each of you. Advanced users: skip to Topic 4.</p>
+          </div>
+          <div class="lab-card green">
+            <h4>Goal by 14:15</h4>
+            <p><code style="font-family:JetBrains Mono;font-weight:600;color:var(--indigo);">claude --version</code> working in your terminal</p>
+          </div>
+          <div class="lab-card amber">
+            <h4>Stuck? Raise your hand</h4>
+            <p>Helpers circulating onsite · Zoom participants: type in chat</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="kicker">Resources to go deeper</div>
+        <h2>Source material</h2>
+        <div class="rule"></div>
+        <div class="link-grid">
+          <a class="link-card" href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank">
+            <div class="lkick">OpenAI</div>
+            <h4>Prompt Engineering Guide</h4>
+            <div class="url">platform.openai.com/docs/guides/prompt-engineering</div>
+          </a>
+          <a class="link-card" href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices" target="_blank">
+            <div class="lkick">Anthropic</div>
+            <h4>Claude Prompting Best Practices</h4>
+            <div class="url">platform.claude.com · long-context, XML, literal instructions</div>
+          </a>
+          <a class="link-card" href="https://www.lakera.ai/blog/prompt-engineering-guide" target="_blank">
+            <div class="lkick">Lakera AI</div>
+            <h4>Comprehensive Prompt Engineering</h4>
+            <div class="url">lakera.ai · CoT, self-refine, least-to-most, prefill</div>
+          </a>
+          <a class="link-card" href="https://medium.com/data-science-collective/from-prompting-to-purpose-creating-a-chain-of-thought-4bc4c4dbc6ba" target="_blank">
+            <div class="lkick">Medium</div>
+            <h4>From Prompting to Purpose — CoT</h4>
+            <div class="url">Abductive · deductive · inductive reasoning workflows</div>
+          </a>
+          <a class="link-card" href="https://medium.com/@ivanescribano1998/mastering-prompt-engineering-complete-2026-guide-a639b42120e9" target="_blank">
+            <div class="lkick">Medium · 2026</div>
+            <h4>Mastering Prompt Engineering</h4>
+            <div class="url">ReAct · Tree of Thoughts · meta-prompting · DSP</div>
+          </a>
+          <a class="link-card" href="https://www.reddit.com/r/ChatGPTPro/comments/1in87ic/mastering_aipowered_research_my_guide_to_deep/" target="_blank">
+            <div class="lkick">Reddit r/ChatGPTPro</div>
+            <h4>AI-Powered Research Workflows</h4>
+            <div class="url">Deep research, multi-source, cost-optimisation strategy</div>
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
-  <p class="muted" style="margin-top:0.7em;">Helpers circulating · stuck? raise your hand · Zoom: type in chat</p>
 </section>
 
-<!-- ══════════════════════════════════════════════════════
-     RESOURCES
-══════════════════════════════════════════════════════ -->
-<section>
-  <h2>Resources to go deeper</h2>
-  <div class="resource-grid">
-    <a class="res-item" href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank">
-      <div class="res-title">OpenAI Prompt Engineering Guide</div>
-      <div class="res-src">platform.openai.com · Official · covers structure, few-shot, RAG</div>
-    </a>
-    <a class="res-item" href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices" target="_blank">
-      <div class="res-title">Anthropic Prompting Best Practices</div>
-      <div class="res-src">platform.claude.com · Claude-specific · long-context, XML scaffolding</div>
-    </a>
-    <a class="res-item" href="https://www.lakera.ai/blog/prompt-engineering-guide" target="_blank">
-      <div class="res-title">Lakera Prompt Engineering Guide</div>
-      <div class="res-src">lakera.ai · Comprehensive · CoT, least-to-most, self-refine</div>
-    </a>
-    <a class="res-item" href="https://medium.com/data-science-collective/from-prompting-to-purpose-creating-a-chain-of-thought-4bc4c4dbc6ba" target="_blank">
-      <div class="res-title">From Prompting to Purpose — Chain of Thought</div>
-      <div class="res-src">Medium · Practical CoT workflows for research tasks</div>
-    </a>
-    <a class="res-item" href="https://medium.com/@ivanescribano1998/mastering-prompt-engineering-complete-2026-guide-a639b42120e9" target="_blank">
-      <div class="res-title">Mastering Prompt Engineering — 2026 Guide</div>
-      <div class="res-src">Medium · ReAct, Tree of Thoughts, meta-prompting</div>
-    </a>
-    <a class="res-item" href="https://www.reddit.com/r/ChatGPTPro/comments/1in87ic/mastering_aipowered_research_my_guide_to_deep/" target="_blank">
-      <div class="res-title">AI-Powered Research Workflows (Reddit)</div>
-      <div class="res-src">r/ChatGPTPro · Deep research, cost optimisation, multi-source</div>
-    </a>
-  </div>
-  <p class="muted" style="margin-top:0.5em;">All links also collected at <strong style="color:var(--light);">aphys-ai.kth.se/may-8-tutorial.html</strong></p>
-</section>
-
-</div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
-  Reveal.initialize({
-    hash: true,
-    transition: "slide",
-    slideNumber: "c/t",
-    progress: true,
-    margin: 0.04,
-    width: 1280,
-    height: 720,
-    backgroundTransition: "fade",
-  });
+  // Scroll progress bar
+  const np = document.getElementById('np');
+  const slides = document.querySelectorAll('.slide');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.intersectionRatio > 0.5) {
+        const idx = Array.from(slides).indexOf(e.target);
+        np.style.width = ((idx + 1) / slides.length * 100) + '%';
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach(s => io.observe(s));
 </script>
 </body>
 </html>
