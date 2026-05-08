@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatGPT Essentials — May 8 Tutorial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --accent:   #6366f1;
+        --accent2:  #c2410c;
+        --green:    #2D7A4F;
+        --red:      #b04040;
+        --fg:       #1a1a1a;
+        --muted:    #64748b;
+        --light:    #94a3b8;
+        --border:   #e2e8f0;
+        --surface:  #f8fafc;
+        --mono:     'JetBrains Mono', monospace;
+      }
+
+      .reveal { font-family: 'Inter', sans-serif; font-size: 36px; color: var(--fg); }
+      .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; font-weight: 700; text-transform: none; letter-spacing: -0.02em; color: var(--fg); }
+      .reveal h1 { font-size: 2em; }
+      .reveal h2 { font-size: 1.4em; margin-bottom: 0.5em; }
+      .reveal h2::after { content: ''; display: block; width: 48px; height: 3px; background: var(--accent); border-radius: 2px; margin-top: 0.3em; }
+      .reveal .center-title h2::after { margin: 0.3em auto 0; }
+      .reveal p { color: var(--muted); line-height: 1.6; }
+      .reveal li { color: var(--muted); line-height: 1.5; margin-bottom: 0.35em; }
+      .reveal li::marker { color: var(--accent); }
+      .reveal code { font-family: var(--mono); font-size: 0.78em; background: #f1f5f9; border: 1px solid var(--border); padding: 0.12em 0.4em; border-radius: 5px; color: var(--accent2); }
+      .reveal pre { box-shadow: none; width: 100%; margin: 0.6em 0; }
+      .reveal pre code { display: block; background: #1e293b; color: #e2e8f0; border-radius: 10px; padding: 0.8em 1em; font-size: 0.52em; line-height: 1.6; border: none; max-height: 400px; overflow: auto; }
+      .reveal .slide-number { font-family: var(--mono); font-size: 13px; color: var(--light); background: transparent; }
+      .reveal .progress span { background: var(--accent); }
+      .reveal .muted { color: var(--light); font-size: 0.5em; }
+
+      /* Cards */
+      .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.5em 0.8em; }
+      .card-good { background: rgba(45,122,79,0.06); border-color: rgba(45,122,79,0.3); }
+      .card-bad  { background: rgba(176,64,64,0.06); border-color: rgba(176,64,64,0.25); }
+      .card-accent { border-color: var(--accent); background: rgba(99,102,241,0.04); }
+
+      /* Tip */
+      .tip { background: rgba(45,122,79,0.07); border-left: 4px solid var(--green); border-radius: 0 8px 8px 0; padding: 0.5em 0.8em; margin: 0.5em 0; text-align: left; }
+      .tip p { color: #334155; font-size: 0.58em; margin: 0; }
+
+      /* Warn */
+      .warn { background: rgba(176,64,64,0.07); border-left: 4px solid var(--red); border-radius: 0 8px 8px 0; padding: 0.5em 0.8em; margin: 0.5em 0; text-align: left; }
+      .warn p { color: #4a1a1a; font-size: 0.58em; margin: 0; }
+
+      /* Highlight */
+      .hl  { color: var(--accent);  font-weight: 600; }
+      .hl2 { color: var(--accent2); font-weight: 600; }
+      .hlg { color: var(--green);   font-weight: 600; }
+      .hlr { color: var(--red);     font-weight: 600; }
+
+      /* Pattern grid */
+      .pattern-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4em; font-size: 0.42em; text-align: center; }
+      .pcard { border-radius: 10px; padding: 0.6em 0.3em; border: 1px solid var(--border); }
+      .pcard .num { font-size: 1.5em; font-weight: 800; color: var(--accent); display: block; }
+      .pcard .label { font-weight: 700; color: var(--fg); display: block; margin: 0.15em 0; }
+      .pcard .sub { color: var(--muted); font-size: 0.9em; line-height: 1.3; }
+
+      /* Prompt anatomy */
+      .anatomy { font-family: var(--mono); background: #1e293b; color: #e2e8f0; border-radius: 10px; padding: 0.8em 1em; font-size: 0.46em; line-height: 1.8; text-align: left; }
+      .task-c    { color: #f87171; }
+      .context-c { color: #86efac; }
+      .format-c  { color: #93c5fd; }
+      .role-c    { color: #fcd34d; }
+      .ann       { color: #64748b; font-size: 0.85em; margin-left: 0.5em; }
+
+      /* Before/after */
+      .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; font-size: 0.46em; }
+      .ba-col h4 { font-weight: 700; margin-bottom: 0.4em; font-size: 1em; }
+      .ba-item { border-radius: 8px; padding: 0.5em 0.7em; margin-bottom: 0.3em; font-style: italic; }
+      .ba-item.bad  { background: rgba(176,64,64,0.08); border: 1px solid rgba(176,64,64,0.2); color: #7a2020; }
+      .ba-item.good { background: rgba(45,122,79,0.08); border: 1px solid rgba(45,122,79,0.2); color: #1a4a30; }
+
+      /* Exercise */
+      .exercise-box { background: rgba(99,102,241,0.06); border: 2px solid var(--accent); border-radius: 12px; padding: 0.8em 1em; text-align: left; }
+      .exercise-box h3 { color: var(--accent); font-size: 0.7em; margin-bottom: 0.4em; }
+      .prompt-display { background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: 0.7em 0.9em; font-family: var(--mono); font-size: 0.44em; line-height: 1.7; white-space: pre-wrap; margin: 0.4em 0; }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- 1. Title -->
+        <section class="center-title">
+          <h2 style="font-size:1.7em; margin-bottom:0.2em;">ChatGPT Essentials</h2>
+          <p style="font-size:0.55em; color:var(--muted); margin-bottom:0.8em;">From search engine replacement to thinking partner</p>
+          <p style="font-size:0.42em; color:var(--light);">APHYS AI Tutorial · May 8, 2026 · 13:30 · Jonas Sellberg</p>
+        </section>
+
+        <!-- 2. Not a search engine -->
+        <section>
+          <h2>Not a search engine — a thinking partner</h2>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5em; font-size:0.5em; text-align:left; margin-bottom:0.4em;">
+            <div class="card card-bad">
+              <p style="color:var(--red); font-weight:600; margin-bottom:0.2em;">What it is NOT</p>
+              <ul style="margin:0; padding-left:1em;">
+                <li>A search engine with sources</li>
+                <li>An oracle of facts</li>
+                <li>A one-shot answer machine</li>
+                <li>A replacement for your expertise</li>
+              </ul>
+            </div>
+            <div class="card card-good">
+              <p style="color:var(--green); font-weight:600; margin-bottom:0.2em;">What it IS</p>
+              <ul style="margin:0; padding-left:1em;">
+                <li>A fast, tireless thinking partner</li>
+                <li>A first-draft generator you refine</li>
+                <li>A sounding board that never judges</li>
+                <li>An amplifier of <em>your</em> domain knowledge</li>
+              </ul>
+            </div>
+          </div>
+          <div class="tip">
+            <p>Think: <strong>a brilliant but forgetful colleague</strong> who has read everything, reasons fast, but sometimes invents plausible-sounding nonsense. Your job is to catch that — and your physics training makes you good at it.</p>
+          </div>
+        </section>
+
+        <!-- 3. Five patterns -->
+        <section>
+          <h2>Five patterns that make the difference</h2>
+          <div class="pattern-grid" style="margin-bottom:0.5em;">
+            <div class="pcard" style="background:rgba(239,68,68,0.06); border-color:rgba(239,68,68,0.25);">
+              <span class="num" style="color:#dc2626;">①</span>
+              <span class="label">Task</span>
+              <span class="sub">Say exactly what you want done</span>
+            </div>
+            <div class="pcard" style="background:rgba(99,102,241,0.06); border-color:rgba(99,102,241,0.25);">
+              <span class="num">②</span>
+              <span class="label">Context</span>
+              <span class="sub">Tell it who you are and why</span>
+            </div>
+            <div class="pcard" style="background:rgba(59,130,246,0.06); border-color:rgba(59,130,246,0.25);">
+              <span class="num" style="color:#2563eb;">③</span>
+              <span class="label">Format</span>
+              <span class="sub">Specify the output shape</span>
+            </div>
+            <div class="pcard" style="background:rgba(245,158,11,0.06); border-color:rgba(245,158,11,0.3);">
+              <span class="num" style="color:#d97706;">④</span>
+              <span class="label">Role</span>
+              <span class="sub">Assign it a persona or stance</span>
+            </div>
+            <div class="pcard" style="background:rgba(45,122,79,0.06); border-color:rgba(45,122,79,0.25);">
+              <span class="num" style="color:var(--green);">⑤</span>
+              <span class="label">Iterate</span>
+              <span class="sub">The real skill is the follow-up</span>
+            </div>
+          </div>
+          <div class="tip">
+            <p>You rarely need all five at once. Start with ① and ③, add ② when the output is too generic, use ④ for critical review, and ⑤ always — the first response is rarely the best.</p>
+          </div>
+        </section>
+
+        <!-- 4. Anatomy -->
+        <section>
+          <h2>A prompt with all five patterns</h2>
+          <div class="anatomy">
+<span class="role-c">Act as a critical peer reviewer for a VR grant application.</span> <span class="ann">← role</span>
+
+<span class="task-c">Read the research description below and identify the three weakest points
+in the scientific argument.</span> <span class="ann">← task</span>
+
+<span class="context-c">I am a researcher in ultrafast X-ray spectroscopy at KTH Applied Physics.
+The reviewers will be physicists but not specialists in my sub-field.
+This is for a 4-year senior researcher grant.</span> <span class="ann">← context</span>
+
+<span class="format-c">Format: numbered list, one sentence per weakness, then a suggested fix for each.
+Max 200 words.</span> <span class="ann">← format</span>
+
+[paste your research description here]</div>
+          <p style="font-size:0.45em; color:var(--muted); margin-top:0.4em; text-align:left;">After it replies → <span class="hl">iterate</span>: "Make the tone more constructive." / "Which of the three is most critical?" / "Now write the improved version."</p>
+        </section>
+
+        <!-- 5. Before / after -->
+        <section>
+          <h2>Weak vs. strong — physics examples</h2>
+          <div class="ba">
+            <div class="ba-col">
+              <h4 style="color:var(--red);">❌ Too vague</h4>
+              <div class="ba-item bad">"Summarise this paper"</div>
+              <div class="ba-item bad">"Write a grant intro"</div>
+              <div class="ba-item bad">"Explain machine learning"</div>
+              <div class="ba-item bad">"Is my analysis correct?"</div>
+              <div class="ba-item bad">"Help me with my lecture"</div>
+            </div>
+            <div class="ba-col">
+              <h4 style="color:var(--green);">✓ Specific and useful</h4>
+              <div class="ba-item good">"Summarise for a PhD student in optics — focus on experimental method, 150 words."</div>
+              <div class="ba-item good">"200-word VR grant intro for ultrafast dynamics, non-specialist panel, stress societal impact."</div>
+              <div class="ba-item good">"Explain supervised learning using an analogy from X-ray diffraction."</div>
+              <div class="ba-item good">"Here is my fitting approach [paste code]. List 3 assumptions that could break it."</div>
+              <div class="ba-item good">"I teach quantum mechanics to 3rd-year engineers. Suggest one active-learning exercise on spin that takes 10 min."</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. Critical awareness -->
+        <section>
+          <h2>When it goes wrong — and it will</h2>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4em; font-size:0.48em; text-align:left; margin-bottom:0.4em;">
+            <div class="card" style="border-color:rgba(176,64,64,0.3);">
+              <p style="color:var(--red); font-weight:600; margin-bottom:0.1em;">Hallucination</p>
+              <p style="margin:0;">Invents citations, statistics, equations. Sounds completely confident. <strong>Always verify specific claims</strong> — especially paper titles and DOIs.</p>
+            </div>
+            <div class="card" style="border-color:rgba(176,64,64,0.3);">
+              <p style="color:var(--red); font-weight:600; margin-bottom:0.1em;">Sycophancy</p>
+              <p style="margin:0;">Will agree with whatever framing you give it. Counter with: <em>"What is wrong with this argument?"</em> or <em>"Steel-man the opposite view."</em></p>
+            </div>
+            <div class="card" style="border-color:rgba(176,64,64,0.3);">
+              <p style="color:var(--red); font-weight:600; margin-bottom:0.1em;">Generic drift</p>
+              <p style="margin:0;">Without context, output is textbook-level generic. The more specific your prompt, the more specific — and useful — the response.</p>
+            </div>
+            <div class="card" style="border-color:rgba(176,64,64,0.3);">
+              <p style="color:var(--red); font-weight:600; margin-bottom:0.1em;">Confidentiality</p>
+              <p style="margin:0;">Don't paste unpublished data, student personal info, or grant content you haven't cleared. Check KTH's AI data policy.</p>
+            </div>
+          </div>
+          <div class="warn">
+            <p><strong>Your domain expertise is the quality filter.</strong> ChatGPT is fast and fluent — you provide the scientific judgment. This is not optional.</p>
+          </div>
+        </section>
+
+        <!-- 7. Research use cases -->
+        <section>
+          <h2>Five things you can do before Monday</h2>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.35em; font-size:0.46em; text-align:left;">
+            <div class="card">
+              <p style="font-weight:600; color:var(--fg); margin-bottom:0.1em;">Literature synthesis</p>
+              <p style="margin:0;">Paste 3 abstracts → ask for themes, gaps, and one open question. Saves 30 min of reading.</p>
+            </div>
+            <div class="card">
+              <p style="font-weight:600; color:var(--fg); margin-bottom:0.1em;">Grant impact paragraph</p>
+              <p style="margin:0;">3-sentence research description → 200-word impact statement for a funding panel.</p>
+            </div>
+            <div class="card">
+              <p style="font-weight:600; color:var(--fg); margin-bottom:0.1em;">Writing feedback</p>
+              <p style="margin:0;">Paste your draft → "What's unclear, what's missing, what should I cut?" Brutal but fair.</p>
+            </div>
+            <div class="card">
+              <p style="font-weight:600; color:var(--fg); margin-bottom:0.1em;">Peer review draft</p>
+              <p style="margin:0;">Paste a paper → "What are the 3 strongest weaknesses in the methodology?" Good first pass.</p>
+            </div>
+            <div class="card" style="grid-column: 1 / -1;">
+              <p style="font-weight:600; color:var(--fg); margin-bottom:0.1em;">Explain your research at every level</p>
+              <p style="margin:0;">"I work on [topic]. Explain it to: a smart 16-year-old, a science journalist, a VR grant panel." Three very different answers — all useful.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. The AI tutor prompt -->
+        <section>
+          <h2>Your personalised guide for the next 30 min</h2>
+          <p style="font-size:0.52em; margin-bottom:0.35em;">Paste this prompt into a <strong>fresh ChatGPT conversation</strong> right now. It will personalise itself to your OS, research area, and experience level — then guide you through prompting, agents, and installing Claude Code.</p>
+          <div class="prompt-display">You are an interactive AI tutor for faculty and researchers at
+KTH Applied Physics. Walk me through five topics ONE AT A TIME:
+
+First, ask me exactly these four questions, one per turn:
+  Q1. My name and division/group at KTH?
+  Q2. My computer OS? (macOS / Windows / Linux)
+  Q3. My AI experience? (none / tried-once / regular / advanced)
+  Q4. The most repetitive task in my research or teaching
+      I wish a computer could handle?
+
+Then cover in order:
+  1. Prompting essentials — show me one good vs bad example from MY field
+  2. Critical evaluation — how to spot hallucinations and confident errors
+  3. What is an AI agent — use a physics analogy
+  4. Install Claude Code — exact command for MY OS, wait for me to confirm
+  5. My first agent task — help me do something related to my Q4 answer
+
+One topic at a time. Adapt every example to my field. Begin with Q1.</div>
+          <p style="font-size:0.4em; color:var(--light); margin-top:0.3em;">Full prompt at <strong>aphys-ai.kth.se/may-8-tutorial.html</strong> &nbsp;·&nbsp; Works in ChatGPT free tier</p>
+        </section>
+
+        <!-- 9. Go! -->
+        <section class="center-title">
+          <h2>Open ChatGPT — paste the prompt — go</h2>
+          <div style="font-size:0.52em; text-align:left; max-width:80%; margin:0.6em auto 0;">
+            <div class="card card-accent" style="padding:0.6em 0.9em; margin-bottom:0.4em;">
+              <p style="margin:0; font-weight:600; color:var(--accent);">→ chat.openai.com</p>
+              <p style="margin:0.2em 0 0; color:var(--muted); font-size:0.9em;">Start a new conversation · paste the prompt · answer Q1–Q4</p>
+            </div>
+            <div class="card" style="padding:0.6em 0.9em; margin-bottom:0.4em;">
+              <p style="margin:0; color:var(--fg);">Work individually or in pairs. The AI adapts to each of you separately.</p>
+            </div>
+            <div class="card" style="padding:0.6em 0.9em;">
+              <p style="margin:0; color:var(--fg);">Goal by 14:15: Topics 1–4 done and <code>claude --version</code> working in your terminal.</p>
+            </div>
+          </div>
+          <p class="muted" style="margin-top:0.8em;">Helpers circulating · stuck? raise your hand · Zoom: type in chat</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        transition: "slide",
+        slideNumber: "c/t",
+        progress: true,
+        margin: 0.04,
+        width: 1280,
+        height: 720,
+      });
+    </script>
+  </body>
+</html>
