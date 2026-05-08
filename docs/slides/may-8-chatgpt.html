@@ -1068,14 +1068,31 @@ Then ask: "Which of the five techniques did you notice most clearly? Which was l
 </section>
 
 <script>
-  // Scroll progress bar
   const np = document.getElementById('np');
   const slides = document.querySelectorAll('.slide');
+
+  // Jump to hash on load (instant — no animation flash)
+  function goToHash() {
+    const id = location.hash.slice(1);
+    if (id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'instant' });
+    }
+  }
+  goToHash();
+  window.addEventListener('hashchange', goToHash);
+
+  // Update hash + progress bar as slides come into view
+  let updating = false;
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.intersectionRatio > 0.5) {
         const idx = Array.from(slides).indexOf(e.target);
         np.style.width = ((idx + 1) / slides.length * 100) + '%';
+        // Update URL hash without triggering hashchange scroll
+        updating = true;
+        history.replaceState(null, '', '#' + e.target.id);
+        updating = false;
       }
     });
   }, { threshold: 0.5 });

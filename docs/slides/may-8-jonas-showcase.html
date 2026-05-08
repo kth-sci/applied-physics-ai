@@ -635,15 +635,30 @@ Begin with Q1.</div>
 <script>
   const np = document.getElementById('np');
   const slides = document.querySelectorAll('.slide');
+
+  function goToHash() {
+    const id = location.hash.slice(1);
+    if (id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'instant' });
+    }
+  }
+  goToHash();
+  window.addEventListener('hashchange', goToHash);
+
+  let updating = false;
   const io = new IntersectionObserver(e => {
     e.forEach(x => {
-      if(x.intersectionRatio > 0.5){
+      if (x.intersectionRatio > 0.5) {
         const i = Array.from(slides).indexOf(x.target);
         np.style.width = ((i+1)/slides.length*100)+'%';
+        updating = true;
+        history.replaceState(null, '', '#' + x.target.id);
+        updating = false;
       }
     });
-  },{threshold:0.5});
-  slides.forEach(s=>io.observe(s));
+  }, { threshold: 0.5 });
+  slides.forEach(s => io.observe(s));
 </script>
 </body>
 </html>
