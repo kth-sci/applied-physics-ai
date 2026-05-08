@@ -277,7 +277,14 @@ cd ~/my-project
       <h2 class="step-title">Write your CLAUDE.md</h2>
     </div>
     <p>The <code>CLAUDE.md</code> file is how you give Claude Code the context it needs to act as a useful collaborator rather than a generic assistant. <b>Think of it as a briefing document for a new team member who knows a lot about AI but nothing about your specific work.</b></p>
-    <p>You can paste the project description from ChatGPT into the Goal section. Or use the template below as a starting point.</p>
+
+    <div class="tip green" style="margin-bottom:var(--s3);">
+      <b>Fastest path: let the agent write it.</b> Open Claude Code, navigate to your project folder, and paste this:<br/>
+      <em style="font-family:'JetBrains Mono',monospace;font-size:13px;display:block;margin-top:6px;">"I'm a [role] at KTH Applied Physics working on [your field]. I want to build [one sentence description]. Write a CLAUDE.md for this project and save it."</em><br/>
+      Claude will ask any clarifying questions it needs, then write and save the file for you.
+    </div>
+
+    <p>Or use the template below as a starting point and edit it yourself:</p>
 
     <div class="code-block">
       <div class="cb-label">
