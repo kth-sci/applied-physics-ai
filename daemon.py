@@ -323,7 +323,7 @@ def check_slack_messages(state):
     """Check for new DMs from Jonas and relay to session."""
     url = (
         f"https://slack.com/api/conversations.history"
-        f"?channel={JONAS_DM_CHANNEL}&limit=5"
+        f"?channel={JONAS_DM_CHANNEL}&limit=100"
         f"&oldest={state['last_slack_ts_jonas']}"
     )
     data = http_get(url, {"Authorization": f"Bearer {SLACK_TOKEN}"})
@@ -331,26 +331,34 @@ def check_slack_messages(state):
         return
 
     messages = data.get("messages", [])
-    # Filter to messages FROM Jonas (not from our bot)
-    new_msgs = [
-        m for m in messages
-        if m.get("user") == JONAS_USER_ID
-        and float(m.get("ts", "0")) > float(state["last_slack_ts_jonas"])
-    ]
+    last_seen = float(state["last_slack_ts_jonas"])
+    # Always advance the cursor past every message we just fetched, so we don't
+    # loop forever on bot/non-Jonas messages that don't trigger the timestamp bump.
+    for m in messages:
+        try:
+            t = float(m.get("ts", "0"))
+        except (TypeError, ValueError):
+            continue
+        if t > last_seen:
+            last_seen = t
+    if last_seen > float(state["last_slack_ts_jonas"]):
+        state["last_slack_ts_jonas"] = f"{last_seen:.6f}"
 
+    # Filter to messages FROM Jonas (not from our bot)
+    new_msgs = sorted(
+        [m for m in messages
+         if m.get("user") == JONAS_USER_ID
+         and float(m.get("ts", "0")) > float("0")],  # filter happens via `oldest` already
+        key=lambda m: float(m["ts"]),
+    )
     if not new_msgs:
         return
-
-    # Update timestamp to latest
-    new_msgs.sort(key=lambda m: float(m["ts"]))
-    state["last_slack_ts_jonas"] = new_msgs[-1]["ts"]
 
     for msg in new_msgs:
         text = msg.get("text", "").strip()
         if not text:
             continue
         log(f"New message from Jonas: {text[:100]}")
-        # Relay to session
         send_to_session(
             f"[Slack from Jonas] {text}\n\n"
             f"(Reply via Slack or update the site accordingly.)",
@@ -362,7 +370,7 @@ def check_slack_messages_wei(state):
     """Check for new DMs from Wei and relay to session."""
     url = (
         f"https://slack.com/api/conversations.history"
-        f"?channel={WEI_DM_CHANNEL}&limit=5"
+        f"?channel={WEI_DM_CHANNEL}&limit=100"
         f"&oldest={state['last_slack_ts_wei']}"
     )
     data = http_get(url, {"Authorization": f"Bearer {SLACK_TOKEN}"})
@@ -370,17 +378,24 @@ def check_slack_messages_wei(state):
         return
 
     messages = data.get("messages", [])
-    new_msgs = [
-        m for m in messages
-        if m.get("user") == WEI_USER_ID
-        and float(m.get("ts", "0")) > float(state["last_slack_ts_wei"])
-    ]
+    last_seen = float(state["last_slack_ts_wei"])
+    for m in messages:
+        try:
+            t = float(m.get("ts", "0"))
+        except (TypeError, ValueError):
+            continue
+        if t > last_seen:
+            last_seen = t
+    if last_seen > float(state["last_slack_ts_wei"]):
+        state["last_slack_ts_wei"] = f"{last_seen:.6f}"
+
+    new_msgs = sorted(
+        [m for m in messages if m.get("user") == WEI_USER_ID],
+        key=lambda m: float(m["ts"]),
+    )
 
     if not new_msgs:
         return
-
-    new_msgs.sort(key=lambda m: float(m["ts"]))
-    state["last_slack_ts_wei"] = new_msgs[-1]["ts"]
 
     for msg in new_msgs:
         text = msg.get("text", "").strip()
