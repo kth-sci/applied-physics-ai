@@ -44,9 +44,9 @@
     <p class="text-slate-500 mb-6">Each event builds on the skills from the previous one.</p>
 
     <div class="flex items-center justify-center gap-0 flex-wrap my-8">
-      <div class="bg-accent text-white text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap">May 8: Tutorial</div>
+      <div class="bg-slate-200 text-slate-500 text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap line-through">May 8: Tutorial</div>
       <span class="text-slate-400 text-lg mx-2">&rarr;</span>
-      <div class="bg-white border-2 border-slate-200 text-slate-600 text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap">May 26: Hackathon</div>
+      <div class="bg-fire text-white text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap">May 26: Hackathon</div>
       <span class="text-slate-400 text-lg mx-2">&rarr;</span>
       <div class="bg-white border-2 border-slate-200 text-slate-600 text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap">May 27: LearnWise</div>
       <span class="text-slate-400 text-lg mx-2">&rarr;</span>
@@ -60,23 +60,48 @@
     </div>
   </section>
 
-  <!-- FEATURED: May 8 Tutorial -->
-  <section class="mb-16">
+  <!-- FEATURED: SCI AI Agent Hackathon (now the next upcoming event) -->
+  <section class="mb-12">
     <div class="relative bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-fire rounded-xl p-8 overflow-hidden">
       <div class="absolute top-0 right-0 flex items-center gap-2">
-        <span id="reg-count-badge" style="display:none;background:#fff;border:1px solid #fed7aa;color:#c2410c;font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:0 0 0 8px;white-space:nowrap">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:-1px;margin-right:3px"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-          <span id="reg-count-num">0</span> registered
-        </span>
         <span class="bg-fire text-white text-xs font-bold px-4 py-1.5 rounded-bl-lg tracking-wide">NEXT EVENT</span>
       </div>
-
       <div class="inline-flex items-center gap-2 bg-fire text-white px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span id="countdown-text">Coming May 8, 2026</span>
+        <span>May 26, 2026 &bull; 09:00-16:00 CET</span>
+      </div>
+      <h3 class="text-xl font-bold text-orange-700 mb-3">SCI AI Agent Hackathon</h3>
+      <p class="text-slate-600 text-sm mb-4">A full-day hands-on hackathon at <strong>Hugin, Teknikringen 8</strong> (entrance level). Solve a real research or teaching problem using AI agents. Build a working prototype and showcase it to the school. <strong>Leads:</strong> Fredrik + Artem + Wei + Marco + Jonas.</p>
+      <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-r-lg p-4 text-sm text-slate-700 mb-3">
+        <strong>Prerequisite:</strong> Attendance at the May 8 tutorial is strongly recommended. Bring your laptop and a real problem you want to attack.
+      </div>
+      <div>
+        <a href="https://www.kth.se/form/699ee8e2fa8f3c4d8d259d61" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-fire hover:bg-orange-700 text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Register for Hackathon &rarr;
+        </a>
+      </div>
+      <p class="text-xs text-slate-500 mt-3">Free &bull; Open to all SCI faculty &bull; Limited to 40 participants</p>
+    </div>
+  </section>
+
+  <!-- PAST: May 8 Tutorial -->
+  <section class="mb-16">
+    <div class="relative bg-slate-50 border border-slate-300 rounded-xl p-8 overflow-hidden">
+      <div class="absolute top-0 right-0 flex items-center gap-2">
+        <span id="reg-count-badge" style="display:none;background:#fff;border:1px solid #cbd5e1;color:#475569;font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:0 0 0 8px;white-space:nowrap">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:-1px;margin-right:3px"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <span id="reg-count-num">0</span> attended
+        </span>
+        <span class="bg-slate-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-lg tracking-wide">PAST EVENT</span>
       </div>
 
-      <h3 class="text-xl font-bold text-orange-700 mb-3">APHYS AI Agent Tutorial</h3>
+      <div class="inline-flex items-center gap-2 bg-slate-500 text-white px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Held on May 8, 2026</span>
+      </div>
+
+      <h3 class="text-xl font-bold text-slate-700 mb-3">APHYS AI Agent Tutorial</h3>
 
       <div class="flex flex-wrap gap-4 text-sm text-slate-600 mb-4">
         <span class="flex items-center gap-1.5">
@@ -120,71 +145,21 @@
         </div>
       </div>
 
-      <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-r-lg p-4 text-sm text-slate-700">
-        <strong>Preparation:</strong> Bring your laptop. No coding experience required &mdash; the AI does the coding for you. We will email you a <strong>Claude Team license invitation</strong> in advance so you can install Claude Code before the session. Detailed agenda: <a href="may-8-tutorial.html" class="text-accent hover:underline font-semibold">May 8 Tutorial Page &rarr;</a>
+      <div class="bg-slate-100 border-l-4 border-slate-400 rounded-r-lg p-4 text-sm text-slate-700">
+        <strong>Recap:</strong> The tutorial was held on May 8, 2026 at FB53 AlbaNova. Registration is closed. See the detailed agenda and follow-up resources: <a href="may-8-tutorial.html" class="text-accent hover:underline font-semibold">May 8 Tutorial Page &rarr;</a>
       </div>
 
-      <div style="margin-top:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
-        <button onclick="document.getElementById('signup-section').scrollIntoView({behavior:'smooth'})" style="background:#c2410c;color:#fff;font-weight:700;padding:0.6rem 1.5rem;border-radius:8px;border:none;cursor:pointer;font-size:0.95rem;font-family:inherit;display:inline-flex;align-items:center;gap:0.5rem;transition:background 0.15s" onmouseenter="this.style.background='#9a3412'" onmouseleave="this.style.background='#c2410c'">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-          Register Now
-        </button>
-        <a href="may-8-tutorial.html" style="background:#fff;color:#c2410c;font-weight:700;padding:0.6rem 1.5rem;border-radius:8px;border:2px solid #c2410c;font-size:0.95rem;font-family:inherit;display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;transition:background 0.15s" onmouseenter="this.style.background='#fff7ed'" onmouseleave="this.style.background='#fff'">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          View Agenda
+      <div style="margin-top:1rem">
+        <a href="may-8-tutorial.html" style="background:#fff;color:#475569;font-weight:600;padding:0.5rem 1.2rem;border-radius:8px;border:1.5px solid #cbd5e1;font-size:0.9rem;font-family:inherit;display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;transition:all 0.15s" onmouseenter="this.style.borderColor='#6366f1';this.style.color='#6366f1'" onmouseleave="this.style.borderColor='#cbd5e1';this.style.color='#475569'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          View Agenda &amp; Recap
         </a>
-        <span class="text-xs text-slate-500">Free &bull; Open to all APHYS faculty and researchers</span>
       </div>
 
-      <p class="text-xs text-slate-500 mt-3">The skills you build here will be directly applied at the Hackathon on May 26 and all subsequent events. This is the foundation.</p>
+      <p class="text-xs text-slate-500 mt-3">The skills built here apply directly to the May 26 SCI AI Agent Hackathon and all subsequent events.</p>
     </div>
   </section>
 
-  <!-- Signup Form -->
-  <section id="signup-section" class="mb-16">
-    <h2 class="text-2xl font-bold text-slate-900 mb-2">Register for May 8 Tutorial</h2>
-    <p class="text-slate-500 text-sm mb-6">Fill in the form below to register. You will receive a confirmation by email.</p>
-
-    <form id="signup-form" style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1.5rem;max-width:36rem;display:flex;flex-direction:column;gap:1rem">
-      <div>
-        <label style="display:block;font-size:0.875rem;font-weight:600;margin-bottom:0.25rem;color:#0f172a">Name *</label>
-        <input type="text" name="name" required placeholder="Your full name" style="width:100%;padding:0.5rem 0.75rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.9rem;outline:none;transition:border 0.15s" onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'">
-      </div>
-      <div>
-        <label style="display:block;font-size:0.875rem;font-weight:600;margin-bottom:0.25rem;color:#0f172a">E-mail *</label>
-        <input type="email" name="email" required placeholder="your.name@kth.se" style="width:100%;padding:0.5rem 0.75rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.9rem;outline:none;transition:border 0.15s" onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'">
-      </div>
-      <div>
-        <label style="display:block;font-size:0.875rem;font-weight:600;margin-bottom:0.25rem;color:#0f172a">Preferred Attendance *</label>
-        <div style="display:flex;gap:1rem;margin-top:0.25rem;flex-wrap:wrap">
-          <label id="opt-albanova-label" style="display:flex;align-items:center;gap:0.4rem;font-size:0.9rem;cursor:pointer;color:#475569">
-            <input type="radio" id="opt-albanova" name="attendance" value="AlbaNova" required style="accent-color:#6366f1"> AlbaNova (in-person) <span id="opt-albanova-status" style="font-size:0.75rem;color:#94a3b8"></span>
-          </label>
-          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.9rem;cursor:pointer;color:#475569">
-            <input type="radio" name="attendance" value="Zoom"> Zoom (remote)
-          </label>
-        </div>
-        <p id="albanova-full-msg" style="display:none;margin-top:0.5rem;font-size:0.82rem;color:#c2410c;background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:0.5rem 0.75rem">
-          <strong>AlbaNova is full</strong> (60 onsite seats reached). You can still register for Zoom attendance.
-        </p>
-      </div>
-      <div>
-        <label style="display:block;font-size:0.875rem;font-weight:600;margin-bottom:0.25rem;color:#0f172a">Previous AI Experience <span style="font-weight:400;color:#94a3b8">(optional)</span></label>
-        <select name="experience" style="width:100%;padding:0.5rem 0.75rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.9rem;background:#fff;outline:none">
-          <option value="">-- Select --</option>
-          <option value="none">No experience with AI tools</option>
-          <option value="beginner">Tried ChatGPT a few times</option>
-          <option value="regular">Use AI tools regularly</option>
-          <option value="advanced">Advanced user / build with AI agents</option>
-        </select>
-      </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.25rem">
-        <span style="font-size:0.72rem;color:#94a3b8">Your data is stored securely and only used for event organization.</span>
-        <button type="submit" style="background:#6366f1;color:#fff;font-weight:600;padding:0.5rem 1.5rem;border-radius:8px;border:none;cursor:pointer;font-size:0.9rem;font-family:inherit;transition:background 0.15s" onmouseenter="this.style.background='#4f46e5'" onmouseleave="this.style.background='#6366f1'">Register</button>
-      </div>
-      <div id="signup-status" style="display:none"></div>
-    </form>
-  </section>
 
   <!-- Full Event Schedule -->
   <section class="mb-16">
@@ -201,25 +176,7 @@
       <p class="text-slate-600 text-sm">Introductory hands-on session for APHYS faculty. Learn to use ChatGPT and Claude Code for research, teaching, and productivity. <strong>Leads:</strong> Wei + Jonas.</p>
     </div>
 
-    <!-- May 26 -->
-    <div class="border-l-4 border-kth-light bg-white rounded-r-xl p-5 mb-4 shadow-sm hover:translate-x-1 transition border border-slate-200">
-      <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-2">
-        <span class="font-semibold text-slate-700">May 26, 2026</span> &bull; 09:00-16:00
-        <span class="inline-block text-xs font-semibold bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full">Hackathon</span>
-      </div>
-      <h3 class="text-lg font-bold text-slate-900 mb-1">SCI AI Agent Hackathon</h3>
-      <p class="text-slate-600 text-sm">School-wide hackathon at Hugin, Teknikringen 8, Entrance level. Solve real research or teaching problems using AI. Build working prototypes and present results. <strong>Leads:</strong> Fredrik + Artem + Wei + Marco + Jonas.</p>
-      <div class="bg-indigo-50 border-l-4 border-accent rounded-r-lg p-3 text-sm text-slate-700 mt-3">
-        <strong>Prerequisite:</strong> Attendance at the May 8 tutorial is strongly recommended. You should be comfortable using at least one AI tool before the hackathon.
-      </div>
-      <div style="margin-top:0.75rem">
-        <a href="https://www.kth.se/form/699ee8e2fa8f3c4d8d259d61" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;background:#6366f1;color:#fff;font-weight:600;padding:0.45rem 1.2rem;border-radius:8px;text-decoration:none;font-size:0.85rem;transition:background 0.15s" onmouseenter="this.style.background='#4f46e5'" onmouseleave="this.style.background='#6366f1'">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          Register for Hackathon &rarr;
-        </a>
-      </div>
-      <p class="text-xs text-slate-500 mt-3">Free &bull; Open to all SCI faculty &bull; Limited to 40 participants</p>
-    </div>
+    <!-- May 26 is featured above as the NEXT EVENT — not duplicated here -->
 
     <!-- May 27 -->
     <div class="border-l-4 border-emerald-400 bg-white rounded-r-xl p-5 mb-4 shadow-sm hover:translate-x-1 transition border border-slate-200">
@@ -359,99 +316,18 @@
   setInterval(update, 60000);
 })();
 
-// Registration: load count + handle form submit
-const REG_HYPHA = 'https://hypha.aicell.io';
-const REG_COLLECTION = 'kth-sci/aphys-ai-registrations';
-const REG_CHILDREN = REG_HYPHA + '/kth-sci/artifacts/aphys-ai-registrations/children';
-
-const ALBANOVA_CAP = 60;
-
-// Load registration count + apply AlbaNova cap
-async function refreshRegState() {
+// Past event: show attendance count
+(async function() {
   try {
-    const res = await fetch(REG_CHILDREN + '?pagination=true&limit=200&silent=true');
+    const res = await fetch('https://hypha.aicell.io/kth-sci/artifacts/aphys-ai-registrations/children?pagination=true&limit=1&silent=true');
     const data = await res.json();
-    const items = data.items || [];
-    const total = data.total || items.length;
-    const albanovaCount = items.filter(i => i.manifest?.attendance === 'AlbaNova').length;
+    const total = data.total || 0;
     if (total > 0) {
       document.getElementById('reg-count-num').textContent = total;
       document.getElementById('reg-count-badge').style.display = '';
     }
-    // Apply AlbaNova cap
-    const albaInput = document.getElementById('opt-albanova');
-    const albaLabel = document.getElementById('opt-albanova-label');
-    const albaStatus = document.getElementById('opt-albanova-status');
-    const fullMsg = document.getElementById('albanova-full-msg');
-    if (albaInput && albaLabel) {
-      if (albanovaCount >= ALBANOVA_CAP) {
-        albaInput.disabled = true;
-        albaInput.checked = false;
-        albaLabel.style.opacity = '0.5';
-        albaLabel.style.cursor = 'not-allowed';
-        albaLabel.style.textDecoration = 'line-through';
-        if (albaStatus) albaStatus.textContent = '(full)';
-        if (fullMsg) fullMsg.style.display = 'block';
-        // Auto-select Zoom
-        const zoomInput = document.querySelector('input[name="attendance"][value="Zoom"]');
-        if (zoomInput && !zoomInput.checked) zoomInput.checked = true;
-      } else {
-        if (albaStatus) albaStatus.textContent = `(${albanovaCount}/${ALBANOVA_CAP})`;
-      }
-    }
   } catch(e) {}
-}
-refreshRegState();
-
-// Signup form
-document.getElementById('signup-form')?.addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const status = document.getElementById('signup-status');
-  const name = form.querySelector('[name="name"]').value.trim();
-  const email = form.querySelector('[name="email"]').value.trim();
-  const attendance = form.querySelector('[name="attendance"]:checked')?.value;
-  const experience = form.querySelector('[name="experience"]').value;
-
-  if (!name || !email || !attendance) return;
-
-  const alias = 'reg-' + email.replace(/[^a-z0-9]/gi, '-').slice(0, 40) + '-' + Date.now().toString(36);
-
-  try {
-    const res = await fetch(REG_HYPHA + '/public/services/artifact-manager/create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        alias: alias,
-        parent_id: REG_COLLECTION,
-        manifest: {
-          name: name,
-          email: email,
-          attendance: attendance,
-          experience: experience || 'Not specified',
-          event: 'may-8-tutorial',
-          timestamp: new Date().toISOString(),
-          tags: ['registration', 'may-8-tutorial', attendance.toLowerCase()],
-        }
-      })
-    });
-    const data = await res.json();
-    if (data.id) {
-      status.style.display = 'block';
-      status.style.cssText = 'display:block;padding:0.75rem;border-radius:8px;font-size:0.9rem;font-weight:600;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;text-align:center';
-      status.textContent = 'You are registered! A confirmation email is on its way. See you on May 8.';
-      form.querySelectorAll('input,select,button[type=submit]').forEach(el => el.disabled = true);
-      // Refresh registration state (count + AlbaNova cap)
-      refreshRegState();
-    } else {
-      throw new Error(data.detail || 'Unknown error');
-    }
-  } catch(err) {
-    status.style.display = 'block';
-    status.style.cssText = 'display:block;padding:0.75rem;border-radius:8px;font-size:0.875rem;font-weight:500;background:#fef2f2;color:#991b1b;border:1px solid #fecaca';
-    status.textContent = 'Registration failed: ' + err.message;
-  }
-});
+})();
 </script>
 <script src="assets/feedback.js"></script>
 <script src="assets/pageviews.js"></script>

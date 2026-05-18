@@ -613,6 +613,71 @@ async function editSubmission(artifactId) {
 }
 
 // ===== CLAUDE TEAM REQUESTS =====
+// Compute expiration date from approval date based on position + seat
+// Faculty + standard: 1 year; Researcher + standard: 6 months;
+// Postdoc/PhD Student + standard: 3 months; any Premium: 3 months
+function computeExpiration(positionRaw, seat, approvedDate) {
+  const d = approvedDate ? new Date(approvedDate) : new Date();
+  if (isNaN(d.getTime())) return null;
+  const p = (positionRaw || '').toLowerCase();
+  let months;
+  if (seat === 'premium') {
+    months = 3;
+  } else {
+    if (p.includes('faculty')) months = 12;
+    else if (p.includes('post-doc') || p.includes('postdoc') || p.includes('phd') || p.includes('博')) months = 3;
+    else if (p.includes('research')) months = 6;  // Researcher / Research Engineer
+    else months = 6;  // default fallback
+  }
+  const out = new Date(d.getTime());
+  out.setMonth(out.getMonth() + months);
+  return out.toISOString();
+}
+
+function formatExpiration(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  const now = Date.now();
+  const days = Math.round((d.getTime() - now) / (1000*60*60*24));
+  const dateStr = d.toISOString().slice(0,10);
+  if (days < 0) return `<span style="color:#dc2626">Expired ${-days}d ago</span> (${dateStr})`;
+  if (days < 30) return `<span style="color:#c2410c">Expires in ${days}d</span> (${dateStr})`;
+  return `Expires ${dateStr} (in ${days}d)`;
+}
+
+function downloadCSV(rows, filename) {
+  const csv = rows.map(r => r.map(c => {
+    const s = (c == null) ? '' : String(c);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 100);
+}
+
+let _claudeCache = [];
+
+async function exportClaudeCSV() {
+  const items = _claudeCache;
+  const rows = [['#','name','email','position','seat','status','expires_at','timestamp','status_changed','motivation','consent']];
+  items.forEach((item, i) => {
+    const m = item.manifest || {};
+    rows.push([
+      i+1, m.name||'', m.email||'', m.position||'', m.seat||'standard',
+      m.status||'pending', m.expires_at||'', (m.timestamp||'').slice(0,10),
+      (m.status_changed||'').slice(0,10),
+      (m.motivation||'').replace(/\n/g,' ').trim(),
+      m.consent ? 'yes' : 'no',
+    ]);
+  });
+  downloadCSV(rows, `claude-requests-${new Date().toISOString().slice(0,10)}.csv`);
+}
+
 async function loadClaudeRequests() {
   const list = document.getElementById('tab-claude');
   list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">Loading...</div>';
@@ -620,28 +685,47 @@ async function loadClaudeRequests() {
     const res = await fetch(`${CLAUDE_URL}?pagination=true&limit=200&silent=true`);
     const data = await res.json();
     const items = (data.items || []).sort((a,b) => (b.manifest?.timestamp||'').localeCompare(a.manifest?.timestamp||''));
+    _claudeCache = items;
 
     const pending = items.filter(i => (i.manifest?.status||'pending') === 'pending').length;
     const approved = items.filter(i => i.manifest?.status === 'approved').length;
     const rejected = items.filter(i => i.manifest?.status === 'rejected').length;
+    // Soon-expiring approved seats
+    const expSoon = items.filter(i => {
+      const m = i.manifest || {};
+      if (m.status !== 'approved' || !m.expires_at) return false;
+      const days = (new Date(m.expires_at).getTime() - Date.now()) / (1000*60*60*24);
+      return days < 30;
+    }).length;
 
     let html = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem">
+      <h3 style="margin:0;font-size:1rem;font-weight:700;color:#0f172a">Claude Team Requests</h3>
+      <button onclick="exportClaudeCSV()" style="background:#fff;color:#6366f1;border:1px solid #c7d2fe;border-radius:6px;padding:0.35rem 0.85rem;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:0.35rem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export CSV
+      </button>
+    </div>
     <div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap">
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:110px">
         <div style="font-size:1.5rem;font-weight:800;color:#0f172a">${items.length}</div>
         <div style="font-size:0.7rem;color:#94a3b8;font-weight:500;text-transform:uppercase">Total</div>
       </div>
-      <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+      <div style="background:#fffbeb;border:1px solid #fef3c7;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:110px">
         <div style="font-size:1.5rem;font-weight:800;color:#92400e">${pending}</div>
         <div style="font-size:0.7rem;color:#92400e;font-weight:500;text-transform:uppercase">Pending</div>
       </div>
-      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:110px">
         <div style="font-size:1.5rem;font-weight:800;color:#16a34a">${approved}</div>
         <div style="font-size:0.7rem;color:#16a34a;font-weight:500;text-transform:uppercase">Approved</div>
       </div>
-      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:110px">
         <div style="font-size:1.5rem;font-weight:800;color:#dc2626">${rejected}</div>
         <div style="font-size:0.7rem;color:#dc2626;font-weight:500;text-transform:uppercase">Rejected</div>
+      </div>
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:110px">
+        <div style="font-size:1.5rem;font-weight:800;color:#c2410c">${expSoon}</div>
+        <div style="font-size:0.7rem;color:#c2410c;font-weight:500;text-transform:uppercase">Expiring &lt;30d</div>
       </div>
     </div>`;
 
@@ -675,15 +759,20 @@ async function loadClaudeRequests() {
             <div style="font-size:0.82rem;color:#475569;margin-bottom:0.4rem"><a href="mailto:${(m.email||'').replace(/"/g,'')}" style="color:#6366f1">${(m.email||'?').replace(/</g,'&lt;')}</a></div>
             <p style="color:#475569;font-size:0.85rem;margin:0.25rem 0;line-height:1.5;font-style:italic">"${(m.motivation||'').replace(/</g,'&lt;')}"</p>
             <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.4rem">Consent: ${m.consent ? '✓ Agreed to Gallery + GitHub publication' : '✗ Not agreed'}</div>
+            ${status === 'approved' && m.expires_at ? `<div style="font-size:0.78rem;color:#475569;margin-top:0.35rem;font-weight:500">License: ${formatExpiration(m.expires_at)}</div>` : ''}
           </div>
-          ${status === 'pending' ? `
-          <div style="display:flex;flex-direction:column;gap:0.4rem;flex-shrink:0">
-            <button onclick="setClaudeStatus('${item.id}','approved')" style="background:#16a34a;color:#fff;border:none;border-radius:6px;padding:0.4rem 1rem;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer">Approve</button>
-            <button onclick="setClaudeStatus('${item.id}','rejected')" style="background:#fff;color:#dc2626;border:1px solid #fecaca;border-radius:6px;padding:0.4rem 1rem;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer">Reject</button>
-          </div>` : `
-          <div style="display:flex;gap:0.4rem;flex-shrink:0">
-            <button onclick="setClaudeStatus('${item.id}','pending')" style="background:#f1f5f9;color:#64748b;border:none;border-radius:6px;padding:0.35rem 0.85rem;font-family:inherit;font-size:0.75rem;cursor:pointer">Reset</button>
-          </div>`}
+          <div style="display:flex;flex-direction:column;gap:0.4rem;flex-shrink:0;min-width:140px">
+            ${status === 'pending' ? `
+              <button onclick="setClaudeStatus('${item.id}','approved')" style="background:#16a34a;color:#fff;border:none;border-radius:6px;padding:0.4rem 1rem;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer">Approve</button>
+              <button onclick="setClaudeStatus('${item.id}','rejected')" style="background:#fff;color:#dc2626;border:1px solid #fecaca;border-radius:6px;padding:0.4rem 1rem;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer">Reject</button>
+            ` : `
+              ${status === 'approved' ? `
+                <button onclick="editClaudeSeat('${item.id}','${m.seat||'standard'}')" style="background:#eef2ff;color:#6366f1;border:1px solid #c7d2fe;border-radius:6px;padding:0.35rem 0.85rem;font-family:inherit;font-size:0.75rem;cursor:pointer">Edit seat type</button>
+              ` : ''}
+              <button onclick="setClaudeStatus('${item.id}','pending')" style="background:#f1f5f9;color:#64748b;border:none;border-radius:6px;padding:0.35rem 0.85rem;font-family:inherit;font-size:0.75rem;cursor:pointer">Reset</button>
+            `}
+            <button onclick="deleteClaudeRequest('${item.id}','${(m.name||'').replace(/'/g, '&apos;')}')" style="background:#fff;color:#dc2626;border:1px solid #fecaca;border-radius:6px;padding:0.35rem 0.85rem;font-family:inherit;font-size:0.75rem;font-weight:500;cursor:pointer">Delete</button>
+          </div>
         </div>
       </div>`;
     }).join('');
@@ -702,7 +791,14 @@ async function setClaudeStatus(artifactId, newStatus) {
     });
     const artifact = await readRes.json();
     if (!artifact.manifest) throw new Error(artifact.detail || 'Read failed');
-    const manifest = { ...artifact.manifest, status: newStatus, status_changed: new Date().toISOString() };
+    const now = new Date().toISOString();
+    const manifest = { ...artifact.manifest, status: newStatus, status_changed: now };
+    // Auto-set expiration on approval; clear it otherwise
+    if (newStatus === 'approved') {
+      manifest.expires_at = computeExpiration(manifest.position, manifest.seat, now);
+    } else {
+      delete manifest.expires_at;
+    }
     const editRes = await fetch(`${HYPHA}/public/services/artifact-manager/edit`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ artifact_id: artifactId, manifest })
@@ -711,6 +807,49 @@ async function setClaudeStatus(artifactId, newStatus) {
     if (editData.detail) throw new Error(editData.detail);
     loadClaudeRequests();
   } catch(e) { alert('Failed: ' + e.message); }
+}
+
+async function editClaudeSeat(artifactId, currentSeat) {
+  const next = currentSeat === 'premium' ? 'standard' : 'premium';
+  if (!confirm(`Change seat type from ${currentSeat.toUpperCase()} to ${next.toUpperCase()}?\nThis will recompute the expiration date.`)) return;
+  try {
+    const readRes = await fetch(`${HYPHA}/public/services/artifact-manager/read`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artifact_id: artifactId, silent: true })
+    });
+    const artifact = await readRes.json();
+    if (!artifact.manifest) throw new Error(artifact.detail || 'Read failed');
+    const m = artifact.manifest;
+    const baseDate = m.status_changed || new Date().toISOString();
+    const manifest = {
+      ...m,
+      seat: next,
+      expires_at: computeExpiration(m.position, next, baseDate),
+      seat_changed_at: new Date().toISOString(),
+    };
+    const editRes = await fetch(`${HYPHA}/public/services/artifact-manager/edit`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artifact_id: artifactId, manifest })
+    });
+    const editData = await editRes.json();
+    if (editData.detail) throw new Error(editData.detail);
+    loadClaudeRequests();
+  } catch(e) { alert('Failed: ' + e.message); }
+}
+
+async function deleteClaudeRequest(artifactId, name) {
+  if (!confirm(`Delete the Claude request from "${name}" permanently?\nThis cannot be undone.`)) return;
+  try {
+    const res = await fetch(`${HYPHA}/public/services/artifact-manager/delete`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artifact_id: artifactId, delete_files: true })
+    });
+    try {
+      const d = await res.json();
+      if (d && d.detail) throw new Error(d.detail);
+    } catch(parseErr) { /* null response on success */ }
+    loadClaudeRequests();
+  } catch(e) { alert('Delete failed: ' + e.message); }
 }
 
 // ===== COMMUNITY MESSAGES =====
@@ -881,6 +1020,18 @@ async function loadDiscussions() {
 }
 
 // ===== ATTENDEES =====
+let _attendeesCache = [];
+
+async function exportAttendeesCSV() {
+  const items = _attendeesCache;
+  const rows = [['#','name','email','attendance','experience','timestamp']];
+  items.forEach((item, i) => {
+    const m = item.manifest || {};
+    rows.push([i+1, m.name||'', m.email||'', m.attendance||'', m.experience||'', (m.timestamp||'').slice(0,10)]);
+  });
+  downloadCSV(rows, `may8-attendees-${new Date().toISOString().slice(0,10)}.csv`);
+}
+
 async function loadAttendees() {
   const list = document.getElementById('tab-attendees');
   list.innerHTML = '<div style="text-align:center;padding:3rem;color:#94a3b8">Loading...</div>';
@@ -889,6 +1040,7 @@ async function loadAttendees() {
     const res = await fetch(`${REG_URL}?pagination=true&limit=200&silent=true`);
     const data = await res.json();
     const items = (data.items || []).sort((a,b) => (b.manifest?.timestamp||'').localeCompare(a.manifest?.timestamp||''));
+    _attendeesCache = items;
 
     const albanova = items.filter(i => i.manifest?.attendance === 'AlbaNova').length;
     const zoom = items.filter(i => i.manifest?.attendance === 'Zoom').length;
@@ -899,6 +1051,13 @@ async function loadAttendees() {
     }
 
     const header = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem">
+      <h3 style="margin:0;font-size:1rem;font-weight:700;color:#0f172a">May 8 Tutorial Attendees</h3>
+      <button onclick="exportAttendeesCSV()" style="background:#fff;color:#6366f1;border:1px solid #c7d2fe;border-radius:6px;padding:0.35rem 0.85rem;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:0.35rem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export CSV
+      </button>
+    </div>
     <div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap">
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:0.75rem 1.25rem;text-align:center;flex:1;min-width:120px">
         <div style="font-size:1.5rem;font-weight:800;color:#0f172a">${items.length}</div>
