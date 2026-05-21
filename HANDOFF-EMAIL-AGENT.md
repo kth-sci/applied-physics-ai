@@ -1,67 +1,77 @@
 # Handoff — Claude Seat Request Email Agent
 
-**Purpose:** another agent running in `/Users/weio/workspace/applied-physics-ai/` takes over the email side of the Claude Team seat request workflow. This other agent has **SMTP email access but no Slack access** — so it sends confirmation / approval / rejection emails directly, while this session's daemon (which had only Slack fallback) is being retired.
+**Purpose:** another agent running in `/Users/weio/workspace/applied-physics-ai/` takes over the email side of the Claude Team seat request workflow. This other agent has **SMTP email access but no Slack access** — so it sends confirmation / approval / rejection emails directly via Gmail SMTP.
 
-Today is 2026-05-21. The APHYS AI initiative is live; the May 8 tutorial happened; the May 26 SCI Hackathon is the next event. ~48 May 8 attendees, ~20 Claude Team seat requests so far.
+Today is 2026-05-21. The APHYS AI initiative is live; the May 8 tutorial happened (48 participants); the May 26 SCI Hackathon is the next event. ~20 Claude Team seat requests so far.
 
 ---
 
-## What this agent needs to do
+## What this agent owns
 
-Continuously monitor two Hypha collections and send the right email for each event:
+Continuously monitor two Hypha collections and send the right email for each event. The infrastructure already exists — this agent's job is to keep `daemon.py` running with SMTP enabled, and to use `send_email.py` for manual approvals/rejections when needed.
 
-| Event | Trigger | Email to send |
+| Event | Trigger | Email |
 |---|---|---|
-| New May 8 tutorial registration | new artifact in `kth-sci/aphys-ai-registrations` | Confirmation to attendee |
-| New Claude Team seat request | new artifact in `kth-sci/aphys-ai-claude-requests` | "Received: your Claude Team seat request" |
-| Claude request approved | `status` flips to `approved` on an existing request | Approval email with next steps + Claude Team invite reminder |
-| Claude request rejected | `status` flips to `rejected` | Polite rejection with alternatives |
+| New May 8 registration | new artifact in `kth-sci/aphys-ai-registrations` | Confirmation to attendee |
+| New Claude seat request | new artifact in `kth-sci/aphys-ai-claude-requests` | "Received: your Claude Team seat request" |
+| Request approved | `status` flips `pending` → `approved` in the admin UI | Approval + next steps |
+| Request rejected | `status` flips `pending` → `rejected` | Polite rejection with alternatives |
 
-All four email templates already exist in `daemon.py` (functions named `email_registration_confirmation`, `email_claude_request_received`, `email_claude_request_approved`, `email_claude_request_rejected`). **Do not rewrite them** — they are content-reviewed and consistent with the rest of the site.
-
-The expiration auto-computation (Faculty std=1yr, Researcher std=6mo, Postdoc/PhD std=3mo, any Premium=3mo) is handled client-side in the admin UI when a status flips to approved. The agent does not need to touch expiration — it just sends the emails when status changes.
+All templates and the polling loop already exist in `daemon.py`. The `send_email.py` CLI exists for one-off sends.
 
 ---
 
-## Quick start (do these, in order)
+## Quick start
 
 ### 1. Read the project context
 
 ```bash
 cd /Users/weio/workspace/applied-physics-ai
-cat CLAUDE.md          # project overview
-cat HANDOFF.md         # broader handoff doc (slightly older)
+cat CLAUDE.md          # full project overview — read the "Email setup" + "Email CLI" sections
+cat HANDOFF.md         # broader handoff (slightly older but still accurate)
 ```
 
-### 2. Stop the previous daemon (it's running with Slack fallback only)
+### 2. Stop the previous daemon (if running)
 
 ```bash
 [ -f .daemon.pid ] && kill $(cat .daemon.pid) 2>/dev/null
 rm -f .daemon.pid
 ```
 
-The state file `.daemon_state.json` should be left in place — it tracks which registrations / Claude requests have already been seen, so the new daemon does not re-send confirmation emails for old entries.
+**Leave `.daemon_state.json` in place.** It tracks which registrations / Claude requests have already been seen; deleting it would re-send confirmation emails for every existing entry (40+ duplicates).
 
-### 3. Add SMTP credentials to `.env`
+### 3. Confirm SMTP credentials are in `.env`
 
 ```bash
-# Open .env (do NOT commit it — it is gitignored)
-nano .env
+grep -E "^SMTP_(USER|PASS|FROM_NAME)" .env
 ```
 
-Add these three lines (replace with real values):
-
+Expected:
 ```
-SMTP_USER=kth-aphys-ai@gmail.com
-SMTP_PASS=<gmail app password — 16 chars, no spaces>
+SMTP_USER=kth.aphys.ai@gmail.com
+SMTP_PASS=<gmail app password, 16 chars no spaces>
 SMTP_FROM_NAME=APHYS AI Initiative
 ```
 
-The Gmail app password is generated at https://myaccount.google.com/apppasswords (requires 2FA on the Gmail account). The address `kth-aphys-ai@gmail.com` was set up by Wei + Jonas on 2026-05-07 — the password is whatever Jonas saved.
+If `SMTP_PASS` is missing, get the app password from Jonas (or regenerate at https://myaccount.google.com/apppasswords — requires 2FA on the Gmail account). The account is `kth.aphys.ai@gmail.com`, owned jointly by Wei + Jonas.
 
-If SMTP credentials are missing, the daemon falls back to posting "[Email pending — please send manually]" to Slack — which we do **not** want any more. Setting these vars is what flips the daemon into autonomous-email mode.
+### 4. Test the SMTP CLI without sending
 
-### 4. Start the daemon
+```bash
+python3 send_email.py --to "Your Name <you@kth.se>" --template claude-approved --dry-run
+```
+
+Should preview the email body. If you see "SMTP_PASS not set" the `.env` is not loading — check the file path.
+
+### 5. Send a real test to yourself
+
+```bash
+python3 send_email.py --to "Your Name <you@kth.se>" --template claude-approved
+```
+
+Check your inbox. If it arrives, SMTP is working end-to-end.
+
+### 6. Start the daemon
 
 ```bash
 cd /Users/weio/workspace/applied-physics-ai
@@ -71,129 +81,148 @@ sleep 4
 grep -v DEBUG .daemon.log | tail -10
 ```
 
-You should see a line like:
-
+Confirm you see:
 ```
-SMTP email: enabled (kth-aphys-ai@gmail.com)
-```
-
-If it instead says `SMTP email: NOT configured — using Slack fallback`, the credentials in `.env` were not loaded. Restart after fixing.
-
-### 5. Verify by sending a test
-
-The cleanest test is to submit a fake Claude request via the public form and watch the daemon send the email:
-
-- Go to https://kth-sci.github.io/applied-physics-ai/ai-agents.html
-- Click the "Request a Claude Team Seat" button
-- Submit with your own email (so you can verify the message arrives)
-- Within 30s, daemon should log `Email sent to <you>: Received: your Claude Team seat request (Standard)` and your inbox gets the confirmation
-
-If something fails, the daemon will log the SMTP error (typically auth error if the app password is wrong, or "Less Secure Apps" if 2FA is not on).
-
----
-
-## How the daemon is structured
-
-`daemon.py` has these polling functions, called every 30 seconds:
-
-- `check_slack_messages` / `check_slack_messages_wei` — relays Jonas/Wei Slack DMs to the Svamp session. **You can ignore these** if you have no Slack token; they will fail silently and not affect email sending.
-- `check_registrations` — sees new May 8 tutorial registrations and sends confirmation emails.
-- `check_claude_requests` — sees new Claude Team requests (→ received-confirmation email) and status changes on existing ones (→ approval / rejection email). Tracks per-request status in `.daemon_state.json` so it does not re-send.
-- `check_gallery_submissions` — notifies organizers when someone submits a use case to the public gallery. Not email-related.
-- `check_action_requests` — admin-dashboard "Send to Agent" hook. Not email-related.
-
-The email sending is `send_email(to_email, subject, body, cc_organizers=False)` at the top of the file. It uses Gmail SMTP over SSL on port 465.
-
-If you only want the email pieces and nothing else, you can:
-
-```python
-# Quick test of just the email path:
-python3 -c "
-import daemon
-daemon.send_email('your.email@kth.se', 'Test', 'This is a test from the daemon.')
-"
+SMTP email: enabled (kth.aphys.ai@gmail.com)
 ```
 
-(Run from `/Users/weio/workspace/applied-physics-ai/` so `.env` loads.)
+If it says `NOT configured — using Slack fallback`, the `.env` did not load. Restart the daemon after fixing.
 
 ---
 
-## Coordinating with the human team (Jonas + Wei)
+## Two ways to send emails
 
-- **Do not send approval emails until Jonas (or Wei) explicitly approves a request via the admin dashboard.** The approval/rejection emails fire when `status` flips from `pending` → `approved` or `rejected`. Status flips are controlled by the admin UI at https://kth-sci.github.io/applied-physics-ai/admin.html (passphrase `aphys2026`).
-- **Confirmation emails on new submissions are automatic** — send them as soon as a new artifact appears in the collection. The template already says "we will review it and contact you" so users know an approval email is coming separately.
-- **CC the organizers on approval/rejection only** (not on the initial confirmation). This is already wired in `send_email(..., cc_organizers=True)` for status-change emails. `ORGANIZER_EMAILS = ["wei.ouyang@scilifelab.se", "jonassel@kth.se"]` at the top of `daemon.py`.
-- **Reply-To on every email** is set to both Wei and Jonas, so when an attendee replies it lands in both inboxes.
+### A. Automatic — via the daemon
+
+The daemon polls Hypha every 30 s and auto-sends confirmation emails on new registrations / Claude requests, and approval/rejection emails when an admin flips a status in the dashboard. Once it's running with SMTP enabled, you don't have to do anything for the common case.
+
+### B. Manual one-off — via `send_email.py`
+
+For ad-hoc cases (e.g. resending an approval email someone missed, or rejecting a request that was created before the daemon was started):
+
+```bash
+# Approve a Claude Team seat request
+python3 send_email.py --to "Ada Lovelace <ada@kth.se>" --template claude-approved
+
+# Reject a Claude seat request
+python3 send_email.py --to "Ada Lovelace <ada@kth.se>" --template claude-rejected
+
+# Send a free-form custom message
+python3 send_email.py --to "Name <email@kth.se>" \
+    --subject "Subject line" \
+    --body "Body text on multiple lines is fine"
+
+# Send to multiple recipients
+python3 send_email.py \
+    --to "A <a@kth.se>" --to "B <b@kth.se>" \
+    --subject "Hi everyone" --body "..."
+
+# Preview before sending
+python3 send_email.py --to "..." --template claude-approved --dry-run
+```
 
 ---
 
-## Things you should NOT do
+## How the daemon decides what to send
 
-- Do not edit the email templates' content — they are reviewed copy. If text needs to change, ask Wei or Jonas first.
-- Do not change the cron / poll interval below ~15 s (Hypha rate-limits and we get 503s).
-- Do not delete `.daemon_state.json` — that would re-send confirmation emails for every existing registration / request (40+ duplicate emails).
-- Do not commit `.env` to git. It's in `.gitignore` already but double-check before any `git add`.
-- Do not approve/reject Claude requests from the agent side. Only the admin dashboard (a human) does that.
+`daemon.py` keeps `.daemon_state.json` with three things relevant here:
 
----
+- `known_registration_aliases`: list of registration artifacts already processed → no duplicate confirmations
+- `known_claude_request_aliases`: same for Claude requests
+- `claude_request_statuses`: dict of `alias → status` so the daemon can detect when an admin changes status (`pending` → `approved` / `rejected`) and trigger the corresponding email
 
-## When something goes wrong
+When the daemon starts fresh with an empty state, it seeds these baselines from the current Hypha state (no emails sent for existing items). Then it only acts on new items / status changes that happen after start-up. This is why **never delete `.daemon_state.json`** — that would re-seed and miss any change you already processed.
 
-- **Daemon stopped:** `cat .daemon.pid | xargs kill -0 2>/dev/null && echo running || echo stopped`. Restart with the command in §4.
-- **No emails being sent (but logs show "SMTP not configured"):** `.env` did not load. Check the file exists at `/Users/weio/workspace/applied-physics-ai/.env`, contains all three SMTP vars, no quotes around values.
-- **No emails (SMTP enabled but errors):** the most common errors are auth failures (wrong app password) or "username and password not accepted" (need to regenerate app password). Check `tail -30 .daemon.log`.
-- **Duplicate emails being sent:** check `.daemon_state.json` is being written. If `last_check` is updating but `known_*_aliases` lists are not growing, there's a state-save bug.
-- **Hypha returning 503s for long stretches:** that happens. Daemon retries every 30s; just wait. Logs will show `HTTP GET failed: ... 503`.
+The expiration date (Faculty std=1yr, Researcher std=6mo, Postdoc/PhD std=3mo, any Premium=3mo) is auto-computed in the admin UI when status flips to approved. The agent does not need to touch expiration — but the approval email body references it.
 
 ---
 
-## Quick reference — files and URLs
+## Coordination rules
 
-| Thing | Where |
+- **Confirmation emails on new submissions are fully automatic.** No human input needed.
+- **Approval / rejection emails only fire when a human flips the status** in the admin UI: https://kth-sci.github.io/applied-physics-ai/admin.html (passphrase `aphys2026`). Do not approve/reject requests from the agent side.
+- **Both Wei and Jonas are CCed on approval/rejection emails.** Set in `daemon.py` as `ORGANIZER_EMAILS = ["wei.ouyang@scilifelab.se", "jonassel@kth.se"]`. Confirmation emails are sent to the user only, not CCed.
+- **Reply-To is set to both organizers on every email**, so user replies land in both inboxes.
+- This agent has no Slack. If something needs human attention (e.g. SMTP auth keeps failing), email Wei or Jonas directly using `send_email.py` — do not try to reach Slack.
+
+---
+
+## Things to NEVER do
+
+- Don't edit the email template content in `daemon.py` or `send_email.py` — they're reviewed copy. If text needs to change, ask Wei or Jonas via email first.
+- Don't delete `.daemon_state.json`.
+- Don't commit `.env` to git. It's in `.gitignore` already; double-check before any `git add -A`.
+- Don't approve / reject Claude requests from the agent side. Humans-only via admin UI.
+- Don't reduce the poll interval below ~15 s — Hypha rate-limits and starts returning 503s.
+
+---
+
+## When things go wrong
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Daemon stopped | crash or system restart | Restart per §6 above |
+| "SMTP NOT configured" in logs | `.env` did not load | Check file exists at repo root with all three SMTP vars, no quotes |
+| "Username and Password not accepted" | wrong/expired app password | Regenerate at https://myaccount.google.com/apppasswords |
+| Duplicate emails sent | state file not being written | Check `.daemon_state.json` mtime — should update every 30 s |
+| Hypha 503s | service temporarily unavailable | Daemon retries every 30 s. Wait it out. |
+| No new emails despite new submissions | daemon stuck on a stale Slack timestamp | Look at `last_slack_ts_jonas` in `.daemon_state.json` vs latest Slack ts — fixed in May, but watch for regressions |
+
+---
+
+## File map
+
+| File | Role |
 |---|---|
-| Daemon script | `/Users/weio/workspace/applied-physics-ai/daemon.py` |
-| Persisted state | `/Users/weio/workspace/applied-physics-ai/.daemon_state.json` |
-| Log (rotating, 2 MB × 5) | `/Users/weio/workspace/applied-physics-ai/.daemon.log` |
-| PID file | `/Users/weio/workspace/applied-physics-ai/.daemon.pid` |
-| Credentials | `/Users/weio/workspace/applied-physics-ai/.env` (gitignored) |
-| Hypha API base | https://hypha.aicell.io |
-| Hypha workspace | `kth-sci` |
-| Claude requests collection | https://hypha.aicell.io/kth-sci/artifacts/aphys-ai-claude-requests/children |
-| Registrations collection | https://hypha.aicell.io/kth-sci/artifacts/aphys-ai-registrations/children |
-| Admin dashboard | https://kth-sci.github.io/applied-physics-ai/admin.html (passphrase `aphys2026`) |
-| Public site | https://kth-sci.github.io/applied-physics-ai/ |
+| `daemon.py` | Long-running poller. Send-email logic + email templates inside. |
+| `send_email.py` | CLI for manual sends. Uses same SMTP creds. |
+| `.env` | SMTP_USER / SMTP_PASS / SMTP_FROM_NAME. Gitignored. |
+| `.daemon.pid` | Current daemon process ID. Gitignored. |
+| `.daemon.log` | Rotating log (2 MB × 5). Gitignored. |
+| `.daemon_state.json` | Per-collection seen-aliases + per-request statuses. Gitignored. |
+| `CLAUDE.md` | Full project context — read sections "Community Daemon", "Email setup", "Email CLI". |
+| `HANDOFF.md` | Earlier session handoff doc — broader project context. |
 
 ---
 
-## Verifying you have everything
+## Sanity-check command bundle
 
-Run this once after setup to sanity-check:
+Run this once after setup to verify everything is healthy:
 
 ```bash
 cd /Users/weio/workspace/applied-physics-ai
-echo "=== Daemon ==="
+echo "=== Daemon process ==="
 kill -0 $(cat .daemon.pid 2>/dev/null) 2>/dev/null && echo "  running (PID $(cat .daemon.pid))" || echo "  STOPPED"
-echo "=== SMTP enabled? ==="
-grep -E "^SMTP_(USER|PASS)=" .env | sed 's/=.*/=set/' || echo "  not configured"
-echo "=== Last log lines ==="
-grep -v DEBUG .daemon.log | tail -8
-echo "=== Claude requests in Hypha ==="
+echo "=== SMTP config in .env ==="
+grep -E "^SMTP_(USER|PASS|FROM_NAME)=" .env | sed 's/PASS=.*/PASS=<set>/'
+echo "=== Daemon recent log (non-debug) ==="
+grep -v DEBUG .daemon.log 2>/dev/null | tail -8
+echo "=== State file ==="
+[ -f .daemon_state.json ] && stat -f "  %Sm: .daemon_state.json" .daemon_state.json 2>/dev/null || echo "  missing"
+echo "=== Claude Team requests on Hypha ==="
 curl -s "https://hypha.aicell.io/kth-sci/artifacts/aphys-ai-claude-requests/children?pagination=true&limit=1&silent=true" | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'  total: {d.get(\"total\",\"?\")}')"
+echo "=== Registrations on Hypha ==="
+curl -s "https://hypha.aicell.io/kth-sci/artifacts/aphys-ai-registrations/children?pagination=true&limit=1&silent=true" | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'  total: {d.get(\"total\",\"?\")}')"
 ```
 
-Expected output:
+A healthy setup looks like:
 
 ```
-=== Daemon ===
+=== Daemon process ===
   running (PID 12345)
-=== SMTP enabled? ===
-SMTP_USER=set
-SMTP_PASS=set
-=== Last log lines ===
-2026-05-21 ... [INFO] aphys-daemon: SMTP email: enabled (kth-aphys-ai@gmail.com)
+=== SMTP config in .env ===
+SMTP_USER=kth.aphys.ai@gmail.com
+SMTP_PASS=<set>
+SMTP_FROM_NAME=APHYS AI Initiative
+=== Daemon recent log (non-debug) ===
+2026-05-21 ... [INFO] aphys-daemon: SMTP email: enabled (kth.aphys.ai@gmail.com)
 2026-05-21 ... [INFO] aphys-daemon: Initialization complete. Entering poll loop.
-=== Claude requests in Hypha ===
+=== State file ===
+  May 21 16:50:33 2026: .daemon_state.json
+=== Claude Team requests on Hypha ===
   total: 20
+=== Registrations on Hypha ===
+  total: 48
 ```
 
-If all four sections look healthy, you are good. The agent does not need to do anything else — the daemon runs itself.
+If all five blocks look like that, the handoff is complete. The daemon will run itself; you only need to act if logs start showing errors.
