@@ -124,14 +124,45 @@ A continuously-running Python process that monitors external events and relays t
 
 ### Email setup (Gmail SMTP)
 
-To enable real confirmation emails, add to `.env`:
+Credentials are stored in `.env` (never commit):
 ```
-SMTP_USER=your.gmail@gmail.com
-SMTP_PASS=your-app-password   # Get one at https://myaccount.google.com/apppasswords (requires 2FA)
+SMTP_USER=kth.aphys.ai@gmail.com
+SMTP_PASS=<app-password>   # Generate at https://myaccount.google.com/apppasswords (requires 2FA on)
 SMTP_FROM_NAME=APHYS AI Initiative
 ```
 
-Without SMTP credentials, the daemon falls back to posting the email content as a Slack notification to Wei+Jonas, who can then send manually.
+Without SMTP credentials the daemon falls back to posting email content as a Slack notification.
+
+### Email CLI (`send_email.py`)
+
+General-purpose script for sending emails from `kth.aphys.ai@gmail.com`. Use for Claude seat approvals/rejections and any other initiative communications.
+
+```bash
+# Approve a Claude Team seat request
+python3 send_email.py --to "Ada Lovelace <ada@kth.se>" --template claude-approved
+
+# Reject a Claude seat request
+python3 send_email.py --to "Ada Lovelace <ada@kth.se>" --template claude-rejected
+
+# Send a custom message
+python3 send_email.py --to "Name <email@kth.se>" --subject "Subject" --body "Body text"
+
+# Multiple recipients
+python3 send_email.py --to "A <a@kth.se>" --to "B <b@kth.se>" --template claude-approved
+
+# Preview without sending
+python3 send_email.py --to "Name <email@kth.se>" --template claude-approved --dry-run
+```
+
+**Available templates:**
+- `claude-approved` — seat approved, includes install instructions for Claude Code
+- `claude-rejected` — seat not approved, explains scope and offers free alternatives
+
+To add a new template, add a function `template_<name>(first_name) -> (subject, plain, html)` to `send_email.py` and register it in `TEMPLATES`.
+
+**Wei and Jonas contact emails** (for test sends):
+- Wei Ouyang: `wei.ouyang@scilifelab.se`
+- Jonas Sellberg: `jonassel@kth.se`
 
 ### Management
 
