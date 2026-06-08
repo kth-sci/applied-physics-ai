@@ -184,7 +184,7 @@
                   <div style="font-size:0.78rem;color:#64748b;margin-top:0.15rem">Sonnet 4.6 chat &amp; Claude Code, Projects, file uploads, web search, computer use, MCP tools, ~3-5x usage of Pro plan.</div>
                 </div>
               </label>
-              <label style="display:flex;gap:0.6rem;padding:0.65rem 0.85rem;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;align-items:flex-start" onmouseenter="this.style.borderColor='#c7d2fe'" onmouseleave="this.style.borderColor='#e2e8f0'">
+              <label id="premium-seat-option" style="display:none;gap:0.6rem;padding:0.65rem 0.85rem;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;align-items:flex-start" onmouseenter="this.style.borderColor='#c7d2fe'" onmouseleave="this.style.borderColor='#e2e8f0'">
                 <input type="radio" name="seat" value="premium" style="margin-top:3px;accent-color:#6366f1">
                 <div style="flex:1">
                   <div style="font-weight:600;font-size:0.875rem;color:#0f172a">Premium Seat</div>
@@ -207,6 +207,22 @@
     </div>
 
     <script>
+    // Show Premium seat option only when Position = Faculty
+    (function() {
+      const positionSelect = document.querySelector('[name="position"]');
+      const premiumOption  = document.getElementById('premium-seat-option');
+      const standardRadio  = document.querySelector('[name="seat"][value="standard"]');
+      if (!positionSelect || !premiumOption) return;
+      positionSelect.addEventListener('change', function() {
+        if (this.value === 'Faculty') {
+          premiumOption.style.display = 'flex';
+        } else {
+          premiumOption.style.display = 'none';
+          if (standardRadio) standardRadio.checked = true;
+        }
+      });
+    })();
+
     document.getElementById('claude-request-form')?.addEventListener('submit', async function(e) {
       e.preventDefault();
       const form = e.target;

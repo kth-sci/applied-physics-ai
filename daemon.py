@@ -270,10 +270,12 @@ def email_claude_request_approved(req):
     """Email when a Claude Team request is approved."""
     name = req.get("name", "there")
     seat = req.get("seat", "standard").capitalize()
+    expiry = req.get("expiration_date", "")
+    expiry_line = f"\n  Valid until: {expiry}\n" if expiry else ""
     body = f"""Hi {name},
 
 Good news — your request for a {seat} seat in the APHYS Claude Team license has been APPROVED.
-
+{expiry_line}
 Next steps:
   1. We will send you a Claude Team invitation email shortly (separate message from Anthropic).
   2. Accept the invitation and create or link your Claude account.
@@ -292,6 +294,32 @@ Wei Ouyang & Jonas Sellberg
 Department of Applied Physics, KTH
 """
     return (f"Approved: your Claude Team {seat} seat request", body)
+
+
+def email_claude_request_seat_changed(req):
+    """Email when a Claude Team seat type is changed (seat type and expiration date update)."""
+    name = req.get("name", "there")
+    seat = req.get("seat", "standard").capitalize()
+    expiry = req.get("expiration_date", "")
+    expiry_line = f"\n  Valid until: {expiry}\n" if expiry else ""
+    body = f"""Hi {name},
+
+This is a notice that your Claude Team seat type has been updated.
+
+Your current seat: {seat}{expiry_line}
+
+Next steps:
+  - No action needed — the change takes effect automatically in your Claude account.
+  - If you have any questions about your seat type or access level, reply to this email.
+
+Install Claude Code (if you haven't yet):
+  - Mac/Linux: curl -fsSL https://claude.ai/install.sh | bash
+  - Windows / Desktop / Web: see https://kth-sci.github.io/applied-physics-ai/ai-agents.html
+
+Wei Ouyang & Jonas Sellberg
+Department of Applied Physics, KTH
+"""
+    return (f"Update: your Claude Team seat has changed to {seat}", body)
 
 
 def email_claude_request_rejected(req):
@@ -514,34 +542,51 @@ def check_claude_requests(state):
                 f"Motivation: {(m.get('motivation','') or '')[:200]}"
             )
 
-    # Status changes → approval/rejection email
+    # Status changes and seat type changes → appropriate emails
+    seats = dict(state.get("claude_request_seats", {}))
     for item in data["items"]:
         alias = item["alias"]
         m = item.get("manifest", {})
         cur_status = m.get("status", "pending")
+        cur_seat = m.get("seat", "standard")
         prev_status = statuses.get(alias)
+        prev_seat = seats.get(alias)
+
         if prev_status is None:
             statuses[alias] = cur_status
+            seats[alias] = cur_seat
             continue
-        if prev_status == cur_status:
-            continue
-        # Status changed
-        statuses[alias] = cur_status
+
         email = m.get("email")
         if not email or "@" not in email:
+            statuses[alias] = cur_status
+            seats[alias] = cur_seat
             continue
-        if cur_status == "approved":
-            log(f"Claude request approved: {m.get('name','?')} <{email}>")
-            subject, body = email_claude_request_approved(m)
+
+        # Status changed
+        if prev_status != cur_status:
+            statuses[alias] = cur_status
+            if cur_status == "approved":
+                log(f"Claude request approved: {m.get('name','?')} <{email}>")
+                subject, body = email_claude_request_approved(m)
+                send_email(email, subject, body, cc_organizers=True)
+            elif cur_status == "rejected":
+                log(f"Claude request rejected: {m.get('name','?')} <{email}>")
+                subject, body = email_claude_request_rejected(m)
+                send_email(email, subject, body, cc_organizers=True)
+            # 'pending' (reset) — no email
+
+        # Seat type changed (independent of status, e.g. standard → premium upgrade)
+        if prev_seat is not None and prev_seat != cur_seat:
+            log(f"Claude seat type changed: {m.get('name','?')} <{email}> {prev_seat} → {cur_seat}")
+            subject, body = email_claude_request_seat_changed(m)
             send_email(email, subject, body, cc_organizers=True)
-        elif cur_status == "rejected":
-            log(f"Claude request rejected: {m.get('name','?')} <{email}>")
-            subject, body = email_claude_request_rejected(m)
-            send_email(email, subject, body, cc_organizers=True)
-        # 'pending' (reset) — no email
+
+        seats[alias] = cur_seat
 
     state["known_claude_request_aliases"] = list(current)
     state["claude_request_statuses"] = statuses
+    state["claude_request_seats"] = seats
 
 
 # ── Poll: Action requests from admin dashboard ────────────────────────────
