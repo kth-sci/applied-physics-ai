@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APHYS Teachers' Meeting — AI &amp; Teaching (June 2026)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --indigo: #6366f1; --indigo-l: #818cf8; --indigo-d: #4f46e5;
+    --fire: #f97316; --amber: #f59e0b;
+    --slate: #0f172a; --slate2: #475569; --slate3: #94a3b8; --slate-bg: #f8fafc;
+    --emerald: #10b981; --red: #ef4444;
+  }
+  .reveal { font-family: 'Inter', sans-serif; color: var(--slate); }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { padding: 18px 36px; box-sizing: border-box; }
+  .reveal h1, .reveal h2, .reveal h3 { font-weight: 700; color: var(--indigo); text-transform: none; letter-spacing: -0.02em; }
+  .reveal h1 { font-size: 1.75em; }
+  .reveal h2 { font-size: 1.18em; margin-bottom: 0.4em; }
+  .reveal h3 { font-size: 0.78em; color: var(--indigo-l); margin-bottom: 0.2em; font-weight: 600; }
+  .reveal p, .reveal li { font-size: 0.5em; line-height: 1.55; }
+  .reveal ul { list-style: none; padding-left: 0; }
+  .reveal ul li { padding-left: 1em; position: relative; margin-bottom: 0.25em; }
+  .reveal ul li::before { content:''; position: absolute; left: 0; top: 0.5em; width: 5px; height: 5px; border-radius: 50%; background: var(--indigo-l); }
+  .reveal ul.qmark li::before { content:'?'; background:none; color:var(--indigo); font-weight:700; font-family:'Inter'; font-size:0.9em; top:0.05em; left:-0.05em; }
+  .reveal blockquote {
+    background: none; border: none; font-style: italic;
+    font-size: 0.62em; color: var(--slate); padding: 0.3em 0 0.3em 1.5em;
+    margin: 0.4em 0; box-shadow: none; position: relative; line-height: 1.55;
+    width: 100%;
+  }
+  .reveal blockquote::before {
+    content:'\201C'; position: absolute; left: 0; top: -0.05em;
+    font-size: 2.2em; color: var(--indigo-l); opacity: 0.35; font-style: normal;
+  }
+  .attribution { font-size: 0.42em !important; color: var(--slate3); font-style: normal; margin-top: 0.3em; display: block; }
+  .footnote { font-size: 0.36em !important; color: var(--slate3); font-style: normal; margin-top: 0.6em; line-height: 1.4; }
+  .hbox {
+    border-left: 3px solid var(--indigo);
+    padding: 0.45em 0.85em; border-radius: 0 5px 5px 0;
+    margin: 0.4em 0; font-size: 0.5em; line-height: 1.55;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  }
+  .hbox.fire { border-color: var(--fire); background: linear-gradient(135deg, #fff7ed, #fffbeb); }
+  .hbox.emerald { border-color: var(--emerald); background: linear-gradient(135deg, #ecfdf5, #f0fdf4); }
+  .hbox.red { border-color: var(--red); background: linear-gradient(135deg, #fef2f2, #fff1f2); }
+  .hbox.amber { border-color: var(--amber); background: linear-gradient(135deg, #fffbeb, #fefce8); }
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9em; align-items: start; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7em; align-items: start; }
+  .card {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 8px; padding: 0.55em 0.7em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .card h3 { margin-top: 0; }
+  .card p, .card li { font-size: 0.46em; }
+  .tag {
+    display: inline-block; padding: 0.1em 0.5em; border-radius: 12px;
+    font-size: 0.4em; font-weight: 600; margin-right: 0.3em;
+  }
+  .tag.indigo { background: #eef2ff; color: var(--indigo); }
+  .tag.fire   { background: #fff7ed; color: #c2410c; }
+  .tag.emerald{ background: #ecfdf5; color: #047857; }
+  .tag.red    { background: #fef2f2; color: #b91c1c; }
+  .tag.amber  { background: #fffbeb; color: #92400e; }
+  .title-slide { text-align: center !important; }
+  .title-slide h1 { font-size: 2.1em; margin-bottom: 0.1em; font-weight: 800; }
+  .title-slide .sub { font-size: 0.85em; color: var(--indigo-l); font-weight: 400; margin-bottom: 0.9em; }
+  .title-slide .meta { font-size: 0.5em; color: var(--slate2); line-height: 1.7; }
+  .big-num { font-size: 2.6em; font-weight: 800; color: var(--indigo); line-height: 1; }
+  .big-num-label { font-size: 0.42em; color: var(--slate2); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7em; margin: 0.7em 0; }
+  .stat { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.7em 0.5em; text-align: center; }
+  .stat .n { font-size: 1.5em; font-weight: 800; color: var(--indigo); line-height: 1; }
+  .stat .l { font-size: 0.4em; color: var(--slate3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-top: 0.25em; }
+  .speaker-note {
+    font-size: 0.4em !important; color: var(--slate3);
+    font-style: italic; margin-top: 0.5em;
+    padding: 0.3em 0.6em; background: var(--slate-bg);
+    border-left: 2px solid var(--slate3); border-radius: 0 4px 4px 0;
+  }
+  .reveal table {
+    font-size: 0.46em; border-collapse: separate; border-spacing: 0;
+    width: 100%; margin: 0.4em 0; border-radius: 6px; overflow: hidden;
+  }
+  .reveal table th { background: var(--indigo); color: #fff; padding: 0.45em 0.7em; font-weight: 600; text-align: left; }
+  .reveal table td { padding: 0.4em 0.7em; border-bottom: 1px solid #e2e8f0; background: #fff; }
+  .reveal table tr:nth-child(even) td { background: #f8fafc; }
+  .reveal .progress { height: 3px; color: var(--indigo); }
+  .reveal .slide-number { font-family: 'Inter'; font-size: 11px !important; color: var(--slate3) !important; background: none !important; }
+  #fs-btn {
+    position: fixed; top: 12px; right: 12px; z-index: 100;
+    background: rgba(99,102,241,0.85); color: #fff; border: none;
+    border-radius: 6px; padding: 6px 12px;
+    font-family: 'Inter'; font-size: 12px; font-weight: 500;
+    cursor: pointer; opacity: 0.6; transition: 0.2s;
+  }
+  #fs-btn:hover { opacity: 1; }
+  .ineq {
+    text-align: center; font-size: 0.95em; font-weight: 700;
+    color: var(--indigo); margin: 0.7em 0 0.5em;
+    letter-spacing: 0.01em;
+  }
+  .ineq span.student { color: var(--slate); }
+  .ineq span.gt { color: var(--slate3); margin: 0 0.2em; }
+</style>
+</head>
+<body>
+
+<button id="fs-btn" onclick="document.documentElement.requestFullscreen()">Fullscreen</button>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- 1. TITLE -->
+<section>
+  <div class="title-slide">
+    <div style="margin-bottom:1em;">
+      <svg width="60" height="60" viewBox="0 0 64 64">
+        <ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/>
+        <ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/>
+        <ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/>
+        <circle cx="32" cy="16" r="4" fill="#818cf8"/>
+        <circle cx="18" cy="40" r="4" fill="#818cf8"/>
+        <circle cx="46" cy="40" r="4" fill="#818cf8"/>
+        <line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/>
+        <line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/>
+        <line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/>
+        <circle cx="32" cy="32" r="7" fill="#6366f1"/>
+        <text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text>
+      </svg>
+    </div>
+    <h1>AI Agents &amp; the Future of Teaching</h1>
+    <div class="sub">Why this conversation is different from last year &mdash; and what it asks of us</div>
+    <div class="meta">
+      APHYS Teachers' Meeting &bull; Week 24, June 2026<br>
+      <strong>Wei Ouyang</strong> &bull; Department of Applied Physics, KTH<br>
+      (with Jonas Sellberg &bull; Uli Vogt &bull; Olle B&auml;lter)
+    </div>
+  </div>
+</section>
+
+<!-- 2. THE INFLECTION POINT -->
+<section>
+  <h2>Something quietly changed in late 2025</h2>
+  <p>Andrej Karpathy &mdash; OpenAI co-founder, ex-Tesla AI lead &mdash; at Sequoia AI Ascent (March 2026):</p>
+  <blockquote>
+    In November I was writing 80% of my code. In December that flipped: I now write maybe 20%, and the agent does the rest. The handover happened in roughly a month. Most people missed it.
+    <span class="attribution">&mdash; A. Karpathy, Sequoia AI Ascent 2026 (paraphrased)</span>
+  </blockquote>
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="n">1.96%</div>
+      <div class="l">SWE-bench Verified<br>Oct 2023</div>
+    </div>
+    <div class="stat">
+      <div class="n">~78%</div>
+      <div class="l">SWE-bench Verified<br>Spring 2026</div>
+    </div>
+    <div class="stat">
+      <div class="n">~2&times;</div>
+      <div class="l">Autonomous-turn duration<br>Oct 2025 &rarr; Jan 2026</div>
+    </div>
+  </div>
+  <div class="hbox fire">
+    Anthropic itself reports that ~80% of new production code at Anthropic is now authored by Claude, with human review.
+  </div>
+  <div class="footnote">
+    Sources: Karpathy, Sequoia AI Ascent 2026; Anthropic, <em>Measuring AI Agent Autonomy in Practice</em> (2026); VentureBeat, "80% of Anthropic's new production code is now authored by Claude" (2026).
+  </div>
+  <div class="speaker-note">SPEAKER NOTE: This slide is the wake-up call. Don't oversell &mdash; senior faculty will tune out hype. Pause and let them absorb the SWE-bench numbers.</div>
+</section>
+
+<!-- 3. THE NEW ENGINEERING — NOT JUST CHAT -->
+<section>
+  <h2>Working with agents is <em>not</em> talking to ChatGPT</h2>
+  <p>From the SCI Agenthon Track C reading &mdash; three things that actually matter:</p>
+  <div class="g3">
+    <div class="card">
+      <h3>Context engineering</h3>
+      <p>Deliberately shaping what the model sees: project notes, file mounts, skills triggered on demand. Garbage in, garbage out &mdash; but worse, because the output looks confident.</p>
+    </div>
+    <div class="card">
+      <h3>Loop engineering</h3>
+      <p>Agents don't decide when they are done &mdash; you do, with explicit stop conditions. "Everything is a Ralph loop." Night-shift automation by day-shift humans.</p>
+    </div>
+    <div class="card">
+      <h3>Aligned understanding</h3>
+      <p>A shared glossary, explicit specs, named conventions. The AI uses <em>your</em> domain terms or justifies deviating. System-design intuition stays human.</p>
+    </div>
+  </div>
+  <blockquote>
+    The question is not: <em>what prompt should I write?</em><br>
+    The question is: <em>what should Claude know?</em>
+    <span class="attribution">&mdash; SCI Agenthon Track C, "Advanced agentic engineering"</span>
+  </blockquote>
+  <div class="footnote">
+    Reference for participants: <strong>kth-sci.github.io/sci-agenthon-2026/advanced.html</strong>
+  </div>
+</section>
+
+<!-- 4. CONCRETE NAMED DEMOS -->
+<section>
+  <h2>What this looks like in practice</h2>
+  <p>Pick three concrete, citable cases &mdash; the rest are hype:</p>
+  <div class="g2">
+    <div class="card">
+      <h3>AlphaEvolve breaks a 56-year record</h3>
+      <p>Google DeepMind's Gemini-powered evolutionary coding agent autonomously discovered a procedure to multiply two 4&times;4 complex matrices using <strong>48 scalar multiplications</strong> &mdash; the first improvement on Strassen's algorithm since 1969. It also produced new results across analysis, combinatorics, and geometry.</p>
+      <p class="footnote">DeepMind blog, May 2025.</p>
+    </div>
+    <div class="card">
+      <h3>A 47-year-old computer running a transformer</h3>
+      <p><strong>Dave Plummer</strong> &mdash; veteran Windows developer (Task Manager) &mdash; wrote a working mini-transformer in <em>PDP-11 assembly</em> running on a 6 MHz, 64 KB-RAM PDP-11 from 1978. A teaching demo of what these models really are.</p>
+      <p class="footnote">Tom's Hardware, 2025.</p>
+    </div>
+  </div>
+  <div class="hbox emerald">
+    <strong>Closer to home:</strong> the May 8 tutorial (48 participants) and the May 26 SCI Hackathon both produced working APHYS tools in hours, not weeks &mdash; everything is in the gallery at <strong>kth-sci.github.io/applied-physics-ai/gallery.html</strong>.
+  </div>
+</section>
+
+<!-- 5. THE EMPIRICAL TEACHING PICTURE -->
+<section>
+  <h2>What does the teaching literature say?</h2>
+  <p>Two facts to hold at once:</p>
+  <div class="g2">
+    <div>
+      <h3>The aggregate effect is positive</h3>
+      <ul>
+        <li>Wang et al. (Nature HSSC, 2026) &mdash; meta-analysis of 35 experimental studies. <strong>g = 0.67</strong> on learning outcomes.</li>
+        <li>Liu et al. (J. Computer Assisted Learning, 2025) &mdash; large positive performance effect.</li>
+        <li>HEPI Student GenAI Survey 2026 &mdash; majority of UK undergraduates already use AI weekly.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>But the nuance is brutal</h3>
+      <ul>
+        <li>"Outsourcing tasks to GenAI without pedagogical guidance enhances performance with <strong>no real learning gains</strong>." (Systematic-review framing, 2026)</li>
+        <li>Effects depend sharply on <em>knowledge type</em> and <em>assignment design</em>.</li>
+        <li>One major <em>Nature HSSC</em> meta-analysis was <strong>retracted</strong> in 2025. The field is moving fast and messily.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox amber">
+    Students get higher scores. Whether they learn more &mdash; or learn less but cover for it &mdash; depends almost entirely on <strong>how we design the work</strong>.
+  </div>
+</section>
+
+<!-- 6. INSTITUTIONS HAVE ALREADY PICKED SIDES -->
+<section>
+  <h2>The university landscape is no longer waiting</h2>
+  <table>
+    <thead><tr><th>Institution / report</th><th>Position (2025-26)</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Arizona State University</strong></td><td>ChatGPT Edu with GPT-5 <em>free to every student, faculty, researcher</em>, Oct 2025</td><td>tech.asu.edu, 2025</td></tr>
+      <tr><td><strong>California State University</strong></td><td>System-wide ChatGPT Edu, <strong>$13M/yr</strong>, 22 campuses &mdash; with organised faculty + student refusal to use it</td><td>CalMatters, NPR (May 2026)</td></tr>
+      <tr><td><strong>OECD Digital Education Outlook 2026</strong></td><td>"The question is no longer <em>whether</em> students use AI but <em>how well</em>, and how institutions support responsible use."</td><td>OECD, 2026</td></tr>
+      <tr><td><strong>Nature</strong></td><td>"What would an AI university actually look like?" (open editorial)</td><td>Nature, Dec 2025</td></tr>
+    </tbody>
+  </table>
+  <div class="hbox">
+    The choice is not <em>whether</em> APHYS adopts a position. The choice is whether we are <strong>deliberate</strong> about ours, or whether students and the literature shape it for us.
+  </div>
+</section>
+
+<!-- 7. WHAT I AM SERIOUSLY WORRIED ABOUT — JUNIOR CAREERS -->
+<section>
+  <h2>What I am seriously worried about &mdash; the squeeze</h2>
+  <div class="g2">
+    <div>
+      <h3>The signal in the labour market</h3>
+      <ul>
+        <li>Entry-level hiring at the 15 largest US tech firms <strong>down 25%</strong> from 2023 to 2024.</li>
+        <li>Junior developer postings <strong>down ~40-50%</strong> since early 2024.</li>
+        <li>Employment of devs aged 22-25 <strong>down ~20%</strong> from late-2022 peak.</li>
+        <li>LeadDev 2025 survey: <strong>54%</strong> of engineering leaders plan to hire fewer juniors because of AI copilots.</li>
+      </ul>
+      <p class="footnote">Stack Overflow Blog (Dec 2025); SSRN, Adam (2026).</p>
+    </div>
+    <div>
+      <h3>The pedagogical implication</h3>
+      <p>The classical career arc was: <em>learn basics &rarr; junior role &rarr; build expertise.</em> The middle step is what's getting absorbed by agents.</p>
+      <p>If our graduates can do <em>only what a competent agent can already do</em>, they have no entry point. They have to be measurably better.</p>
+      <div class="hbox red" style="margin-top:0.5em">
+        <strong>Counter-data point:</strong> IBM announced <em>tripling</em> US entry-level hiring in 2026. The picture is not uniform. But the trend among software-heavy firms is unmistakable.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. WHAT WE OWE STUDENTS — THE INEQUALITY THAT MATTERS -->
+<section>
+  <h2>What we owe students &mdash; and the inequality that matters</h2>
+  <div class="ineq">
+    <span class="student">Student alone</span>
+    <span class="gt">&lt;</span>
+    AI alone
+    <span class="gt">&lt;</span>
+    <span class="student">Student + AI</span>
+  </div>
+  <p style="font-size:0.5em;color:var(--slate2);margin-top:0.4em;text-align:center">
+    Our graduates can survive only on the right-hand side &mdash; and only if "+AI" is more than copy-paste.
+  </p>
+  <div class="g2" style="margin-top:0.6em">
+    <div class="card">
+      <h3>Skills that get cheap</h3>
+      <ul>
+        <li>Looking things up.</li>
+        <li>Writing the first draft of code, text, or a derivation.</li>
+        <li>Routine application of a known method.</li>
+        <li>Boilerplate. Reformatting. Summarising.</li>
+      </ul>
+      <p class="footnote">Knowledge access has collapsed in price. Expertise is less defendable.</p>
+    </div>
+    <div class="card">
+      <h3>Skills that get scarce &mdash; and valuable</h3>
+      <ul>
+        <li><strong>Problem framing</strong> &mdash; deciding what is worth asking.</li>
+        <li><strong>Judgment &amp; taste</strong> &mdash; recognising when the agent is confidently wrong.</li>
+        <li><strong>Physical intuition</strong> &mdash; the silent prior our students still need.</li>
+        <li><strong>Agency</strong> &mdash; running a loop end-to-end, not waiting for instructions.</li>
+        <li><strong>Communicating to humans</strong> &mdash; still done in human time.</li>
+      </ul>
+    </div>
+  </div>
+  <blockquote style="margin-top:0.4em">
+    You can outsource your thinking, but you cannot outsource your understanding.
+    <span class="attribution">&mdash; quoted by Karpathy, late 2025</span>
+  </blockquote>
+</section>
+
+<!-- 9. DISCUSSION SEEDS -->
+<section>
+  <h2>Let's actually talk &mdash; five questions to debate</h2>
+  <ul class="qmark">
+    <li>What is the <strong>one course</strong> in your programme where you can already see the effect of AI on student work? What changed?</li>
+    <li>If a student turns in work an AI agent could have produced in 5 minutes &mdash; <strong>have they learned anything we cared about?</strong> If not, what should the assignment have asked instead?</li>
+    <li>What is the <strong>minimum AI fluency</strong> we owe an APHYS graduate by the time they leave us? Should it be a course, an embedded thread, or an examination requirement?</li>
+    <li>Where do we draw the line on <strong>disclosure</strong>: in homework, exams, theses, grant texts, recommendation letters?</li>
+    <li>What is the <strong>experiment</strong> our department could run in autumn 2026 that would give us actual evidence &mdash; not opinion &mdash; about what works?</li>
+  </ul>
+  <div class="hbox emerald" style="margin-top:0.4em">
+    Today is not the day we decide policy. It is the day we make a list of the experiments worth running &mdash; and the questions we now know we have to answer.
+  </div>
+</section>
+
+<!-- 10. HAND-OFF -->
+<section>
+  <div class="title-slide">
+    <h1 style="font-size:1.6em">Over to Jonas &mdash;</h1>
+    <div class="sub" style="margin-top:0.4em">An auto-grader from the SCI AI Hackathon, the Canvas / LearnWise initiative, and what landed (or didn't) at the May 8 tutorial.</div>
+    <div class="meta" style="margin-top:1.5em">
+      Resources: <strong>kth-sci.github.io/applied-physics-ai</strong> &middot;
+      <strong>kth-sci.github.io/sci-agenthon-2026</strong>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true, width: 1100, height: 660, margin: 0.05,
+  minScale: 0.2, maxScale: 2.0, center: true,
+  transition: 'slide', progress: true, controls: true,
+  keyboard: true, overview: true, slideNumber: 'c/t',
+});
+</script>
+</body>
+</html>
