@@ -251,6 +251,16 @@
     font-size: 0.46em; line-height: 1.4;
   }
   .artefact-banner b { color: var(--slate); }
+  .scale-stat {
+    margin-top: 0.32em; padding: 0.42em 0.7em;
+    background: linear-gradient(135deg,#ecfdf5,#f0fdf4);
+    border-left: 3px solid var(--emerald);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.42em; line-height: 1.45;
+    color: var(--slate);
+  }
+  .scale-stat strong { color: #065f46; font-weight: 700; }
+  .scale-stat .arrow { color: var(--emerald); font-weight: 700; }
 
   /* THESIS BLOCK (slide 6) */
   .thesis-block {
@@ -463,7 +473,7 @@
   <h2>Proposing an agentic-AI course for 2027</h2>
   <div class="course-card">
     <div class="cc-badges">
-      <span class="tag slate">SKXXX &bull; code TBD</span>
+      <span class="tag slate">SKxxxx &bull; code TBD</span>
       <span class="tag indigo">7.5 hp + 2.0 hp PhD workshop</span>
       <span class="tag emerald">Master's elective</span>
       <span class="tag amber">HT 2027</span>
@@ -535,15 +545,15 @@
         <span class="mcred">2.5 hp &bull; P/F</span>
       </div>
       <div class="mname">Build &amp; peer chat review</div>
-      <p>Weekly hands-on studio labs. Each week the student exports their full AI chat history; a paired peer reviews it against a published rubric &mdash; brief clarity, problem decomposition, recovery from agent errors, calibration of trust, disclosure honesty.</p>
+      <p>Weekly studio labs. Each week the student exports their AI chat history; a paired peer reviews against a published rubric. <strong>An LLM pre-validates each peer review</strong>; disagreements flag to the TA.</p>
     </div>
     <div class="mod sem">
       <div class="mhead">
         <span class="mcode">SEM1</span>
         <span class="mcred">1.5 hp &bull; P/F</span>
       </div>
-      <div class="mname">Oral discussion &amp; presentation</div>
-      <p>Weekly breakout-room discussions in studio (participation, not formal peer evaluation) plus two presentation blocks &mdash; mid-course and final week &mdash; where groups present their work and engage with peer questions.</p>
+      <div class="mname">Oral practice &amp; presentation</div>
+      <p>Weekly breakout discussions. <strong>Everyone prepares; 1&ndash;2 students drawn at random to present</strong> (case-method cold-calling, Christensen tradition). Two formal presentation blocks per term.</p>
     </div>
     <div class="mod pro">
       <div class="mhead">
@@ -551,16 +561,16 @@
         <span class="mcred">3.5 hp &bull; A&ndash;F</span>
       </div>
       <div class="mname">Real agent system project</div>
-      <p>Build &amp; ship an agent system for a real external user. Public defence; AI-augmented examiner panel; 5-minute Failure Report. Three non-negotiables: <em>real-user witness</em>, <em>peer reproducibility audit</em>, <em>public defence</em>.</p>
+      <p>Real external-user mandate &mdash; own contact <em>or</em> the <strong>Guest-Lecturer Project Menu</strong> (1&ndash;3 open problems per guest). <strong>12-min public defence</strong>, AI-augmented panel, 5-min Failure Report. <strong>Agent Auditor</strong> grades autonomously; students design to be agent-gradable.</p>
     </div>
   </div>
   <div class="artefact-banner">
     <b>The single recurring written artefact across all three modules is the student's own AI conversation history.</b>
     Disclosed, peer-reviewed, archived. It cannot be post-rationalised &mdash; honest use of AI becomes the graded skill.
   </div>
-  <p class="src" style="font-family:'JetBrains Mono', monospace; font-size:0.32em; color:var(--slate3); margin-top:0.3em">
-    Full kursplan &amp; rationale: <strong>sk2538-uli-discussion.md</strong> &bull; <strong>sk2538-course-syllabus.md</strong>
-  </p>
+  <div class="scale-stat">
+    <strong>Scalability target.</strong> Teacher load drops from <strong>~22 h/wk</strong> on current SK2538 <span class="arrow">&rarr;</span> <strong>~6 h/wk</strong> on HT 2027 (~70% reduction). The reduction comes from LLM pre-validation, the Agent Auditor, and cohort scaffolding &mdash; the same operating model the course teaches students to build.
+  </div>
 </section>
 
 <!-- =========== 9. WHY THIS DESIGN =========== -->
@@ -586,8 +596,8 @@
     <div class="design-card">
       <span class="dc-tag">Project</span>
       <h3>The project serves a <em>real</em> external user.</h3>
-      <p>Research supervisor, partner-lab scientist, partner-company engineer. Witness statement + a concrete utility example. A peer team reproduces one result in 90 minutes.</p>
-      <div class="dc-why"><strong>Why &rarr;</strong> real-world utility is the binding constraint. Without it the system has nothing to prove. The witness statement cannot be gamed.</div>
+      <p>Research supervisor, partner-lab scientist, partner-company engineer, or open problem from the Guest-Lecturer Project Menu. Witness statement + concrete utility example. A course <strong>Agent Auditor</strong> grades autonomously.</p>
+      <div class="dc-why"><strong>Why &rarr;</strong> real-world utility is the binding constraint; the witness cannot be gamed; the Agent Auditor scales the rigour without scaling the teacher.</div>
     </div>
 
     <div class="design-card">
