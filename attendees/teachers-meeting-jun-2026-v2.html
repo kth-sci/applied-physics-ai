@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI in Higher Education — Wei, APHYS Teachers' Meeting (June 2026)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --indigo: #6366f1; --indigo-l: #818cf8; --indigo-d: #4f46e5;
+    --fire: #f97316; --slate: #0f172a; --slate2: #475569; --slate3: #94a3b8;
+    --emerald: #10b981; --amber: #f59e0b; --rose: #e11d48;
+  }
+  .reveal { font-family: 'Inter', sans-serif; color: var(--slate); }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { padding: 18px 36px; box-sizing: border-box; }
+  .reveal h1, .reveal h2, .reveal h3 { font-weight: 700; color: var(--indigo); text-transform: none; letter-spacing: -0.02em; }
+  .reveal h1 { font-size: 1.7em; }
+  .reveal h2 { font-size: 1.15em; margin-bottom: 0.4em; }
+  .reveal h3 { font-size: 0.75em; color: var(--indigo-l); margin-bottom: 0.2em; font-weight: 600; }
+  .reveal p, .reveal li { font-size: 0.5em; line-height: 1.5; }
+  .reveal ul { list-style: none; padding-left: 0; }
+  .reveal ul li { padding-left: 1em; position: relative; margin-bottom: 0.2em; }
+  .reveal ul li::before { content:''; position: absolute; left: 0; top: 0.5em; width: 5px; height: 5px; border-radius: 50%; background: var(--indigo-l); }
+  .reveal blockquote { background: none; border: none; font-style: italic; font-size: 0.62em; color: var(--slate); padding: 0.3em 0 0.3em 1.5em; margin: 0.4em 0; box-shadow: none; position: relative; line-height: 1.5; }
+  .reveal blockquote::before { content:'\201C'; position: absolute; left: 0; top: -0.05em; font-size: 2.2em; color: var(--indigo-l); opacity: 0.35; font-style: normal; }
+  .attribution { font-size: 0.42em !important; color: var(--slate3); font-style: normal; margin-top: 0.3em; display: block; }
+  .hbox { border-left: 3px solid var(--indigo); padding: 0.4em 0.8em; border-radius: 0 5px 5px 0; margin: 0.35em 0; font-size: 0.5em; line-height: 1.5; background: linear-gradient(135deg,#eef2ff,#f8fafc); }
+  .hbox.fire { border-color: var(--fire); background: linear-gradient(135deg,#fff7ed,#fffbeb); }
+  .hbox.amber { border-color: var(--amber); background: linear-gradient(135deg,#fffbeb,#fefce8); }
+  .hbox.emerald { border-color: var(--emerald); background: linear-gradient(135deg,#ecfdf5,#f0fdf4); }
+  .hbox.rose { border-color: var(--rose); background: linear-gradient(135deg,#fff1f2,#fef2f2); }
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9em; align-items: start; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7em; align-items: start; }
+  .g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.6em; align-items: start; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.55em 0.7em; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .card h3 { margin-top: 0; }
+  .card p, .card li { font-size: 0.46em; }
+  .tag { display: inline-block; padding: 0.1em 0.5em; border-radius: 12px; font-size: 0.4em; font-weight: 600; margin-right: 0.3em; }
+  .tag.indigo { background: #eef2ff; color: var(--indigo); }
+  .tag.fire { background: #fff7ed; color: #c2410c; }
+  .tag.emerald { background: #ecfdf5; color: #047857; }
+  .tag.amber { background: #fffbeb; color: #92400e; }
+  .tag.rose { background: #fff1f2; color: var(--rose); }
+  .tag.slate { background: #f1f5f9; color: var(--slate2); }
+  .title-slide { text-align: center !important; }
+  .title-slide h1 { font-size: 1.9em; margin-bottom: 0.15em; font-weight: 800; color: var(--slate); }
+  .title-slide h1 em { color: var(--indigo); font-style: normal; font-weight: 800; }
+  .title-slide .sub { font-size: 0.7em; color: var(--indigo); font-weight: 500; margin-bottom: 1em; font-style: italic; }
+  .title-slide .meta { font-size: 0.48em; color: var(--slate2); line-height: 1.7; }
+  .reveal .progress { height: 3px; color: var(--indigo); }
+  .reveal .slide-number { font-family: 'Inter'; font-size: 11px !important; color: var(--slate3) !important; background: none !important; }
+
+  /* INEQUALITY DISPLAY (slide 2) */
+  .ineq {
+    display: flex; align-items: stretch; justify-content: center;
+    gap: 0.5em; margin: 0.7em auto 0.4em; max-width: 100%;
+  }
+  .ineq .pill {
+    flex: 0 1 auto;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 0.55em 0.9em;
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    min-width: 5.5em;
+  }
+  .ineq .pill.win { background: linear-gradient(135deg,#ecfdf5,#d1fae5); border-color: rgba(16,185,129,0.5); }
+  .ineq .pill.gray { background: #fff; border-color: #cbd5e1; }
+  .ineq .pill.fade { background: linear-gradient(135deg,#fff7ed,#ffedd5); border-color: rgba(249,115,22,0.45); }
+  .ineq .icons {
+    display: flex; align-items: center; gap: 0.15em;
+    color: var(--slate); margin-bottom: 0.3em;
+  }
+  .ineq .pill.win .icons { color: #047857; }
+  .ineq .pill.fade .icons { color: #c2410c; }
+  .ineq .icons svg { width: 26px; height: 26px; }
+  .ineq .icons .plus { font-size: 0.65em; font-weight: 800; color: inherit; padding: 0 0.1em; }
+  .ineq .lbl {
+    font-size: 0.45em; font-weight: 700; color: var(--slate);
+    letter-spacing: -0.01em; text-align: center;
+  }
+  .ineq .pill.win .lbl { color: #065f46; }
+  .ineq .pill.fade .lbl { color: #9a3412; }
+  .ineq .op {
+    display: flex; align-items: center;
+    font-size: 1.2em; font-weight: 800; color: var(--indigo);
+    padding: 0 0.1em;
+  }
+  .ineq .or {
+    display: flex; align-items: center;
+    font-size: 0.55em; font-weight: 700; color: var(--slate3);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    padding: 0 0.3em;
+  }
+
+  /* NEWS CARDS (slide 3) */
+  .news-card {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-left: 3px solid var(--indigo);
+    border-radius: 0 8px 8px 0;
+    padding: 0.55em 0.8em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .news-card.gov { border-left-color: var(--rose); }
+  .news-card .nh {
+    display: flex; align-items: center; gap: 0.4em;
+    margin-bottom: 0.25em;
+  }
+  .news-card .nh .nh-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.34em; color: var(--slate3); margin-left: auto;
+  }
+  .news-card h3 { margin: 0; font-size: 0.65em; color: var(--slate); font-weight: 700; }
+  .news-card .news-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4em;
+    margin: 0.4em 0 0.3em;
+  }
+  .news-card .ns { text-align: center; }
+  .news-card .ns b {
+    display: block; font-size: 0.95em; font-weight: 800;
+    color: var(--indigo-d); line-height: 1;
+  }
+  .news-card.gov .ns b { color: var(--rose); }
+  .news-card .ns span {
+    display: block; font-size: 0.32em; color: var(--slate2);
+    margin-top: 0.15em;
+  }
+  .news-card p { font-size: 0.42em; margin: 0.15em 0 0; color: var(--slate2); }
+  .news-card .src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.3em; color: var(--slate3); margin-top: 0.25em;
+  }
+
+  /* JOB MARKET STATS (slide 4) */
+  .jstat-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.55em;
+    margin: 0.5em 0;
+  }
+  .jstat {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 8px; padding: 0.55em 0.45em;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    position: relative;
+  }
+  .jstat .n {
+    font-size: 1.4em; font-weight: 800; color: var(--rose); line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .jstat .l {
+    font-size: 0.38em; color: var(--slate); margin-top: 0.3em;
+    line-height: 1.35; font-weight: 500;
+  }
+  .jstat .src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.28em; color: var(--slate3);
+    margin-top: 0.35em; line-height: 1.3;
+  }
+
+  /* COURSE-PROPOSAL CARD (slide 6) */
+  .course-card {
+    background: linear-gradient(135deg,#eef2ff 0%,#fafbff 100%);
+    border: 1.5px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 0.7em 0.9em;
+    margin: 0.5em 0;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+  }
+  .course-card .cc-badges {
+    display: flex; flex-wrap: wrap; gap: 0.3em;
+    margin-bottom: 0.4em;
+  }
+  .course-card .cc-title {
+    font-size: 0.95em; font-weight: 800;
+    color: var(--indigo-d); letter-spacing: -0.02em;
+    line-height: 1.15; margin-bottom: 0.15em;
+  }
+  .course-card .cc-sv {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.5em; color: var(--slate2);
+    font-style: italic; margin-bottom: 0.35em;
+  }
+  .course-card .cc-from {
+    font-size: 0.42em; color: var(--slate2);
+    margin-bottom: 0.2em;
+  }
+  .course-card .cc-from b { color: var(--slate); }
+
+  /* ILO ICON CARDS (slide 7) */
+  .ilo {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.5em 0.55em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    text-align: center;
+  }
+  .ilo .icon {
+    width: 38px; height: 38px;
+    margin: 0 auto 0.35em;
+    background: #eef2ff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--indigo-d);
+  }
+  .ilo .icon svg { width: 22px; height: 22px; }
+  .ilo h3 {
+    font-size: 0.55em; color: var(--slate); font-weight: 700;
+    text-transform: none; letter-spacing: -0.01em; margin: 0 0 0.25em;
+  }
+  .ilo p { font-size: 0.36em; margin: 0; line-height: 1.4; color: var(--slate2); }
+
+  /* EXAM MODULES (slide 8) */
+  .mod {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.5em 0.65em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    position: relative;
+  }
+  .mod.lab { border-top: 3px solid var(--emerald); }
+  .mod.sem { border-top: 3px solid var(--amber); }
+  .mod.pro { border-top: 3px solid var(--indigo); }
+  .mod .mhead {
+    display: flex; align-items: baseline; gap: 0.4em;
+    margin-bottom: 0.25em;
+  }
+  .mod .mcode {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55em; font-weight: 700;
+    color: var(--slate);
+  }
+  .mod.lab .mcode { color: #047857; }
+  .mod.sem .mcode { color: #92400e; }
+  .mod.pro .mcode { color: var(--indigo-d); }
+  .mod .mcred {
+    font-size: 0.36em; color: var(--slate3);
+    margin-left: auto;
+  }
+  .mod .mname { font-size: 0.42em; color: var(--slate); font-weight: 600; margin-bottom: 0.25em; }
+  .mod p { font-size: 0.36em; margin: 0; line-height: 1.45; color: var(--slate2); }
+
+  .artefact-banner {
+    margin: 0.4em 0; padding: 0.45em 0.7em;
+    background: linear-gradient(135deg,#fff7ed,#fffbeb);
+    border-left: 3px solid var(--fire);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.46em; line-height: 1.4;
+  }
+  .artefact-banner b { color: var(--slate); }
+  .scale-stat {
+    margin-top: 0.32em; padding: 0.42em 0.7em;
+    background: linear-gradient(135deg,#ecfdf5,#f0fdf4);
+    border-left: 3px solid var(--emerald);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.42em; line-height: 1.45;
+    color: var(--slate);
+  }
+  .scale-stat strong { color: #065f46; font-weight: 700; }
+  .scale-stat .arrow { color: var(--emerald); font-weight: 700; }
+
+  /* THESIS BLOCK (slide 6) */
+  .thesis-block {
+    background: linear-gradient(135deg,#eef2ff 0%,#fafbff 100%);
+    border-left: 3px solid var(--indigo);
+    border-radius: 0 6px 6px 0;
+    padding: 0.5em 0.85em;
+    margin: 0.4em 0;
+    font-size: 0.5em; line-height: 1.55;
+    color: var(--slate);
+  }
+  .thesis-block strong { color: var(--indigo-d); font-weight: 700; }
+  .thesis-block em { color: var(--slate); font-style: italic; font-weight: 500; }
+
+  /* WHY-THIS-DESIGN CARDS (slide 9) */
+  .design-card {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.55em 0.7em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .design-card .dc-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.32em; font-weight: 700;
+    color: var(--indigo-d); background: #eef2ff;
+    padding: 0.18em 0.5em; border-radius: 4px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 0.25em;
+  }
+  .design-card h3 {
+    font-size: 0.55em; color: var(--slate); font-weight: 700;
+    letter-spacing: -0.01em; margin: 0 0 0.22em;
+    line-height: 1.25;
+  }
+  .design-card p {
+    font-size: 0.38em; margin: 0 0 0.32em;
+    line-height: 1.45; color: var(--slate2);
+  }
+  .design-card .dc-why {
+    font-size: 0.38em; line-height: 1.45;
+    color: var(--slate); padding-top: 0.32em;
+    border-top: 1px dashed #e2e8f0;
+  }
+  .design-card .dc-why strong { color: var(--fire); font-weight: 700; }
+
+  /* ============ V2 ADDITIONS ============ */
+
+  /* EDUCATION-DATA HEADLINE (v2 slide 5) */
+  .edu-headline {
+    display: grid; grid-template-columns: 1fr 0.7fr 1fr;
+    gap: 0.6em; align-items: stretch;
+    margin: 0.25em 0 0.1em;
+  }
+  .eh-side {
+    background: #fff; border: 1.5px solid #e2e8f0;
+    border-radius: 12px; padding: 0.5em 0.65em;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .eh-side.gain { background: linear-gradient(135deg,#ecfdf5,#d1fae5); border-color: rgba(16,185,129,0.45); }
+  .eh-side.gap  { background: linear-gradient(135deg,#fffbeb,#fef3c7); border-color: rgba(245,158,11,0.5); }
+  .eh-n {
+    font-size: 2.1em; font-weight: 800; line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+  .eh-n span { font-size: 0.5em; font-weight: 700; margin-left: 0.05em; }
+  .eh-side.gain .eh-n { color: #047857; }
+  .eh-side.gap  .eh-n { color: #b45309; }
+  .eh-l {
+    font-size: 0.4em; line-height: 1.3;
+    color: var(--slate2); margin-top: 0.3em; font-weight: 500;
+  }
+  .eh-vs {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .eh-vs-label {
+    font-size: 0.4em; font-weight: 700; color: var(--slate2);
+    text-transform: uppercase; letter-spacing: 0.1em; margin: 0.2em 0;
+  }
+  .eh-vs-up   { font-size: 0.95em; color: #10b981; line-height: 1; }
+  .eh-vs-down { font-size: 0.95em; color: #f59e0b; line-height: 1; }
+  .eh-src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.3em; color: var(--slate3);
+    text-align: center; margin: 0.18em 0 0.4em;
+  }
+
+  /* EDUCATION SUB-CARDS (v2 slide 5) */
+  .ec-card {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-top: 3px solid var(--indigo);
+    border-radius: 6px 6px 8px 8px;
+    padding: 0.5em 0.6em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .ec-card.emerald { border-top-color: var(--emerald); }
+  .ec-card.indigo  { border-top-color: var(--indigo-d); }
+  .ec-card.rose    { border-top-color: var(--rose); }
+  .ec-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.32em; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--slate3); margin-bottom: 0.15em;
+  }
+  .ec-card.emerald .ec-tag { color: #047857; }
+  .ec-card.indigo  .ec-tag { color: var(--indigo-d); }
+  .ec-card.rose    .ec-tag { color: var(--rose); }
+  .ec-h {
+    font-size: 0.5em; font-weight: 700;
+    color: var(--slate); margin-bottom: 0.18em;
+    letter-spacing: -0.01em; line-height: 1.25;
+  }
+  .ec-stat {
+    font-size: 0.85em; font-weight: 800;
+    line-height: 1; letter-spacing: -0.02em;
+    margin: 0.15em 0 0.3em;
+  }
+  .ec-card.emerald .ec-stat { color: #047857; }
+  .ec-card.indigo  .ec-stat { color: var(--indigo-d); }
+  .ec-card.rose    .ec-stat { color: var(--rose); }
+  .ec-p {
+    font-size: 0.36em; line-height: 1.45;
+    color: var(--slate2); margin: 0;
+  }
+  .ec-p em { color: var(--slate); font-style: italic; font-weight: 600; }
+  .ec-p strong { color: var(--slate); font-weight: 700; }
+  .ec-src {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.28em; color: var(--slate3);
+    margin-top: 0.3em; line-height: 1.35;
+  }
+
+  /* BEFORE/AFTER COMPARISON (v2 slide 7) */
+  .ba-grid {
+    display: grid; grid-template-columns: 1fr 28px 1fr;
+    gap: 0.45em; align-items: stretch;
+    margin-top: 0.4em;
+  }
+  .ba-col {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 8px; padding: 0.5em 0.65em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .ba-col.without { background: linear-gradient(135deg,#fff7ed,#fffbeb); border-color: rgba(249,115,22,0.3); }
+  .ba-col.with    { background: linear-gradient(135deg,#ecfdf5,#f0fdf4); border-color: rgba(16,185,129,0.4); }
+  .ba-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.32em; font-weight: 700;
+    padding: 0.2em 0.5em; border-radius: 4px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 0.3em;
+  }
+  .ba-col.without .ba-tag { background: #ffedd5; color: #9a3412; }
+  .ba-col.with    .ba-tag { background: #d1fae5; color: #065f46; }
+  .ba-col ul { margin: 0; padding-left: 0; list-style: none; }
+  .ba-col ul li {
+    font-size: 0.4em; line-height: 1.45;
+    margin-bottom: 0.25em; padding-left: 1em;
+    position: relative;
+  }
+  .ba-col.without ul li::before {
+    content: '\2715'; position: absolute; left: 0; top: 0;
+    width: auto; height: auto;
+    color: var(--fire); font-weight: 700;
+    background: none; border-radius: 0;
+  }
+  .ba-col.with ul li::before {
+    content: '\2713'; position: absolute; left: 0; top: 0;
+    width: auto; height: auto;
+    color: var(--emerald); font-weight: 700;
+    background: none; border-radius: 0;
+  }
+  .ba-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1em; font-weight: 800;
+    color: var(--indigo);
+  }
+
+  #fs-btn { position: fixed; top: 12px; right: 12px; z-index: 100; background: rgba(99,102,241,0.85); color: #fff; border: none; border-radius: 6px; padding: 6px 12px; font-family: 'Inter'; font-size: 12px; font-weight: 500; cursor: pointer; opacity: 0.6; transition: 0.2s; }
+  #fs-btn:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<button id="fs-btn" onclick="document.documentElement.requestFullscreen()">Fullscreen</button>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- =========== 1. TITLE =========== -->
+<section>
+  <div class="title-slide">
+    <div style="margin-bottom:0.8em">
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="24" fill="none" stroke="#6366f1" stroke-width="1.3" opacity="0.35"/>
+        <circle cx="32" cy="32" r="15" fill="none" stroke="#818cf8" stroke-width="1.3" opacity="0.5"/>
+        <circle cx="32" cy="16" r="4" fill="#6366f1"/>
+        <circle cx="48" cy="40" r="4" fill="#818cf8"/>
+        <circle cx="16" cy="40" r="4" fill="#818cf8"/>
+        <line x1="32" y1="16" x2="48" y2="40" stroke="#6366f1" stroke-width="1.2" opacity="0.6"/>
+        <line x1="32" y1="16" x2="16" y2="40" stroke="#6366f1" stroke-width="1.2" opacity="0.6"/>
+        <line x1="16" y1="40" x2="48" y2="40" stroke="#818cf8" stroke-width="1.2" opacity="0.4"/>
+        <circle cx="32" cy="32" r="7" fill="#4f46e5"/>
+        <text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text>
+      </svg>
+    </div>
+    <h1>Agentic AI in <em>Higher Education</em></h1>
+    <div class="sub">Proposing a new agentic-AI master's course at KTH Applied Physics</div>
+    <div class="meta">
+      APHYS Teachers' Meeting &bull; June 2026 &bull; FB53 AlbaNova<br>
+      <strong>Wei Ouyang</strong> &bull; Assistant Professor, Biophysics<br>
+      Department of Applied Physics &bull; KTH Royal Institute of Technology
+    </div>
+  </div>
+</section>
+
+<!-- =========== 2. THE ASYMMETRY =========== -->
+<section>
+  <h2>The shift our students will be hired for</h2>
+  <p>An agent on its own is already doing the work we set as homework. A student on their own is no longer the comparison point. The only piece our graduates can sell on the 2027 job market is <strong>the combination</strong>.</p>
+  <div class="ineq">
+    <div class="pill win">
+      <div class="icons">
+        <svg viewBox="0 0 24 24"><path d="M12 3 L1 8 L12 13 L23 8 Z" fill="currentColor"/><path d="M5 11 L5 17 Q12 21 19 17 L19 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span class="plus">+</span>
+        <svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="9" y="9" width="6" height="6" fill="currentColor"/><line x1="2" y1="9" x2="5" y2="9" stroke="currentColor" stroke-width="1.6"/><line x1="2" y1="15" x2="5" y2="15" stroke="currentColor" stroke-width="1.6"/><line x1="19" y1="9" x2="22" y2="9" stroke="currentColor" stroke-width="1.6"/><line x1="19" y1="15" x2="22" y2="15" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
+      <div class="lbl">Student + AI</div>
+    </div>
+    <div class="op">&gt;</div>
+    <div class="pill gray">
+      <div class="icons">
+        <svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="9" y="9" width="6" height="6" fill="currentColor"/><line x1="2" y1="9" x2="5" y2="9" stroke="currentColor" stroke-width="1.6"/><line x1="2" y1="15" x2="5" y2="15" stroke="currentColor" stroke-width="1.6"/><line x1="19" y1="9" x2="22" y2="9" stroke="currentColor" stroke-width="1.6"/><line x1="19" y1="15" x2="22" y2="15" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
+      <div class="lbl">AI alone</div>
+    </div>
+    <div class="or">or</div>
+    <div class="pill fade">
+      <div class="icons">
+        <svg viewBox="0 0 24 24"><path d="M12 3 L1 8 L12 13 L23 8 Z" fill="currentColor"/><path d="M5 11 L5 17 Q12 21 19 17 L19 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
+      <div class="lbl">Student alone</div>
+    </div>
+  </div>
+  <div class="hbox emerald">
+    The differentiator is not "can you use AI". It is whether the student can produce something <strong>the agent could not have produced without them</strong>. That is what we should design our courses to develop.
+  </div>
+</section>
+
+<!-- =========== 3. THREE RECENT SIGNALS =========== -->
+<section>
+  <h2>Three recent signals &mdash; the ground we are standing on</h2>
+
+  <!-- Capability -->
+  <div class="news-card">
+    <div class="nh">
+      <span class="tag indigo">Capability</span>
+      <h3>16 parallel Claude agents built a production C compiler in 14 days</h3>
+      <span class="nh-date">Anthropic engineering blog &bull; Feb 6, 2026</span>
+    </div>
+    <div class="news-stats">
+      <div class="ns"><b>~100k</b><span>lines of Rust, written by agents</span></div>
+      <div class="ns"><b>99%</b><span>GCC torture tests pass</span></div>
+      <div class="ns"><b>$20k</b><span>compute, end-to-end</span></div>
+      <div class="ns"><b>0</b><span>compiler code by the human</span></div>
+    </div>
+    <p>Compiles the Linux kernel, PostgreSQL, FFmpeg, and Doom. One human researcher orchestrated; agents wrote, tested, and integrated. <em>Compilers used to be PhD theses.</em></p>
+    <div class="src">Source: anthropic.com/engineering/building-c-compiler</div>
+  </div>
+
+  <!-- Science -->
+  <div class="news-card sci" style="margin-top:0.45em; border-left-color: var(--emerald)">
+    <div class="nh">
+      <span class="tag emerald">Science</span>
+      <h3>Three Nature-family papers on autonomous AI agents for science &mdash; in a row</h3>
+      <span class="nh-date">Nature &bull; Nature Medicine &bull; Nature Methods &bull; 2026</span>
+    </div>
+    <p style="font-size:0.45em">A multi-agent system <em>automating</em> scientific discovery (Nature). An agentic framework for autonomous discovery in <em>cancer pathology</em> (Nature Medicine). Agentic methods <em>at the bench</em> (Nature Methods). The flagship journals are publishing the agents themselves as the contribution &mdash; not the wet-lab result behind them.</p>
+    <div class="src">Sources: nature.com/articles/s41586-026-10652-y &bull; /s41591-026-04357-y &bull; /s41592-026-03088-9</div>
+  </div>
+
+  <!-- Governance -->
+  <div class="news-card gov" style="margin-top:0.45em">
+    <div class="nh">
+      <span class="tag rose">Governance</span>
+      <h3>Fable 5 / Mythos 5 &mdash; state-of-the-art on June 9, banned by June 12</h3>
+      <span class="nh-date">Anthropic &bull; US gov't directive &bull; June 2026</span>
+    </div>
+    <p style="font-size:0.45em">Anthropic's strongest models &mdash; state of the art across coding, math, scientific reasoning (80.3% on SWE-Bench Pro, 11 points ahead of the next-best model) &mdash; suspended worldwide for all foreign nationals <em>three days after launch</em>, citing a jailbreak bypass and national-security concerns. Frontier agents are now regulated as strategic technology.</p>
+    <div class="src">Source: anthropic.com/news/fable-mythos-access &bull; TIME &bull; Tom's Hardware &bull; June 13, 2026</div>
+  </div>
+</section>
+
+<!-- =========== 4. JOB MARKET =========== -->
+<section>
+  <h2>The bottom rung is disappearing</h2>
+  <p>Our graduates are entering at the bottom rung. These are not projections &mdash; they are the labour data already on the table.</p>
+  <div class="jstat-grid">
+    <div class="jstat">
+      <div class="n">&minus;20%</div>
+      <div class="l">software developers aged 22&ndash;25 &mdash; employment, since late-2022 peak</div>
+      <div class="src">Stanford Digital Economy<br>Study, 2025</div>
+    </div>
+    <div class="jstat">
+      <div class="n">&minus;25%</div>
+      <div class="l">entry-level tech hiring &mdash; year on year, 2024</div>
+      <div class="src">Stack Overflow,<br>Dec 2025</div>
+    </div>
+    <div class="jstat">
+      <div class="n">&minus;50%</div>
+      <div class="l">Big-Tech entry-level hiring &mdash; cumulative, last 3 years</div>
+      <div class="src">Stanford / SO 2026<br>employment panel</div>
+    </div>
+    <div class="jstat">
+      <div class="n">50%</div>
+      <div class="l">share of entry-level white-collar jobs at risk within 5 years</div>
+      <div class="src">D. Amodei, Anthropic<br>Economic Index 2026</div>
+    </div>
+  </div>
+  <div class="hbox rose">
+    <strong>The path that built our graduates' careers &mdash; "junior role &rarr; learn the basics &rarr; expertise" &mdash; is the path the data shows collapsing.</strong>
+    What replaces it has to be taught explicitly: not <em>using</em> AI, but doing work an AI alone cannot do.
+  </div>
+</section>
+
+<!-- =========== 5 (v2). AI IN OUR CLASSROOMS =========== -->
+<section>
+  <h2>AI is already in our classrooms &mdash; without us</h2>
+
+  <div class="edu-headline">
+    <div class="eh-side gain">
+      <div class="eh-n">95<span>%</span></div>
+      <div class="eh-l">of UK undergraduates use AI for assessed work</div>
+    </div>
+    <div class="eh-vs">
+      <div class="eh-vs-up">&uarr;</div>
+      <div class="eh-vs-label">but only</div>
+      <div class="eh-vs-down">&darr;</div>
+    </div>
+    <div class="eh-side gap">
+      <div class="eh-n">36<span>%</span></div>
+      <div class="eh-l">feel encouraged or supported by their institution</div>
+    </div>
+  </div>
+  <div class="eh-src">HEPI Student GenAI Survey 2026 &middot; n=1,054 UK undergraduates &middot; up from 66% AI-use in 2024</div>
+
+  <div class="g3" style="margin-top:0.5em">
+    <div class="ec-card emerald">
+      <div class="ec-tag">Effect</div>
+      <div class="ec-h">Learning gains <em>are</em> real &mdash; when structured</div>
+      <div class="ec-stat">g = 0.5&ndash;0.9</div>
+      <div class="ec-p">Three independent 2026 meta-analyses converge on moderate-to-large positive effects on student learning &mdash; <strong>only when AI use is structured and supported</strong>.</div>
+      <div class="ec-src">Wang et al. 2026 Nature HSSC, 35 studies, g=0.67 &bull; Frontiers Psychology 2026, g=0.87 &bull; IRRODL 2026, g=0.57</div>
+    </div>
+    <div class="ec-card indigo">
+      <div class="ec-tag">Adoption</div>
+      <div class="ec-h">Adoption is going exponential</div>
+      <div class="ec-stat">40k &rarr; 700k &rarr; 1M+</div>
+      <div class="ec-p">Khanmigo K&ndash;12 student count, by school year. <strong>17&times; growth in 24 months.</strong> Pilot districts: <em>1.4 grade-level</em> improvement in mathematics.</div>
+      <div class="ec-src">Khan Academy blog, 2026 &bull; OECD: "may raise test scores without deepening real thinking"</div>
+    </div>
+    <div class="ec-card rose">
+      <div class="ec-tag">Risk</div>
+      <div class="ec-h">But unstructured use erodes thinking</div>
+      <div class="ec-stat">&darr; critical thinking</div>
+      <div class="ec-p">Heavy unstructured AI use correlates with <strong>measurable decline</strong> in critical-thinking scores &mdash; the cognitive-offloading effect, strongest in younger users.</div>
+      <div class="ec-src">PsyPost 2025 (cognitive offloading study) &bull; MDPI Societies 2025 &bull; UTS / OECD 2026</div>
+    </div>
+  </div>
+
+  <div class="hbox fire">
+    Our students are doing the experiment <strong>without the structure</strong>. The course I am about to propose is the structure.
+  </div>
+</section>
+
+<!-- =========== 6 (v2). KARPATHY QUOTE =========== -->
+<section>
+  <h2>The line worth quoting</h2>
+  <h3>Andrej Karpathy &bull; Sequoia AI Ascent, late 2025</h3>
+  <blockquote style="font-size:1em;margin:0.9em 0 0.5em;max-width:88%">
+    You can outsource your thinking,<br>but you cannot outsource your understanding.
+    <span class="attribution">&mdash; Andrej Karpathy</span>
+  </blockquote>
+  <ul style="margin-top:0.6em">
+    <li>An agent can produce the answer. The person who borrowed it does not own the result.</li>
+    <li>If our assessments cannot tell those two apart, we are measuring access &mdash; not learning.</li>
+  </ul>
+</section>
+
+<!-- =========== 7 (v2). THE COURSE PROPOSAL — with before/after =========== -->
+<section>
+  <h2>Proposing an agentic-AI course for 2027</h2>
+  <div class="course-card">
+    <div class="cc-badges">
+      <span class="tag slate">SKxxxx &bull; code TBD</span>
+      <span class="tag indigo">7.5 hp + 2.0 hp PhD workshop</span>
+      <span class="tag emerald">Master's elective</span>
+      <span class="tag amber">HT 2027</span>
+    </div>
+    <div class="cc-title">Agentic AI for Science and Engineering</div>
+    <div class="cc-sv">Agentisk AI f&ouml;r vetenskap och teknik</div>
+    <div class="cc-from">Replaces <b>SK2538 / FSK3538</b>.</div>
+  </div>
+
+  <div class="ba-grid">
+    <div class="ba-col without">
+      <span class="ba-tag">Without this course</span>
+      <ul>
+        <li>Uses ChatGPT for homework &mdash; undisclosed, ad hoc</li>
+        <li>Cannot tell confident-correct from confident-wrong</li>
+        <li>A polished CV, no public portfolio of working systems</li>
+        <li>Will be compared against agents alone &mdash; and lose</li>
+      </ul>
+    </div>
+    <div class="ba-arrow">&rarr;</div>
+    <div class="ba-col with">
+      <span class="ba-tag">With this course</span>
+      <ul>
+        <li>Builds agent systems for real users &mdash; disclosed, graded</li>
+        <li>Designs and ships a verification harness</li>
+        <li>Public, defended portfolio of working agentic systems</li>
+        <li>Produces work agents alone <em>cannot</em> produce</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cc-from" style="font-size:0.38em;color:var(--slate2);margin-top:0.4em;text-align:center">
+    Cross-track elective for all five Engineering Physics tracks &middot; studio format &middot; six rotating modules: imaging, molecular structure, single-cell, precision medicine, rotating physics topic, autonomous discovery.
+  </div>
+</section>
+
+<!-- =========== 7. THE 4 ILOs =========== -->
+<section>
+  <h2>Four skills &mdash; the spine of the course</h2>
+  <p>When software implementation cost goes to zero, the durable graduate skills are these four. They are the course's intended learning outcomes.</p>
+  <div class="g4" style="margin-top:0.5em">
+    <div class="ilo">
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 5 L21 5 L21 17 L13 17 L9 21 L9 17 L3 17 Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="11" r="1" fill="currentColor"/><circle cx="12" cy="11" r="1" fill="currentColor"/><circle cx="15" cy="11" r="1" fill="currentColor"/></svg></div>
+      <h3>Communicate</h3>
+      <p>Write specs, decompose problems, articulate constraints &amp; success criteria, iterate through dialog with the agent.</p>
+    </div>
+    <div class="ilo">
+      <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="6" height="11" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><rect x="11" y="4" width="6" height="16" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><line x1="19" y1="4" x2="22" y2="4" stroke="currentColor" stroke-width="2"/><line x1="19" y1="20" x2="22" y2="20" stroke="currentColor" stroke-width="2"/></svg></div>
+      <h3>Build</h3>
+      <p>Design and ship multi-tool / multi-agent workflows for real users. Decide what to delegate, what to wrap as deterministic tools, what to keep in the loop.</p>
+    </div>
+    <div class="ilo">
+      <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 13 L11 16 L17 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>Verify</h3>
+      <p>Failure-mode taxonomies. Evaluation harnesses. Adversarial probes. Calibrate trust case by case &mdash; catch hallucination and silent failure before they propagate.</p>
+    </div>
+    <div class="ilo">
+      <div class="icon"><svg viewBox="0 0 24 24"><line x1="12" y1="3" x2="12" y2="20" stroke="currentColor" stroke-width="2"/><line x1="6" y1="20" x2="18" y2="20" stroke="currentColor" stroke-width="2"/><line x1="6" y1="7" x2="18" y2="7" stroke="currentColor" stroke-width="2"/><path d="M6 7 L3 14 L9 14 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M18 7 L15 14 L21 14 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+      <h3>Use responsibly</h3>
+      <p>Disclose AI use through your own conversation history. Navigate ethics. Produce reproducible, FAIR, openly-licensed artefacts.</p>
+    </div>
+  </div>
+  <div class="hbox amber">
+    Each skill is examined in <strong>all three</strong> exam modules &mdash; not in one place each. That's the cross-module triangulation that keeps every ILO honest.
+  </div>
+</section>
+
+<!-- =========== 8. EXAMINATION FORMAT =========== -->
+<section>
+  <h2>Three exam modules &mdash; one recurring artefact</h2>
+  <div class="g3">
+    <div class="mod lab">
+      <div class="mhead">
+        <span class="mcode">LAB1</span>
+        <span class="mcred">2.5 hp &bull; P/F</span>
+      </div>
+      <div class="mname">Build &amp; peer chat review</div>
+      <p>Weekly studio labs. Each week the student exports their AI chat history; a paired peer reviews against a published rubric. <strong>An LLM pre-validates each peer review</strong>; disagreements flag to the TA.</p>
+    </div>
+    <div class="mod sem">
+      <div class="mhead">
+        <span class="mcode">SEM1</span>
+        <span class="mcred">1.5 hp &bull; P/F</span>
+      </div>
+      <div class="mname">Oral practice &amp; presentation</div>
+      <p>Weekly breakout discussions. <strong>Everyone prepares; 1&ndash;2 students drawn at random to present</strong> (case-method cold-calling, Christensen tradition). Two formal presentation blocks per term.</p>
+    </div>
+    <div class="mod pro">
+      <div class="mhead">
+        <span class="mcode">PRO1</span>
+        <span class="mcred">3.5 hp &bull; A&ndash;F</span>
+      </div>
+      <div class="mname">Real agent system project</div>
+      <p>Real external-user mandate &mdash; own contact <em>or</em> the <strong>Guest-Lecturer Project Menu</strong> (1&ndash;3 open problems per guest). <strong>12-min public defence</strong>, AI-augmented panel, 5-min Failure Report. <strong>Agent Auditor</strong> grades autonomously; students design to be agent-gradable.</p>
+    </div>
+  </div>
+  <div class="artefact-banner">
+    <b>The single recurring written artefact across all three modules is the student's own AI conversation history.</b>
+    Disclosed, peer-reviewed, archived. It cannot be post-rationalised &mdash; honest use of AI becomes the graded skill.
+  </div>
+  <div class="scale-stat">
+    <strong>Scalability target.</strong> Teacher load drops from <strong>~22 h/wk</strong> on current SK2538 <span class="arrow">&rarr;</span> <strong>~6 h/wk</strong> on HT 2027 (~70% reduction). The reduction comes from LLM pre-validation, the Agent Auditor, and cohort scaffolding &mdash; the same operating model the course teaches students to build.
+  </div>
+</section>
+
+<!-- =========== 9. WHY THIS DESIGN =========== -->
+<section>
+  <h2>Why this design &mdash; and not the standard format</h2>
+  <p>Four deliberate departures from the SCI default. Each one anchors a graduate skill we cannot afford to leave assumed.</p>
+  <div class="g2" style="margin-top:0.4em">
+
+    <div class="design-card">
+      <span class="dc-tag">Examination</span>
+      <h3>The defence <em>is</em> the exam.</h3>
+      <p>Public showcase. AI-augmented examiner panel that probes the work live, on the spot. A 5-minute Failure Report that inverts demo-day theatre.</p>
+      <div class="dc-why"><strong>Why &rarr;</strong> mirrors how every reviewer in 2027 will work &mdash; AI-augmented, on real artefacts, in public. Not a closed-room oral.</div>
+    </div>
+
+    <div class="design-card">
+      <span class="dc-tag">Artefact</span>
+      <h3>The chat history <em>is</em> the artefact.</h3>
+      <p>Across LAB1, SEM1, PRO1. Exported, peer-reviewed weekly, archived. Paper deliverables minimised.</p>
+      <div class="dc-why"><strong>Why &rarr;</strong> the only evidence of how a student worked with an agent that <em>cannot be post-rationalised</em>. Honest use becomes the graded skill.</div>
+    </div>
+
+    <div class="design-card">
+      <span class="dc-tag">Project</span>
+      <h3>The project serves a <em>real</em> external user.</h3>
+      <p>Research supervisor, partner-lab scientist, partner-company engineer, or open problem from the Guest-Lecturer Project Menu. Witness statement + concrete utility example. A course <strong>Agent Auditor</strong> grades autonomously.</p>
+      <div class="dc-why"><strong>Why &rarr;</strong> real-world utility is the binding constraint; the witness cannot be gamed; the Agent Auditor scales the rigour without scaling the teacher.</div>
+    </div>
+
+    <div class="design-card">
+      <span class="dc-tag">Verification</span>
+      <h3>Verification <em>is</em> an ILO, not an afterthought.</h3>
+      <p>Failure-mode taxonomies, eval harnesses, adversarial probes &mdash; designed and submitted as graded work, not bolted on at the end.</p>
+      <div class="dc-why"><strong>Why &rarr;</strong> AI outputs lie confidently. Recognising failure modes &mdash; and building the harness that catches them &mdash; is what graduates will be hired for.</div>
+    </div>
+
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true, width: 1100, height: 660, margin: 0.05,
+  minScale: 0.2, maxScale: 2.0, center: true,
+  transition: 'slide', progress: true, controls: true,
+  keyboard: true, overview: true, slideNumber: 'c/t',
+});
+</script>
+</body>
+</html>
