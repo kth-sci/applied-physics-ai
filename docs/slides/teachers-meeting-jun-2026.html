@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI &amp; what we actually assess — APHYS Teachers' Meeting (June 2026)</title>
+<title>After the hackathon — APHYS Teachers' Meeting (June 2026)</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <style>
@@ -94,7 +94,7 @@
   .reveal h1 { font-size: 2.4em; }
   .reveal h2 {
     font-size: 1.55em;
-    max-width: 22ch;
+    max-width: 24ch;
   }
   .reveal h3 {
     font-size: 0.65em; color: var(--indigo);
@@ -108,24 +108,8 @@
     color: var(--ink-soft);
     max-width: 60ch;
   }
-  .reveal p.lead { font-size: 0.7em; color: var(--ink); max-width: 56ch; }
+  .reveal p.lead { font-size: 0.72em; color: var(--ink); max-width: 56ch; line-height: 1.55; }
   .reveal p.muted { color: var(--muted); }
-
-  /* Lists */
-  .reveal ul { list-style: none; padding-left: 0; margin: 0; }
-  .reveal ul li {
-    padding-left: 1.4em; position: relative;
-    margin-bottom: 0.6em;
-    font-size: 0.6em; line-height: 1.6;
-    color: var(--ink-soft);
-  }
-  .reveal ul li::before {
-    content: '';
-    position: absolute; left: 0.2em; top: 0.78em;
-    width: 0.55em; height: 1px;
-    background: var(--indigo);
-  }
-  .reveal ul li strong { color: var(--ink); font-weight: 600; }
 
   /* Quote — used in the dedicated quote slide */
   .reveal blockquote {
@@ -148,10 +132,8 @@
   }
   .card h3 { margin-top: 0; color: var(--indigo); }
   .card p { font-size: 0.5em; margin: 0; line-height: 1.6; color: var(--ink-soft); }
-  .card ul li { font-size: 0.5em; }
 
   /* Grids */
-  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2em; align-items: start; }
   .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; align-items: start; }
 
   /* Stance / pull block */
@@ -160,28 +142,73 @@
     font-style: italic; font-weight: 500;
     font-size: 0.95em; line-height: 1.45;
     color: var(--ink);
-    margin: 0.8em 0 0;
+    margin: 1em 0 0;
     padding: 0.5em 0 0.3em 1.1em;
     border-left: 3px solid var(--indigo);
   }
   .stance strong { font-style: normal; color: var(--indigo); font-weight: 700; }
 
-  /* Highlight box — for the &ldquo;good news&rdquo; / takeaway block */
+  /* Highlight box */
   .key {
     background: #fff;
     border: 1px solid var(--rule);
     border-left: 3px solid var(--indigo);
     border-radius: 0 10px 10px 0;
-    padding: 0.85em 1.1em;
-    margin: 0.6em 0 0;
-    font-size: 0.6em;
+    padding: 0.95em 1.2em;
+    margin: 1em 0 0;
+    font-size: 0.62em;
     line-height: 1.6;
     color: var(--ink-soft);
     box-shadow: var(--shadow-1);
   }
   .key strong { color: var(--ink); font-weight: 600; }
-  .key.warm { border-left-color: var(--warm); }
-  .key.moss { border-left-color: var(--moss); }
+  .key em { font-family: 'Crimson Pro', serif; font-style: italic; color: var(--indigo); font-weight: 500; }
+
+  /* THE INEQUALITY DISPLAY */
+  .inequality {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.55em; margin: 1.6em 0 0.4em;
+    flex-wrap: wrap;
+  }
+  .inequality .term {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700; font-size: 1em;
+    letter-spacing: -0.02em;
+    padding: 0.4em 0.75em;
+    background: #fff;
+    border: 1px solid var(--rule-soft);
+    border-radius: 12px;
+    box-shadow: var(--shadow-1);
+    color: var(--ink-soft);
+    line-height: 1.1;
+  }
+  .inequality .term-good {
+    color: var(--moss);
+    border-color: rgba(21,128,61,0.28);
+    background: linear-gradient(to bottom, #fff, rgba(21,128,61,0.04));
+    font-weight: 800;
+  }
+  .inequality .term-bad {
+    color: var(--warm);
+    border-color: rgba(194,65,12,0.28);
+  }
+  .inequality .op {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic; font-size: 1.5em;
+    color: var(--indigo); font-weight: 600;
+    padding: 0 0.05em;
+  }
+
+  /* Course kicker (above H2) */
+  .course-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.4em; font-weight: 500;
+    color: var(--indigo);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 0.7em;
+  }
+  .course-kicker strong { color: var(--ink); font-weight: 600; letter-spacing: 0; text-transform: none; font-family: 'Inter'; font-size: 1.1em; }
 
   /* TITLE SLIDE */
   .title-slide {
@@ -205,11 +232,11 @@
     display: inline-block;
   }
   .title-slide h1 {
-    font-size: 2.7em; font-weight: 800;
+    font-size: 2.6em; font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.05;
     margin-bottom: 0.45em;
-    max-width: 18ch;
+    max-width: 20ch;
   }
   .title-slide h1 em {
     font-family: 'Crimson Pro', serif;
@@ -219,10 +246,10 @@
   .title-slide .sub {
     font-family: 'Crimson Pro', serif;
     font-style: italic; font-weight: 400;
-    font-size: 0.8em;
+    font-size: 0.85em;
     color: var(--muted);
     margin-bottom: 3em;
-    max-width: 40ch;
+    max-width: 44ch;
   }
   .title-slide .meta {
     font-size: 0.5em; color: var(--muted);
@@ -267,81 +294,43 @@
     font-style: italic;
   }
 
-  /* Exam-format table */
-  .exam {
-    width: 100%; border-collapse: separate; border-spacing: 0 8px;
-    margin: 0.5em 0;
-  }
-  .exam td {
-    padding: 0.85em 1.1em; vertical-align: top;
-    background: #fff;
-    border: 1px solid var(--rule-soft);
-    box-shadow: var(--shadow-1);
-  }
-  .exam tr td:first-child {
-    border-radius: 12px 0 0 12px;
-    border-right: none;
-    width: 55%;
-  }
-  .exam tr td:last-child {
-    border-radius: 0 12px 12px 0;
-    border-left: none;
-  }
-  .exam .what { font-size: 0.5em; line-height: 1.55; }
-  .exam .what strong {
-    display: block;
-    color: var(--ink); font-weight: 700;
-    font-size: 1.1em;
-    margin-bottom: 0.25em;
-    letter-spacing: -0.01em;
-  }
-  .exam .what span { color: var(--muted); }
-  .exam .defends {
-    font-family: 'Crimson Pro', serif;
-    font-style: italic;
-    font-size: 0.55em;
-    color: var(--indigo);
-    text-align: right;
-    padding-right: 1.4em;
-    font-weight: 500;
-  }
-
-  /* HAND-OFF SLIDE */
-  .handoff {
+  /* DISCUSSION SLIDE */
+  .discussion {
     display: flex; flex-direction: column;
     justify-content: center; height: 100%;
     padding-left: 96px; padding-right: 96px;
   }
-  .handoff .eyebrow {
+  .discussion .eyebrow {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px; font-weight: 500;
     color: var(--indigo); letter-spacing: 0.15em;
     text-transform: uppercase;
     margin-bottom: 1.4em;
   }
-  .handoff h1 {
+  .discussion h1 {
     font-size: 2.3em; font-weight: 800;
     letter-spacing: -0.03em;
     margin-bottom: 0.5em;
-    max-width: 20ch;
+    max-width: 22ch;
   }
-  .handoff h1 em {
+  .discussion h1 em {
     font-family: 'Crimson Pro', serif;
     font-style: italic; font-weight: 500;
     color: var(--indigo);
   }
-  .handoff .sub {
+  .discussion .sub {
     font-family: 'Crimson Pro', serif;
-    font-style: italic; font-size: 0.75em;
-    color: var(--muted); margin-bottom: 2.8em;
-    max-width: 44ch;
+    font-style: italic; font-size: 0.78em;
+    color: var(--muted); margin-bottom: 2.4em;
+    max-width: 48ch;
+    line-height: 1.45;
   }
-  .handoff .links {
+  .discussion .links {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.42em; color: var(--muted);
     line-height: 2;
   }
-  .handoff .links strong { color: var(--ink); font-weight: 500; }
+  .discussion .links strong { color: var(--ink); font-weight: 500; }
 
   /* Footnote and speaker note */
   .footnote {
@@ -400,12 +389,12 @@
 <div class="reveal">
 <div class="slides">
 
-<!-- 1. TITLE -->
+<!-- 1. TITLE — picks up after Jonas -->
 <section>
   <div class="title-slide">
-    <div class="eyebrow">APHYS &middot; Teachers' Meeting &middot; June 2026</div>
-    <h1>AI and what we <em>actually</em> assess.</h1>
-    <div class="sub">Sharing experience. Stating an opinion. Inviting pushback.</div>
+    <div class="eyebrow">APHYS &middot; Teachers' Meeting &middot; June 2026 &middot; After Jonas</div>
+    <h1>After the hackathon &mdash; <em>three things</em> I take from it.</h1>
+    <div class="sub">An asymmetry. A line worth quoting. A course on the table for discussion.</div>
     <div class="meta">
       <strong>Wei Ouyang</strong> &middot; Assistant Professor, Biophysics<br>
       Department of Applied Physics &middot; KTH Royal Institute of Technology<br>
@@ -414,7 +403,25 @@
   </div>
 </section>
 
-<!-- 2. THE QUOTE -->
+<!-- 2. THE ASYMMETRY -->
+<section>
+  <div class="section-mark">01 &middot; the asymmetry that matters</div>
+  <h2>The agent is powerful. The students we graduate must be more powerful still.</h2>
+  <p class="lead">What Jonas just showed has a durable lesson. The agent on its own is already doing work we used to assign as homework. A student on their own falls behind it. <strong>A student who has practised the combination</strong> &mdash; that is the only piece our graduates can sell on the 2027 job market.</p>
+  <div class="inequality">
+    <span class="term term-good">Student + AI</span>
+    <span class="op">&gt;</span>
+    <span class="term">AI alone</span>
+    <span class="op">&gt;</span>
+    <span class="term term-bad">Student without AI</span>
+  </div>
+  <div class="stance">
+    The differentiator is not &ldquo;can you use AI&rdquo;. It is &mdash; <strong>&ldquo;can you produce something the agent could not have produced without you&rdquo;</strong>. That is what we should be testing for.
+  </div>
+  <div class="footer-mark">01 &middot; the asymmetry that matters</div>
+</section>
+
+<!-- 3. THE QUOTE -->
 <section>
   <div class="quote-slide">
     <div class="marks">&ldquo;</div>
@@ -428,181 +435,43 @@
       If anything I say today survives the meeting, I would like it to be this line.
     </div>
   </div>
-  <div class="footer-mark">01 &middot; the line that matters</div>
+  <div class="footer-mark">02 &middot; the line worth quoting</div>
 </section>
 
-<!-- 3. WHAT I SEE WHEN I WORK WITH AI NOW -->
+<!-- 4. SK2538 REDESIGN — THREE DESIGN CHOICES -->
 <section>
-  <div class="section-mark">02 &middot; what changed</div>
-  <h2>What I actually see when I work with AI now.</h2>
-  <p class="lead">The interesting part is not the chatbot. The interesting part is that I now run <em>systems</em> of agents that read code, write code, call tools, send email &mdash; and wait for me to disagree.</p>
-  <div class="g3" style="margin-top:1em">
+  <div class="section-mark">03 &middot; a course on the table</div>
+  <div class="course-kicker">SK2538 / FSK3538 &nbsp;&mdash;&nbsp; <strong>Agentic AI for Science and Engineering</strong> &nbsp;&middot;&nbsp; HT&nbsp;2027</div>
+  <h2>What I am redesigning my course around.</h2>
+  <p class="lead">Three design choices, each one a direct attempt to graduate the left-hand side of the inequality. The course operates the way it teaches students to operate.</p>
+  <div class="g3" style="margin-top:0.8em">
     <div class="card">
-      <h3>Context, not prompts</h3>
-      <p>Behaviour is set by a project <em>brief</em> I wrote &mdash; conventions, vocabulary, what counts as &ldquo;done&rdquo;. The prompt is one line. The brief is the whole game.</p>
+      <h3>The defence <em>is</em> the exam</h3>
+      <p>The capstone is a real working agent system. It is defended at a public showcase open to industry &mdash; with a real-user witness statement and a peer reproducibility audit. The defence is not added to the exam. It <em>is</em> the exam.</p>
     </div>
     <div class="card">
-      <h3>Loops, not queries</h3>
-      <p>The first answer is a draft. Real work happens inside an iteration with explicit stop conditions, where I (or another agent) checks what came back.</p>
+      <h3>The AI log is the artefact</h3>
+      <p>The single recurring written deliverable across all three exam modules is the student's own AI conversation log. Disclosed, graded, archived. Honest use becomes a graded skill; hidden use stops being possible by construction.</p>
     </div>
     <div class="card">
-      <h3>Aligned vocabulary</h3>
-      <p>What does &ldquo;fit&rdquo; mean &mdash; least squares, MLE, Bayesian? &ldquo;Noise&rdquo; &mdash; additive, multiplicative, Poisson? If we drift, the agent fabricates confidently.</p>
+      <h3>You vs. you+AI vs. AI-alone</h3>
+      <p>Every lab requires three submissions on the same task. Grading rewards the <em>delta</em> the student adds on top of the agent. The inequality from slide 2 becomes the graded exercise, week after week.</p>
     </div>
   </div>
-  <div class="key moss">
-    <strong>A concrete example.</strong> Pump-probe kinetics extraction. The prompt is one sentence. The brief that says &ldquo;biexponential decay, additive Gaussian noise, refuse to fit below SNR&nbsp;3, report with residuals and confidence intervals&rdquo; is what separates a useful agent from a confident fabricator. &mdash; This is system design, not prompt engineering.
-  </div>
-  <div class="footer-mark">02 &middot; what changed</div>
+  <div class="footer-mark">03 &middot; a course on the table</div>
 </section>
 
-<!-- 4. WHAT AI CAN ALREADY DO THAT TOUCHES OUR TEACHING -->
+<!-- 5. THE ASK + DISCUSSION -->
 <section>
-  <div class="section-mark">03 &middot; concretely, in our work</div>
-  <h2>What this generation can already do.</h2>
-  <div class="g2" style="margin-top:0.4em">
-    <div class="card">
-      <h3>Mathematics</h3>
-      <p>Google's <strong>AlphaEvolve</strong> autonomously found a way to multiply two 4&times;4 complex matrices in 48 scalar multiplications &mdash; the first improvement on Strassen's algorithm in 56 years.</p>
-      <p class="footnote">DeepMind, May 2025.</p>
-    </div>
-    <div class="card">
-      <h3>Image &amp; data analysis</h3>
-      <p>Cell-morphology classification. Peak fitting on spectra. Anomaly detection in time-resolved data. Routinely at the level of a competent first-year PhD student &mdash; given a good brief.</p>
-    </div>
-    <div class="card">
-      <h3>Our own physics work</h3>
-      <p>This website. Its registration system. The May 8 tutorial gallery with 30+ working examples on real APHYS data. This slide deck. All built by AI agents in days, with me as reviewer.</p>
-      <p class="footnote">kth-sci.github.io/applied-physics-ai/gallery.html</p>
-    </div>
-    <div class="card">
-      <h3>Literature work</h3>
-      <p>End-to-end: download <em>n</em> papers, extract methods, build a comparison table, draft a related-work section with citations. Minutes, not weeks.</p>
+  <div class="discussion">
+    <div class="eyebrow">&mdash; one more course on the table? &mdash;</div>
+    <h1>What would <em>you</em> redesign?</h1>
+    <div class="sub">SK2538 is in the SCI teaching committee for HT&nbsp;2027. I would like one more course from this department &mdash; any track, any level &mdash; to put one assessment on the table along the same lines. Pick the course. Redesign one piece. Bring the result back here next year.</div>
+    <div class="key" style="margin-top:0;max-width:52ch">
+      <strong>Open discussion.</strong> Which assessment in your own course is most exposed to the inequality on slide&nbsp;2 &mdash; and what is the smallest change that would close that gap? <em>I am not pretending I have this right. I want the room to push back.</em>
     </div>
   </div>
-  <div class="stance">
-    The work an agent can do today is roughly the work we currently ask students to do on a problem set, a lab report, or a literature review. <strong>That is the entire problem.</strong>
-  </div>
-  <div class="footer-mark">03 &middot; concretely, in our work</div>
-</section>
-
-<!-- 5. MY WORRY -->
-<section>
-  <div class="section-mark">04 &middot; what I worry about</div>
-  <h2>Three claims I am willing to defend.</h2>
-  <ul style="margin-top:0.5em">
-    <li>A problem set an agent solves in five minutes is no longer measuring whether the <em>student</em> learned. It measures whether they have the agent.</li>
-    <li>A lab report an agent writes from raw data is no longer assessing scientific writing. It is assessing copy-paste.</li>
-    <li>An oral defence with follow-up questioning still works. A live in-room derivation still works. An experiment that requires hands still works.</li>
-  </ul>
-  <div class="key warm">
-    <strong>The good news.</strong> The fix is not banning AI. It is changing the <em>format</em> of what we ask &mdash; so the thing being assessed is something an agent cannot deliver alone, and so honest use of AI is rewarded rather than hidden.
-  </div>
-  <div class="speaker-note">Pause after the third claim. Let the asymmetry land &mdash; written formats fall; live formats hold.</div>
-  <div class="footer-mark">04 &middot; what I worry about</div>
-</section>
-
-<!-- 6. WHAT GRADUATES MUST DO -->
-<section>
-  <div class="section-mark">05 &middot; the durable skills</div>
-  <h2>What our graduates must do &mdash; that an agent cannot.</h2>
-  <div class="g2" style="margin-top:0.5em">
-    <div>
-      <ul>
-        <li><strong>Frame the problem.</strong> Decide what is worth measuring, modelling, arguing for. AI answers. Only humans choose the question.</li>
-        <li><strong>Recognise physically wrong answers.</strong> Catch the confident error that is mathematically consistent but physically impossible.</li>
-        <li><strong>Defend the work live, under questioning.</strong> If you cannot explain why, you do not own the result.</li>
-      </ul>
-    </div>
-    <div>
-      <ul>
-        <li><strong>Use AI deliberately and disclose it.</strong> Honest use is a skill. Hidden use is a failure mode &mdash; for the student and for us.</li>
-        <li><strong>Hold physical intuition.</strong> The silent prior the agent does not have, and the only thing that catches the &ldquo;walk 50&nbsp;m to a car wash&rdquo; answer.</li>
-      </ul>
-    </div>
-  </div>
-  <div class="stance">
-    Cheap, this year: looking up, first drafts, routine derivations, summarising, reformatting. <strong>Scarce</strong>, this year: framing, judgment, taste, agency, real-time communication.
-  </div>
-  <div class="footer-mark">05 &middot; the durable skills</div>
-</section>
-
-<!-- 7. CONCRETE EXAM DESIGNS -->
-<section>
-  <div class="section-mark">06 &middot; designs worth trying</div>
-  <h2>Five exam designs I want to argue for.</h2>
-  <table class="exam">
-    <tbody>
-      <tr>
-        <td class="what">
-          <strong>Oral defence after written submission.</strong>
-          <span>A 15-min follow-up viva. Explain three choices in your report. Rederive one piece live.</span>
-        </td>
-        <td class="defends">defends &mdash; understanding, ownership.</td>
-      </tr>
-      <tr>
-        <td class="what">
-          <strong>AI-required, with disclosure.</strong>
-          <span>&ldquo;Use three different agents on this. Argue which is physically meaningful and which is wrong. Cite each prompt.&rdquo;</span>
-        </td>
-        <td class="defends">defends &mdash; judgment, honest use.</td>
-      </tr>
-      <tr>
-        <td class="what">
-          <strong>Lab presentation, not lab report.</strong>
-          <span>A 10-min talk plus live Q&amp;A. The text version is a one-page abstract, not a twelve-page document.</span>
-        </td>
-        <td class="defends">defends &mdash; communication, integration.</td>
-      </tr>
-      <tr>
-        <td class="what">
-          <strong>Process portfolio.</strong>
-          <span>Submit the messy notebook, the AI conversations, the failed fits, the dead ends &mdash; not just the polished final output.</span>
-        </td>
-        <td class="defends">defends &mdash; the learning trajectory.</td>
-      </tr>
-      <tr>
-        <td class="what">
-          <strong>In-room re-derivation.</strong>
-          <span>From your own report, pick a result. Re-derive a slice on the board, now, no laptop.</span>
-        </td>
-        <td class="defends">defends &mdash; that the work is yours.</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="footer-mark">06 &middot; designs worth trying</div>
-</section>
-
-<!-- 8. WHERE I STAND -->
-<section>
-  <div class="section-mark">07 &middot; what I am arguing for</div>
-  <h2>Where I stand.</h2>
-  <div class="stance" style="margin-top:0.3em">
-    We do not need to ban AI from our courses. We need to <strong>redesign the format of what we ask</strong>, so the thing being assessed is something an agent cannot deliver alone &mdash; and so honest use of AI by the student becomes a rewarded skill, not a hidden one.
-  </div>
-  <p class="lead" style="margin-top:1.1em">
-    Communication, judgment, and physical intuition become the assessment. The product of the agent becomes the raw material.
-  </p>
-  <div class="key">
-    <strong>A practical proposal for autumn 2026.</strong> Pick <em>one course per division</em>. Redesign <em>one assessment</em> along these lines. Bring the result to the next teachers' meeting. Real evidence beats more opinion &mdash; and we are in a good position to generate it.
-  </div>
-  <p class="muted" style="margin-top:0.9em;font-family:'Crimson Pro',serif;font-style:italic;font-size:0.62em">
-    I am not pretending I have this right. I want the room to push back.
-  </p>
-  <div class="footer-mark">07 &middot; what I am arguing for</div>
-</section>
-
-<!-- 9. HANDOFF -->
-<section>
-  <div class="handoff">
-    <div class="eyebrow">&mdash; over to Jonas &mdash;</div>
-    <h1>Now: what <em>actually</em> happened.</h1>
-    <div class="sub">An autograder from the SCI AI Hackathon. The Canvas / LearnWise initiative. What landed at the May 8 tutorial &mdash; and what didn't.</div>
-    <div class="links">
-      Public site &mdash; <strong>kth-sci.github.io/applied-physics-ai</strong><br>
-      Engineering reading &mdash; <strong>kth-sci.github.io/sci-agenthon-2026/advanced.html</strong>
-    </div>
-  </div>
+  <div class="footer-mark">04 &middot; over to the room</div>
 </section>
 
 </div>
