@@ -3,110 +3,394 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APHYS Teachers' Meeting — AI &amp; Teaching (June 2026)</title>
+<title>AI &amp; what we actually assess — APHYS Teachers' Meeting (June 2026)</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap');
+
   :root {
-    --indigo: #6366f1; --indigo-l: #818cf8; --indigo-d: #4f46e5;
-    --fire: #f97316; --amber: #f59e0b;
-    --slate: #0f172a; --slate2: #475569; --slate3: #94a3b8; --slate-bg: #f8fafc;
-    --emerald: #10b981; --red: #ef4444;
+    --ink:       #0b0b14;
+    --ink-soft:  #1f2434;
+    --muted:     #5e6478;
+    --muted-2:   #8b8fa3;
+    --rule:      #e4e2dc;
+    --rule-soft: #efede7;
+    --paper:     #faf8f3;
+    --paper-2:   #f4f1ea;
+    --indigo:    #4f46e5;
+    --indigo-l:  #6366f1;
+    --indigo-ll: #a5b4fc;
+    --warm:      #c2410c;
+    --warm-l:    #ea580c;
+    --moss:      #15803d;
+    --shadow-1:  0 1px 2px rgba(15,15,25,0.04), 0 1px 1px rgba(15,15,25,0.03);
+    --shadow-2:  0 6px 18px -8px rgba(15,15,25,0.10), 0 2px 6px -2px rgba(15,15,25,0.06);
   }
-  .reveal { font-family: 'Inter', sans-serif; color: var(--slate); }
-  .reveal .slides { text-align: left; }
-  .reveal .slides section { padding: 18px 36px; box-sizing: border-box; }
-  .reveal h1, .reveal h2, .reveal h3 { font-weight: 700; color: var(--indigo); text-transform: none; letter-spacing: -0.02em; }
-  .reveal h1 { font-size: 1.75em; }
-  .reveal h2 { font-size: 1.18em; margin-bottom: 0.4em; }
-  .reveal h3 { font-size: 0.78em; color: var(--indigo-l); margin-bottom: 0.2em; font-weight: 600; }
-  .reveal p, .reveal li { font-size: 0.5em; line-height: 1.55; }
-  .reveal ul { list-style: none; padding-left: 0; }
-  .reveal ul li { padding-left: 1em; position: relative; margin-bottom: 0.25em; }
-  .reveal ul li::before { content:''; position: absolute; left: 0; top: 0.5em; width: 5px; height: 5px; border-radius: 50%; background: var(--indigo-l); }
-  .reveal ul.qmark li::before { content:'?'; background:none; color:var(--indigo); font-weight:700; font-family:'Inter'; font-size:0.9em; top:0.05em; left:-0.05em; }
+
+  html, body { background: var(--paper); }
+  .reveal { font-family: 'Inter', sans-serif; color: var(--ink); }
+  .reveal .slides {
+    text-align: left;
+    background: var(--paper);
+  }
+  .reveal .slides section {
+    padding: 56px 64px 48px;
+    box-sizing: border-box;
+    background: var(--paper);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle background wash on every slide */
+  .reveal .slides section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 92% 8%, rgba(79,70,229,0.045) 0%, transparent 38%),
+      radial-gradient(circle at 8% 92%, rgba(234,88,12,0.025) 0%, transparent 42%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .reveal .slides section > * { position: relative; z-index: 1; }
+
+  /* Section marker — small label top-left of non-title slides */
+  .section-mark {
+    position: absolute;
+    top: 28px; left: 64px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    color: var(--muted-2); letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+    z-index: 2;
+  }
+  .section-mark::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--indigo);
+  }
+
+  /* Footer mark on every non-title slide */
+  .footer-mark {
+    position: absolute;
+    bottom: 22px; left: 64px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--muted-2);
+    letter-spacing: 0.08em;
+    z-index: 2;
+  }
+
+  /* Headings */
+  .reveal h1, .reveal h2 {
+    font-weight: 800; color: var(--ink);
+    text-transform: none; letter-spacing: -0.025em;
+    line-height: 1.12;
+    margin: 0 0 0.7em;
+  }
+  .reveal h1 { font-size: 2.4em; }
+  .reveal h2 {
+    font-size: 1.55em;
+    max-width: 22ch;
+  }
+  .reveal h3 {
+    font-size: 0.65em; color: var(--indigo);
+    margin: 0 0 0.4em;
+    font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  .reveal p {
+    font-size: 0.62em; line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+  .reveal p.lead { font-size: 0.7em; color: var(--ink); max-width: 56ch; }
+  .reveal p.muted { color: var(--muted); }
+
+  /* Lists */
+  .reveal ul { list-style: none; padding-left: 0; margin: 0; }
+  .reveal ul li {
+    padding-left: 1.4em; position: relative;
+    margin-bottom: 0.6em;
+    font-size: 0.6em; line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .reveal ul li::before {
+    content: '';
+    position: absolute; left: 0.2em; top: 0.78em;
+    width: 0.55em; height: 1px;
+    background: var(--indigo);
+  }
+  .reveal ul li strong { color: var(--ink); font-weight: 600; }
+
+  /* Quote — used in the dedicated quote slide */
   .reveal blockquote {
-    background: none; border: none; font-style: italic;
-    font-size: 0.62em; color: var(--slate); padding: 0.3em 0 0.3em 1.5em;
-    margin: 0.4em 0; box-shadow: none; position: relative; line-height: 1.55;
-    width: 100%;
+    background: none; border: none;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic; font-weight: 400;
+    font-size: 1em; color: var(--ink);
+    padding: 0; margin: 0;
+    box-shadow: none; line-height: 1.35;
+    max-width: 100%;
   }
-  .reveal blockquote::before {
-    content:'\201C'; position: absolute; left: 0; top: -0.05em;
-    font-size: 2.2em; color: var(--indigo-l); opacity: 0.35; font-style: normal;
-  }
-  .attribution { font-size: 0.42em !important; color: var(--slate3); font-style: normal; margin-top: 0.3em; display: block; }
-  .footnote { font-size: 0.36em !important; color: var(--slate3); font-style: normal; margin-top: 0.6em; line-height: 1.4; }
-  .hbox {
-    border-left: 3px solid var(--indigo);
-    padding: 0.45em 0.85em; border-radius: 0 5px 5px 0;
-    margin: 0.4em 0; font-size: 0.5em; line-height: 1.55;
-    background: linear-gradient(135deg, #eef2ff, #f8fafc);
-  }
-  .hbox.fire { border-color: var(--fire); background: linear-gradient(135deg, #fff7ed, #fffbeb); }
-  .hbox.emerald { border-color: var(--emerald); background: linear-gradient(135deg, #ecfdf5, #f0fdf4); }
-  .hbox.red { border-color: var(--red); background: linear-gradient(135deg, #fef2f2, #fff1f2); }
-  .hbox.amber { border-color: var(--amber); background: linear-gradient(135deg, #fffbeb, #fefce8); }
-  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9em; align-items: start; }
-  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7em; align-items: start; }
+
+  /* Card */
   .card {
-    background: #fff; border: 1px solid #e2e8f0;
-    border-radius: 8px; padding: 0.55em 0.7em;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    background: #fff;
+    border: 1px solid var(--rule-soft);
+    border-radius: 14px;
+    padding: 1.05em 1.15em;
+    box-shadow: var(--shadow-1);
   }
-  .card h3 { margin-top: 0; }
-  .card p, .card li { font-size: 0.46em; }
-  .tag {
-    display: inline-block; padding: 0.1em 0.5em; border-radius: 12px;
-    font-size: 0.4em; font-weight: 600; margin-right: 0.3em;
+  .card h3 { margin-top: 0; color: var(--indigo); }
+  .card p { font-size: 0.5em; margin: 0; line-height: 1.6; color: var(--ink-soft); }
+  .card ul li { font-size: 0.5em; }
+
+  /* Grids */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2em; align-items: start; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; align-items: start; }
+
+  /* Stance / pull block */
+  .stance {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic; font-weight: 500;
+    font-size: 0.95em; line-height: 1.45;
+    color: var(--ink);
+    margin: 0.8em 0 0;
+    padding: 0.5em 0 0.3em 1.1em;
+    border-left: 3px solid var(--indigo);
   }
-  .tag.indigo { background: #eef2ff; color: var(--indigo); }
-  .tag.fire   { background: #fff7ed; color: #c2410c; }
-  .tag.emerald{ background: #ecfdf5; color: #047857; }
-  .tag.red    { background: #fef2f2; color: #b91c1c; }
-  .tag.amber  { background: #fffbeb; color: #92400e; }
-  .title-slide { text-align: center !important; }
-  .title-slide h1 { font-size: 2.1em; margin-bottom: 0.1em; font-weight: 800; }
-  .title-slide .sub { font-size: 0.85em; color: var(--indigo-l); font-weight: 400; margin-bottom: 0.9em; }
-  .title-slide .meta { font-size: 0.5em; color: var(--slate2); line-height: 1.7; }
-  .big-num { font-size: 2.6em; font-weight: 800; color: var(--indigo); line-height: 1; }
-  .big-num-label { font-size: 0.42em; color: var(--slate2); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
-  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7em; margin: 0.7em 0; }
-  .stat { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.7em 0.5em; text-align: center; }
-  .stat .n { font-size: 1.5em; font-weight: 800; color: var(--indigo); line-height: 1; }
-  .stat .l { font-size: 0.4em; color: var(--slate3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-top: 0.25em; }
-  .speaker-note {
-    font-size: 0.4em !important; color: var(--slate3);
-    font-style: italic; margin-top: 0.5em;
-    padding: 0.3em 0.6em; background: var(--slate-bg);
-    border-left: 2px solid var(--slate3); border-radius: 0 4px 4px 0;
+  .stance strong { font-style: normal; color: var(--indigo); font-weight: 700; }
+
+  /* Highlight box — for the &ldquo;good news&rdquo; / takeaway block */
+  .key {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--indigo);
+    border-radius: 0 10px 10px 0;
+    padding: 0.85em 1.1em;
+    margin: 0.6em 0 0;
+    font-size: 0.6em;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    box-shadow: var(--shadow-1);
   }
-  .reveal table {
-    font-size: 0.46em; border-collapse: separate; border-spacing: 0;
-    width: 100%; margin: 0.4em 0; border-radius: 6px; overflow: hidden;
+  .key strong { color: var(--ink); font-weight: 600; }
+  .key.warm { border-left-color: var(--warm); }
+  .key.moss { border-left-color: var(--moss); }
+
+  /* TITLE SLIDE */
+  .title-slide {
+    text-align: left;
+    display: flex; flex-direction: column;
+    justify-content: center; height: 100%;
+    padding-left: 96px; padding-right: 96px;
   }
-  .reveal table th { background: var(--indigo); color: #fff; padding: 0.45em 0.7em; font-weight: 600; text-align: left; }
-  .reveal table td { padding: 0.4em 0.7em; border-bottom: 1px solid #e2e8f0; background: #fff; }
-  .reveal table tr:nth-child(even) td { background: #f8fafc; }
-  .reveal .progress { height: 3px; color: var(--indigo); }
-  .reveal .slide-number { font-family: 'Inter'; font-size: 11px !important; color: var(--slate3) !important; background: none !important; }
-  #fs-btn {
-    position: fixed; top: 12px; right: 12px; z-index: 100;
-    background: rgba(99,102,241,0.85); color: #fff; border: none;
-    border-radius: 6px; padding: 6px 12px;
-    font-family: 'Inter'; font-size: 12px; font-weight: 500;
-    cursor: pointer; opacity: 0.6; transition: 0.2s;
+  .title-slide .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    color: var(--indigo); letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.6em;
+    display: flex; align-items: center; gap: 14px;
   }
-  #fs-btn:hover { opacity: 1; }
-  .ineq {
-    text-align: center; font-size: 0.95em; font-weight: 700;
-    color: var(--indigo); margin: 0.7em 0 0.5em;
+  .title-slide .eyebrow::before {
+    content: '';
+    width: 32px; height: 2px;
+    background: var(--indigo);
+    display: inline-block;
+  }
+  .title-slide h1 {
+    font-size: 2.7em; font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 0.45em;
+    max-width: 18ch;
+  }
+  .title-slide h1 em {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic; font-weight: 500;
+    color: var(--indigo);
+  }
+  .title-slide .sub {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic; font-weight: 400;
+    font-size: 0.8em;
+    color: var(--muted);
+    margin-bottom: 3em;
+    max-width: 40ch;
+  }
+  .title-slide .meta {
+    font-size: 0.5em; color: var(--muted);
+    line-height: 1.85; letter-spacing: 0.01em;
+  }
+  .title-slide .meta strong { color: var(--ink); font-weight: 600; }
+
+  /* QUOTE SLIDE */
+  .quote-slide {
+    display: flex; flex-direction: column;
+    justify-content: center; height: 100%;
+    padding: 0 110px;
+    position: relative;
+  }
+  .quote-slide .marks {
+    font-family: 'Crimson Pro', serif;
+    font-size: 12em; color: var(--indigo); opacity: 0.13;
+    font-weight: 600; font-style: normal;
+    position: absolute;
+    top: 30px; left: 70px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .quote-slide blockquote {
+    font-size: 1.55em; line-height: 1.35;
+    max-width: 22ch;
+    z-index: 1;
+  }
+  .quote-slide .attr {
+    font-family: 'Inter';
+    font-style: normal; font-size: 0.5em;
+    color: var(--muted); margin-top: 1.4em;
+    letter-spacing: 0.02em;
+    max-width: 30ch;
+  }
+  .quote-slide .attr strong { color: var(--ink); font-weight: 600; }
+  .quote-slide .coda {
+    margin-top: 2.8em;
+    font-size: 0.5em; color: var(--muted-2);
+    max-width: 36ch;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* Exam-format table */
+  .exam {
+    width: 100%; border-collapse: separate; border-spacing: 0 8px;
+    margin: 0.5em 0;
+  }
+  .exam td {
+    padding: 0.85em 1.1em; vertical-align: top;
+    background: #fff;
+    border: 1px solid var(--rule-soft);
+    box-shadow: var(--shadow-1);
+  }
+  .exam tr td:first-child {
+    border-radius: 12px 0 0 12px;
+    border-right: none;
+    width: 55%;
+  }
+  .exam tr td:last-child {
+    border-radius: 0 12px 12px 0;
+    border-left: none;
+  }
+  .exam .what { font-size: 0.5em; line-height: 1.55; }
+  .exam .what strong {
+    display: block;
+    color: var(--ink); font-weight: 700;
+    font-size: 1.1em;
+    margin-bottom: 0.25em;
+    letter-spacing: -0.01em;
+  }
+  .exam .what span { color: var(--muted); }
+  .exam .defends {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.55em;
+    color: var(--indigo);
+    text-align: right;
+    padding-right: 1.4em;
+    font-weight: 500;
+  }
+
+  /* HAND-OFF SLIDE */
+  .handoff {
+    display: flex; flex-direction: column;
+    justify-content: center; height: 100%;
+    padding-left: 96px; padding-right: 96px;
+  }
+  .handoff .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    color: var(--indigo); letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.4em;
+  }
+  .handoff h1 {
+    font-size: 2.3em; font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5em;
+    max-width: 20ch;
+  }
+  .handoff h1 em {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic; font-weight: 500;
+    color: var(--indigo);
+  }
+  .handoff .sub {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic; font-size: 0.75em;
+    color: var(--muted); margin-bottom: 2.8em;
+    max-width: 44ch;
+  }
+  .handoff .links {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.42em; color: var(--muted);
+    line-height: 2;
+  }
+  .handoff .links strong { color: var(--ink); font-weight: 500; }
+
+  /* Footnote and speaker note */
+  .footnote {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.38em !important;
+    color: var(--muted-2);
+    margin-top: 0.7em;
+    line-height: 1.55;
     letter-spacing: 0.01em;
   }
-  .ineq span.student { color: var(--slate); }
-  .ineq span.gt { color: var(--slate3); margin: 0 0.2em; }
+  .speaker-note {
+    font-size: 0.4em !important;
+    color: var(--muted-2); font-style: italic;
+    margin-top: 1em;
+    padding: 0.45em 0.7em;
+    background: rgba(79,70,229,0.04);
+    border-left: 2px solid var(--indigo-ll);
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* Reveal UI tweaks */
+  .reveal .progress {
+    height: 2px;
+    color: var(--indigo);
+    background: rgba(79,70,229,0.08);
+  }
+  .reveal .slide-number {
+    font-family: 'JetBrains Mono';
+    font-size: 10px !important;
+    color: var(--muted-2) !important;
+    background: none !important;
+    letter-spacing: 0.06em;
+  }
+  .reveal .controls {
+    color: var(--indigo);
+  }
+
+  /* Fullscreen button */
+  #fs-btn {
+    position: fixed; top: 14px; right: 14px; z-index: 100;
+    background: rgba(79,70,229,0.92); color: #fff; border: none;
+    border-radius: 7px; padding: 6px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  #fs-btn:hover { opacity: 1; }
 </style>
 </head>
 <body>
@@ -119,244 +403,204 @@
 <!-- 1. TITLE -->
 <section>
   <div class="title-slide">
-    <div style="margin-bottom:1em;">
-      <svg width="60" height="60" viewBox="0 0 64 64">
-        <ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.5" transform="rotate(-30 32 32)"/>
-        <ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#818cf8" stroke-width="1.2" opacity="0.4" transform="rotate(30 32 32)"/>
-        <ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.3" transform="rotate(90 32 32)"/>
-        <circle cx="32" cy="16" r="4" fill="#818cf8"/>
-        <circle cx="18" cy="40" r="4" fill="#818cf8"/>
-        <circle cx="46" cy="40" r="4" fill="#818cf8"/>
-        <line x1="32" y1="16" x2="18" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/>
-        <line x1="32" y1="16" x2="46" y2="40" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/>
-        <line x1="18" y1="40" x2="46" y2="40" stroke="#818cf8" stroke-width="1.5" opacity="0.4"/>
-        <circle cx="32" cy="32" r="7" fill="#6366f1"/>
-        <text x="32" y="35.5" text-anchor="middle" fill="white" font-family="Inter" font-size="8" font-weight="800">AI</text>
-      </svg>
-    </div>
-    <h1>AI Agents &amp; the Future of Teaching</h1>
-    <div class="sub">Why this conversation is different from last year &mdash; and what it asks of us</div>
+    <div class="eyebrow">APHYS &middot; Teachers' Meeting &middot; June 2026</div>
+    <h1>AI and what we <em>actually</em> assess.</h1>
+    <div class="sub">Sharing experience. Stating an opinion. Inviting pushback.</div>
     <div class="meta">
-      APHYS Teachers' Meeting &bull; Week 24, June 2026<br>
-      <strong>Wei Ouyang</strong> &bull; Department of Applied Physics, KTH<br>
-      (with Jonas Sellberg &bull; Uli Vogt &bull; Olle B&auml;lter)
+      <strong>Wei Ouyang</strong> &middot; Assistant Professor, Biophysics<br>
+      Department of Applied Physics &middot; KTH Royal Institute of Technology<br>
+      kth-sci.github.io/applied-physics-ai
     </div>
   </div>
 </section>
 
-<!-- 2. THE INFLECTION POINT -->
+<!-- 2. THE QUOTE -->
 <section>
-  <h2>Something quietly changed in late 2025</h2>
-  <p>Andrej Karpathy &mdash; OpenAI co-founder, ex-Tesla AI lead &mdash; at Sequoia AI Ascent (March 2026):</p>
-  <blockquote>
-    In November I was writing 80% of my code. In December that flipped: I now write maybe 20%, and the agent does the rest. The handover happened in roughly a month. Most people missed it.
-    <span class="attribution">&mdash; A. Karpathy, Sequoia AI Ascent 2026 (paraphrased)</span>
-  </blockquote>
-  <div class="stat-grid">
-    <div class="stat">
-      <div class="n">1.96%</div>
-      <div class="l">SWE-bench Verified<br>Oct 2023</div>
+  <div class="quote-slide">
+    <div class="marks">&ldquo;</div>
+    <blockquote>
+      You can outsource your thinking, but you cannot outsource your understanding.
+    </blockquote>
+    <div class="attr">
+      <strong>Andrej Karpathy</strong> &middot; Sequoia AI Ascent, late 2025
     </div>
-    <div class="stat">
-      <div class="n">~78%</div>
-      <div class="l">SWE-bench Verified<br>Spring 2026</div>
-    </div>
-    <div class="stat">
-      <div class="n">~2&times;</div>
-      <div class="l">Autonomous-turn duration<br>Oct 2025 &rarr; Jan 2026</div>
+    <div class="coda">
+      If anything I say today survives the meeting, I would like it to be this line.
     </div>
   </div>
-  <div class="hbox fire">
-    Anthropic itself reports that ~80% of new production code at Anthropic is now authored by Claude, with human review.
-  </div>
-  <div class="footnote">
-    Sources: Karpathy, Sequoia AI Ascent 2026; Anthropic, <em>Measuring AI Agent Autonomy in Practice</em> (2026); VentureBeat, "80% of Anthropic's new production code is now authored by Claude" (2026).
-  </div>
-  <div class="speaker-note">SPEAKER NOTE: This slide is the wake-up call. Don't oversell &mdash; senior faculty will tune out hype. Pause and let them absorb the SWE-bench numbers.</div>
+  <div class="footer-mark">01 &middot; the line that matters</div>
 </section>
 
-<!-- 3. THE NEW ENGINEERING — NOT JUST CHAT -->
+<!-- 3. WHAT I SEE WHEN I WORK WITH AI NOW -->
 <section>
-  <h2>Working with agents is <em>not</em> talking to ChatGPT</h2>
-  <p>From the SCI Agenthon Track C reading &mdash; three things that actually matter:</p>
-  <div class="g3">
+  <div class="section-mark">02 &middot; what changed</div>
+  <h2>What I actually see when I work with AI now.</h2>
+  <p class="lead">The interesting part is not the chatbot. The interesting part is that I now run <em>systems</em> of agents that read code, write code, call tools, send email &mdash; and wait for me to disagree.</p>
+  <div class="g3" style="margin-top:1em">
     <div class="card">
-      <h3>Context engineering</h3>
-      <p>Deliberately shaping what the model sees: project notes, file mounts, skills triggered on demand. Garbage in, garbage out &mdash; but worse, because the output looks confident.</p>
+      <h3>Context, not prompts</h3>
+      <p>Behaviour is set by a project <em>brief</em> I wrote &mdash; conventions, vocabulary, what counts as &ldquo;done&rdquo;. The prompt is one line. The brief is the whole game.</p>
     </div>
     <div class="card">
-      <h3>Loop engineering</h3>
-      <p>Agents don't decide when they are done &mdash; you do, with explicit stop conditions. "Everything is a Ralph loop." Night-shift automation by day-shift humans.</p>
+      <h3>Loops, not queries</h3>
+      <p>The first answer is a draft. Real work happens inside an iteration with explicit stop conditions, where I (or another agent) checks what came back.</p>
     </div>
     <div class="card">
-      <h3>Aligned understanding</h3>
-      <p>A shared glossary, explicit specs, named conventions. The AI uses <em>your</em> domain terms or justifies deviating. System-design intuition stays human.</p>
+      <h3>Aligned vocabulary</h3>
+      <p>What does &ldquo;fit&rdquo; mean &mdash; least squares, MLE, Bayesian? &ldquo;Noise&rdquo; &mdash; additive, multiplicative, Poisson? If we drift, the agent fabricates confidently.</p>
     </div>
   </div>
-  <blockquote>
-    The question is not: <em>what prompt should I write?</em><br>
-    The question is: <em>what should Claude know?</em>
-    <span class="attribution">&mdash; SCI Agenthon Track C, "Advanced agentic engineering"</span>
-  </blockquote>
-  <div class="footnote">
-    Reference for participants: <strong>kth-sci.github.io/sci-agenthon-2026/advanced.html</strong>
+  <div class="key moss">
+    <strong>A concrete example.</strong> Pump-probe kinetics extraction. The prompt is one sentence. The brief that says &ldquo;biexponential decay, additive Gaussian noise, refuse to fit below SNR&nbsp;3, report with residuals and confidence intervals&rdquo; is what separates a useful agent from a confident fabricator. &mdash; This is system design, not prompt engineering.
   </div>
+  <div class="footer-mark">02 &middot; what changed</div>
 </section>
 
-<!-- 4. CONCRETE NAMED DEMOS -->
+<!-- 4. WHAT AI CAN ALREADY DO THAT TOUCHES OUR TEACHING -->
 <section>
-  <h2>What this looks like in practice</h2>
-  <p>Pick three concrete, citable cases &mdash; the rest are hype:</p>
-  <div class="g2">
+  <div class="section-mark">03 &middot; concretely, in our work</div>
+  <h2>What this generation can already do.</h2>
+  <div class="g2" style="margin-top:0.4em">
     <div class="card">
-      <h3>AlphaEvolve breaks a 56-year record</h3>
-      <p>Google DeepMind's Gemini-powered evolutionary coding agent autonomously discovered a procedure to multiply two 4&times;4 complex matrices using <strong>48 scalar multiplications</strong> &mdash; the first improvement on Strassen's algorithm since 1969. It also produced new results across analysis, combinatorics, and geometry.</p>
-      <p class="footnote">DeepMind blog, May 2025.</p>
+      <h3>Mathematics</h3>
+      <p>Google's <strong>AlphaEvolve</strong> autonomously found a way to multiply two 4&times;4 complex matrices in 48 scalar multiplications &mdash; the first improvement on Strassen's algorithm in 56 years.</p>
+      <p class="footnote">DeepMind, May 2025.</p>
     </div>
     <div class="card">
-      <h3>A 47-year-old computer running a transformer</h3>
-      <p><strong>Dave Plummer</strong> &mdash; veteran Windows developer (Task Manager) &mdash; wrote a working mini-transformer in <em>PDP-11 assembly</em> running on a 6 MHz, 64 KB-RAM PDP-11 from 1978. A teaching demo of what these models really are.</p>
-      <p class="footnote">Tom's Hardware, 2025.</p>
+      <h3>Image &amp; data analysis</h3>
+      <p>Cell-morphology classification. Peak fitting on spectra. Anomaly detection in time-resolved data. Routinely at the level of a competent first-year PhD student &mdash; given a good brief.</p>
+    </div>
+    <div class="card">
+      <h3>Our own physics work</h3>
+      <p>This website. Its registration system. The May 8 tutorial gallery with 30+ working examples on real APHYS data. This slide deck. All built by AI agents in days, with me as reviewer.</p>
+      <p class="footnote">kth-sci.github.io/applied-physics-ai/gallery.html</p>
+    </div>
+    <div class="card">
+      <h3>Literature work</h3>
+      <p>End-to-end: download <em>n</em> papers, extract methods, build a comparison table, draft a related-work section with citations. Minutes, not weeks.</p>
     </div>
   </div>
-  <div class="hbox emerald">
-    <strong>Closer to home:</strong> the May 8 tutorial (48 participants) and the May 26 SCI Hackathon both produced working APHYS tools in hours, not weeks &mdash; everything is in the gallery at <strong>kth-sci.github.io/applied-physics-ai/gallery.html</strong>.
+  <div class="stance">
+    The work an agent can do today is roughly the work we currently ask students to do on a problem set, a lab report, or a literature review. <strong>That is the entire problem.</strong>
   </div>
+  <div class="footer-mark">03 &middot; concretely, in our work</div>
 </section>
 
-<!-- 5. THE EMPIRICAL TEACHING PICTURE -->
+<!-- 5. MY WORRY -->
 <section>
-  <h2>What does the teaching literature say?</h2>
-  <p>Two facts to hold at once:</p>
-  <div class="g2">
+  <div class="section-mark">04 &middot; what I worry about</div>
+  <h2>Three claims I am willing to defend.</h2>
+  <ul style="margin-top:0.5em">
+    <li>A problem set an agent solves in five minutes is no longer measuring whether the <em>student</em> learned. It measures whether they have the agent.</li>
+    <li>A lab report an agent writes from raw data is no longer assessing scientific writing. It is assessing copy-paste.</li>
+    <li>An oral defence with follow-up questioning still works. A live in-room derivation still works. An experiment that requires hands still works.</li>
+  </ul>
+  <div class="key warm">
+    <strong>The good news.</strong> The fix is not banning AI. It is changing the <em>format</em> of what we ask &mdash; so the thing being assessed is something an agent cannot deliver alone, and so honest use of AI is rewarded rather than hidden.
+  </div>
+  <div class="speaker-note">Pause after the third claim. Let the asymmetry land &mdash; written formats fall; live formats hold.</div>
+  <div class="footer-mark">04 &middot; what I worry about</div>
+</section>
+
+<!-- 6. WHAT GRADUATES MUST DO -->
+<section>
+  <div class="section-mark">05 &middot; the durable skills</div>
+  <h2>What our graduates must do &mdash; that an agent cannot.</h2>
+  <div class="g2" style="margin-top:0.5em">
     <div>
-      <h3>The aggregate effect is positive</h3>
       <ul>
-        <li>Wang et al. (Nature HSSC, 2026) &mdash; meta-analysis of 35 experimental studies. <strong>g = 0.67</strong> on learning outcomes.</li>
-        <li>Liu et al. (J. Computer Assisted Learning, 2025) &mdash; large positive performance effect.</li>
-        <li>HEPI Student GenAI Survey 2026 &mdash; majority of UK undergraduates already use AI weekly.</li>
+        <li><strong>Frame the problem.</strong> Decide what is worth measuring, modelling, arguing for. AI answers. Only humans choose the question.</li>
+        <li><strong>Recognise physically wrong answers.</strong> Catch the confident error that is mathematically consistent but physically impossible.</li>
+        <li><strong>Defend the work live, under questioning.</strong> If you cannot explain why, you do not own the result.</li>
       </ul>
     </div>
     <div>
-      <h3>But the nuance is brutal</h3>
       <ul>
-        <li>"Outsourcing tasks to GenAI without pedagogical guidance enhances performance with <strong>no real learning gains</strong>." (Systematic-review framing, 2026)</li>
-        <li>Effects depend sharply on <em>knowledge type</em> and <em>assignment design</em>.</li>
-        <li>One major <em>Nature HSSC</em> meta-analysis was <strong>retracted</strong> in 2025. The field is moving fast and messily.</li>
+        <li><strong>Use AI deliberately and disclose it.</strong> Honest use is a skill. Hidden use is a failure mode &mdash; for the student and for us.</li>
+        <li><strong>Hold physical intuition.</strong> The silent prior the agent does not have, and the only thing that catches the &ldquo;walk 50&nbsp;m to a car wash&rdquo; answer.</li>
       </ul>
     </div>
   </div>
-  <div class="hbox amber">
-    Students get higher scores. Whether they learn more &mdash; or learn less but cover for it &mdash; depends almost entirely on <strong>how we design the work</strong>.
+  <div class="stance">
+    Cheap, this year: looking up, first drafts, routine derivations, summarising, reformatting. <strong>Scarce</strong>, this year: framing, judgment, taste, agency, real-time communication.
   </div>
+  <div class="footer-mark">05 &middot; the durable skills</div>
 </section>
 
-<!-- 6. INSTITUTIONS HAVE ALREADY PICKED SIDES -->
+<!-- 7. CONCRETE EXAM DESIGNS -->
 <section>
-  <h2>The university landscape is no longer waiting</h2>
-  <table>
-    <thead><tr><th>Institution / report</th><th>Position (2025-26)</th><th>Source</th></tr></thead>
+  <div class="section-mark">06 &middot; designs worth trying</div>
+  <h2>Five exam designs I want to argue for.</h2>
+  <table class="exam">
     <tbody>
-      <tr><td><strong>Arizona State University</strong></td><td>ChatGPT Edu with GPT-5 <em>free to every student, faculty, researcher</em>, Oct 2025</td><td>tech.asu.edu, 2025</td></tr>
-      <tr><td><strong>California State University</strong></td><td>System-wide ChatGPT Edu, <strong>$13M/yr</strong>, 22 campuses &mdash; with organised faculty + student refusal to use it</td><td>CalMatters, NPR (May 2026)</td></tr>
-      <tr><td><strong>OECD Digital Education Outlook 2026</strong></td><td>"The question is no longer <em>whether</em> students use AI but <em>how well</em>, and how institutions support responsible use."</td><td>OECD, 2026</td></tr>
-      <tr><td><strong>Nature</strong></td><td>"What would an AI university actually look like?" (open editorial)</td><td>Nature, Dec 2025</td></tr>
+      <tr>
+        <td class="what">
+          <strong>Oral defence after written submission.</strong>
+          <span>A 15-min follow-up viva. Explain three choices in your report. Rederive one piece live.</span>
+        </td>
+        <td class="defends">defends &mdash; understanding, ownership.</td>
+      </tr>
+      <tr>
+        <td class="what">
+          <strong>AI-required, with disclosure.</strong>
+          <span>&ldquo;Use three different agents on this. Argue which is physically meaningful and which is wrong. Cite each prompt.&rdquo;</span>
+        </td>
+        <td class="defends">defends &mdash; judgment, honest use.</td>
+      </tr>
+      <tr>
+        <td class="what">
+          <strong>Lab presentation, not lab report.</strong>
+          <span>A 10-min talk plus live Q&amp;A. The text version is a one-page abstract, not a twelve-page document.</span>
+        </td>
+        <td class="defends">defends &mdash; communication, integration.</td>
+      </tr>
+      <tr>
+        <td class="what">
+          <strong>Process portfolio.</strong>
+          <span>Submit the messy notebook, the AI conversations, the failed fits, the dead ends &mdash; not just the polished final output.</span>
+        </td>
+        <td class="defends">defends &mdash; the learning trajectory.</td>
+      </tr>
+      <tr>
+        <td class="what">
+          <strong>In-room re-derivation.</strong>
+          <span>From your own report, pick a result. Re-derive a slice on the board, now, no laptop.</span>
+        </td>
+        <td class="defends">defends &mdash; that the work is yours.</td>
+      </tr>
     </tbody>
   </table>
-  <div class="hbox">
-    The choice is not <em>whether</em> APHYS adopts a position. The choice is whether we are <strong>deliberate</strong> about ours, or whether students and the literature shape it for us.
-  </div>
+  <div class="footer-mark">06 &middot; designs worth trying</div>
 </section>
 
-<!-- 7. WHAT I AM SERIOUSLY WORRIED ABOUT — JUNIOR CAREERS -->
+<!-- 8. WHERE I STAND -->
 <section>
-  <h2>What I am seriously worried about &mdash; the squeeze</h2>
-  <div class="g2">
-    <div>
-      <h3>The signal in the labour market</h3>
-      <ul>
-        <li>Entry-level hiring at the 15 largest US tech firms <strong>down 25%</strong> from 2023 to 2024.</li>
-        <li>Junior developer postings <strong>down ~40-50%</strong> since early 2024.</li>
-        <li>Employment of devs aged 22-25 <strong>down ~20%</strong> from late-2022 peak.</li>
-        <li>LeadDev 2025 survey: <strong>54%</strong> of engineering leaders plan to hire fewer juniors because of AI copilots.</li>
-      </ul>
-      <p class="footnote">Stack Overflow Blog (Dec 2025); SSRN, Adam (2026).</p>
-    </div>
-    <div>
-      <h3>The pedagogical implication</h3>
-      <p>The classical career arc was: <em>learn basics &rarr; junior role &rarr; build expertise.</em> The middle step is what's getting absorbed by agents.</p>
-      <p>If our graduates can do <em>only what a competent agent can already do</em>, they have no entry point. They have to be measurably better.</p>
-      <div class="hbox red" style="margin-top:0.5em">
-        <strong>Counter-data point:</strong> IBM announced <em>tripling</em> US entry-level hiring in 2026. The picture is not uniform. But the trend among software-heavy firms is unmistakable.
-      </div>
-    </div>
+  <div class="section-mark">07 &middot; what I am arguing for</div>
+  <h2>Where I stand.</h2>
+  <div class="stance" style="margin-top:0.3em">
+    We do not need to ban AI from our courses. We need to <strong>redesign the format of what we ask</strong>, so the thing being assessed is something an agent cannot deliver alone &mdash; and so honest use of AI by the student becomes a rewarded skill, not a hidden one.
   </div>
-</section>
-
-<!-- 8. WHAT WE OWE STUDENTS — THE INEQUALITY THAT MATTERS -->
-<section>
-  <h2>What we owe students &mdash; and the inequality that matters</h2>
-  <div class="ineq">
-    <span class="student">Student alone</span>
-    <span class="gt">&lt;</span>
-    AI alone
-    <span class="gt">&lt;</span>
-    <span class="student">Student + AI</span>
-  </div>
-  <p style="font-size:0.5em;color:var(--slate2);margin-top:0.4em;text-align:center">
-    Our graduates can survive only on the right-hand side &mdash; and only if "+AI" is more than copy-paste.
+  <p class="lead" style="margin-top:1.1em">
+    Communication, judgment, and physical intuition become the assessment. The product of the agent becomes the raw material.
   </p>
-  <div class="g2" style="margin-top:0.6em">
-    <div class="card">
-      <h3>Skills that get cheap</h3>
-      <ul>
-        <li>Looking things up.</li>
-        <li>Writing the first draft of code, text, or a derivation.</li>
-        <li>Routine application of a known method.</li>
-        <li>Boilerplate. Reformatting. Summarising.</li>
-      </ul>
-      <p class="footnote">Knowledge access has collapsed in price. Expertise is less defendable.</p>
-    </div>
-    <div class="card">
-      <h3>Skills that get scarce &mdash; and valuable</h3>
-      <ul>
-        <li><strong>Problem framing</strong> &mdash; deciding what is worth asking.</li>
-        <li><strong>Judgment &amp; taste</strong> &mdash; recognising when the agent is confidently wrong.</li>
-        <li><strong>Physical intuition</strong> &mdash; the silent prior our students still need.</li>
-        <li><strong>Agency</strong> &mdash; running a loop end-to-end, not waiting for instructions.</li>
-        <li><strong>Communicating to humans</strong> &mdash; still done in human time.</li>
-      </ul>
-    </div>
+  <div class="key">
+    <strong>A practical proposal for autumn 2026.</strong> Pick <em>one course per division</em>. Redesign <em>one assessment</em> along these lines. Bring the result to the next teachers' meeting. Real evidence beats more opinion &mdash; and we are in a good position to generate it.
   </div>
-  <blockquote style="margin-top:0.4em">
-    You can outsource your thinking, but you cannot outsource your understanding.
-    <span class="attribution">&mdash; quoted by Karpathy, late 2025</span>
-  </blockquote>
+  <p class="muted" style="margin-top:0.9em;font-family:'Crimson Pro',serif;font-style:italic;font-size:0.62em">
+    I am not pretending I have this right. I want the room to push back.
+  </p>
+  <div class="footer-mark">07 &middot; what I am arguing for</div>
 </section>
 
-<!-- 9. DISCUSSION SEEDS -->
+<!-- 9. HANDOFF -->
 <section>
-  <h2>Let's actually talk &mdash; five questions to debate</h2>
-  <ul class="qmark">
-    <li>What is the <strong>one course</strong> in your programme where you can already see the effect of AI on student work? What changed?</li>
-    <li>If a student turns in work an AI agent could have produced in 5 minutes &mdash; <strong>have they learned anything we cared about?</strong> If not, what should the assignment have asked instead?</li>
-    <li>What is the <strong>minimum AI fluency</strong> we owe an APHYS graduate by the time they leave us? Should it be a course, an embedded thread, or an examination requirement?</li>
-    <li>Where do we draw the line on <strong>disclosure</strong>: in homework, exams, theses, grant texts, recommendation letters?</li>
-    <li>What is the <strong>experiment</strong> our department could run in autumn 2026 that would give us actual evidence &mdash; not opinion &mdash; about what works?</li>
-  </ul>
-  <div class="hbox emerald" style="margin-top:0.4em">
-    Today is not the day we decide policy. It is the day we make a list of the experiments worth running &mdash; and the questions we now know we have to answer.
-  </div>
-</section>
-
-<!-- 10. HAND-OFF -->
-<section>
-  <div class="title-slide">
-    <h1 style="font-size:1.6em">Over to Jonas &mdash;</h1>
-    <div class="sub" style="margin-top:0.4em">An auto-grader from the SCI AI Hackathon, the Canvas / LearnWise initiative, and what landed (or didn't) at the May 8 tutorial.</div>
-    <div class="meta" style="margin-top:1.5em">
-      Resources: <strong>kth-sci.github.io/applied-physics-ai</strong> &middot;
-      <strong>kth-sci.github.io/sci-agenthon-2026</strong>
+  <div class="handoff">
+    <div class="eyebrow">&mdash; over to Jonas &mdash;</div>
+    <h1>Now: what <em>actually</em> happened.</h1>
+    <div class="sub">An autograder from the SCI AI Hackathon. The Canvas / LearnWise initiative. What landed at the May 8 tutorial &mdash; and what didn't.</div>
+    <div class="links">
+      Public site &mdash; <strong>kth-sci.github.io/applied-physics-ai</strong><br>
+      Engineering reading &mdash; <strong>kth-sci.github.io/sci-agenthon-2026/advanced.html</strong>
     </div>
   </div>
 </section>
@@ -367,10 +611,17 @@
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
 Reveal.initialize({
-  hash: true, width: 1100, height: 660, margin: 0.05,
-  minScale: 0.2, maxScale: 2.0, center: true,
-  transition: 'slide', progress: true, controls: true,
-  keyboard: true, overview: true, slideNumber: 'c/t',
+  hash: true,
+  width: 1280, height: 760,
+  margin: 0.04,
+  minScale: 0.2, maxScale: 2.0,
+  center: false,
+  transition: 'fade',
+  transitionSpeed: 'default',
+  backgroundTransition: 'fade',
+  progress: true, controls: true,
+  keyboard: true, overview: true,
+  slideNumber: 'c/t',
 });
 </script>
 </body>
