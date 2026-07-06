@@ -1,0 +1,9 @@
+id: aphys-daemon
+name: APHYS AI Initiative Daemon
+command: python3
+args:
+  - daemon.py
+workdir: /data/wei/workspace/applied-physics-ai
+keepAlive: true
+maxRestarts: 0
+restartDelay: 5
