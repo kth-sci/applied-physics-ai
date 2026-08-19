@@ -538,7 +538,9 @@ def check_claude_requests(state):
             send_email(email, subject, body, cc_organizers=False)
             notify_organizers(
                 f"New Claude Team request: *{m.get('name','?')}* <{email}>\n"
-                f"Position: {m.get('position','?')} | Seat: {m.get('seat','standard')}\n"
+                f"Position: {m.get('position','?')} | Seat: {m.get('seat','standard')}"
+                + (f" | Permanent >=50% FTE: {m.get('permanent')}" if m.get("permanent") else "")
+                + "\n"
                 f"Motivation: {(m.get('motivation','') or '')[:200]}"
             )
 

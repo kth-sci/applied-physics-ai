@@ -141,6 +141,12 @@
     </ol>
     <div class="mt-4">
       <button onclick="document.getElementById('claude-request-modal').style.display='flex'" class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition">Request a Claude Team Seat</button>
+      <p class="text-slate-500 text-xs mt-2">Seats in the Team license are available to permanently employed staff at Applied Physics (at least 50&nbsp;% of a full-time equivalent).</p>
+    </div>
+
+    <div class="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4">
+      <p class="text-amber-900 text-sm font-semibold mb-1">Non-permanent staff, PhD students and post-docs</p>
+      <p class="text-amber-900/90 text-sm leading-relaxed">Claude Code access for non-permanent staff should be supported by their <strong>group leader</strong> if deemed necessary for their work. If you need access to Claude Code, please send your request directly to your group leader rather than through this form.</p>
     </div>
 
     <!-- Claude Team request modal -->
@@ -164,11 +170,29 @@
             <select name="position" required style="width:100%;padding:0.5rem 0.7rem;border:1.5px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:0.875rem;background:#fff;outline:none">
               <option value="">-- Select --</option>
               <option>Faculty</option>
-              <option>Post-doc</option>
               <option>Researcher</option>
               <option>Research Engineer</option>
-              <option>PhD Student</option>
             </select>
+            <p style="font-size:0.75rem;color:#94a3b8;margin:0.35rem 0 0">Seats in the Team license are reserved for permanently employed staff at Applied Physics. PhD students, post-docs and other non-permanent staff: see the note below.</p>
+          </div>
+
+          <!-- Permanent employment question (Researcher / Research Engineer only) -->
+          <div id="permanent-question" style="display:none">
+            <label style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.35rem;color:#0f172a">Are you permanently employed at Applied Physics for at least 50% of a full-time equivalent? *</label>
+            <div style="display:flex;gap:0.6rem">
+              <label style="display:flex;gap:0.45rem;align-items:center;padding:0.5rem 0.9rem;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;font-size:0.85rem;color:#0f172a">
+                <input type="radio" name="permanent" value="yes" style="accent-color:#6366f1"> Yes
+              </label>
+              <label style="display:flex;gap:0.45rem;align-items:center;padding:0.5rem 0.9rem;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;font-size:0.85rem;color:#0f172a">
+                <input type="radio" name="permanent" value="no" style="accent-color:#6366f1"> No
+              </label>
+            </div>
+          </div>
+
+          <!-- Not eligible notice -->
+          <div id="claude-ineligible-msg" style="display:none;padding:0.8rem 0.9rem;border-radius:8px;background:#fffbeb;border:1px solid #fde68a;font-size:0.82rem;color:#78350f;line-height:1.55">
+            <strong style="display:block;margin-bottom:0.25rem">Not eligible for a seat in the Team license</strong>
+            Seats are reserved for permanently employed staff at Applied Physics (at least 50&nbsp;% FTE). Claude&nbsp;Code access for non-permanent staff &mdash; including PhD students and post-docs &mdash; should be supported by their <strong>group leader</strong> if deemed necessary for their work. Please send your request directly to your group leader.
           </div>
           <div>
             <label style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.2rem;color:#0f172a">Why do you want a Claude Team seat? *</label>
@@ -207,20 +231,62 @@
     </div>
 
     <script>
-    // Show Premium seat option only when Position = Faculty
+    // Eligibility gating: Premium seat = Faculty only; Researcher / Research Engineer
+    // must confirm permanent employment (>=50% FTE) before they can request a seat.
     (function() {
+      const form           = document.getElementById('claude-request-form');
       const positionSelect = document.querySelector('[name="position"]');
       const premiumOption  = document.getElementById('premium-seat-option');
       const standardRadio  = document.querySelector('[name="seat"][value="standard"]');
-      if (!positionSelect || !premiumOption) return;
-      positionSelect.addEventListener('change', function() {
-        if (this.value === 'Faculty') {
-          premiumOption.style.display = 'flex';
-        } else {
-          premiumOption.style.display = 'none';
-          if (standardRadio) standardRadio.checked = true;
+      const permQuestion   = document.getElementById('permanent-question');
+      const ineligibleMsg  = document.getElementById('claude-ineligible-msg');
+      const submitBtn      = form?.querySelector('button[type="submit"]');
+      if (!form || !positionSelect) return;
+
+      const NEEDS_CHECK = ['Researcher', 'Research Engineer'];
+
+      function permanentAnswer() {
+        const checked = form.querySelector('[name="permanent"]:checked');
+        return checked ? checked.value : '';
+      }
+
+      function refresh() {
+        const pos = positionSelect.value;
+        const needsCheck = NEEDS_CHECK.includes(pos);
+
+        // Premium seat is Faculty-only
+        if (premiumOption) {
+          if (pos === 'Faculty') {
+            premiumOption.style.display = 'flex';
+          } else {
+            premiumOption.style.display = 'none';
+            if (standardRadio) standardRadio.checked = true;
+          }
         }
+
+        // Permanent-employment question
+        permQuestion.style.display = needsCheck ? 'block' : 'none';
+        if (!needsCheck) {
+          form.querySelectorAll('[name="permanent"]').forEach(r => { r.checked = false; });
+        }
+        form.querySelectorAll('[name="permanent"]').forEach(r => { r.required = needsCheck; });
+
+        // Eligibility
+        const ineligible = needsCheck && permanentAnswer() === 'no';
+        ineligibleMsg.style.display = ineligible ? 'block' : 'none';
+        if (submitBtn) {
+          submitBtn.disabled = ineligible;
+          submitBtn.style.opacity = ineligible ? '0.45' : '1';
+          submitBtn.style.cursor = ineligible ? 'not-allowed' : 'pointer';
+        }
+      }
+
+      positionSelect.addEventListener('change', refresh);
+      form.addEventListener('change', function(e) {
+        if (e.target.name === 'permanent') refresh();
       });
+      form.addEventListener('reset', function() { setTimeout(refresh, 0); });
+      refresh();
     })();
 
     document.getElementById('claude-request-form')?.addEventListener('submit', async function(e) {
@@ -228,10 +294,20 @@
       const form = e.target;
       const status = document.getElementById('claude-request-status');
       const submitBtn = form.querySelector('button[type="submit"]');
+      const permanentEl = form.querySelector('[name="permanent"]:checked');
+      const needsCheck = ['Researcher', 'Research Engineer'].includes(form.position.value);
+      if (needsCheck && (!permanentEl || permanentEl.value === 'no')) {
+        status.style.cssText = 'display:block;padding:0.6rem 0.8rem;border-radius:8px;font-size:0.85rem;font-weight:500;background:#fffbeb;color:#78350f;border:1px solid #fde68a';
+        status.textContent = permanentEl
+          ? 'Only permanently employed staff (at least 50% FTE) can request a seat. Please contact your group leader instead.'
+          : 'Please answer the question about permanent employment.';
+        return;
+      }
       const data = {
         name: form.name.value.trim(),
         email: form.email.value.trim(),
         position: form.position.value,
+        permanent: permanentEl ? permanentEl.value : (form.position.value === 'Faculty' ? 'yes' : ''),
         motivation: form.motivation.value.trim(),
         seat: form.seat.value,
         consent: form.consent.checked,
