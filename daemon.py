@@ -17,6 +17,7 @@ import os
 import smtplib
 import ssl
 import subprocess
+import sys
 import time
 import urllib.request
 import urllib.error
@@ -32,6 +33,27 @@ if _env_path.exists():
         if line and not line.startswith("#") and "=" in line:
             k, v = line.split("=", 1)
             os.environ.setdefault(k.strip(), v.strip())
+
+# ── Single-instance lock ───────────────────────────────────────────────────
+# Several daemons sharing this directory race on the same state file and each
+# send their own copy of every email. Hold an exclusive lock so only one runs.
+_LOCK_PATH = Path(__file__).parent / ".daemon.lock"
+_lock_handle = None
+
+
+def acquire_single_instance_lock():
+    """Take an exclusive lock on .daemon.lock. Exits if another daemon holds it."""
+    global _lock_handle
+    import fcntl
+    _lock_handle = open(_LOCK_PATH, "w")
+    try:
+        fcntl.flock(_lock_handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        print(f"Another daemon already holds {_LOCK_PATH} — exiting.", flush=True)
+        sys.exit(0)
+    _lock_handle.write(str(os.getpid()))
+    _lock_handle.flush()
+
 
 # ── Configuration ──────────────────────────────────────────────────────────
 SLACK_TOKEN = os.environ.get("SLACK_BOT_TOKEN", "")
@@ -87,6 +109,7 @@ def load_state():
         "known_registration_aliases": [],
         "known_claude_request_aliases": [],
         "claude_request_statuses": {},  # alias -> status (for detecting status changes)
+        "emails_sent": [],              # ledger of already-sent email keys (dedupe)
         "last_check": None,
     }
     if os.path.exists(STATE_FILE):
@@ -173,9 +196,33 @@ def notify_organizers(text):
 
 
 # ── Email sending ─────────────────────────────────────────────────────────
-def send_email(to_email, subject, body, cc_organizers=False):
-    """Send an email via Gmail SMTP. Falls back to Slack notification if SMTP not configured.
-    Returns True if sent, False if logged-only fallback."""
+def send_email_once(state, key, to_email, subject, body):
+    """Send an email at most once per key, persisted across restarts.
+
+    Guards against duplicate sends when a poll cycle re-observes the same
+    request (e.g. after a crash, or if state was written from another process).
+    """
+    sent = state.setdefault("emails_sent", [])
+    if key in sent:
+        log(f"Skipping duplicate email [{key}] to {to_email}")
+        return False
+    result = send_email(to_email, subject, body)
+    sent.append(key)
+    # Bound the ledger so it cannot grow without limit
+    if len(sent) > 2000:
+        del sent[:-2000]
+    return result
+
+
+
+def send_email(to_email, subject, body, cc_organizers=True):
+    """Send an email via Gmail SMTP, always blind-copying the organizers.
+
+    Falls back to a Slack notification if SMTP is not configured.
+    Returns True if sent, False if logged-only fallback.
+    (cc_organizers is retained for call-site compatibility; organizers are
+    always Bcc'd regardless of its value.)
+    """
     if not SMTP_USER or not SMTP_PASS:
         # Fallback: notify organizers on Slack with the email content
         log(f"SMTP not configured — Slack-fallback for email to {to_email}: {subject}")
@@ -189,8 +236,11 @@ def send_email(to_email, subject, body, cc_organizers=False):
         msg["Subject"] = subject
         msg["From"] = f"{SMTP_FROM_NAME} <{SMTP_USER}>"
         msg["To"] = to_email
-        if cc_organizers:
-            msg["Cc"] = ", ".join(ORGANIZER_EMAILS)
+        # Organizers are always blind-copied. Skip anyone already on the To line
+        # so a recipient who is also an organizer gets exactly one copy.
+        bcc = [e for e in ORGANIZER_EMAILS if e.lower() != to_email.strip().lower()]
+        if bcc:
+            msg["Bcc"] = ", ".join(bcc)
         msg["Reply-To"] = ", ".join(ORGANIZER_EMAILS)
         msg.set_content(body)
 
@@ -330,7 +380,7 @@ def email_claude_request_rejected(req):
 
 Thank you for your interest in the APHYS Claude Team license.
 
-After review, we are unable to grant your request for a {seat} seat at this time. Common reasons include limited seat availability or eligibility scope.
+After review, we are unable to grant your request for a {seat} seat at this time. Seats in the Team license are reserved for permanently employed staff at Applied Physics (at least 50% of a full-time equivalent). For non-permanent staff, PhD students and post-docs, Claude Code access should be supported by the group leader if deemed necessary for the work — please send your request directly to your group leader.
 
 Alternatives that may work for you:
   - Claude Pro ($20/month) — entry-level Claude Code access
@@ -504,7 +554,7 @@ def check_registrations(state):
                 continue
             log(f"New registration: {m.get('name','?')} <{email}>")
             subject, body = email_registration_confirmation(m)
-            send_email(email, subject, body, cc_organizers=False)
+            send_email_once(state, f"reg:{alias}:confirmation", email, subject, body)
             notify_organizers(
                 f"New May 8 registration: *{m.get('name','?')}* <{email}> "
                 f"({m.get('attendance','?')}, {m.get('experience','?')})"
@@ -535,7 +585,7 @@ def check_claude_requests(state):
                 continue
             log(f"New Claude request: {m.get('name','?')} <{email}> ({m.get('seat','standard')})")
             subject, body = email_claude_request_received(m)
-            send_email(email, subject, body, cc_organizers=False)
+            send_email_once(state, f"claude:{alias}:received", email, subject, body)
             notify_organizers(
                 f"New Claude Team request: *{m.get('name','?')}* <{email}>\n"
                 f"Position: {m.get('position','?')} | Seat: {m.get('seat','standard')}"
@@ -571,18 +621,18 @@ def check_claude_requests(state):
             if cur_status == "approved":
                 log(f"Claude request approved: {m.get('name','?')} <{email}>")
                 subject, body = email_claude_request_approved(m)
-                send_email(email, subject, body, cc_organizers=True)
+                send_email_once(state, f"claude:{alias}:approved", email, subject, body)
             elif cur_status == "rejected":
                 log(f"Claude request rejected: {m.get('name','?')} <{email}>")
                 subject, body = email_claude_request_rejected(m)
-                send_email(email, subject, body, cc_organizers=True)
+                send_email_once(state, f"claude:{alias}:rejected", email, subject, body)
             # 'pending' (reset) — no email
 
         # Seat type changed (independent of status, e.g. standard → premium upgrade)
         if prev_seat is not None and prev_seat != cur_seat:
             log(f"Claude seat type changed: {m.get('name','?')} <{email}> {prev_seat} → {cur_seat}")
             subject, body = email_claude_request_seat_changed(m)
-            send_email(email, subject, body, cc_organizers=True)
+            send_email_once(state, f"claude:{alias}:seat:{prev_seat}->{cur_seat}", email, subject, body)
 
         seats[alias] = cur_seat
 
@@ -638,6 +688,7 @@ def check_action_requests(state):
 
 # ── Main loop ─────────────────────────────────────────────────────────────
 def main():
+    acquire_single_instance_lock()
     log("=" * 60)
     log("APHYS AI Community Daemon starting")
     log(f"Session: {SESSION_ID}")

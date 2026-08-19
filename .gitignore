@@ -35,3 +35,4 @@ ai-workshop-2026/
 .daemon.log*
 .daemon.pid
 .daemon_state.json
+.daemon.lock

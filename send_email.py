@@ -142,7 +142,7 @@ def template_claude_rejected(first_name: str) -> tuple[str, str, str]:
 
 Thank you for your interest in the Claude Team seat through the APHYS AI Initiative.
 
-Unfortunately we are unable to approve your request at this time — seats are currently reserved for faculty, researchers, and PhD students within the Department of Applied Physics.
+Unfortunately we are unable to approve your request at this time — seats are currently reserved for permanently employed staff (at least 50% of a full-time equivalent) within the Department of Applied Physics. If you are non-permanent staff, a PhD student or a post-doc, Claude Code access should be supported by your group leader if it is deemed necessary for your work — please send your request directly to them.
 
 You can still use Claude for free at https://claude.ai, and ChatGPT at https://chat.openai.com.
 
@@ -156,7 +156,10 @@ APHYS AI Initiative"""
   <p>Dear {first_name},</p>
   <p>Thank you for your interest in the Claude Team seat through the APHYS AI Initiative.</p>
   <p>Unfortunately we are unable to approve your request at this time — seats are currently
-  reserved for faculty, researchers, and PhD students within the Department of Applied Physics.</p>
+  reserved for permanently employed staff (at least 50% of a full-time equivalent) within the
+  Department of Applied Physics. If you are non-permanent staff, a PhD student or a post-doc,
+  Claude Code access should be supported by your group leader if it is deemed necessary for your
+  work — please send your request directly to them.</p>
   <p>You can still use Claude for free at
   <a href="https://claude.ai" style="color:#C46849;">claude.ai</a>, and ChatGPT at
   <a href="https://chat.openai.com" style="color:#C46849;">chat.openai.com</a>.</p>
@@ -187,16 +190,26 @@ def parse_recipient(s: str) -> tuple[str, str]:
 
 # ── Send ─────────────────────────────────────────────────────────────────────
 
+# Organizers are blind-copied on every email sent from this account.
+ORGANIZER_EMAILS = ["jonassel@kth.se", "wei.ouyang@scilifelab.se"]
+
+
 def send(to_addr: str, to_name: str, subject: str, plain: str, html: str, dry_run: bool):
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"]    = SMTP_FROM
     msg["To"]      = f"{to_name} <{to_addr}>"
+    # Skip anyone already on the To line so an organizer who is also the
+    # recipient receives exactly one copy.
+    bcc = [e for e in ORGANIZER_EMAILS if e.lower() != to_addr.strip().lower()]
+    if bcc:
+        msg["Bcc"] = ", ".join(bcc)
     msg.attach(MIMEText(plain, "plain"))
     msg.attach(MIMEText(html,  "html"))
 
     if dry_run:
         print(f"[DRY RUN] To: {to_name} <{to_addr}>")
+        print(f"          Bcc: {', '.join(bcc) if bcc else '(none)'}")
         print(f"          Subject: {subject}")
         print(f"          Body preview: {plain[:120].strip()}…")
         return
