@@ -48,7 +48,7 @@ def html_wrap(body_html: str) -> str:
   <div style="border-top:1px solid #e8e4da;margin-top:32px;padding-top:16px;
               font-size:12px;color:#999;">
     APHYS AI Initiative · KTH Applied Physics ·
-    <a href="https://kth-sci.github.io/applied-physics-ai/" style="color:#C46849;">aphys-ai.kth.se</a>
+    <a href="https://kth-sci.github.io/applied-physics-ai/" style="color:#C46849;">kth-sci.github.io/applied-physics-ai</a>
   </div>
 </body></html>"""
 
@@ -144,7 +144,7 @@ Thank you for your interest in the Claude Team seat through the APHYS AI Initiat
 
 Unfortunately we are unable to approve your request at this time — seats are currently reserved for permanently employed staff (at least 50% of a full-time equivalent) within the Department of Applied Physics. If you are non-permanent staff, a PhD student or a post-doc, Claude Code access should be supported by your group leader if it is deemed necessary for your work — please send your request directly to them.
 
-You can still use Claude for free at https://claude.ai, and ChatGPT at https://chat.openai.com.
+You can still use Claude at https://claude.ai and ChatGPT at https://chatgpt.com — note that the free Claude plan does not include Claude Code, which now requires a plan above Claude Pro.
 
 If your situation has changed or you believe this decision is in error, please reply and we will review.
 
@@ -160,9 +160,10 @@ APHYS AI Initiative"""
   Department of Applied Physics. If you are non-permanent staff, a PhD student or a post-doc,
   Claude Code access should be supported by your group leader if it is deemed necessary for your
   work — please send your request directly to them.</p>
-  <p>You can still use Claude for free at
-  <a href="https://claude.ai" style="color:#C46849;">claude.ai</a>, and ChatGPT at
-  <a href="https://chat.openai.com" style="color:#C46849;">chat.openai.com</a>.</p>
+  <p>You can still use Claude at
+  <a href="https://claude.ai" style="color:#C46849;">claude.ai</a> and ChatGPT at
+  <a href="https://chatgpt.com" style="color:#C46849;">chatgpt.com</a> &mdash; note that the free
+  Claude plan does not include Claude Code, which now requires a plan above Claude Pro.</p>
   <p>If your situation has changed or you believe this decision is in error,
   please reply and we will review.</p>
   <p>Best,<br/>Wei Ouyang &amp; Jonas Sellberg</p>""")

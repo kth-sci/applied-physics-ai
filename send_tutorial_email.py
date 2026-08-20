@@ -105,7 +105,7 @@ def make_email(name: str, mode: str) -> tuple[str, str]:
               padding:16px 20px;margin:16px 0;">
     <p style="margin:0 0 8px;font-weight:600;">1. A ChatGPT account (free)</p>
     <p style="margin:0;color:#555;font-size:14px;">
-      Sign up at <a href="https://chat.openai.com" style="color:#C46849;">chat.openai.com</a>
+      Sign up at <a href="https://chatgpt.com" style="color:#C46849;">chatgpt.com</a>
       if you don't already have one. The free tier is enough.
     </p>
   </div>
@@ -131,8 +131,8 @@ def make_email(name: str, mode: str) -> tuple[str, str]:
   </div>
 
   <p>Full setup instructions and the day's exercise prompts are at:<br/>
-  <a href="https://aphys-ai.kth.se/may8-tutorial"
-     style="color:#C46849;font-weight:600;">aphys-ai.kth.se/may8-tutorial</a></p>
+  <a href="https://kth-sci.github.io/applied-physics-ai/may-8-tutorial.html"
+     style="color:#C46849;font-weight:600;">kth-sci.github.io/applied-physics-ai</a></p>
 
   <p><strong>That's it.</strong> No data or slides to prepare — just show up with your laptop.</p>
 
@@ -157,11 +157,30 @@ def make_email(name: str, mode: str) -> tuple[str, str]:
   <div style="border-top:1px solid #e8e4da;margin-top:28px;padding-top:12px;
               font-size:12px;color:#aaa;">
     APHYS AI Initiative · KTH Royal Institute of Technology ·
-    <a href="https://aphys-ai.kth.se" style="color:#C46849;">aphys-ai.kth.se</a>
+    <a href="https://kth-sci.github.io/applied-physics-ai/" style="color:#C46849;">kth-sci.github.io/applied-physics-ai</a>
   </div>
 
 </body></html>"""
     return subject, html
+
+
+# ── Past-event guard ────────────────────────────────────────────────────────
+# This script is a one-off blast for the May 8, 2026 tutorial, with a hardcoded
+# participant list. The event has passed, so re-running it would mail 40+ people
+# about a date in the past. Requires --i-know-this-event-has-passed to send.
+EVENT_DATE = "2026-05-08"
+
+
+def refuse_if_past(force: bool):
+    from datetime import date
+    if date.today().isoformat() <= EVENT_DATE or force:
+        return
+    sys.exit(
+        f"Refusing to send: this script mails {len(PARTICIPANTS)} people about the "
+        f"{EVENT_DATE} tutorial, which has passed.\n"
+        f"For a new event, update PARTICIPANTS, the email body and EVENT_DATE.\n"
+        f"To send anyway: --i-know-this-event-has-passed"
+    )
 
 
 # ── Send logic ──────────────────────────────────────────────────────────────
@@ -195,10 +214,16 @@ if __name__ == "__main__":
     parser.add_argument("--test", action="store_true",
                         help="Send only to Wei + Jonas")
     parser.add_argument("--send", action="store_true",
-                        help="Send to all 32 participants")
+                        help="Send to all participants in PARTICIPANTS")
     parser.add_argument("--dry-run", action="store_true",
                         help="Print list without sending")
+    parser.add_argument("--i-know-this-event-has-passed", dest="force",
+                        action="store_true",
+                        help="Override the past-event guard (see EVENT_DATE)")
     args = parser.parse_args()
+
+    if not args.dry_run:
+        refuse_if_past(args.force)
 
     if args.dry_run:
         send_all(PARTICIPANTS, dry_run=True)

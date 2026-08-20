@@ -62,6 +62,13 @@ WEI_DM_CHANNEL = "D0AESV2LHQD"    # DM channel with Wei
 JONAS_USER_ID = "U0AM83MUH6V"
 WEI_USER_ID = "U059XQJG518"
 
+# The tutorial the registration confirmation email refers to. Update these two
+# lines when a new event opens registration; the daemon stops sending the
+# confirmation once the date has passed so nobody gets a "see you on <past
+# date>" email.
+TUTORIAL_DATE = "2026-05-08"
+TUTORIAL_NAME = "APHYS AI Agent Tutorial"
+
 HYPHA_URL = "https://hypha.aicell.io"
 GALLERY_CHILDREN_URL = f"{HYPHA_URL}/kth-sci/artifacts/aphys-ai-gallery/children"
 REGISTRATION_URL = f"{HYPHA_URL}/kth-sci/artifacts/aphys-ai-registrations/children"
@@ -258,7 +265,14 @@ def send_email(to_email, subject, body, cc_organizers=True):
 
 # ── Email templates ───────────────────────────────────────────────────────
 def email_registration_confirmation(reg):
-    """Confirmation email for May 8 tutorial registration."""
+    """Confirmation email for tutorial registration.
+
+    NOTE: the body below is specific to the May 8, 2026 tutorial and is only
+    sent while TUTORIAL_DATE is in the future. Reusing it for a new event means
+    rewriting the details — in particular "a Claude Team license (standard seat)
+    at no cost", which no longer matches the eligibility rules (seats are for
+    permanently employed staff at >=50% FTE).
+    """
     name = reg.get("name", "there")
     attendance = reg.get("attendance", "AlbaNova")
     body = f"""Hi {name},
@@ -316,11 +330,21 @@ https://kth-sci.github.io/applied-physics-ai/
     return (f"Received: your Claude Team seat request ({seat})", body)
 
 
+def expiry_date(req):
+    """Seat expiry as YYYY-MM-DD, or "" if not set.
+
+    The admin dashboard stores this as `expires_at` (full ISO timestamp);
+    `expiration_date` is accepted as a fallback for older records.
+    """
+    raw = req.get("expires_at") or req.get("expiration_date") or ""
+    return raw[:10] if raw else ""
+
+
 def email_claude_request_approved(req):
     """Email when a Claude Team request is approved."""
     name = req.get("name", "there")
     seat = req.get("seat", "standard").capitalize()
-    expiry = req.get("expiration_date", "")
+    expiry = expiry_date(req)
     expiry_line = f"\n  Valid until: {expiry}\n" if expiry else ""
     body = f"""Hi {name},
 
@@ -350,7 +374,7 @@ def email_claude_request_seat_changed(req):
     """Email when a Claude Team seat type is changed (seat type and expiration date update)."""
     name = req.get("name", "there")
     seat = req.get("seat", "standard").capitalize()
-    expiry = req.get("expiration_date", "")
+    expiry = expiry_date(req)
     expiry_line = f"\n  Valid until: {expiry}\n" if expiry else ""
     body = f"""Hi {name},
 
@@ -383,10 +407,10 @@ Thank you for your interest in the APHYS Claude Team license.
 After review, we are unable to grant your request for a {seat} seat at this time. Seats in the Team license are reserved for permanently employed staff at Applied Physics (at least 50% of a full-time equivalent). For non-permanent staff, PhD students and post-docs, Claude Code access should be supported by the group leader if deemed necessary for the work — please send your request directly to your group leader.
 
 Alternatives that may work for you:
-  - Claude Pro ($20/month) — entry-level Claude Code access
   - Claude Max ($100/month) — full Claude Code access without the team license
-  - Join the May 8 Tutorial — Claude Team standard seats available to all attendees:
-    https://kth-sci.github.io/applied-physics-ai/events.html
+  - Claude Pro ($20/month) — chat only; note that Claude Code now requires a plan above Pro
+  - Free tools and guides on our site, including a ChatGPT quick-start:
+    https://kth-sci.github.io/applied-physics-ai/getting-started.html
 
 If you have questions about the decision, please reply to this email and we will get back to you.
 
@@ -553,8 +577,13 @@ def check_registrations(state):
             if not email or "@" not in email:
                 continue
             log(f"New registration: {m.get('name','?')} <{email}>")
-            subject, body = email_registration_confirmation(m)
-            send_email_once(state, f"reg:{alias}:confirmation", email, subject, body)
+            if datetime.now().strftime("%Y-%m-%d") > TUTORIAL_DATE:
+                # The event has passed — the confirmation text would be wrong.
+                log(f"{TUTORIAL_NAME} ({TUTORIAL_DATE}) has passed — "
+                    f"skipping confirmation email to {email}", "warning")
+            else:
+                subject, body = email_registration_confirmation(m)
+                send_email_once(state, f"reg:{alias}:confirmation", email, subject, body)
             notify_organizers(
                 f"New May 8 registration: *{m.get('name','?')}* <{email}> "
                 f"({m.get('attendance','?')}, {m.get('experience','?')})"
