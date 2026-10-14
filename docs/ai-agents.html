@@ -136,8 +136,8 @@
     <h3 class="text-lg font-bold text-slate-900 mt-6 mb-3">Step 1: Get a Claude Account</h3>
     <ol class="text-slate-600 text-sm space-y-2 list-decimal list-inside leading-relaxed">
       <li>Go to <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">claude.ai</code> and create an account (or log in if you have one)</li>
-      <li>Get a seat through your <strong>group leader's Claude Team license</strong> (see below &mdash; now the primary route), request a seat in the department <strong>Claude Team</strong> license, or subscribe to <strong>Claude Max</strong> ($100/month) yourself</li>
-      <li>The free Claude.ai plan does <strong>not</strong> include Claude Code access &mdash; a paid plan above <strong>Claude Pro</strong> is now required for Claude Code</li>
+      <li>Get a seat through your <strong>group leader's Claude Team license</strong> (see below &mdash; now the primary route), request a seat in the department <strong>Claude Team</strong> license, or subscribe yourself to <strong>Claude Pro</strong> ($20/month, or $17/month billed annually) or <strong>Claude Max</strong> (from $100/month)</li>
+      <li>The free Claude.ai plan does <strong>not</strong> include Claude Code. Every paid plan does &mdash; Pro, Max, Team and Enterprise all include it, drawing on the same usage pool as chat</li>
     </ol>
     <div class="mt-4">
       <div class="flex flex-wrap gap-3">
@@ -372,11 +372,23 @@
       <strong>Easiest option:</strong> If you have never used a terminal, start with the <strong>Desktop App</strong> or the <strong>Web</strong> version &mdash; no installation needed. You can always switch to the terminal later for more power.
     </div>
 
+    <!-- System requirements -->
+    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-4">
+      <h4 class="text-base font-bold text-slate-900 mb-2">System requirements</h4>
+      <div class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-slate-600">
+        <p><strong class="text-slate-900">Operating system:</strong> macOS 13.0+, Windows 10 1809+ (or Server 2019+), Ubuntu 20.04+, Debian 10+, or Alpine Linux 3.19+</p>
+        <p><strong class="text-slate-900">Hardware:</strong> 4&nbsp;GB RAM or more, x64 or ARM64 processor</p>
+        <p><strong class="text-slate-900">Shell:</strong> Bash, Zsh, PowerShell or CMD</p>
+        <p><strong class="text-slate-900">Network:</strong> an internet connection, from a <a href="https://www.anthropic.com/supported-countries" target="_blank" rel="noopener" class="text-accent hover:underline">supported country</a></p>
+      </div>
+      <p class="text-slate-500 text-xs mt-3">No Node.js needed for the native install, the desktop app or the IDE extensions &mdash; only the optional npm package requires Node.js 22+. Any laptop bought in the last several years meets these requirements comfortably.</p>
+    </div>
+
     <!-- Option A: Desktop App -->
     <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-4">
       <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
         <span style="background:#d1fae5;color:#059669;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">EASIEST</span>
-        <h4 class="text-base font-bold text-slate-900">Option A: Desktop App (Mac &amp; Windows)</h4>
+        <h4 class="text-base font-bold text-slate-900">Option A: Desktop App (Mac, Windows &amp; Linux)</h4>
       </div>
       <p class="text-slate-600 text-sm mb-3">A standalone app with a visual interface. Review diffs, run multiple sessions side by side, and use the <strong>Code</strong> tab to start coding &mdash; no terminal needed.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem">
@@ -389,7 +401,7 @@
           Download for Windows
         </a>
       </div>
-      <p class="text-slate-500 text-xs">After installing, launch the app, sign in, and click the <strong>Code</strong> tab to start.</p>
+      <p class="text-slate-500 text-xs">After installing, launch the app, sign in, and click the <strong>Code</strong> tab to start. On Linux, see the <a href="https://code.claude.com/docs/en/desktop-linux" target="_blank" rel="noopener" style="color:#6366f1;font-weight:500">Linux desktop instructions</a>.</p>
     </div>
 
     <!-- Option B: Web -->
@@ -421,15 +433,16 @@
           <p class="text-slate-600 text-sm mb-2">Run this single command in Terminal &mdash; no prerequisites needed:</p>
           <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">curl -fsSL https://claude.ai/install.sh | bash</pre>
           <p class="text-slate-500 text-xs mt-2">This installs a native binary that auto-updates in the background. No Node.js or npm required.</p>
+          <p class="text-slate-500 text-xs mt-2">On Linux you can also install from the signed <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">apt</code>, <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">dnf</code> or <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">apk</code> repositories &mdash; see the <a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener" style="color:#6366f1;font-weight:500">setup guide</a>. Those do not auto-update.</p>
         </div>
 
         <div id="tab-win" class="tab-panel">
-          <p class="text-slate-600 text-sm mb-2"><strong>Prerequisite:</strong> Install <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener" style="color:#6366f1;font-weight:500">Git for Windows</a> first.</p>
-          <p class="text-slate-600 text-sm mb-2">Then run in <strong>PowerShell</strong>:</p>
+          <p class="text-slate-600 text-sm mb-2">Run in <strong>PowerShell</strong>:</p>
           <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">irm https://claude.ai/install.ps1 | iex</pre>
           <p class="text-slate-600 text-sm mt-3 mb-2">Or in <strong>CMD</strong>:</p>
           <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd</pre>
-          <p class="text-slate-500 text-xs mt-2">You can also use <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">winget install Anthropic.ClaudeCode</code> if you prefer WinGet.</p>
+          <p class="text-slate-500 text-xs mt-2">You can also use <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">winget install Anthropic.ClaudeCode</code> if you prefer WinGet (no auto-update &mdash; run <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">winget upgrade Anthropic.ClaudeCode</code> now and then).</p>
+          <p class="text-slate-500 text-xs mt-2"><a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener" style="color:#6366f1;font-weight:500">Git for Windows</a> is optional but recommended &mdash; it gives Claude Code a Bash shell. Without it, Claude Code uses PowerShell instead.</p>
         </div>
 
         <div id="tab-brew" class="tab-panel">
@@ -442,7 +455,7 @@
       <p class="text-slate-600 text-sm mt-4 mb-2">Then start Claude Code in any project:</p>
       <pre class="bg-slate-800 text-slate-200 p-4 rounded-lg text-sm font-mono overflow-x-auto">cd your-project
 claude</pre>
-      <p class="text-slate-600 text-sm mt-2">You will be prompted to log in on first run. That is it.</p>
+      <p class="text-slate-600 text-sm mt-2">You will be prompted to log in on first run. That is it. To check the install first, run <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">claude --version</code>, or <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">claude doctor</code> for a full diagnostic.</p>
     </div>
 
     <!-- Option D: VS Code / IDE -->
